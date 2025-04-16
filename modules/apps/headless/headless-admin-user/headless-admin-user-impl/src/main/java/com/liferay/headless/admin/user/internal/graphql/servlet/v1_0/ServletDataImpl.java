@@ -136,11 +136,6 @@ public class ServletDataImpl implements ServletData {
 							EmailAddressResourceImpl.class,
 							"getUserAccountEmailAddressesPage"));
 					put(
-						"query#organizations",
-						new ObjectValuePair<>(
-							OrganizationResourceImpl.class,
-							"getOrganizationsPage"));
-					put(
 						"query#organization",
 						new ObjectValuePair<>(
 							OrganizationResourceImpl.class, "getOrganization"));
@@ -149,6 +144,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							OrganizationResourceImpl.class,
 							"getOrganizationOrganizationsPage"));
+					put(
+						"query#organizations",
+						new ObjectValuePair<>(
+							OrganizationResourceImpl.class,
+							"getOrganizationsPage"));
 					put(
 						"query#organizationPhones",
 						new ObjectValuePair<>(
@@ -179,13 +179,13 @@ public class ServletDataImpl implements ServletData {
 							PostalAddressResourceImpl.class,
 							"getUserAccountPostalAddressesPage"));
 					put(
-						"query#roles",
-						new ObjectValuePair<>(
-							RoleResourceImpl.class, "getRolesPage"));
-					put(
 						"query#role",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class, "getRole"));
+					put(
+						"query#roles",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "getRolesPage"));
 					put(
 						"query#segments",
 						new ObjectValuePair<>(
@@ -206,24 +206,24 @@ public class ServletDataImpl implements ServletData {
 							SiteResourceImpl.class,
 							"getMyUserAccountSitesPage"));
 					put(
+						"query#site",
+						new ObjectValuePair<>(
+							SiteResourceImpl.class, "getSite"));
+					put(
 						"query#byFriendlyUrlPath",
 						new ObjectValuePair<>(
 							SiteResourceImpl.class,
 							"getSiteByFriendlyUrlPath"));
 					put(
-						"query#site",
+						"query#myUserAccountSubscription",
 						new ObjectValuePair<>(
-							SiteResourceImpl.class, "getSite"));
+							SubscriptionResourceImpl.class,
+							"getMyUserAccountSubscription"));
 					put(
 						"query#myUserAccountSubscriptions",
 						new ObjectValuePair<>(
 							SubscriptionResourceImpl.class,
 							"getMyUserAccountSubscriptionsPage"));
-					put(
-						"query#myUserAccountSubscription",
-						new ObjectValuePair<>(
-							SubscriptionResourceImpl.class,
-							"getMyUserAccountSubscription"));
 					put(
 						"query#myUserAccount",
 						new ObjectValuePair<>(
@@ -239,14 +239,14 @@ public class ServletDataImpl implements ServletData {
 							UserAccountResourceImpl.class,
 							"getSiteUserAccountsPage"));
 					put(
+						"query#userAccount",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class, "getUserAccount"));
+					put(
 						"query#userAccounts",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,
 							"getUserAccountsPage"));
-					put(
-						"query#userAccount",
-						new ObjectValuePair<>(
-							UserAccountResourceImpl.class, "getUserAccount"));
 					put(
 						"query#organizationWebUrls",
 						new ObjectValuePair<>(

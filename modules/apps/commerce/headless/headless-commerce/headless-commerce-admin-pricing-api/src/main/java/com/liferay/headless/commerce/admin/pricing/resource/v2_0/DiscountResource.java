@@ -45,6 +45,21 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DiscountResource {
 
+	public void deleteDiscount(Long id) throws Exception;
+
+	public Response deleteDiscountBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteDiscountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Discount getDiscount(Long id) throws Exception;
+
+	public Discount getDiscountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<Discount> getDiscountsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -52,31 +67,16 @@ public interface DiscountResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Discount postDiscount(Discount discount) throws Exception;
-
-	public Response postDiscountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteDiscountByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Discount getDiscountByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
+	public Discount patchDiscount(Long id, Discount discount) throws Exception;
 
 	public Discount patchDiscountByExternalReferenceCode(
 			String externalReferenceCode, Discount discount)
 		throws Exception;
 
-	public void deleteDiscount(Long id) throws Exception;
+	public Discount postDiscount(Discount discount) throws Exception;
 
-	public Response deleteDiscountBatch(String callbackURL, Object object)
+	public Response postDiscountBatch(String callbackURL, Object object)
 		throws Exception;
-
-	public Discount getDiscount(Long id) throws Exception;
-
-	public Discount patchDiscount(Long id, Discount discount) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

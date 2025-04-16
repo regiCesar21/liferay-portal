@@ -52,6 +52,8 @@ public interface ImportTaskResource {
 			MultipartBody multipartBody)
 		throws Exception;
 
+	public ImportTask getImportTask(Long importTaskId) throws Exception;
+
 	public ImportTask postImportTask(
 			String className, String callbackURL, String fieldNameMapping,
 			String taskItemDelegateName, Object object)
@@ -71,8 +73,6 @@ public interface ImportTaskResource {
 			String className, String callbackURL, String taskItemDelegateName,
 			MultipartBody multipartBody)
 		throws Exception;
-
-	public ImportTask getImportTask(Long importTaskId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

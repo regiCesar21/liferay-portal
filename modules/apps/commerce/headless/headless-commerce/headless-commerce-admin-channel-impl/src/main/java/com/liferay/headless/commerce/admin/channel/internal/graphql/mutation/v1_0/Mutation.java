@@ -44,29 +44,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Channel createChannel(@GraphQLName("channel") Channel channel)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_channelResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			channelResource -> channelResource.postChannel(channel));
-	}
-
-	@GraphQLField
-	public Response createChannelBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_channelResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			channelResource -> channelResource.postChannelBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
 	public boolean deleteChannel(@GraphQLName("channelId") Long channelId)
 		throws Exception {
 
@@ -102,6 +79,29 @@ public class Mutation {
 			this::_populateResourceContext,
 			channelResource -> channelResource.patchChannel(
 				channelId, channel));
+	}
+
+	@GraphQLField
+	public Channel createChannel(@GraphQLName("channel") Channel channel)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource -> channelResource.postChannel(channel));
+	}
+
+	@GraphQLField
+	public Response createChannelBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource -> channelResource.postChannelBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField

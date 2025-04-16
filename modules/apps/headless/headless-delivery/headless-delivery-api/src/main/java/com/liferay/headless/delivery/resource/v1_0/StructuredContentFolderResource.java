@@ -45,6 +45,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface StructuredContentFolderResource {
 
+	public void deleteStructuredContentFolder(Long structuredContentFolderId)
+		throws Exception;
+
+	public Response deleteStructuredContentFolderBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<StructuredContentFolder> getSiteStructuredContentFoldersPage(
 			Long siteId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -53,12 +60,8 @@ public interface StructuredContentFolderResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public StructuredContentFolder postSiteStructuredContentFolder(
-			Long siteId, StructuredContentFolder structuredContentFolder)
-		throws Exception;
-
-	public Response postSiteStructuredContentFolderBatch(
-			Long siteId, String callbackURL, Object object)
+	public StructuredContentFolder getStructuredContentFolder(
+			Long structuredContentFolderId)
 		throws Exception;
 
 	public Page<StructuredContentFolder>
@@ -70,26 +73,23 @@ public interface StructuredContentFolderResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public StructuredContentFolder patchStructuredContentFolder(
+			Long structuredContentFolderId,
+			StructuredContentFolder structuredContentFolder)
+		throws Exception;
+
+	public StructuredContentFolder postSiteStructuredContentFolder(
+			Long siteId, StructuredContentFolder structuredContentFolder)
+		throws Exception;
+
+	public Response postSiteStructuredContentFolderBatch(
+			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
 	public StructuredContentFolder
 			postStructuredContentFolderStructuredContentFolder(
 				Long parentStructuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
-		throws Exception;
-
-	public void deleteStructuredContentFolder(Long structuredContentFolderId)
-		throws Exception;
-
-	public Response deleteStructuredContentFolderBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public StructuredContentFolder getStructuredContentFolder(
-			Long structuredContentFolderId)
-		throws Exception;
-
-	public StructuredContentFolder patchStructuredContentFolder(
-			Long structuredContentFolderId,
-			StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
 	public StructuredContentFolder putStructuredContentFolder(

@@ -51,6 +51,18 @@ public interface AttachmentResource {
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public Page<Attachment> getProductByExternalReferenceCodeImagesPage(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Page<Attachment> getProductIdAttachmentsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public Page<Attachment> getProductIdImagesPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
 	public Attachment postProductByExternalReferenceCodeAttachment(
 			String externalReferenceCode, Attachment attachment)
 		throws Exception;
@@ -63,10 +75,6 @@ public interface AttachmentResource {
 			String externalReferenceCode, AttachmentUrl attachmentUrl)
 		throws Exception;
 
-	public Page<Attachment> getProductByExternalReferenceCodeImagesPage(
-			String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
 	public Attachment postProductByExternalReferenceCodeImage(
 			String externalReferenceCode, Attachment attachment)
 		throws Exception;
@@ -77,10 +85,6 @@ public interface AttachmentResource {
 
 	public Attachment postProductByExternalReferenceCodeImageByUrl(
 			String externalReferenceCode, AttachmentUrl attachmentUrl)
-		throws Exception;
-
-	public Page<Attachment> getProductIdAttachmentsPage(
-			Long id, Pagination pagination)
 		throws Exception;
 
 	public Attachment postProductIdAttachment(Long id, Attachment attachment)
@@ -96,10 +100,6 @@ public interface AttachmentResource {
 
 	public Attachment postProductIdAttachmentByUrl(
 			Long id, AttachmentUrl attachmentUrl)
-		throws Exception;
-
-	public Page<Attachment> getProductIdImagesPage(
-			Long id, Pagination pagination)
 		throws Exception;
 
 	public Attachment postProductIdImage(Long id, Attachment attachment)

@@ -49,25 +49,25 @@ public interface WarehouseResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public Response deleteWarehousId(Long id) throws Exception;
+
 	public Warehouse getWarehousByExternalReferenceCode(
 			String externalReferenceCode)
+		throws Exception;
+
+	public Warehouse getWarehousId(Long id) throws Exception;
+
+	public Page<Warehouse> getWarehousesPage(
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Response patchWarehousByExternalReferenceCode(
 			String externalReferenceCode, Warehouse warehouse)
 		throws Exception;
 
-	public Response deleteWarehousId(Long id) throws Exception;
-
-	public Warehouse getWarehousId(Long id) throws Exception;
-
 	public Response patchWarehousId(Long id, Warehouse warehouse)
-		throws Exception;
-
-	public Page<Warehouse> getWarehousesPage(
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Warehouse postWarehous(Warehouse warehouse) throws Exception;

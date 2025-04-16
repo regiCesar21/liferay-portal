@@ -183,6 +183,262 @@ public abstract class BaseProductGroupResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteProductGroup() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductGroup productGroup = testDeleteProductGroup_addProductGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			productGroupResource.deleteProductGroupHttpResponse(
+				productGroup.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productGroupResource.getProductGroupHttpResponse(
+				productGroup.getId()));
+		assertHttpResponseStatusCode(
+			404, productGroupResource.getProductGroupHttpResponse(0L));
+	}
+
+	protected ProductGroup testDeleteProductGroup_addProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteProductGroup() throws Exception {
+
+		// No namespace
+
+		ProductGroup productGroup1 =
+			testGraphQLDeleteProductGroup_addProductGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductGroup",
+						new HashMap<String, Object>() {
+							{
+								put("id", productGroup1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProductGroup"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"productGroup",
+					new HashMap<String, Object>() {
+						{
+							put("id", productGroup1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected ProductGroup testGraphQLDeleteProductGroup_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
+	}
+
+	@Test
+	public void testDeleteProductGroupByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductGroup productGroup =
+			testDeleteProductGroupByExternalReferenceCode_addProductGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			productGroupResource.
+				deleteProductGroupByExternalReferenceCodeHttpResponse(
+					productGroup.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productGroupResource.
+				getProductGroupByExternalReferenceCodeHttpResponse(
+					productGroup.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			productGroupResource.
+				getProductGroupByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected ProductGroup
+			testDeleteProductGroupByExternalReferenceCode_addProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetProductGroup() throws Exception {
+		ProductGroup postProductGroup = testGetProductGroup_addProductGroup();
+
+		ProductGroup getProductGroup = productGroupResource.getProductGroup(
+			postProductGroup.getId());
+
+		assertEquals(postProductGroup, getProductGroup);
+		assertValid(getProductGroup);
+	}
+
+	protected ProductGroup testGetProductGroup_addProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductGroup() throws Exception {
+		ProductGroup productGroup =
+			testGraphQLGetProductGroup_addProductGroup();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productGroup,
+				ProductGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productGroup",
+								new HashMap<String, Object>() {
+									{
+										put("id", productGroup.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/productGroup"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductGroupNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productGroup",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductGroup testGraphQLGetProductGroup_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
+	}
+
+	@Test
+	public void testGetProductGroupByExternalReferenceCode() throws Exception {
+		ProductGroup postProductGroup =
+			testGetProductGroupByExternalReferenceCode_addProductGroup();
+
+		ProductGroup getProductGroup =
+			productGroupResource.getProductGroupByExternalReferenceCode(
+				postProductGroup.getExternalReferenceCode());
+
+		assertEquals(postProductGroup, getProductGroup);
+		assertValid(getProductGroup);
+	}
+
+	protected ProductGroup
+			testGetProductGroupByExternalReferenceCode_addProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductGroupByExternalReferenceCode()
+		throws Exception {
+
+		ProductGroup productGroup =
+			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productGroup,
+				ProductGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productGroupByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												productGroup.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productGroupByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductGroupByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productGroupByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductGroup
+			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
+	}
+
+	@Test
 	public void testGetProductGroupsPage() throws Exception {
 		Page<ProductGroup> page = productGroupResource.getProductGroupsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -585,6 +841,18 @@ public abstract class BaseProductGroupResourceTestCase {
 	}
 
 	@Test
+	public void testPatchProductGroup() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchProductGroupByExternalReferenceCode()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostProductGroup() throws Exception {
 		ProductGroup randomProductGroup = randomProductGroup();
 
@@ -601,274 +869,6 @@ public abstract class BaseProductGroupResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteProductGroupByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ProductGroup productGroup =
-			testDeleteProductGroupByExternalReferenceCode_addProductGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			productGroupResource.
-				deleteProductGroupByExternalReferenceCodeHttpResponse(
-					productGroup.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.
-				getProductGroupByExternalReferenceCodeHttpResponse(
-					productGroup.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.
-				getProductGroupByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected ProductGroup
-			testDeleteProductGroupByExternalReferenceCode_addProductGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetProductGroupByExternalReferenceCode() throws Exception {
-		ProductGroup postProductGroup =
-			testGetProductGroupByExternalReferenceCode_addProductGroup();
-
-		ProductGroup getProductGroup =
-			productGroupResource.getProductGroupByExternalReferenceCode(
-				postProductGroup.getExternalReferenceCode());
-
-		assertEquals(postProductGroup, getProductGroup);
-		assertValid(getProductGroup);
-	}
-
-	protected ProductGroup
-			testGetProductGroupByExternalReferenceCode_addProductGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductGroupByExternalReferenceCode()
-		throws Exception {
-
-		ProductGroup productGroup =
-			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				productGroup,
-				ProductGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"productGroupByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												productGroup.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/productGroupByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetProductGroupByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"productGroupByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ProductGroup
-			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup()
-		throws Exception {
-
-		return testGraphQLProductGroup_addProductGroup();
-	}
-
-	@Test
-	public void testPatchProductGroupByExternalReferenceCode()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testDeleteProductGroup() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ProductGroup productGroup = testDeleteProductGroup_addProductGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			productGroupResource.deleteProductGroupHttpResponse(
-				productGroup.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.getProductGroupHttpResponse(
-				productGroup.getId()));
-		assertHttpResponseStatusCode(
-			404, productGroupResource.getProductGroupHttpResponse(0L));
-	}
-
-	protected ProductGroup testDeleteProductGroup_addProductGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteProductGroup() throws Exception {
-
-		// No namespace
-
-		ProductGroup productGroup1 =
-			testGraphQLDeleteProductGroup_addProductGroup();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteProductGroup",
-						new HashMap<String, Object>() {
-							{
-								put("id", productGroup1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteProductGroup"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"productGroup",
-					new HashMap<String, Object>() {
-						{
-							put("id", productGroup1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected ProductGroup testGraphQLDeleteProductGroup_addProductGroup()
-		throws Exception {
-
-		return testGraphQLProductGroup_addProductGroup();
-	}
-
-	@Test
-	public void testGetProductGroup() throws Exception {
-		ProductGroup postProductGroup = testGetProductGroup_addProductGroup();
-
-		ProductGroup getProductGroup = productGroupResource.getProductGroup(
-			postProductGroup.getId());
-
-		assertEquals(postProductGroup, getProductGroup);
-		assertValid(getProductGroup);
-	}
-
-	protected ProductGroup testGetProductGroup_addProductGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductGroup() throws Exception {
-		ProductGroup productGroup =
-			testGraphQLGetProductGroup_addProductGroup();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				productGroup,
-				ProductGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"productGroup",
-								new HashMap<String, Object>() {
-									{
-										put("id", productGroup.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/productGroup"))));
-	}
-
-	@Test
-	public void testGraphQLGetProductGroupNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"productGroup",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ProductGroup testGraphQLGetProductGroup_addProductGroup()
-		throws Exception {
-
-		return testGraphQLProductGroup_addProductGroup();
-	}
-
-	@Test
-	public void testPatchProductGroup() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Rule

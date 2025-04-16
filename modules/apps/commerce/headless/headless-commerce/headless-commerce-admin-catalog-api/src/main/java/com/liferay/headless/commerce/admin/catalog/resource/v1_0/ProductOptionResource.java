@@ -50,23 +50,23 @@ public interface ProductOptionResource {
 	public Response deleteProductOptionBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Page<ProductOption>
+			getProductByExternalReferenceCodeProductOptionsPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Page<ProductOption> getProductIdProductOptionsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
 	public ProductOption getProductOption(Long id) throws Exception;
 
 	public Response patchProductOption(Long id, ProductOption productOption)
 		throws Exception;
 
 	public Page<ProductOption>
-			getProductByExternalReferenceCodeProductOptionsPage(
-				String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public Page<ProductOption>
 			postProductByExternalReferenceCodeProductOptionsPage(
 				String externalReferenceCode, ProductOption[] productOptions)
-		throws Exception;
-
-	public Page<ProductOption> getProductIdProductOptionsPage(
-			Long id, Pagination pagination)
 		throws Exception;
 
 	public Page<ProductOption> postProductIdProductOptionsPage(

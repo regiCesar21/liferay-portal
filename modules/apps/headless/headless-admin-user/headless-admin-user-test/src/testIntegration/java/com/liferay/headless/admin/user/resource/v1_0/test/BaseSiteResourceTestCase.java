@@ -290,6 +290,71 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
+	public void testGetSite() throws Exception {
+		Site postSite = testGetSite_addSite();
+
+		Site getSite = siteResource.getSite(postSite.getId());
+
+		assertEquals(postSite, getSite);
+		assertValid(getSite);
+	}
+
+	protected Site testGetSite_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSite() throws Exception {
+		Site site = testGraphQLGetSite_addSite();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				site,
+				SiteSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"site",
+								new HashMap<String, Object>() {
+									{
+										put("siteId", site.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/site"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteNotFound() throws Exception {
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"site",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Site testGraphQLGetSite_addSite() throws Exception {
+		return testGraphQLSite_addSite();
+	}
+
+	@Test
 	public void testGetSiteByFriendlyUrlPath() throws Exception {
 		Site postSite = testGetSiteByFriendlyUrlPath_addSite();
 
@@ -359,71 +424,6 @@ public abstract class BaseSiteResourceTestCase {
 	protected Site testGraphQLGetSiteByFriendlyUrlPath_addSite()
 		throws Exception {
 
-		return testGraphQLSite_addSite();
-	}
-
-	@Test
-	public void testGetSite() throws Exception {
-		Site postSite = testGetSite_addSite();
-
-		Site getSite = siteResource.getSite(postSite.getId());
-
-		assertEquals(postSite, getSite);
-		assertValid(getSite);
-	}
-
-	protected Site testGetSite_addSite() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSite() throws Exception {
-		Site site = testGraphQLGetSite_addSite();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				site,
-				SiteSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"site",
-								new HashMap<String, Object>() {
-									{
-										put("siteId", site.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/site"))));
-	}
-
-	@Test
-	public void testGraphQLGetSiteNotFound() throws Exception {
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"site",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Site testGraphQLGetSite_addSite() throws Exception {
 		return testGraphQLSite_addSite();
 	}
 

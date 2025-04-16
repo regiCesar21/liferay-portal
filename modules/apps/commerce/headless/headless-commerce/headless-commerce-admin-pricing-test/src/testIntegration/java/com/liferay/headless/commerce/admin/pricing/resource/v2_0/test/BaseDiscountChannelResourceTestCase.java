@@ -445,29 +445,6 @@ public abstract class BaseDiscountChannelResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscountByExternalReferenceCodeDiscountChannel()
-		throws Exception {
-
-		DiscountChannel randomDiscountChannel = randomDiscountChannel();
-
-		DiscountChannel postDiscountChannel =
-			testPostDiscountByExternalReferenceCodeDiscountChannel_addDiscountChannel(
-				randomDiscountChannel);
-
-		assertEquals(randomDiscountChannel, postDiscountChannel);
-		assertValid(postDiscountChannel);
-	}
-
-	protected DiscountChannel
-			testPostDiscountByExternalReferenceCodeDiscountChannel_addDiscountChannel(
-				DiscountChannel discountChannel)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetDiscountIdDiscountChannelsPage() throws Exception {
 		Long id = testGetDiscountIdDiscountChannelsPage_getId();
 		Long irrelevantId =
@@ -908,6 +885,29 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostDiscountByExternalReferenceCodeDiscountChannel()
+		throws Exception {
+
+		DiscountChannel randomDiscountChannel = randomDiscountChannel();
+
+		DiscountChannel postDiscountChannel =
+			testPostDiscountByExternalReferenceCodeDiscountChannel_addDiscountChannel(
+				randomDiscountChannel);
+
+		assertEquals(randomDiscountChannel, postDiscountChannel);
+		assertValid(postDiscountChannel);
+	}
+
+	protected DiscountChannel
+			testPostDiscountByExternalReferenceCodeDiscountChannel_addDiscountChannel(
+				DiscountChannel discountChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

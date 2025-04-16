@@ -263,6 +263,37 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteMessageBoardMessageMyRating() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardMessage messageBoardMessage =
+			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				deleteMessageBoardMessageMyRatingHttpResponse(
+					messageBoardMessage.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				getMessageBoardMessageMyRatingHttpResponse(
+					messageBoardMessage.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				getMessageBoardMessageMyRatingHttpResponse(0L));
+	}
+
+	protected MessageBoardMessage
+			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetMessageBoardMessage() throws Exception {
 		MessageBoardMessage postMessageBoardMessage =
 			testGetMessageBoardMessage_addMessageBoardMessage();
@@ -338,156 +369,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		throws Exception {
 
 		return testGraphQLMessageBoardMessage_addMessageBoardMessage();
-	}
-
-	@Test
-	public void testPatchMessageBoardMessage() throws Exception {
-		MessageBoardMessage postMessageBoardMessage =
-			testPatchMessageBoardMessage_addMessageBoardMessage();
-
-		MessageBoardMessage randomPatchMessageBoardMessage =
-			randomPatchMessageBoardMessage();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardMessage patchMessageBoardMessage =
-			messageBoardMessageResource.patchMessageBoardMessage(
-				postMessageBoardMessage.getId(),
-				randomPatchMessageBoardMessage);
-
-		MessageBoardMessage expectedPatchMessageBoardMessage =
-			postMessageBoardMessage.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchMessageBoardMessage, expectedPatchMessageBoardMessage);
-
-		MessageBoardMessage getMessageBoardMessage =
-			messageBoardMessageResource.getMessageBoardMessage(
-				patchMessageBoardMessage.getId());
-
-		assertEquals(expectedPatchMessageBoardMessage, getMessageBoardMessage);
-		assertValid(getMessageBoardMessage);
-	}
-
-	protected MessageBoardMessage
-			testPatchMessageBoardMessage_addMessageBoardMessage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutMessageBoardMessage() throws Exception {
-		MessageBoardMessage postMessageBoardMessage =
-			testPutMessageBoardMessage_addMessageBoardMessage();
-
-		MessageBoardMessage randomMessageBoardMessage =
-			randomMessageBoardMessage();
-
-		MessageBoardMessage putMessageBoardMessage =
-			messageBoardMessageResource.putMessageBoardMessage(
-				postMessageBoardMessage.getId(), randomMessageBoardMessage);
-
-		assertEquals(randomMessageBoardMessage, putMessageBoardMessage);
-		assertValid(putMessageBoardMessage);
-
-		MessageBoardMessage getMessageBoardMessage =
-			messageBoardMessageResource.getMessageBoardMessage(
-				putMessageBoardMessage.getId());
-
-		assertEquals(randomMessageBoardMessage, getMessageBoardMessage);
-		assertValid(getMessageBoardMessage);
-	}
-
-	protected MessageBoardMessage
-			testPutMessageBoardMessage_addMessageBoardMessage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteMessageBoardMessageMyRating() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardMessage messageBoardMessage =
-			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardMessageResource.
-				deleteMessageBoardMessageMyRatingHttpResponse(
-					messageBoardMessage.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.
-				getMessageBoardMessageMyRatingHttpResponse(
-					messageBoardMessage.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.
-				getMessageBoardMessageMyRatingHttpResponse(0L));
-	}
-
-	protected MessageBoardMessage
-			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutMessageBoardMessageSubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardMessage messageBoardMessage =
-			testPutMessageBoardMessageSubscribe_addMessageBoardMessage();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardMessageResource.
-				putMessageBoardMessageSubscribeHttpResponse(
-					messageBoardMessage.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.
-				putMessageBoardMessageSubscribeHttpResponse(0L));
-	}
-
-	protected MessageBoardMessage
-			testPutMessageBoardMessageSubscribe_addMessageBoardMessage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutMessageBoardMessageUnsubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardMessage messageBoardMessage =
-			testPutMessageBoardMessageUnsubscribe_addMessageBoardMessage();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardMessageResource.
-				putMessageBoardMessageUnsubscribeHttpResponse(
-					messageBoardMessage.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.
-				putMessageBoardMessageUnsubscribeHttpResponse(0L));
-	}
-
-	protected MessageBoardMessage
-			testPutMessageBoardMessageUnsubscribe_addMessageBoardMessage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -982,32 +863,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostMessageBoardMessageMessageBoardMessage()
-		throws Exception {
-
-		MessageBoardMessage randomMessageBoardMessage =
-			randomMessageBoardMessage();
-
-		MessageBoardMessage postMessageBoardMessage =
-			testPostMessageBoardMessageMessageBoardMessage_addMessageBoardMessage(
-				randomMessageBoardMessage);
-
-		assertEquals(randomMessageBoardMessage, postMessageBoardMessage);
-		assertValid(postMessageBoardMessage);
-	}
-
-	protected MessageBoardMessage
-			testPostMessageBoardMessageMessageBoardMessage_addMessageBoardMessage(
-				MessageBoardMessage messageBoardMessage)
-		throws Exception {
-
-		return messageBoardMessageResource.
-			postMessageBoardMessageMessageBoardMessage(
-				testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId(),
-				messageBoardMessage);
 	}
 
 	@Test
@@ -1513,32 +1368,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostMessageBoardThreadMessageBoardMessage()
-		throws Exception {
-
-		MessageBoardMessage randomMessageBoardMessage =
-			randomMessageBoardMessage();
-
-		MessageBoardMessage postMessageBoardMessage =
-			testPostMessageBoardThreadMessageBoardMessage_addMessageBoardMessage(
-				randomMessageBoardMessage);
-
-		assertEquals(randomMessageBoardMessage, postMessageBoardMessage);
-		assertValid(postMessageBoardMessage);
-	}
-
-	protected MessageBoardMessage
-			testPostMessageBoardThreadMessageBoardMessage_addMessageBoardMessage(
-				MessageBoardMessage messageBoardMessage)
-		throws Exception {
-
-		return messageBoardMessageResource.
-			postMessageBoardThreadMessageBoardMessage(
-				testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
-				messageBoardMessage);
 	}
 
 	@Test
@@ -2057,6 +1886,177 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		throws Exception {
 
 		return testGraphQLMessageBoardMessage_addMessageBoardMessage();
+	}
+
+	@Test
+	public void testPatchMessageBoardMessage() throws Exception {
+		MessageBoardMessage postMessageBoardMessage =
+			testPatchMessageBoardMessage_addMessageBoardMessage();
+
+		MessageBoardMessage randomPatchMessageBoardMessage =
+			randomPatchMessageBoardMessage();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardMessage patchMessageBoardMessage =
+			messageBoardMessageResource.patchMessageBoardMessage(
+				postMessageBoardMessage.getId(),
+				randomPatchMessageBoardMessage);
+
+		MessageBoardMessage expectedPatchMessageBoardMessage =
+			postMessageBoardMessage.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchMessageBoardMessage, expectedPatchMessageBoardMessage);
+
+		MessageBoardMessage getMessageBoardMessage =
+			messageBoardMessageResource.getMessageBoardMessage(
+				patchMessageBoardMessage.getId());
+
+		assertEquals(expectedPatchMessageBoardMessage, getMessageBoardMessage);
+		assertValid(getMessageBoardMessage);
+	}
+
+	protected MessageBoardMessage
+			testPatchMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostMessageBoardMessageMessageBoardMessage()
+		throws Exception {
+
+		MessageBoardMessage randomMessageBoardMessage =
+			randomMessageBoardMessage();
+
+		MessageBoardMessage postMessageBoardMessage =
+			testPostMessageBoardMessageMessageBoardMessage_addMessageBoardMessage(
+				randomMessageBoardMessage);
+
+		assertEquals(randomMessageBoardMessage, postMessageBoardMessage);
+		assertValid(postMessageBoardMessage);
+	}
+
+	protected MessageBoardMessage
+			testPostMessageBoardMessageMessageBoardMessage_addMessageBoardMessage(
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return messageBoardMessageResource.
+			postMessageBoardMessageMessageBoardMessage(
+				testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId(),
+				messageBoardMessage);
+	}
+
+	@Test
+	public void testPostMessageBoardThreadMessageBoardMessage()
+		throws Exception {
+
+		MessageBoardMessage randomMessageBoardMessage =
+			randomMessageBoardMessage();
+
+		MessageBoardMessage postMessageBoardMessage =
+			testPostMessageBoardThreadMessageBoardMessage_addMessageBoardMessage(
+				randomMessageBoardMessage);
+
+		assertEquals(randomMessageBoardMessage, postMessageBoardMessage);
+		assertValid(postMessageBoardMessage);
+	}
+
+	protected MessageBoardMessage
+			testPostMessageBoardThreadMessageBoardMessage_addMessageBoardMessage(
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return messageBoardMessageResource.
+			postMessageBoardThreadMessageBoardMessage(
+				testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
+				messageBoardMessage);
+	}
+
+	@Test
+	public void testPutMessageBoardMessage() throws Exception {
+		MessageBoardMessage postMessageBoardMessage =
+			testPutMessageBoardMessage_addMessageBoardMessage();
+
+		MessageBoardMessage randomMessageBoardMessage =
+			randomMessageBoardMessage();
+
+		MessageBoardMessage putMessageBoardMessage =
+			messageBoardMessageResource.putMessageBoardMessage(
+				postMessageBoardMessage.getId(), randomMessageBoardMessage);
+
+		assertEquals(randomMessageBoardMessage, putMessageBoardMessage);
+		assertValid(putMessageBoardMessage);
+
+		MessageBoardMessage getMessageBoardMessage =
+			messageBoardMessageResource.getMessageBoardMessage(
+				putMessageBoardMessage.getId());
+
+		assertEquals(randomMessageBoardMessage, getMessageBoardMessage);
+		assertValid(getMessageBoardMessage);
+	}
+
+	protected MessageBoardMessage
+			testPutMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutMessageBoardMessageSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardMessage messageBoardMessage =
+			testPutMessageBoardMessageSubscribe_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				putMessageBoardMessageSubscribeHttpResponse(
+					messageBoardMessage.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				putMessageBoardMessageSubscribeHttpResponse(0L));
+	}
+
+	protected MessageBoardMessage
+			testPutMessageBoardMessageSubscribe_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutMessageBoardMessageUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardMessage messageBoardMessage =
+			testPutMessageBoardMessageUnsubscribe_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				putMessageBoardMessageUnsubscribeHttpResponse(
+					messageBoardMessage.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				putMessageBoardMessageUnsubscribeHttpResponse(0L));
+	}
+
+	protected MessageBoardMessage
+			testPutMessageBoardMessageUnsubscribe_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

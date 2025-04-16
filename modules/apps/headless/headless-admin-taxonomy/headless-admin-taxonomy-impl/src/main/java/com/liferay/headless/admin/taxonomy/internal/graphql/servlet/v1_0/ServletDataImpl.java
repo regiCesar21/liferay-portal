@@ -96,14 +96,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "deleteKeywordBatch"));
 					put(
-						"mutation#updateKeyword",
-						new ObjectValuePair<>(
-							KeywordResourceImpl.class, "putKeyword"));
-					put(
-						"mutation#updateKeywordBatch",
-						new ObjectValuePair<>(
-							KeywordResourceImpl.class, "putKeywordBatch"));
-					put(
 						"mutation#createSiteKeyword",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "postSiteKeyword"));
@@ -112,10 +104,13 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "postSiteKeywordBatch"));
 					put(
-						"mutation#createTaxonomyCategoryTaxonomyCategory",
+						"mutation#updateKeyword",
 						new ObjectValuePair<>(
-							TaxonomyCategoryResourceImpl.class,
-							"postTaxonomyCategoryTaxonomyCategory"));
+							KeywordResourceImpl.class, "putKeyword"));
+					put(
+						"mutation#updateKeywordBatch",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class, "putKeywordBatch"));
 					put(
 						"mutation#deleteTaxonomyCategory",
 						new ObjectValuePair<>(
@@ -132,15 +127,10 @@ public class ServletDataImpl implements ServletData {
 							TaxonomyCategoryResourceImpl.class,
 							"patchTaxonomyCategory"));
 					put(
-						"mutation#updateTaxonomyCategory",
+						"mutation#createTaxonomyCategoryTaxonomyCategory",
 						new ObjectValuePair<>(
 							TaxonomyCategoryResourceImpl.class,
-							"putTaxonomyCategory"));
-					put(
-						"mutation#updateTaxonomyCategoryBatch",
-						new ObjectValuePair<>(
-							TaxonomyCategoryResourceImpl.class,
-							"putTaxonomyCategoryBatch"));
+							"postTaxonomyCategoryTaxonomyCategory"));
 					put(
 						"mutation#createTaxonomyVocabularyTaxonomyCategory",
 						new ObjectValuePair<>(
@@ -152,15 +142,15 @@ public class ServletDataImpl implements ServletData {
 							TaxonomyCategoryResourceImpl.class,
 							"postTaxonomyVocabularyTaxonomyCategoryBatch"));
 					put(
-						"mutation#createSiteTaxonomyVocabulary",
+						"mutation#updateTaxonomyCategory",
 						new ObjectValuePair<>(
-							TaxonomyVocabularyResourceImpl.class,
-							"postSiteTaxonomyVocabulary"));
+							TaxonomyCategoryResourceImpl.class,
+							"putTaxonomyCategory"));
 					put(
-						"mutation#createSiteTaxonomyVocabularyBatch",
+						"mutation#updateTaxonomyCategoryBatch",
 						new ObjectValuePair<>(
-							TaxonomyVocabularyResourceImpl.class,
-							"postSiteTaxonomyVocabularyBatch"));
+							TaxonomyCategoryResourceImpl.class,
+							"putTaxonomyCategoryBatch"));
 					put(
 						"mutation#deleteTaxonomyVocabulary",
 						new ObjectValuePair<>(
@@ -176,6 +166,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TaxonomyVocabularyResourceImpl.class,
 							"patchTaxonomyVocabulary"));
+					put(
+						"mutation#createSiteTaxonomyVocabulary",
+						new ObjectValuePair<>(
+							TaxonomyVocabularyResourceImpl.class,
+							"postSiteTaxonomyVocabulary"));
+					put(
+						"mutation#createSiteTaxonomyVocabularyBatch",
+						new ObjectValuePair<>(
+							TaxonomyVocabularyResourceImpl.class,
+							"postSiteTaxonomyVocabularyBatch"));
 					put(
 						"mutation#updateTaxonomyVocabulary",
 						new ObjectValuePair<>(
@@ -196,15 +196,15 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "getSiteKeywordsPage"));
 					put(
-						"query#taxonomyCategoryTaxonomyCategories",
-						new ObjectValuePair<>(
-							TaxonomyCategoryResourceImpl.class,
-							"getTaxonomyCategoryTaxonomyCategoriesPage"));
-					put(
 						"query#taxonomyCategory",
 						new ObjectValuePair<>(
 							TaxonomyCategoryResourceImpl.class,
 							"getTaxonomyCategory"));
+					put(
+						"query#taxonomyCategoryTaxonomyCategories",
+						new ObjectValuePair<>(
+							TaxonomyCategoryResourceImpl.class,
+							"getTaxonomyCategoryTaxonomyCategoriesPage"));
 					put(
 						"query#taxonomyVocabularyTaxonomyCategories",
 						new ObjectValuePair<>(

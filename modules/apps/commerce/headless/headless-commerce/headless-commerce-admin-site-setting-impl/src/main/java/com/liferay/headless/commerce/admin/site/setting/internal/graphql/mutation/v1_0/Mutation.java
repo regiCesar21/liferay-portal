@@ -99,6 +99,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public AvailabilityEstimate
+			createCommerceAdminSiteSettingGroupAvailabilityEstimate(
+				@GraphQLName("groupId") Long groupId,
+				@GraphQLName("availabilityEstimate") AvailabilityEstimate
+					availabilityEstimate)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_availabilityEstimateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			availabilityEstimateResource ->
+				availabilityEstimateResource.
+					postCommerceAdminSiteSettingGroupAvailabilityEstimate(
+						groupId, availabilityEstimate));
+	}
+
+	@GraphQLField
 	public Response updateAvailabilityEstimate(
 			@GraphQLName("id") Long id,
 			@GraphQLName("availabilityEstimate") AvailabilityEstimate
@@ -128,38 +145,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public AvailabilityEstimate
-			createCommerceAdminSiteSettingGroupAvailabilityEstimate(
-				@GraphQLName("groupId") Long groupId,
-				@GraphQLName("availabilityEstimate") AvailabilityEstimate
-					availabilityEstimate)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_availabilityEstimateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			availabilityEstimateResource ->
-				availabilityEstimateResource.
-					postCommerceAdminSiteSettingGroupAvailabilityEstimate(
-						groupId, availabilityEstimate));
-	}
-
-	@GraphQLField
-	public MeasurementUnit createCommerceAdminSiteSettingGroupMeasurementUnit(
-			@GraphQLName("groupId") Long groupId,
-			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_measurementUnitResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			measurementUnitResource ->
-				measurementUnitResource.
-					postCommerceAdminSiteSettingGroupMeasurementUnit(
-						groupId, measurementUnit));
-	}
-
-	@GraphQLField
 	public Response deleteMeasurementUnit(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -182,6 +167,21 @@ public class Mutation {
 			measurementUnitResource ->
 				measurementUnitResource.deleteMeasurementUnitBatch(
 					callbackURL, object));
+	}
+
+	@GraphQLField
+	public MeasurementUnit createCommerceAdminSiteSettingGroupMeasurementUnit(
+			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("measurementUnit") MeasurementUnit measurementUnit)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.
+					postCommerceAdminSiteSettingGroupMeasurementUnit(
+						groupId, measurementUnit));
 	}
 
 	@GraphQLField
@@ -213,21 +213,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public TaxCategory createCommerceAdminSiteSettingGroupTaxCategory(
-			@GraphQLName("groupId") Long groupId,
-			@GraphQLName("taxCategory") TaxCategory taxCategory)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_taxCategoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taxCategoryResource ->
-				taxCategoryResource.
-					postCommerceAdminSiteSettingGroupTaxCategory(
-						groupId, taxCategory));
-	}
-
-	@GraphQLField
 	public Response deleteTaxCategory(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -248,6 +233,21 @@ public class Mutation {
 			this::_populateResourceContext,
 			taxCategoryResource -> taxCategoryResource.deleteTaxCategoryBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField
+	public TaxCategory createCommerceAdminSiteSettingGroupTaxCategory(
+			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("taxCategory") TaxCategory taxCategory)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxCategoryResource ->
+				taxCategoryResource.
+					postCommerceAdminSiteSettingGroupTaxCategory(
+						groupId, taxCategory));
 	}
 
 	@GraphQLField
@@ -277,20 +277,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Warehouse createCommerceAdminSiteSettingGroupWarehouse(
-			@GraphQLName("groupId") Long groupId,
-			@GraphQLName("warehouse") Warehouse warehouse)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_warehouseResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			warehouseResource ->
-				warehouseResource.postCommerceAdminSiteSettingGroupWarehouse(
-					groupId, warehouse));
-	}
-
-	@GraphQLField
 	public Response deleteWarehouse(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -311,6 +297,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			warehouseResource -> warehouseResource.deleteWarehouseBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField
+	public Warehouse createCommerceAdminSiteSettingGroupWarehouse(
+			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("warehouse") Warehouse warehouse)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_warehouseResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			warehouseResource ->
+				warehouseResource.postCommerceAdminSiteSettingGroupWarehouse(
+					groupId, warehouse));
 	}
 
 	@GraphQLField

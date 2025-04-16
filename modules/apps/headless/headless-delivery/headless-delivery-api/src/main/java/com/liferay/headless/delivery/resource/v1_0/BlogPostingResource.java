@@ -51,28 +51,11 @@ public interface BlogPostingResource {
 	public Response deleteBlogPostingBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception;
-
-	public BlogPosting patchBlogPosting(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception;
-
-	public BlogPosting putBlogPosting(
-			Long blogPostingId, BlogPosting blogPosting)
-		throws Exception;
-
-	public Response putBlogPostingBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteBlogPostingMyRating(Long blogPostingId) throws Exception;
 
+	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception;
+
 	public Rating getBlogPostingMyRating(Long blogPostingId) throws Exception;
-
-	public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
-		throws Exception;
-
-	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
-		throws Exception;
 
 	public Page<BlogPosting> getSiteBlogPostingsPage(
 			Long siteId, String search,
@@ -82,11 +65,28 @@ public interface BlogPostingResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public BlogPosting patchBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception;
+
+	public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
+		throws Exception;
+
 	public BlogPosting postSiteBlogPosting(Long siteId, BlogPosting blogPosting)
 		throws Exception;
 
 	public Response postSiteBlogPostingBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public BlogPosting putBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception;
+
+	public Response putBlogPostingBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception;
 
 	public void putSiteBlogPostingSubscribe(Long siteId) throws Exception;

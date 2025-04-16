@@ -60,14 +60,14 @@ public interface UserAccountResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public UserAccount getUserAccount(Long userAccountId) throws Exception;
+
 	public Page<UserAccount> getUserAccountsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
-
-	public UserAccount getUserAccount(Long userAccountId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

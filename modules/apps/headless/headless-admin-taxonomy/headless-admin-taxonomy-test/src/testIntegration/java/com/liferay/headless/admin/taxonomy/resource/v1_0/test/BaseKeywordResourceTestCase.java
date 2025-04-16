@@ -305,29 +305,6 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
-	public void testPutKeyword() throws Exception {
-		Keyword postKeyword = testPutKeyword_addKeyword();
-
-		Keyword randomKeyword = randomKeyword();
-
-		Keyword putKeyword = keywordResource.putKeyword(
-			postKeyword.getId(), randomKeyword);
-
-		assertEquals(randomKeyword, putKeyword);
-		assertValid(putKeyword);
-
-		Keyword getKeyword = keywordResource.getKeyword(putKeyword.getId());
-
-		assertEquals(randomKeyword, getKeyword);
-		assertValid(getKeyword);
-	}
-
-	protected Keyword testPutKeyword_addKeyword() throws Exception {
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
-	}
-
-	@Test
 	public void testGetSiteKeywordsPage() throws Exception {
 		Long siteId = testGetSiteKeywordsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteKeywordsPage_getIrrelevantSiteId();
@@ -779,6 +756,29 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword = testGraphQLKeyword_addKeyword(randomKeyword);
 
 		Assert.assertTrue(equals(randomKeyword, keyword));
+	}
+
+	@Test
+	public void testPutKeyword() throws Exception {
+		Keyword postKeyword = testPutKeyword_addKeyword();
+
+		Keyword randomKeyword = randomKeyword();
+
+		Keyword putKeyword = keywordResource.putKeyword(
+			postKeyword.getId(), randomKeyword);
+
+		assertEquals(randomKeyword, putKeyword);
+		assertValid(putKeyword);
+
+		Keyword getKeyword = keywordResource.getKeyword(putKeyword.getId());
+
+		assertEquals(randomKeyword, getKeyword);
+		assertValid(getKeyword);
+	}
+
+	protected Keyword testPutKeyword_addKeyword() throws Exception {
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
 	}
 
 	@Rule

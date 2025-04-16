@@ -186,156 +186,6 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteWarehouseItemByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WarehouseItem warehouseItem =
-			testDeleteWarehouseItemByExternalReferenceCode_addWarehouseItem();
-
-		assertHttpResponseStatusCode(
-			204,
-			warehouseItemResource.
-				deleteWarehouseItemByExternalReferenceCodeHttpResponse(
-					warehouseItem.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			warehouseItemResource.
-				getWarehouseItemByExternalReferenceCodeHttpResponse(
-					warehouseItem.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			warehouseItemResource.
-				getWarehouseItemByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected WarehouseItem
-			testDeleteWarehouseItemByExternalReferenceCode_addWarehouseItem()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetWarehouseItemByExternalReferenceCode() throws Exception {
-		WarehouseItem postWarehouseItem =
-			testGetWarehouseItemByExternalReferenceCode_addWarehouseItem();
-
-		WarehouseItem getWarehouseItem =
-			warehouseItemResource.getWarehouseItemByExternalReferenceCode(
-				postWarehouseItem.getExternalReferenceCode());
-
-		assertEquals(postWarehouseItem, getWarehouseItem);
-		assertValid(getWarehouseItem);
-	}
-
-	protected WarehouseItem
-			testGetWarehouseItemByExternalReferenceCode_addWarehouseItem()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetWarehouseItemByExternalReferenceCode()
-		throws Exception {
-
-		WarehouseItem warehouseItem =
-			testGraphQLGetWarehouseItemByExternalReferenceCode_addWarehouseItem();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				warehouseItem,
-				WarehouseItemSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"warehouseItemByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												warehouseItem.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/warehouseItemByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetWarehouseItemByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"warehouseItemByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected WarehouseItem
-			testGraphQLGetWarehouseItemByExternalReferenceCode_addWarehouseItem()
-		throws Exception {
-
-		return testGraphQLWarehouseItem_addWarehouseItem();
-	}
-
-	@Test
-	public void testPatchWarehouseItemByExternalReferenceCode()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPostWarehouseItemByExternalReferenceCode()
-		throws Exception {
-
-		WarehouseItem randomWarehouseItem = randomWarehouseItem();
-
-		WarehouseItem postWarehouseItem =
-			testPostWarehouseItemByExternalReferenceCode_addWarehouseItem(
-				randomWarehouseItem);
-
-		assertEquals(randomWarehouseItem, postWarehouseItem);
-		assertValid(postWarehouseItem);
-	}
-
-	protected WarehouseItem
-			testPostWarehouseItemByExternalReferenceCode_addWarehouseItem(
-				WarehouseItem warehouseItem)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteWarehouseItem() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseItem warehouseItem =
@@ -403,79 +253,36 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	}
 
 	@Test
-	public void testGetWarehouseItem() throws Exception {
-		WarehouseItem postWarehouseItem =
-			testGetWarehouseItem_addWarehouseItem();
+	public void testDeleteWarehouseItemByExternalReferenceCode()
+		throws Exception {
 
-		WarehouseItem getWarehouseItem = warehouseItemResource.getWarehouseItem(
-			postWarehouseItem.getId());
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WarehouseItem warehouseItem =
+			testDeleteWarehouseItemByExternalReferenceCode_addWarehouseItem();
 
-		assertEquals(postWarehouseItem, getWarehouseItem);
-		assertValid(getWarehouseItem);
+		assertHttpResponseStatusCode(
+			204,
+			warehouseItemResource.
+				deleteWarehouseItemByExternalReferenceCodeHttpResponse(
+					warehouseItem.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			warehouseItemResource.
+				getWarehouseItemByExternalReferenceCodeHttpResponse(
+					warehouseItem.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			warehouseItemResource.
+				getWarehouseItemByExternalReferenceCodeHttpResponse("-"));
 	}
 
-	protected WarehouseItem testGetWarehouseItem_addWarehouseItem()
+	protected WarehouseItem
+			testDeleteWarehouseItemByExternalReferenceCode_addWarehouseItem()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetWarehouseItem() throws Exception {
-		WarehouseItem warehouseItem =
-			testGraphQLGetWarehouseItem_addWarehouseItem();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				warehouseItem,
-				WarehouseItemSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"warehouseItem",
-								new HashMap<String, Object>() {
-									{
-										put("id", warehouseItem.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/warehouseItem"))));
-	}
-
-	@Test
-	public void testGraphQLGetWarehouseItemNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"warehouseItem",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected WarehouseItem testGraphQLGetWarehouseItem_addWarehouseItem()
-		throws Exception {
-
-		return testGraphQLWarehouseItem_addWarehouseItem();
-	}
-
-	@Test
-	public void testPatchWarehouseItem() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -688,29 +495,6 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	}
 
 	@Test
-	public void testPostWarehousByExternalReferenceCodeWarehouseItem()
-		throws Exception {
-
-		WarehouseItem randomWarehouseItem = randomWarehouseItem();
-
-		WarehouseItem postWarehouseItem =
-			testPostWarehousByExternalReferenceCodeWarehouseItem_addWarehouseItem(
-				randomWarehouseItem);
-
-		assertEquals(randomWarehouseItem, postWarehouseItem);
-		assertValid(postWarehouseItem);
-	}
-
-	protected WarehouseItem
-			testPostWarehousByExternalReferenceCodeWarehouseItem_addWarehouseItem(
-				WarehouseItem warehouseItem)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetWarehousIdWarehouseItemsPage() throws Exception {
 		Long id = testGetWarehousIdWarehouseItemsPage_getId();
 		Long irrelevantId =
@@ -893,23 +677,161 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	}
 
 	@Test
-	public void testPostWarehousIdWarehouseItem() throws Exception {
-		WarehouseItem randomWarehouseItem = randomWarehouseItem();
-
+	public void testGetWarehouseItem() throws Exception {
 		WarehouseItem postWarehouseItem =
-			testPostWarehousIdWarehouseItem_addWarehouseItem(
-				randomWarehouseItem);
+			testGetWarehouseItem_addWarehouseItem();
 
-		assertEquals(randomWarehouseItem, postWarehouseItem);
-		assertValid(postWarehouseItem);
+		WarehouseItem getWarehouseItem = warehouseItemResource.getWarehouseItem(
+			postWarehouseItem.getId());
+
+		assertEquals(postWarehouseItem, getWarehouseItem);
+		assertValid(getWarehouseItem);
 	}
 
-	protected WarehouseItem testPostWarehousIdWarehouseItem_addWarehouseItem(
-			WarehouseItem warehouseItem)
+	protected WarehouseItem testGetWarehouseItem_addWarehouseItem()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetWarehouseItem() throws Exception {
+		WarehouseItem warehouseItem =
+			testGraphQLGetWarehouseItem_addWarehouseItem();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				warehouseItem,
+				WarehouseItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"warehouseItem",
+								new HashMap<String, Object>() {
+									{
+										put("id", warehouseItem.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/warehouseItem"))));
+	}
+
+	@Test
+	public void testGraphQLGetWarehouseItemNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"warehouseItem",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected WarehouseItem testGraphQLGetWarehouseItem_addWarehouseItem()
+		throws Exception {
+
+		return testGraphQLWarehouseItem_addWarehouseItem();
+	}
+
+	@Test
+	public void testGetWarehouseItemByExternalReferenceCode() throws Exception {
+		WarehouseItem postWarehouseItem =
+			testGetWarehouseItemByExternalReferenceCode_addWarehouseItem();
+
+		WarehouseItem getWarehouseItem =
+			warehouseItemResource.getWarehouseItemByExternalReferenceCode(
+				postWarehouseItem.getExternalReferenceCode());
+
+		assertEquals(postWarehouseItem, getWarehouseItem);
+		assertValid(getWarehouseItem);
+	}
+
+	protected WarehouseItem
+			testGetWarehouseItemByExternalReferenceCode_addWarehouseItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetWarehouseItemByExternalReferenceCode()
+		throws Exception {
+
+		WarehouseItem warehouseItem =
+			testGraphQLGetWarehouseItemByExternalReferenceCode_addWarehouseItem();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				warehouseItem,
+				WarehouseItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"warehouseItemByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												warehouseItem.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/warehouseItemByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetWarehouseItemByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"warehouseItemByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected WarehouseItem
+			testGraphQLGetWarehouseItemByExternalReferenceCode_addWarehouseItem()
+		throws Exception {
+
+		return testGraphQLWarehouseItem_addWarehouseItem();
 	}
 
 	@Test
@@ -1052,6 +974,84 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 	protected WarehouseItem testGetWarehouseItemsUpdatedPage_addWarehouseItem(
 			WarehouseItem warehouseItem)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchWarehouseItem() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchWarehouseItemByExternalReferenceCode()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostWarehousByExternalReferenceCodeWarehouseItem()
+		throws Exception {
+
+		WarehouseItem randomWarehouseItem = randomWarehouseItem();
+
+		WarehouseItem postWarehouseItem =
+			testPostWarehousByExternalReferenceCodeWarehouseItem_addWarehouseItem(
+				randomWarehouseItem);
+
+		assertEquals(randomWarehouseItem, postWarehouseItem);
+		assertValid(postWarehouseItem);
+	}
+
+	protected WarehouseItem
+			testPostWarehousByExternalReferenceCodeWarehouseItem_addWarehouseItem(
+				WarehouseItem warehouseItem)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostWarehousIdWarehouseItem() throws Exception {
+		WarehouseItem randomWarehouseItem = randomWarehouseItem();
+
+		WarehouseItem postWarehouseItem =
+			testPostWarehousIdWarehouseItem_addWarehouseItem(
+				randomWarehouseItem);
+
+		assertEquals(randomWarehouseItem, postWarehouseItem);
+		assertValid(postWarehouseItem);
+	}
+
+	protected WarehouseItem testPostWarehousIdWarehouseItem_addWarehouseItem(
+			WarehouseItem warehouseItem)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostWarehouseItemByExternalReferenceCode()
+		throws Exception {
+
+		WarehouseItem randomWarehouseItem = randomWarehouseItem();
+
+		WarehouseItem postWarehouseItem =
+			testPostWarehouseItemByExternalReferenceCode_addWarehouseItem(
+				randomWarehouseItem);
+
+		assertEquals(randomWarehouseItem, postWarehouseItem);
+		assertValid(postWarehouseItem);
+	}
+
+	protected WarehouseItem
+			testPostWarehouseItemByExternalReferenceCode_addWarehouseItem(
+				WarehouseItem warehouseItem)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

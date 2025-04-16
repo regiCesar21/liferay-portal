@@ -331,114 +331,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPatchDocumentFolder() throws Exception {
-		DocumentFolder postDocumentFolder =
-			testPatchDocumentFolder_addDocumentFolder();
-
-		DocumentFolder randomPatchDocumentFolder = randomPatchDocumentFolder();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DocumentFolder patchDocumentFolder =
-			documentFolderResource.patchDocumentFolder(
-				postDocumentFolder.getId(), randomPatchDocumentFolder);
-
-		DocumentFolder expectedPatchDocumentFolder = postDocumentFolder.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchDocumentFolder, expectedPatchDocumentFolder);
-
-		DocumentFolder getDocumentFolder =
-			documentFolderResource.getDocumentFolder(
-				patchDocumentFolder.getId());
-
-		assertEquals(expectedPatchDocumentFolder, getDocumentFolder);
-		assertValid(getDocumentFolder);
-	}
-
-	protected DocumentFolder testPatchDocumentFolder_addDocumentFolder()
-		throws Exception {
-
-		return documentFolderResource.postSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
-	}
-
-	@Test
-	public void testPutDocumentFolder() throws Exception {
-		DocumentFolder postDocumentFolder =
-			testPutDocumentFolder_addDocumentFolder();
-
-		DocumentFolder randomDocumentFolder = randomDocumentFolder();
-
-		DocumentFolder putDocumentFolder =
-			documentFolderResource.putDocumentFolder(
-				postDocumentFolder.getId(), randomDocumentFolder);
-
-		assertEquals(randomDocumentFolder, putDocumentFolder);
-		assertValid(putDocumentFolder);
-
-		DocumentFolder getDocumentFolder =
-			documentFolderResource.getDocumentFolder(putDocumentFolder.getId());
-
-		assertEquals(randomDocumentFolder, getDocumentFolder);
-		assertValid(getDocumentFolder);
-	}
-
-	protected DocumentFolder testPutDocumentFolder_addDocumentFolder()
-		throws Exception {
-
-		return documentFolderResource.postSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
-	}
-
-	@Test
-	public void testPutDocumentFolderSubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DocumentFolder documentFolder =
-			testPutDocumentFolderSubscribe_addDocumentFolder();
-
-		assertHttpResponseStatusCode(
-			204,
-			documentFolderResource.putDocumentFolderSubscribeHttpResponse(
-				documentFolder.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			documentFolderResource.putDocumentFolderSubscribeHttpResponse(0L));
-	}
-
-	protected DocumentFolder testPutDocumentFolderSubscribe_addDocumentFolder()
-		throws Exception {
-
-		return documentFolderResource.postSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
-	}
-
-	@Test
-	public void testPutDocumentFolderUnsubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DocumentFolder documentFolder =
-			testPutDocumentFolderUnsubscribe_addDocumentFolder();
-
-		assertHttpResponseStatusCode(
-			204,
-			documentFolderResource.putDocumentFolderUnsubscribeHttpResponse(
-				documentFolder.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			documentFolderResource.putDocumentFolderUnsubscribeHttpResponse(
-				0L));
-	}
-
-	protected DocumentFolder
-			testPutDocumentFolderUnsubscribe_addDocumentFolder()
-		throws Exception {
-
-		return documentFolderResource.postSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
-	}
-
-	@Test
 	public void testGetDocumentFolderDocumentFoldersPage() throws Exception {
 		Long parentDocumentFolderId =
 			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId();
@@ -892,28 +784,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostDocumentFolderDocumentFolder() throws Exception {
-		DocumentFolder randomDocumentFolder = randomDocumentFolder();
-
-		DocumentFolder postDocumentFolder =
-			testPostDocumentFolderDocumentFolder_addDocumentFolder(
-				randomDocumentFolder);
-
-		assertEquals(randomDocumentFolder, postDocumentFolder);
-		assertValid(postDocumentFolder);
-	}
-
-	protected DocumentFolder
-			testPostDocumentFolderDocumentFolder_addDocumentFolder(
-				DocumentFolder documentFolder)
-		throws Exception {
-
-		return documentFolderResource.postDocumentFolderDocumentFolder(
-			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
-			documentFolder);
 	}
 
 	@Test
@@ -1416,6 +1286,60 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPatchDocumentFolder() throws Exception {
+		DocumentFolder postDocumentFolder =
+			testPatchDocumentFolder_addDocumentFolder();
+
+		DocumentFolder randomPatchDocumentFolder = randomPatchDocumentFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DocumentFolder patchDocumentFolder =
+			documentFolderResource.patchDocumentFolder(
+				postDocumentFolder.getId(), randomPatchDocumentFolder);
+
+		DocumentFolder expectedPatchDocumentFolder = postDocumentFolder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchDocumentFolder, expectedPatchDocumentFolder);
+
+		DocumentFolder getDocumentFolder =
+			documentFolderResource.getDocumentFolder(
+				patchDocumentFolder.getId());
+
+		assertEquals(expectedPatchDocumentFolder, getDocumentFolder);
+		assertValid(getDocumentFolder);
+	}
+
+	protected DocumentFolder testPatchDocumentFolder_addDocumentFolder()
+		throws Exception {
+
+		return documentFolderResource.postSiteDocumentFolder(
+			testGroup.getGroupId(), randomDocumentFolder());
+	}
+
+	@Test
+	public void testPostDocumentFolderDocumentFolder() throws Exception {
+		DocumentFolder randomDocumentFolder = randomDocumentFolder();
+
+		DocumentFolder postDocumentFolder =
+			testPostDocumentFolderDocumentFolder_addDocumentFolder(
+				randomDocumentFolder);
+
+		assertEquals(randomDocumentFolder, postDocumentFolder);
+		assertValid(postDocumentFolder);
+	}
+
+	protected DocumentFolder
+			testPostDocumentFolderDocumentFolder_addDocumentFolder(
+				DocumentFolder documentFolder)
+		throws Exception {
+
+		return documentFolderResource.postDocumentFolderDocumentFolder(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			documentFolder);
+	}
+
+	@Test
 	public void testPostSiteDocumentFolder() throws Exception {
 		DocumentFolder randomDocumentFolder = randomDocumentFolder();
 
@@ -1442,6 +1366,82 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGraphQLDocumentFolder_addDocumentFolder(randomDocumentFolder);
 
 		Assert.assertTrue(equals(randomDocumentFolder, documentFolder));
+	}
+
+	@Test
+	public void testPutDocumentFolder() throws Exception {
+		DocumentFolder postDocumentFolder =
+			testPutDocumentFolder_addDocumentFolder();
+
+		DocumentFolder randomDocumentFolder = randomDocumentFolder();
+
+		DocumentFolder putDocumentFolder =
+			documentFolderResource.putDocumentFolder(
+				postDocumentFolder.getId(), randomDocumentFolder);
+
+		assertEquals(randomDocumentFolder, putDocumentFolder);
+		assertValid(putDocumentFolder);
+
+		DocumentFolder getDocumentFolder =
+			documentFolderResource.getDocumentFolder(putDocumentFolder.getId());
+
+		assertEquals(randomDocumentFolder, getDocumentFolder);
+		assertValid(getDocumentFolder);
+	}
+
+	protected DocumentFolder testPutDocumentFolder_addDocumentFolder()
+		throws Exception {
+
+		return documentFolderResource.postSiteDocumentFolder(
+			testGroup.getGroupId(), randomDocumentFolder());
+	}
+
+	@Test
+	public void testPutDocumentFolderSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DocumentFolder documentFolder =
+			testPutDocumentFolderSubscribe_addDocumentFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			documentFolderResource.putDocumentFolderSubscribeHttpResponse(
+				documentFolder.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentFolderResource.putDocumentFolderSubscribeHttpResponse(0L));
+	}
+
+	protected DocumentFolder testPutDocumentFolderSubscribe_addDocumentFolder()
+		throws Exception {
+
+		return documentFolderResource.postSiteDocumentFolder(
+			testGroup.getGroupId(), randomDocumentFolder());
+	}
+
+	@Test
+	public void testPutDocumentFolderUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DocumentFolder documentFolder =
+			testPutDocumentFolderUnsubscribe_addDocumentFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			documentFolderResource.putDocumentFolderUnsubscribeHttpResponse(
+				documentFolder.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentFolderResource.putDocumentFolderUnsubscribeHttpResponse(
+				0L));
+	}
+
+	protected DocumentFolder
+			testPutDocumentFolderUnsubscribe_addDocumentFolder()
+		throws Exception {
+
+		return documentFolderResource.postSiteDocumentFolder(
+			testGroup.getGroupId(), randomDocumentFolder());
 	}
 
 	@Rule

@@ -61,6 +61,11 @@ public interface MessageBoardAttachmentResource {
 				Long messageBoardMessageId)
 		throws Exception;
 
+	public Page<MessageBoardAttachment>
+			getMessageBoardThreadMessageBoardAttachmentsPage(
+				Long messageBoardThreadId)
+		throws Exception;
+
 	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
 			Long messageBoardMessageId, MultipartBody multipartBody)
 		throws Exception;
@@ -68,11 +73,6 @@ public interface MessageBoardAttachmentResource {
 	public Response postMessageBoardMessageMessageBoardAttachmentBatch(
 			Long messageBoardMessageId, MultipartBody multipartBody,
 			String callbackURL, Object object)
-		throws Exception;
-
-	public Page<MessageBoardAttachment>
-			getMessageBoardThreadMessageBoardAttachmentsPage(
-				Long messageBoardThreadId)
 		throws Exception;
 
 	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(

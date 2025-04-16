@@ -92,33 +92,6 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required."
-	)
-	public Keyword updateKeyword(
-			@GraphQLName("keywordId") Long keywordId,
-			@GraphQLName("keyword") Keyword keyword)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> keywordResource.putKeyword(keywordId, keyword));
-	}
-
-	@GraphQLField
-	public Response updateKeywordBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> keywordResource.putKeywordBatch(
-				callbackURL, object));
-	}
-
 	@GraphQLField(description = "Inserts a new keyword in a Site.")
 	public Keyword createSiteKeyword(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -146,19 +119,31 @@ public class Mutation {
 				Long.valueOf(siteKey), callbackURL, object));
 	}
 
-	@GraphQLField(description = "Inserts a new child taxonomy category.")
-	public TaxonomyCategory createTaxonomyCategoryTaxonomyCategory(
-			@GraphQLName("parentTaxonomyCategoryId") Long
-				parentTaxonomyCategoryId,
-			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
+	@GraphQLField(
+		description = "Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required."
+	)
+	public Keyword updateKeyword(
+			@GraphQLName("keywordId") Long keywordId,
+			@GraphQLName("keyword") Keyword keyword)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_taxonomyCategoryResourceComponentServiceObjects,
+			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			taxonomyCategoryResource ->
-				taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
-					parentTaxonomyCategoryId, taxonomyCategory));
+			keywordResource -> keywordResource.putKeyword(keywordId, keyword));
+	}
+
+	@GraphQLField
+	public Response updateKeywordBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.putKeywordBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -208,11 +193,10 @@ public class Mutation {
 					taxonomyCategoryId, taxonomyCategory));
 	}
 
-	@GraphQLField(
-		description = "Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required."
-	)
-	public TaxonomyCategory updateTaxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
+	@GraphQLField(description = "Inserts a new child taxonomy category.")
+	public TaxonomyCategory createTaxonomyCategoryTaxonomyCategory(
+			@GraphQLName("parentTaxonomyCategoryId") Long
+				parentTaxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -220,22 +204,8 @@ public class Mutation {
 			_taxonomyCategoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			taxonomyCategoryResource ->
-				taxonomyCategoryResource.putTaxonomyCategory(
-					taxonomyCategoryId, taxonomyCategory));
-	}
-
-	@GraphQLField
-	public Response updateTaxonomyCategoryBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_taxonomyCategoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taxonomyCategoryResource ->
-				taxonomyCategoryResource.putTaxonomyCategoryBatch(
-					callbackURL, object));
+				taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+					parentTaxonomyCategoryId, taxonomyCategory));
 	}
 
 	@GraphQLField(
@@ -270,34 +240,34 @@ public class Mutation {
 						taxonomyVocabularyId, callbackURL, object));
 	}
 
-	@GraphQLField(description = "Inserts a new taxonomy vocabulary in a Site.")
-	public TaxonomyVocabulary createSiteTaxonomyVocabulary(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
-				taxonomyVocabulary)
+	@GraphQLField(
+		description = "Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required."
+	)
+	public TaxonomyCategory updateTaxonomyCategory(
+			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
+			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_taxonomyVocabularyResourceComponentServiceObjects,
+			_taxonomyCategoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			taxonomyVocabularyResource ->
-				taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-					Long.valueOf(siteKey), taxonomyVocabulary));
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.putTaxonomyCategory(
+					taxonomyCategoryId, taxonomyCategory));
 	}
 
 	@GraphQLField
-	public Response createSiteTaxonomyVocabularyBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
+	public Response updateTaxonomyCategoryBatch(
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_taxonomyVocabularyResourceComponentServiceObjects,
+			_taxonomyCategoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			taxonomyVocabularyResource ->
-				taxonomyVocabularyResource.postSiteTaxonomyVocabularyBatch(
-					Long.valueOf(siteKey), callbackURL, object));
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.putTaxonomyCategoryBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -346,6 +316,36 @@ public class Mutation {
 			taxonomyVocabularyResource ->
 				taxonomyVocabularyResource.patchTaxonomyVocabulary(
 					taxonomyVocabularyId, taxonomyVocabulary));
+	}
+
+	@GraphQLField(description = "Inserts a new taxonomy vocabulary in a Site.")
+	public TaxonomyVocabulary createSiteTaxonomyVocabulary(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
+				taxonomyVocabulary)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+					Long.valueOf(siteKey), taxonomyVocabulary));
+	}
+
+	@GraphQLField
+	public Response createSiteTaxonomyVocabularyBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.postSiteTaxonomyVocabularyBatch(
+					Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField(

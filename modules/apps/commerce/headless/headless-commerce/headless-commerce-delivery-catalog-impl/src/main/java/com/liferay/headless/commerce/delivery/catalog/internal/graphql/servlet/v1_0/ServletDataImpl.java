@@ -112,14 +112,14 @@ public class ServletDataImpl implements ServletData {
 							CategoryResourceImpl.class,
 							"getChannelProductCategoriesPage"));
 					put(
+						"query#channelProduct",
+						new ObjectValuePair<>(
+							ProductResourceImpl.class, "getChannelProduct"));
+					put(
 						"query#channelProducts",
 						new ObjectValuePair<>(
 							ProductResourceImpl.class,
 							"getChannelProductsPage"));
-					put(
-						"query#channelProduct",
-						new ObjectValuePair<>(
-							ProductResourceImpl.class, "getChannelProduct"));
 					put(
 						"query#channelProductOptions",
 						new ObjectValuePair<>(

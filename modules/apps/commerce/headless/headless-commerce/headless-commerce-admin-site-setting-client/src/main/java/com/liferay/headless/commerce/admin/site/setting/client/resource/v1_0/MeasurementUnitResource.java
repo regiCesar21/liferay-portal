@@ -34,25 +34,6 @@ public interface MeasurementUnitResource {
 		return new Builder();
 	}
 
-	public Page<MeasurementUnit>
-			getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-				Long groupId, Integer type, Pagination pagination)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getCommerceAdminSiteSettingGroupMeasurementUnitPageHttpResponse(
-				Long groupId, Integer type, Pagination pagination)
-		throws Exception;
-
-	public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
-			Long groupId, MeasurementUnit measurementUnit)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postCommerceAdminSiteSettingGroupMeasurementUnitHttpResponse(
-				Long groupId, MeasurementUnit measurementUnit)
-		throws Exception;
-
 	public void deleteMeasurementUnit(Long id) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteMeasurementUnitHttpResponse(Long id)
@@ -65,9 +46,28 @@ public interface MeasurementUnitResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public Page<MeasurementUnit>
+			getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+				Long groupId, Integer type, Pagination pagination)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getCommerceAdminSiteSettingGroupMeasurementUnitPageHttpResponse(
+				Long groupId, Integer type, Pagination pagination)
+		throws Exception;
+
 	public MeasurementUnit getMeasurementUnit(Long id) throws Exception;
 
 	public HttpInvoker.HttpResponse getMeasurementUnitHttpResponse(Long id)
+		throws Exception;
+
+	public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
+			Long groupId, MeasurementUnit measurementUnit)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postCommerceAdminSiteSettingGroupMeasurementUnitHttpResponse(
+				Long groupId, MeasurementUnit measurementUnit)
 		throws Exception;
 
 	public void putMeasurementUnit(Long id, MeasurementUnit measurementUnit)
@@ -192,236 +192,6 @@ public interface MeasurementUnitResource {
 
 	public static class MeasurementUnitResourceImpl
 		implements MeasurementUnitResource {
-
-		public Page<MeasurementUnit>
-				getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-					Long groupId, Integer type, Pagination pagination)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getCommerceAdminSiteSettingGroupMeasurementUnitPageHttpResponse(
-					groupId, type, pagination);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, MeasurementUnitSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getCommerceAdminSiteSettingGroupMeasurementUnitPageHttpResponse(
-					Long groupId, Integer type, Pagination pagination)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (type != null) {
-				httpInvoker.parameter("type", String.valueOf(type));
-			}
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit");
-
-			httpInvoker.path("groupId", groupId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
-				Long groupId, MeasurementUnit measurementUnit)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postCommerceAdminSiteSettingGroupMeasurementUnitHttpResponse(
-					groupId, measurementUnit);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return MeasurementUnitSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postCommerceAdminSiteSettingGroupMeasurementUnitHttpResponse(
-					Long groupId, MeasurementUnit measurementUnit)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(measurementUnit.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit");
-
-			httpInvoker.path("groupId", groupId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
 
 		public void deleteMeasurementUnit(Long id) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
@@ -615,6 +385,126 @@ public interface MeasurementUnitResource {
 			return httpInvoker.invoke();
 		}
 
+		public Page<MeasurementUnit>
+				getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+					Long groupId, Integer type, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getCommerceAdminSiteSettingGroupMeasurementUnitPageHttpResponse(
+					groupId, type, pagination);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, MeasurementUnitSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getCommerceAdminSiteSettingGroupMeasurementUnitPageHttpResponse(
+					Long groupId, Integer type, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (type != null) {
+				httpInvoker.parameter("type", String.valueOf(type));
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit");
+
+			httpInvoker.path("groupId", groupId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public MeasurementUnit getMeasurementUnit(Long id) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
 				getMeasurementUnitHttpResponse(id);
@@ -708,6 +598,116 @@ public interface MeasurementUnitResource {
 						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}");
 
 			httpInvoker.path("id", id);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
+				Long groupId, MeasurementUnit measurementUnit)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postCommerceAdminSiteSettingGroupMeasurementUnitHttpResponse(
+					groupId, measurementUnit);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return MeasurementUnitSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postCommerceAdminSiteSettingGroupMeasurementUnitHttpResponse(
+					Long groupId, MeasurementUnit measurementUnit)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(measurementUnit.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit");
+
+			httpInvoker.path("groupId", groupId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

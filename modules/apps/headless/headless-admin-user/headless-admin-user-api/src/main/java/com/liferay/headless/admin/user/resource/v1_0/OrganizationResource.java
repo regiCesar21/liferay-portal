@@ -44,17 +44,17 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OrganizationResource {
 
-	public Page<Organization> getOrganizationsPage(
-			Boolean flatten, String search,
+	public Organization getOrganization(Long organizationId) throws Exception;
+
+	public Page<Organization> getOrganizationOrganizationsPage(
+			Long parentOrganizationId, Boolean flatten, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Organization getOrganization(Long organizationId) throws Exception;
-
-	public Page<Organization> getOrganizationOrganizationsPage(
-			Long parentOrganizationId, Boolean flatten, String search,
+	public Page<Organization> getOrganizationsPage(
+			Boolean flatten, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)

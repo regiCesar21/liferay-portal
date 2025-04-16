@@ -45,38 +45,38 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OrderItemResource {
 
-	public Response deleteOrderItemByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public OrderItem getOrderItemByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchOrderItemByExternalReferenceCode(
-			String externalReferenceCode, OrderItem orderItem)
-		throws Exception;
-
 	public Response deleteOrderItem(Long id) throws Exception;
 
 	public Response deleteOrderItemBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public OrderItem getOrderItem(Long id) throws Exception;
-
-	public Response patchOrderItem(Long id, OrderItem orderItem)
+	public Response deleteOrderItemByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<OrderItem> getOrderByExternalReferenceCodeOrderItemsPage(
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public OrderItem postOrderByExternalReferenceCodeOrderItem(
+	public Page<OrderItem> getOrderIdOrderItemsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public OrderItem getOrderItem(Long id) throws Exception;
+
+	public OrderItem getOrderItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response patchOrderItem(Long id, OrderItem orderItem)
+		throws Exception;
+
+	public Response patchOrderItemByExternalReferenceCode(
 			String externalReferenceCode, OrderItem orderItem)
 		throws Exception;
 
-	public Page<OrderItem> getOrderIdOrderItemsPage(
-			Long id, Pagination pagination)
+	public OrderItem postOrderByExternalReferenceCodeOrderItem(
+			String externalReferenceCode, OrderItem orderItem)
 		throws Exception;
 
 	public OrderItem postOrderIdOrderItem(Long id, OrderItem orderItem)

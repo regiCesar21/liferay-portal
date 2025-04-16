@@ -45,6 +45,21 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductGroupResource {
 
+	public void deleteProductGroup(Long id) throws Exception;
+
+	public Response deleteProductGroupBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteProductGroupByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ProductGroup getProductGroup(Long id) throws Exception;
+
+	public ProductGroup getProductGroupByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<ProductGroup> getProductGroupsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -52,32 +67,17 @@ public interface ProductGroupResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public ProductGroup postProductGroup(ProductGroup productGroup)
-		throws Exception;
-
-	public Response postProductGroupBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteProductGroupByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public ProductGroup getProductGroupByExternalReferenceCode(
-			String externalReferenceCode)
+	public Response patchProductGroup(Long id, ProductGroup productGroup)
 		throws Exception;
 
 	public Response patchProductGroupByExternalReferenceCode(
 			String externalReferenceCode, ProductGroup productGroup)
 		throws Exception;
 
-	public void deleteProductGroup(Long id) throws Exception;
-
-	public Response deleteProductGroupBatch(String callbackURL, Object object)
+	public ProductGroup postProductGroup(ProductGroup productGroup)
 		throws Exception;
 
-	public ProductGroup getProductGroup(Long id) throws Exception;
-
-	public Response patchProductGroup(Long id, ProductGroup productGroup)
+	public Response postProductGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

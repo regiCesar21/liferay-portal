@@ -87,14 +87,14 @@ public class ServletDataImpl implements ServletData {
 							WarehouseResourceImpl.class,
 							"deleteWarehousByExternalReferenceCode"));
 					put(
+						"mutation#deleteWarehousId",
+						new ObjectValuePair<>(
+							WarehouseResourceImpl.class, "deleteWarehousId"));
+					put(
 						"mutation#patchWarehousByExternalReferenceCode",
 						new ObjectValuePair<>(
 							WarehouseResourceImpl.class,
 							"patchWarehousByExternalReferenceCode"));
-					put(
-						"mutation#deleteWarehousId",
-						new ObjectValuePair<>(
-							WarehouseResourceImpl.class, "deleteWarehousId"));
 					put(
 						"mutation#patchWarehousId",
 						new ObjectValuePair<>(
@@ -103,21 +103,6 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createWarehous",
 						new ObjectValuePair<>(
 							WarehouseResourceImpl.class, "postWarehous"));
-					put(
-						"mutation#deleteWarehouseItemByExternalReferenceCode",
-						new ObjectValuePair<>(
-							WarehouseItemResourceImpl.class,
-							"deleteWarehouseItemByExternalReferenceCode"));
-					put(
-						"mutation#patchWarehouseItemByExternalReferenceCode",
-						new ObjectValuePair<>(
-							WarehouseItemResourceImpl.class,
-							"patchWarehouseItemByExternalReferenceCode"));
-					put(
-						"mutation#createWarehouseItemByExternalReferenceCode",
-						new ObjectValuePair<>(
-							WarehouseItemResourceImpl.class,
-							"postWarehouseItemByExternalReferenceCode"));
 					put(
 						"mutation#deleteWarehouseItem",
 						new ObjectValuePair<>(
@@ -129,10 +114,20 @@ public class ServletDataImpl implements ServletData {
 							WarehouseItemResourceImpl.class,
 							"deleteWarehouseItemBatch"));
 					put(
+						"mutation#deleteWarehouseItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WarehouseItemResourceImpl.class,
+							"deleteWarehouseItemByExternalReferenceCode"));
+					put(
 						"mutation#patchWarehouseItem",
 						new ObjectValuePair<>(
 							WarehouseItemResourceImpl.class,
 							"patchWarehouseItem"));
+					put(
+						"mutation#patchWarehouseItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WarehouseItemResourceImpl.class,
+							"patchWarehouseItemByExternalReferenceCode"));
 					put(
 						"mutation#createWarehousByExternalReferenceCodeWarehouseItem",
 						new ObjectValuePair<>(
@@ -143,6 +138,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WarehouseItemResourceImpl.class,
 							"postWarehousIdWarehouseItem"));
+					put(
+						"mutation#createWarehouseItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WarehouseItemResourceImpl.class,
+							"postWarehouseItemByExternalReferenceCode"));
 
 					put(
 						"query#warehousByExternalReferenceCode",
@@ -158,16 +158,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WarehouseResourceImpl.class, "getWarehousesPage"));
 					put(
-						"query#warehouseItemByExternalReferenceCode",
-						new ObjectValuePair<>(
-							WarehouseItemResourceImpl.class,
-							"getWarehouseItemByExternalReferenceCode"));
-					put(
-						"query#warehouseItem",
-						new ObjectValuePair<>(
-							WarehouseItemResourceImpl.class,
-							"getWarehouseItem"));
-					put(
 						"query#warehousByExternalReferenceCodeWarehouseItems",
 						new ObjectValuePair<>(
 							WarehouseItemResourceImpl.class,
@@ -177,6 +167,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WarehouseItemResourceImpl.class,
 							"getWarehousIdWarehouseItemsPage"));
+					put(
+						"query#warehouseItem",
+						new ObjectValuePair<>(
+							WarehouseItemResourceImpl.class,
+							"getWarehouseItem"));
+					put(
+						"query#warehouseItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WarehouseItemResourceImpl.class,
+							"getWarehouseItemByExternalReferenceCode"));
 					put(
 						"query#warehouseItemsUpdated",
 						new ObjectValuePair<>(

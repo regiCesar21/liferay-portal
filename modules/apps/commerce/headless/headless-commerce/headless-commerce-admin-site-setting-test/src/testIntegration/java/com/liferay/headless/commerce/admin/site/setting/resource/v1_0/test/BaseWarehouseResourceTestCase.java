@@ -192,6 +192,66 @@ public abstract class BaseWarehouseResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteWarehouse() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Warehouse warehouse = testDeleteWarehouse_addWarehouse();
+
+		assertHttpResponseStatusCode(
+			204,
+			warehouseResource.deleteWarehouseHttpResponse(warehouse.getId()));
+
+		assertHttpResponseStatusCode(
+			404, warehouseResource.getWarehouseHttpResponse(warehouse.getId()));
+		assertHttpResponseStatusCode(
+			404, warehouseResource.getWarehouseHttpResponse(0L));
+	}
+
+	protected Warehouse testDeleteWarehouse_addWarehouse() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteWarehouse() throws Exception {
+
+		// No namespace
+
+		Warehouse warehouse1 = testGraphQLDeleteWarehouse_addWarehouse();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWarehouse",
+						new HashMap<String, Object>() {
+							{
+								put("id", warehouse1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWarehouse"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"warehouse",
+					new HashMap<String, Object>() {
+						{
+							put("id", warehouse1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Warehouse testGraphQLDeleteWarehouse_addWarehouse()
+		throws Exception {
+
+		return testGraphQLWarehouse_addWarehouse();
+	}
+
+	@Test
 	public void testGetCommerceAdminSiteSettingGroupWarehousePage()
 		throws Exception {
 
@@ -375,89 +435,6 @@ public abstract class BaseWarehouseResourceTestCase {
 	}
 
 	@Test
-	public void testPostCommerceAdminSiteSettingGroupWarehouse()
-		throws Exception {
-
-		Warehouse randomWarehouse = randomWarehouse();
-
-		Warehouse postWarehouse =
-			testPostCommerceAdminSiteSettingGroupWarehouse_addWarehouse(
-				randomWarehouse);
-
-		assertEquals(randomWarehouse, postWarehouse);
-		assertValid(postWarehouse);
-	}
-
-	protected Warehouse
-			testPostCommerceAdminSiteSettingGroupWarehouse_addWarehouse(
-				Warehouse warehouse)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteWarehouse() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Warehouse warehouse = testDeleteWarehouse_addWarehouse();
-
-		assertHttpResponseStatusCode(
-			204,
-			warehouseResource.deleteWarehouseHttpResponse(warehouse.getId()));
-
-		assertHttpResponseStatusCode(
-			404, warehouseResource.getWarehouseHttpResponse(warehouse.getId()));
-		assertHttpResponseStatusCode(
-			404, warehouseResource.getWarehouseHttpResponse(0L));
-	}
-
-	protected Warehouse testDeleteWarehouse_addWarehouse() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteWarehouse() throws Exception {
-
-		// No namespace
-
-		Warehouse warehouse1 = testGraphQLDeleteWarehouse_addWarehouse();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteWarehouse",
-						new HashMap<String, Object>() {
-							{
-								put("id", warehouse1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteWarehouse"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"warehouse",
-					new HashMap<String, Object>() {
-						{
-							put("id", warehouse1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Warehouse testGraphQLDeleteWarehouse_addWarehouse()
-		throws Exception {
-
-		return testGraphQLWarehouse_addWarehouse();
-	}
-
-	@Test
 	public void testGetWarehouse() throws Exception {
 		Warehouse postWarehouse = testGetWarehouse_addWarehouse();
 
@@ -522,6 +499,29 @@ public abstract class BaseWarehouseResourceTestCase {
 		throws Exception {
 
 		return testGraphQLWarehouse_addWarehouse();
+	}
+
+	@Test
+	public void testPostCommerceAdminSiteSettingGroupWarehouse()
+		throws Exception {
+
+		Warehouse randomWarehouse = randomWarehouse();
+
+		Warehouse postWarehouse =
+			testPostCommerceAdminSiteSettingGroupWarehouse_addWarehouse(
+				randomWarehouse);
+
+		assertEquals(randomWarehouse, postWarehouse);
+		assertValid(postWarehouse);
+	}
+
+	protected Warehouse
+			testPostCommerceAdminSiteSettingGroupWarehouse_addWarehouse(
+				Warehouse warehouse)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

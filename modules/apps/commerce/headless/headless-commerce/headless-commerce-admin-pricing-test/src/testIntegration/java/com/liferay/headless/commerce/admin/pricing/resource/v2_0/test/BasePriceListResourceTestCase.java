@@ -191,6 +191,249 @@ public abstract class BasePriceListResourceTestCase {
 	}
 
 	@Test
+	public void testDeletePriceList() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceList priceList = testDeletePriceList_addPriceList();
+
+		assertHttpResponseStatusCode(
+			204,
+			priceListResource.deletePriceListHttpResponse(priceList.getId()));
+
+		assertHttpResponseStatusCode(
+			404, priceListResource.getPriceListHttpResponse(priceList.getId()));
+		assertHttpResponseStatusCode(
+			404, priceListResource.getPriceListHttpResponse(0L));
+	}
+
+	protected PriceList testDeletePriceList_addPriceList() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeletePriceList() throws Exception {
+
+		// No namespace
+
+		PriceList priceList1 = testGraphQLDeletePriceList_addPriceList();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePriceList",
+						new HashMap<String, Object>() {
+							{
+								put("id", priceList1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePriceList"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"priceList",
+					new HashMap<String, Object>() {
+						{
+							put("id", priceList1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected PriceList testGraphQLDeletePriceList_addPriceList()
+		throws Exception {
+
+		return testGraphQLPriceList_addPriceList();
+	}
+
+	@Test
+	public void testDeletePriceListByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceList priceList =
+			testDeletePriceListByExternalReferenceCode_addPriceList();
+
+		assertHttpResponseStatusCode(
+			204,
+			priceListResource.
+				deletePriceListByExternalReferenceCodeHttpResponse(
+					priceList.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
+				priceList.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
+				"-"));
+	}
+
+	protected PriceList
+			testDeletePriceListByExternalReferenceCode_addPriceList()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetPriceList() throws Exception {
+		PriceList postPriceList = testGetPriceList_addPriceList();
+
+		PriceList getPriceList = priceListResource.getPriceList(
+			postPriceList.getId());
+
+		assertEquals(postPriceList, getPriceList);
+		assertValid(getPriceList);
+	}
+
+	protected PriceList testGetPriceList_addPriceList() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPriceList() throws Exception {
+		PriceList priceList = testGraphQLGetPriceList_addPriceList();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				priceList,
+				PriceListSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"priceList",
+								new HashMap<String, Object>() {
+									{
+										put("id", priceList.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/priceList"))));
+	}
+
+	@Test
+	public void testGraphQLGetPriceListNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"priceList",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected PriceList testGraphQLGetPriceList_addPriceList()
+		throws Exception {
+
+		return testGraphQLPriceList_addPriceList();
+	}
+
+	@Test
+	public void testGetPriceListByExternalReferenceCode() throws Exception {
+		PriceList postPriceList =
+			testGetPriceListByExternalReferenceCode_addPriceList();
+
+		PriceList getPriceList =
+			priceListResource.getPriceListByExternalReferenceCode(
+				postPriceList.getExternalReferenceCode());
+
+		assertEquals(postPriceList, getPriceList);
+		assertValid(getPriceList);
+	}
+
+	protected PriceList testGetPriceListByExternalReferenceCode_addPriceList()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetPriceListByExternalReferenceCode()
+		throws Exception {
+
+		PriceList priceList =
+			testGraphQLGetPriceListByExternalReferenceCode_addPriceList();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				priceList,
+				PriceListSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"priceListByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												priceList.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/priceListByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetPriceListByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"priceListByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected PriceList
+			testGraphQLGetPriceListByExternalReferenceCode_addPriceList()
+		throws Exception {
+
+		return testGraphQLPriceList_addPriceList();
+	}
+
+	@Test
 	public void testGetPriceListsPage() throws Exception {
 		Page<PriceList> page = priceListResource.getPriceListsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -565,137 +808,30 @@ public abstract class BasePriceListResourceTestCase {
 	}
 
 	@Test
-	public void testPostPriceList() throws Exception {
-		PriceList randomPriceList = randomPriceList();
+	public void testPatchPriceList() throws Exception {
+		PriceList postPriceList = testPatchPriceList_addPriceList();
 
-		PriceList postPriceList = testPostPriceList_addPriceList(
-			randomPriceList);
+		PriceList randomPatchPriceList = randomPatchPriceList();
 
-		assertEquals(randomPriceList, postPriceList);
-		assertValid(postPriceList);
-	}
-
-	protected PriceList testPostPriceList_addPriceList(PriceList priceList)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeletePriceListByExternalReferenceCode() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceList priceList =
-			testDeletePriceListByExternalReferenceCode_addPriceList();
+		PriceList patchPriceList = priceListResource.patchPriceList(
+			postPriceList.getId(), randomPatchPriceList);
 
-		assertHttpResponseStatusCode(
-			204,
-			priceListResource.
-				deletePriceListByExternalReferenceCodeHttpResponse(
-					priceList.getExternalReferenceCode()));
+		PriceList expectedPatchPriceList = postPriceList.clone();
 
-		assertHttpResponseStatusCode(
-			404,
-			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
-				priceList.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
-				"-"));
-	}
+		BeanTestUtil.copyProperties(
+			randomPatchPriceList, expectedPatchPriceList);
 
-	protected PriceList
-			testDeletePriceListByExternalReferenceCode_addPriceList()
-		throws Exception {
+		PriceList getPriceList = priceListResource.getPriceList(
+			patchPriceList.getId());
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetPriceListByExternalReferenceCode() throws Exception {
-		PriceList postPriceList =
-			testGetPriceListByExternalReferenceCode_addPriceList();
-
-		PriceList getPriceList =
-			priceListResource.getPriceListByExternalReferenceCode(
-				postPriceList.getExternalReferenceCode());
-
-		assertEquals(postPriceList, getPriceList);
+		assertEquals(expectedPatchPriceList, getPriceList);
 		assertValid(getPriceList);
 	}
 
-	protected PriceList testGetPriceListByExternalReferenceCode_addPriceList()
-		throws Exception {
-
+	protected PriceList testPatchPriceList_addPriceList() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPriceListByExternalReferenceCode()
-		throws Exception {
-
-		PriceList priceList =
-			testGraphQLGetPriceListByExternalReferenceCode_addPriceList();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				priceList,
-				PriceListSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"priceListByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												priceList.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/priceListByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetPriceListByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"priceListByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected PriceList
-			testGraphQLGetPriceListByExternalReferenceCode_addPriceList()
-		throws Exception {
-
-		return testGraphQLPriceList_addPriceList();
 	}
 
 	@Test
@@ -731,155 +867,19 @@ public abstract class BasePriceListResourceTestCase {
 	}
 
 	@Test
-	public void testDeletePriceList() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceList priceList = testDeletePriceList_addPriceList();
+	public void testPostPriceList() throws Exception {
+		PriceList randomPriceList = randomPriceList();
 
-		assertHttpResponseStatusCode(
-			204,
-			priceListResource.deletePriceListHttpResponse(priceList.getId()));
+		PriceList postPriceList = testPostPriceList_addPriceList(
+			randomPriceList);
 
-		assertHttpResponseStatusCode(
-			404, priceListResource.getPriceListHttpResponse(priceList.getId()));
-		assertHttpResponseStatusCode(
-			404, priceListResource.getPriceListHttpResponse(0L));
+		assertEquals(randomPriceList, postPriceList);
+		assertValid(postPriceList);
 	}
 
-	protected PriceList testDeletePriceList_addPriceList() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeletePriceList() throws Exception {
-
-		// No namespace
-
-		PriceList priceList1 = testGraphQLDeletePriceList_addPriceList();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deletePriceList",
-						new HashMap<String, Object>() {
-							{
-								put("id", priceList1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deletePriceList"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"priceList",
-					new HashMap<String, Object>() {
-						{
-							put("id", priceList1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected PriceList testGraphQLDeletePriceList_addPriceList()
+	protected PriceList testPostPriceList_addPriceList(PriceList priceList)
 		throws Exception {
 
-		return testGraphQLPriceList_addPriceList();
-	}
-
-	@Test
-	public void testGetPriceList() throws Exception {
-		PriceList postPriceList = testGetPriceList_addPriceList();
-
-		PriceList getPriceList = priceListResource.getPriceList(
-			postPriceList.getId());
-
-		assertEquals(postPriceList, getPriceList);
-		assertValid(getPriceList);
-	}
-
-	protected PriceList testGetPriceList_addPriceList() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPriceList() throws Exception {
-		PriceList priceList = testGraphQLGetPriceList_addPriceList();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				priceList,
-				PriceListSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"priceList",
-								new HashMap<String, Object>() {
-									{
-										put("id", priceList.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/priceList"))));
-	}
-
-	@Test
-	public void testGraphQLGetPriceListNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"priceList",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected PriceList testGraphQLGetPriceList_addPriceList()
-		throws Exception {
-
-		return testGraphQLPriceList_addPriceList();
-	}
-
-	@Test
-	public void testPatchPriceList() throws Exception {
-		PriceList postPriceList = testPatchPriceList_addPriceList();
-
-		PriceList randomPatchPriceList = randomPatchPriceList();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceList patchPriceList = priceListResource.patchPriceList(
-			postPriceList.getId(), randomPatchPriceList);
-
-		PriceList expectedPatchPriceList = postPriceList.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchPriceList, expectedPatchPriceList);
-
-		PriceList getPriceList = priceListResource.getPriceList(
-			patchPriceList.getId());
-
-		assertEquals(expectedPatchPriceList, getPriceList);
-		assertValid(getPriceList);
-	}
-
-	protected PriceList testPatchPriceList_addPriceList() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

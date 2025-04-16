@@ -45,19 +45,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SpecificationResource {
 
-	public Page<Specification> getSpecificationsPage(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Specification postSpecification(Specification specification)
-		throws Exception;
-
-	public Response postSpecificationBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public Response deleteSpecification(Long id) throws Exception;
 
 	public Response deleteSpecificationBatch(String callbackURL, Object object)
@@ -65,7 +52,20 @@ public interface SpecificationResource {
 
 	public Specification getSpecification(Long id) throws Exception;
 
+	public Page<Specification> getSpecificationsPage(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public Response patchSpecification(Long id, Specification specification)
+		throws Exception;
+
+	public Specification postSpecification(Specification specification)
+		throws Exception;
+
+	public Response postSpecificationBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

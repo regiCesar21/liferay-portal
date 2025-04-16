@@ -325,68 +325,6 @@ public abstract class BaseCartResourceTestCase {
 	}
 
 	@Test
-	public void testPatchCart() throws Exception {
-		Cart postCart = testPatchCart_addCart();
-
-		Cart randomPatchCart = randomPatchCart();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Cart patchCart = cartResource.patchCart(
-			postCart.getId(), randomPatchCart);
-
-		Cart expectedPatchCart = postCart.clone();
-
-		BeanTestUtil.copyProperties(randomPatchCart, expectedPatchCart);
-
-		Cart getCart = cartResource.getCart(patchCart.getId());
-
-		assertEquals(expectedPatchCart, getCart);
-		assertValid(getCart);
-	}
-
-	protected Cart testPatchCart_addCart() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutCart() throws Exception {
-		Cart postCart = testPutCart_addCart();
-
-		Cart randomCart = randomCart();
-
-		Cart putCart = cartResource.putCart(postCart.getId(), randomCart);
-
-		assertEquals(randomCart, putCart);
-		assertValid(putCart);
-
-		Cart getCart = cartResource.getCart(putCart.getId());
-
-		assertEquals(randomCart, getCart);
-		assertValid(getCart);
-	}
-
-	protected Cart testPutCart_addCart() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostCartCouponCode() throws Exception {
-		Cart randomCart = randomCart();
-
-		Cart postCart = testPostCartCouponCode_addCart(randomCart);
-
-		assertEquals(randomCart, postCart);
-		assertValid(postCart);
-	}
-
-	protected Cart testPostCartCouponCode_addCart(Cart cart) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetChannelCartsPage() throws Exception {
 		Long channelId = testGetChannelCartsPage_getChannelId();
 		Long irrelevantChannelId =
@@ -531,6 +469,46 @@ public abstract class BaseCartResourceTestCase {
 	}
 
 	@Test
+	public void testPatchCart() throws Exception {
+		Cart postCart = testPatchCart_addCart();
+
+		Cart randomPatchCart = randomPatchCart();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Cart patchCart = cartResource.patchCart(
+			postCart.getId(), randomPatchCart);
+
+		Cart expectedPatchCart = postCart.clone();
+
+		BeanTestUtil.copyProperties(randomPatchCart, expectedPatchCart);
+
+		Cart getCart = cartResource.getCart(patchCart.getId());
+
+		assertEquals(expectedPatchCart, getCart);
+		assertValid(getCart);
+	}
+
+	protected Cart testPatchCart_addCart() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostCartCouponCode() throws Exception {
+		Cart randomCart = randomCart();
+
+		Cart postCart = testPostCartCouponCode_addCart(randomCart);
+
+		assertEquals(randomCart, postCart);
+		assertValid(postCart);
+	}
+
+	protected Cart testPostCartCouponCode_addCart(Cart cart) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostChannelCart() throws Exception {
 		Cart randomCart = randomCart();
 
@@ -543,6 +521,28 @@ public abstract class BaseCartResourceTestCase {
 	protected Cart testPostChannelCart_addCart(Cart cart) throws Exception {
 		return cartResource.postChannelCart(
 			testGetChannelCartsPage_getChannelId(), cart);
+	}
+
+	@Test
+	public void testPutCart() throws Exception {
+		Cart postCart = testPutCart_addCart();
+
+		Cart randomCart = randomCart();
+
+		Cart putCart = cartResource.putCart(postCart.getId(), randomCart);
+
+		assertEquals(randomCart, putCart);
+		assertValid(putCart);
+
+		Cart getCart = cartResource.getCart(putCart.getId());
+
+		assertEquals(randomCart, getCart);
+		assertValid(getCart);
+	}
+
+	protected Cart testPutCart_addCart() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Cart testGraphQLCart_addCart() throws Exception {

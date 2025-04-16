@@ -191,6 +191,87 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSku() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Sku sku = testDeleteSku_addSku();
+
+		assertHttpResponseStatusCode(
+			204, skuResource.deleteSkuHttpResponse(sku.getId()));
+
+		assertHttpResponseStatusCode(
+			404, skuResource.getSkuHttpResponse(sku.getId()));
+		assertHttpResponseStatusCode(404, skuResource.getSkuHttpResponse(0L));
+	}
+
+	protected Sku testDeleteSku_addSku() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteSku() throws Exception {
+
+		// No namespace
+
+		Sku sku1 = testGraphQLDeleteSku_addSku();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSku",
+						new HashMap<String, Object>() {
+							{
+								put("id", sku1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteSku"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"sku",
+					new HashMap<String, Object>() {
+						{
+							put("id", sku1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Sku testGraphQLDeleteSku_addSku() throws Exception {
+		return testGraphQLSku_addSku();
+	}
+
+	@Test
+	public void testDeleteSkuByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Sku sku = testDeleteSkuByExternalReferenceCode_addSku();
+
+		assertHttpResponseStatusCode(
+			204,
+			skuResource.deleteSkuByExternalReferenceCodeHttpResponse(
+				sku.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			skuResource.getSkuByExternalReferenceCodeHttpResponse(
+				sku.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404, skuResource.getSkuByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Sku testDeleteSkuByExternalReferenceCode_addSku()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetProductByExternalReferenceCodeSkusPage()
 		throws Exception {
 
@@ -365,24 +446,6 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductByExternalReferenceCodeSku() throws Exception {
-		Sku randomSku = randomSku();
-
-		Sku postSku = testPostProductByExternalReferenceCodeSku_addSku(
-			randomSku);
-
-		assertEquals(randomSku, postSku);
-		assertValid(postSku);
-	}
-
-	protected Sku testPostProductByExternalReferenceCodeSku_addSku(Sku sku)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductIdSkusPage() throws Exception {
 		Long id = testGetProductIdSkusPage_getId();
 		Long irrelevantId = testGetProductIdSkusPage_getIrrelevantId();
@@ -521,18 +584,144 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductIdSku() throws Exception {
-		Sku randomSku = randomSku();
+	public void testGetSku() throws Exception {
+		Sku postSku = testGetSku_addSku();
 
-		Sku postSku = testPostProductIdSku_addSku(randomSku);
+		Sku getSku = skuResource.getSku(postSku.getId());
 
-		assertEquals(randomSku, postSku);
-		assertValid(postSku);
+		assertEquals(postSku, getSku);
+		assertValid(getSku);
 	}
 
-	protected Sku testPostProductIdSku_addSku(Sku sku) throws Exception {
+	protected Sku testGetSku_addSku() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSku() throws Exception {
+		Sku sku = testGraphQLGetSku_addSku();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				sku,
+				SkuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"sku",
+								new HashMap<String, Object>() {
+									{
+										put("id", sku.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/sku"))));
+	}
+
+	@Test
+	public void testGraphQLGetSkuNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"sku",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Sku testGraphQLGetSku_addSku() throws Exception {
+		return testGraphQLSku_addSku();
+	}
+
+	@Test
+	public void testGetSkuByExternalReferenceCode() throws Exception {
+		Sku postSku = testGetSkuByExternalReferenceCode_addSku();
+
+		Sku getSku = skuResource.getSkuByExternalReferenceCode(
+			postSku.getExternalReferenceCode());
+
+		assertEquals(postSku, getSku);
+		assertValid(getSku);
+	}
+
+	protected Sku testGetSkuByExternalReferenceCode_addSku() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSkuByExternalReferenceCode() throws Exception {
+		Sku sku = testGraphQLGetSkuByExternalReferenceCode_addSku();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				sku,
+				SkuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"skuByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												sku.getExternalReferenceCode() +
+													"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/skuByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetSkuByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"skuByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Sku testGraphQLGetSkuByExternalReferenceCode_addSku()
+		throws Exception {
+
+		return testGraphQLSku_addSku();
 	}
 
 	@Test
@@ -881,105 +1070,8 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteSkuByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Sku sku = testDeleteSkuByExternalReferenceCode_addSku();
-
-		assertHttpResponseStatusCode(
-			204,
-			skuResource.deleteSkuByExternalReferenceCodeHttpResponse(
-				sku.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			skuResource.getSkuByExternalReferenceCodeHttpResponse(
-				sku.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404, skuResource.getSkuByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Sku testDeleteSkuByExternalReferenceCode_addSku()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetSkuByExternalReferenceCode() throws Exception {
-		Sku postSku = testGetSkuByExternalReferenceCode_addSku();
-
-		Sku getSku = skuResource.getSkuByExternalReferenceCode(
-			postSku.getExternalReferenceCode());
-
-		assertEquals(postSku, getSku);
-		assertValid(getSku);
-	}
-
-	protected Sku testGetSkuByExternalReferenceCode_addSku() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSkuByExternalReferenceCode() throws Exception {
-		Sku sku = testGraphQLGetSkuByExternalReferenceCode_addSku();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				sku,
-				SkuSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"skuByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												sku.getExternalReferenceCode() +
-													"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/skuByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetSkuByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"skuByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Sku testGraphQLGetSkuByExternalReferenceCode_addSku()
-		throws Exception {
-
-		return testGraphQLSku_addSku();
+	public void testPatchSku() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -988,128 +1080,36 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteSku() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Sku sku = testDeleteSku_addSku();
+	public void testPostProductByExternalReferenceCodeSku() throws Exception {
+		Sku randomSku = randomSku();
 
-		assertHttpResponseStatusCode(
-			204, skuResource.deleteSkuHttpResponse(sku.getId()));
+		Sku postSku = testPostProductByExternalReferenceCodeSku_addSku(
+			randomSku);
 
-		assertHttpResponseStatusCode(
-			404, skuResource.getSkuHttpResponse(sku.getId()));
-		assertHttpResponseStatusCode(404, skuResource.getSkuHttpResponse(0L));
+		assertEquals(randomSku, postSku);
+		assertValid(postSku);
 	}
 
-	protected Sku testDeleteSku_addSku() throws Exception {
+	protected Sku testPostProductByExternalReferenceCodeSku_addSku(Sku sku)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGraphQLDeleteSku() throws Exception {
+	public void testPostProductIdSku() throws Exception {
+		Sku randomSku = randomSku();
 
-		// No namespace
+		Sku postSku = testPostProductIdSku_addSku(randomSku);
 
-		Sku sku1 = testGraphQLDeleteSku_addSku();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSku",
-						new HashMap<String, Object>() {
-							{
-								put("id", sku1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSku"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"sku",
-					new HashMap<String, Object>() {
-						{
-							put("id", sku1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
+		assertEquals(randomSku, postSku);
+		assertValid(postSku);
 	}
 
-	protected Sku testGraphQLDeleteSku_addSku() throws Exception {
-		return testGraphQLSku_addSku();
-	}
-
-	@Test
-	public void testGetSku() throws Exception {
-		Sku postSku = testGetSku_addSku();
-
-		Sku getSku = skuResource.getSku(postSku.getId());
-
-		assertEquals(postSku, getSku);
-		assertValid(getSku);
-	}
-
-	protected Sku testGetSku_addSku() throws Exception {
+	protected Sku testPostProductIdSku_addSku(Sku sku) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSku() throws Exception {
-		Sku sku = testGraphQLGetSku_addSku();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				sku,
-				SkuSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"sku",
-								new HashMap<String, Object>() {
-									{
-										put("id", sku.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/sku"))));
-	}
-
-	@Test
-	public void testGraphQLGetSkuNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"sku",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Sku testGraphQLGetSku_addSku() throws Exception {
-		return testGraphQLSku_addSku();
-	}
-
-	@Test
-	public void testPatchSku() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Rule

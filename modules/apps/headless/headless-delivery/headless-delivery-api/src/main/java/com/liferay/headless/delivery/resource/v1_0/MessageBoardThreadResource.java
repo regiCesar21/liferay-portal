@@ -46,6 +46,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MessageBoardThreadResource {
 
+	public void deleteMessageBoardThread(Long messageBoardThreadId)
+		throws Exception;
+
+	public Response deleteMessageBoardThreadBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteMessageBoardThreadMyRating(Long messageBoardThreadId)
+		throws Exception;
+
 	public Page<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
 				Long messageBoardSectionId, String search,
@@ -55,54 +65,10 @@ public interface MessageBoardThreadResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
-			Long messageBoardSectionId, MessageBoardThread messageBoardThread)
-		throws Exception;
-
-	public Response postMessageBoardSectionMessageBoardThreadBatch(
-			Long messageBoardSectionId, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteMessageBoardThread(Long messageBoardThreadId)
-		throws Exception;
-
-	public Response deleteMessageBoardThreadBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
 	public MessageBoardThread getMessageBoardThread(Long messageBoardThreadId)
 		throws Exception;
 
-	public MessageBoardThread patchMessageBoardThread(
-			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
-		throws Exception;
-
-	public MessageBoardThread putMessageBoardThread(
-			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
-		throws Exception;
-
-	public Response putMessageBoardThreadBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteMessageBoardThreadMyRating(Long messageBoardThreadId)
-		throws Exception;
-
 	public Rating getMessageBoardThreadMyRating(Long messageBoardThreadId)
-		throws Exception;
-
-	public Rating postMessageBoardThreadMyRating(
-			Long messageBoardThreadId, Rating rating)
-		throws Exception;
-
-	public Rating putMessageBoardThreadMyRating(
-			Long messageBoardThreadId, Rating rating)
-		throws Exception;
-
-	public void putMessageBoardThreadSubscribe(Long messageBoardThreadId)
-		throws Exception;
-
-	public void putMessageBoardThreadUnsubscribe(Long messageBoardThreadId)
 		throws Exception;
 
 	public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
@@ -113,12 +79,46 @@ public interface MessageBoardThreadResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public MessageBoardThread patchMessageBoardThread(
+			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
+		throws Exception;
+
+	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
+			Long messageBoardSectionId, MessageBoardThread messageBoardThread)
+		throws Exception;
+
+	public Response postMessageBoardSectionMessageBoardThreadBatch(
+			Long messageBoardSectionId, String callbackURL, Object object)
+		throws Exception;
+
+	public Rating postMessageBoardThreadMyRating(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception;
+
 	public MessageBoardThread postSiteMessageBoardThread(
 			Long siteId, MessageBoardThread messageBoardThread)
 		throws Exception;
 
 	public Response postSiteMessageBoardThreadBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public MessageBoardThread putMessageBoardThread(
+			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
+		throws Exception;
+
+	public Response putMessageBoardThreadBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public Rating putMessageBoardThreadMyRating(
+			Long messageBoardThreadId, Rating rating)
+		throws Exception;
+
+	public void putMessageBoardThreadSubscribe(Long messageBoardThreadId)
+		throws Exception;
+
+	public void putMessageBoardThreadUnsubscribe(Long messageBoardThreadId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -337,73 +337,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPatchKnowledgeBaseFolder() throws Exception {
-		KnowledgeBaseFolder postKnowledgeBaseFolder =
-			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder();
-
-		KnowledgeBaseFolder randomPatchKnowledgeBaseFolder =
-			randomPatchKnowledgeBaseFolder();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		KnowledgeBaseFolder patchKnowledgeBaseFolder =
-			knowledgeBaseFolderResource.patchKnowledgeBaseFolder(
-				postKnowledgeBaseFolder.getId(),
-				randomPatchKnowledgeBaseFolder);
-
-		KnowledgeBaseFolder expectedPatchKnowledgeBaseFolder =
-			postKnowledgeBaseFolder.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchKnowledgeBaseFolder, expectedPatchKnowledgeBaseFolder);
-
-		KnowledgeBaseFolder getKnowledgeBaseFolder =
-			knowledgeBaseFolderResource.getKnowledgeBaseFolder(
-				patchKnowledgeBaseFolder.getId());
-
-		assertEquals(expectedPatchKnowledgeBaseFolder, getKnowledgeBaseFolder);
-		assertValid(getKnowledgeBaseFolder);
-	}
-
-	protected KnowledgeBaseFolder
-			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder()
-		throws Exception {
-
-		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), randomKnowledgeBaseFolder());
-	}
-
-	@Test
-	public void testPutKnowledgeBaseFolder() throws Exception {
-		KnowledgeBaseFolder postKnowledgeBaseFolder =
-			testPutKnowledgeBaseFolder_addKnowledgeBaseFolder();
-
-		KnowledgeBaseFolder randomKnowledgeBaseFolder =
-			randomKnowledgeBaseFolder();
-
-		KnowledgeBaseFolder putKnowledgeBaseFolder =
-			knowledgeBaseFolderResource.putKnowledgeBaseFolder(
-				postKnowledgeBaseFolder.getId(), randomKnowledgeBaseFolder);
-
-		assertEquals(randomKnowledgeBaseFolder, putKnowledgeBaseFolder);
-		assertValid(putKnowledgeBaseFolder);
-
-		KnowledgeBaseFolder getKnowledgeBaseFolder =
-			knowledgeBaseFolderResource.getKnowledgeBaseFolder(
-				putKnowledgeBaseFolder.getId());
-
-		assertEquals(randomKnowledgeBaseFolder, getKnowledgeBaseFolder);
-		assertValid(getKnowledgeBaseFolder);
-	}
-
-	protected KnowledgeBaseFolder
-			testPutKnowledgeBaseFolder_addKnowledgeBaseFolder()
-		throws Exception {
-
-		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), randomKnowledgeBaseFolder());
-	}
-
-	@Test
 	public void testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage()
 		throws Exception {
 
@@ -624,32 +557,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostKnowledgeBaseFolderKnowledgeBaseFolder()
-		throws Exception {
-
-		KnowledgeBaseFolder randomKnowledgeBaseFolder =
-			randomKnowledgeBaseFolder();
-
-		KnowledgeBaseFolder postKnowledgeBaseFolder =
-			testPostKnowledgeBaseFolderKnowledgeBaseFolder_addKnowledgeBaseFolder(
-				randomKnowledgeBaseFolder);
-
-		assertEquals(randomKnowledgeBaseFolder, postKnowledgeBaseFolder);
-		assertValid(postKnowledgeBaseFolder);
-	}
-
-	protected KnowledgeBaseFolder
-			testPostKnowledgeBaseFolderKnowledgeBaseFolder_addKnowledgeBaseFolder(
-				KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		return knowledgeBaseFolderResource.
-			postKnowledgeBaseFolderKnowledgeBaseFolder(
-				testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
-				knowledgeBaseFolder);
 	}
 
 	@Test
@@ -915,6 +822,68 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPatchKnowledgeBaseFolder() throws Exception {
+		KnowledgeBaseFolder postKnowledgeBaseFolder =
+			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder();
+
+		KnowledgeBaseFolder randomPatchKnowledgeBaseFolder =
+			randomPatchKnowledgeBaseFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		KnowledgeBaseFolder patchKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.patchKnowledgeBaseFolder(
+				postKnowledgeBaseFolder.getId(),
+				randomPatchKnowledgeBaseFolder);
+
+		KnowledgeBaseFolder expectedPatchKnowledgeBaseFolder =
+			postKnowledgeBaseFolder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchKnowledgeBaseFolder, expectedPatchKnowledgeBaseFolder);
+
+		KnowledgeBaseFolder getKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.getKnowledgeBaseFolder(
+				patchKnowledgeBaseFolder.getId());
+
+		assertEquals(expectedPatchKnowledgeBaseFolder, getKnowledgeBaseFolder);
+		assertValid(getKnowledgeBaseFolder);
+	}
+
+	protected KnowledgeBaseFolder
+			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+	}
+
+	@Test
+	public void testPostKnowledgeBaseFolderKnowledgeBaseFolder()
+		throws Exception {
+
+		KnowledgeBaseFolder randomKnowledgeBaseFolder =
+			randomKnowledgeBaseFolder();
+
+		KnowledgeBaseFolder postKnowledgeBaseFolder =
+			testPostKnowledgeBaseFolderKnowledgeBaseFolder_addKnowledgeBaseFolder(
+				randomKnowledgeBaseFolder);
+
+		assertEquals(randomKnowledgeBaseFolder, postKnowledgeBaseFolder);
+		assertValid(postKnowledgeBaseFolder);
+	}
+
+	protected KnowledgeBaseFolder
+			testPostKnowledgeBaseFolderKnowledgeBaseFolder_addKnowledgeBaseFolder(
+				KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
+		return knowledgeBaseFolderResource.
+			postKnowledgeBaseFolderKnowledgeBaseFolder(
+				testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+				knowledgeBaseFolder);
+	}
+
+	@Test
 	public void testPostSiteKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder randomKnowledgeBaseFolder =
 			randomKnowledgeBaseFolder();
@@ -948,6 +917,37 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		Assert.assertTrue(
 			equals(randomKnowledgeBaseFolder, knowledgeBaseFolder));
+	}
+
+	@Test
+	public void testPutKnowledgeBaseFolder() throws Exception {
+		KnowledgeBaseFolder postKnowledgeBaseFolder =
+			testPutKnowledgeBaseFolder_addKnowledgeBaseFolder();
+
+		KnowledgeBaseFolder randomKnowledgeBaseFolder =
+			randomKnowledgeBaseFolder();
+
+		KnowledgeBaseFolder putKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.putKnowledgeBaseFolder(
+				postKnowledgeBaseFolder.getId(), randomKnowledgeBaseFolder);
+
+		assertEquals(randomKnowledgeBaseFolder, putKnowledgeBaseFolder);
+		assertValid(putKnowledgeBaseFolder);
+
+		KnowledgeBaseFolder getKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.getKnowledgeBaseFolder(
+				putKnowledgeBaseFolder.getId());
+
+		assertEquals(randomKnowledgeBaseFolder, getKnowledgeBaseFolder);
+		assertValid(getKnowledgeBaseFolder);
+	}
+
+	protected KnowledgeBaseFolder
+			testPutKnowledgeBaseFolder_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			testGroup.getGroupId(), randomKnowledgeBaseFolder());
 	}
 
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)

@@ -182,6 +182,111 @@ public abstract class BaseSubscriptionResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteMyUserAccountSubscription() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Subscription subscription =
+			testDeleteMyUserAccountSubscription_addSubscription();
+
+		assertHttpResponseStatusCode(
+			204,
+			subscriptionResource.deleteMyUserAccountSubscriptionHttpResponse(
+				subscription.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			subscriptionResource.getMyUserAccountSubscriptionHttpResponse(
+				subscription.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			subscriptionResource.getMyUserAccountSubscriptionHttpResponse(0L));
+	}
+
+	protected Subscription testDeleteMyUserAccountSubscription_addSubscription()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetMyUserAccountSubscription() throws Exception {
+		Subscription postSubscription =
+			testGetMyUserAccountSubscription_addSubscription();
+
+		Subscription getSubscription =
+			subscriptionResource.getMyUserAccountSubscription(
+				postSubscription.getId());
+
+		assertEquals(postSubscription, getSubscription);
+		assertValid(getSubscription);
+	}
+
+	protected Subscription testGetMyUserAccountSubscription_addSubscription()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetMyUserAccountSubscription() throws Exception {
+		Subscription subscription =
+			testGraphQLGetMyUserAccountSubscription_addSubscription();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				subscription,
+				SubscriptionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"myUserAccountSubscription",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"subscriptionId",
+											subscription.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/myUserAccountSubscription"))));
+	}
+
+	@Test
+	public void testGraphQLGetMyUserAccountSubscriptionNotFound()
+		throws Exception {
+
+		Long irrelevantSubscriptionId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"myUserAccountSubscription",
+						new HashMap<String, Object>() {
+							{
+								put("subscriptionId", irrelevantSubscriptionId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Subscription
+			testGraphQLGetMyUserAccountSubscription_addSubscription()
+		throws Exception {
+
+		return testGraphQLSubscription_addSubscription();
+	}
+
+	@Test
 	public void testGetMyUserAccountSubscriptionsPage() throws Exception {
 		Page<Subscription> page =
 			subscriptionResource.getMyUserAccountSubscriptionsPage(
@@ -314,111 +419,6 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteMyUserAccountSubscription() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Subscription subscription =
-			testDeleteMyUserAccountSubscription_addSubscription();
-
-		assertHttpResponseStatusCode(
-			204,
-			subscriptionResource.deleteMyUserAccountSubscriptionHttpResponse(
-				subscription.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			subscriptionResource.getMyUserAccountSubscriptionHttpResponse(
-				subscription.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			subscriptionResource.getMyUserAccountSubscriptionHttpResponse(0L));
-	}
-
-	protected Subscription testDeleteMyUserAccountSubscription_addSubscription()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetMyUserAccountSubscription() throws Exception {
-		Subscription postSubscription =
-			testGetMyUserAccountSubscription_addSubscription();
-
-		Subscription getSubscription =
-			subscriptionResource.getMyUserAccountSubscription(
-				postSubscription.getId());
-
-		assertEquals(postSubscription, getSubscription);
-		assertValid(getSubscription);
-	}
-
-	protected Subscription testGetMyUserAccountSubscription_addSubscription()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetMyUserAccountSubscription() throws Exception {
-		Subscription subscription =
-			testGraphQLGetMyUserAccountSubscription_addSubscription();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				subscription,
-				SubscriptionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"myUserAccountSubscription",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"subscriptionId",
-											subscription.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/myUserAccountSubscription"))));
-	}
-
-	@Test
-	public void testGraphQLGetMyUserAccountSubscriptionNotFound()
-		throws Exception {
-
-		Long irrelevantSubscriptionId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"myUserAccountSubscription",
-						new HashMap<String, Object>() {
-							{
-								put("subscriptionId", irrelevantSubscriptionId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Subscription
-			testGraphQLGetMyUserAccountSubscription_addSubscription()
-		throws Exception {
-
-		return testGraphQLSubscription_addSubscription();
 	}
 
 	protected Subscription testGraphQLSubscription_addSubscription()

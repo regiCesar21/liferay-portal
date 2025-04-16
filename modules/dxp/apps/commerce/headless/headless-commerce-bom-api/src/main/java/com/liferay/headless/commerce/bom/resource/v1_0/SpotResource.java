@@ -43,12 +43,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SpotResource {
 
+	public Response deleteAreaIdSpot(Long id, Long spotId) throws Exception;
+
 	public Spot postAreaIdSpot(Long id, Spot spot) throws Exception;
 
 	public Response postAreaIdSpotBatch(String callbackURL, Object object)
 		throws Exception;
-
-	public Response deleteAreaIdSpot(Long id, Long spotId) throws Exception;
 
 	public Response putAreaIdSpot(Long id, Long spotId, Spot spot)
 		throws Exception;

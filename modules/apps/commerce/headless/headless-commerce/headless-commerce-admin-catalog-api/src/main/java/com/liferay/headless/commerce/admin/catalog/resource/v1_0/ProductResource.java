@@ -45,6 +45,21 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductResource {
 
+	public Response deleteProduct(Long id) throws Exception;
+
+	public Response deleteProductBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response deleteProductByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Product getProduct(Long id) throws Exception;
+
+	public Product getProductByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<Product> getProductsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -52,35 +67,20 @@ public interface ProductResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Product postProduct(Product product) throws Exception;
-
-	public Response postProductBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Response deleteProductByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Product getProductByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
+	public Response patchProduct(Long id, Product product) throws Exception;
 
 	public Response patchProductByExternalReferenceCode(
 			String externalReferenceCode, Product product)
 		throws Exception;
 
+	public Product postProduct(Product product) throws Exception;
+
+	public Response postProductBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Product postProductByExternalReferenceCodeClone(
 			String externalReferenceCode, String catalogExternalReferenceCode)
 		throws Exception;
-
-	public Response deleteProduct(Long id) throws Exception;
-
-	public Response deleteProductBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Product getProduct(Long id) throws Exception;
-
-	public Response patchProduct(Long id, Product product) throws Exception;
 
 	public Product postProductClone(Long id, Long catalogId) throws Exception;
 

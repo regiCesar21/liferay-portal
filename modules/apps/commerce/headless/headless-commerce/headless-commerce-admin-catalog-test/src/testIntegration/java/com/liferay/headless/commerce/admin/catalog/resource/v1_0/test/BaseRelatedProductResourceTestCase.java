@@ -183,6 +183,73 @@ public abstract class BaseRelatedProductResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteRelatedProduct() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		RelatedProduct relatedProduct =
+			testDeleteRelatedProduct_addRelatedProduct();
+
+		assertHttpResponseStatusCode(
+			204,
+			relatedProductResource.deleteRelatedProductHttpResponse(
+				relatedProduct.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			relatedProductResource.getRelatedProductHttpResponse(
+				relatedProduct.getId()));
+		assertHttpResponseStatusCode(
+			404, relatedProductResource.getRelatedProductHttpResponse(0L));
+	}
+
+	protected RelatedProduct testDeleteRelatedProduct_addRelatedProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteRelatedProduct() throws Exception {
+
+		// No namespace
+
+		RelatedProduct relatedProduct1 =
+			testGraphQLDeleteRelatedProduct_addRelatedProduct();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteRelatedProduct",
+						new HashMap<String, Object>() {
+							{
+								put("id", relatedProduct1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteRelatedProduct"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"relatedProduct",
+					new HashMap<String, Object>() {
+						{
+							put("id", relatedProduct1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected RelatedProduct testGraphQLDeleteRelatedProduct_addRelatedProduct()
+		throws Exception {
+
+		return testGraphQLRelatedProduct_addRelatedProduct();
+	}
+
+	@Test
 	public void testGetProductByExternalReferenceCodeRelatedProductsPage()
 		throws Exception {
 
@@ -394,29 +461,6 @@ public abstract class BaseRelatedProductResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductByExternalReferenceCodeRelatedProduct()
-		throws Exception {
-
-		RelatedProduct randomRelatedProduct = randomRelatedProduct();
-
-		RelatedProduct postRelatedProduct =
-			testPostProductByExternalReferenceCodeRelatedProduct_addRelatedProduct(
-				randomRelatedProduct);
-
-		assertEquals(randomRelatedProduct, postRelatedProduct);
-		assertValid(postRelatedProduct);
-	}
-
-	protected RelatedProduct
-			testPostProductByExternalReferenceCodeRelatedProduct_addRelatedProduct(
-				RelatedProduct relatedProduct)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductIdRelatedProductsPage() throws Exception {
 		Long id = testGetProductIdRelatedProductsPage_getId();
 		Long irrelevantId =
@@ -601,93 +645,6 @@ public abstract class BaseRelatedProductResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductIdRelatedProduct() throws Exception {
-		RelatedProduct randomRelatedProduct = randomRelatedProduct();
-
-		RelatedProduct postRelatedProduct =
-			testPostProductIdRelatedProduct_addRelatedProduct(
-				randomRelatedProduct);
-
-		assertEquals(randomRelatedProduct, postRelatedProduct);
-		assertValid(postRelatedProduct);
-	}
-
-	protected RelatedProduct testPostProductIdRelatedProduct_addRelatedProduct(
-			RelatedProduct relatedProduct)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteRelatedProduct() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		RelatedProduct relatedProduct =
-			testDeleteRelatedProduct_addRelatedProduct();
-
-		assertHttpResponseStatusCode(
-			204,
-			relatedProductResource.deleteRelatedProductHttpResponse(
-				relatedProduct.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			relatedProductResource.getRelatedProductHttpResponse(
-				relatedProduct.getId()));
-		assertHttpResponseStatusCode(
-			404, relatedProductResource.getRelatedProductHttpResponse(0L));
-	}
-
-	protected RelatedProduct testDeleteRelatedProduct_addRelatedProduct()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteRelatedProduct() throws Exception {
-
-		// No namespace
-
-		RelatedProduct relatedProduct1 =
-			testGraphQLDeleteRelatedProduct_addRelatedProduct();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteRelatedProduct",
-						new HashMap<String, Object>() {
-							{
-								put("id", relatedProduct1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteRelatedProduct"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"relatedProduct",
-					new HashMap<String, Object>() {
-						{
-							put("id", relatedProduct1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected RelatedProduct testGraphQLDeleteRelatedProduct_addRelatedProduct()
-		throws Exception {
-
-		return testGraphQLRelatedProduct_addRelatedProduct();
-	}
-
-	@Test
 	public void testGetRelatedProduct() throws Exception {
 		RelatedProduct postRelatedProduct =
 			testGetRelatedProduct_addRelatedProduct();
@@ -757,6 +714,49 @@ public abstract class BaseRelatedProductResourceTestCase {
 		throws Exception {
 
 		return testGraphQLRelatedProduct_addRelatedProduct();
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeRelatedProduct()
+		throws Exception {
+
+		RelatedProduct randomRelatedProduct = randomRelatedProduct();
+
+		RelatedProduct postRelatedProduct =
+			testPostProductByExternalReferenceCodeRelatedProduct_addRelatedProduct(
+				randomRelatedProduct);
+
+		assertEquals(randomRelatedProduct, postRelatedProduct);
+		assertValid(postRelatedProduct);
+	}
+
+	protected RelatedProduct
+			testPostProductByExternalReferenceCodeRelatedProduct_addRelatedProduct(
+				RelatedProduct relatedProduct)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostProductIdRelatedProduct() throws Exception {
+		RelatedProduct randomRelatedProduct = randomRelatedProduct();
+
+		RelatedProduct postRelatedProduct =
+			testPostProductIdRelatedProduct_addRelatedProduct(
+				randomRelatedProduct);
+
+		assertEquals(randomRelatedProduct, postRelatedProduct);
+		assertValid(postRelatedProduct);
+	}
+
+	protected RelatedProduct testPostProductIdRelatedProduct_addRelatedProduct(
+			RelatedProduct relatedProduct)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected RelatedProduct testGraphQLRelatedProduct_addRelatedProduct()

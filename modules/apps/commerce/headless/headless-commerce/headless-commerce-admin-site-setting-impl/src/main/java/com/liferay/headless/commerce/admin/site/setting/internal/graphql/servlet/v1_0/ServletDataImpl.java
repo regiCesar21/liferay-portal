@@ -104,6 +104,11 @@ public class ServletDataImpl implements ServletData {
 							AvailabilityEstimateResourceImpl.class,
 							"deleteAvailabilityEstimateBatch"));
 					put(
+						"mutation#createCommerceAdminSiteSettingGroupAvailabilityEstimate",
+						new ObjectValuePair<>(
+							AvailabilityEstimateResourceImpl.class,
+							"postCommerceAdminSiteSettingGroupAvailabilityEstimate"));
+					put(
 						"mutation#updateAvailabilityEstimate",
 						new ObjectValuePair<>(
 							AvailabilityEstimateResourceImpl.class,
@@ -113,16 +118,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AvailabilityEstimateResourceImpl.class,
 							"putAvailabilityEstimateBatch"));
-					put(
-						"mutation#createCommerceAdminSiteSettingGroupAvailabilityEstimate",
-						new ObjectValuePair<>(
-							AvailabilityEstimateResourceImpl.class,
-							"postCommerceAdminSiteSettingGroupAvailabilityEstimate"));
-					put(
-						"mutation#createCommerceAdminSiteSettingGroupMeasurementUnit",
-						new ObjectValuePair<>(
-							MeasurementUnitResourceImpl.class,
-							"postCommerceAdminSiteSettingGroupMeasurementUnit"));
 					put(
 						"mutation#deleteMeasurementUnit",
 						new ObjectValuePair<>(
@@ -134,6 +129,11 @@ public class ServletDataImpl implements ServletData {
 							MeasurementUnitResourceImpl.class,
 							"deleteMeasurementUnitBatch"));
 					put(
+						"mutation#createCommerceAdminSiteSettingGroupMeasurementUnit",
+						new ObjectValuePair<>(
+							MeasurementUnitResourceImpl.class,
+							"postCommerceAdminSiteSettingGroupMeasurementUnit"));
+					put(
 						"mutation#updateMeasurementUnit",
 						new ObjectValuePair<>(
 							MeasurementUnitResourceImpl.class,
@@ -143,11 +143,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							MeasurementUnitResourceImpl.class,
 							"putMeasurementUnitBatch"));
-					put(
-						"mutation#createCommerceAdminSiteSettingGroupTaxCategory",
-						new ObjectValuePair<>(
-							TaxCategoryResourceImpl.class,
-							"postCommerceAdminSiteSettingGroupTaxCategory"));
 					put(
 						"mutation#deleteTaxCategory",
 						new ObjectValuePair<>(
@@ -159,6 +154,11 @@ public class ServletDataImpl implements ServletData {
 							TaxCategoryResourceImpl.class,
 							"deleteTaxCategoryBatch"));
 					put(
+						"mutation#createCommerceAdminSiteSettingGroupTaxCategory",
+						new ObjectValuePair<>(
+							TaxCategoryResourceImpl.class,
+							"postCommerceAdminSiteSettingGroupTaxCategory"));
+					put(
 						"mutation#updateTaxCategory",
 						new ObjectValuePair<>(
 							TaxCategoryResourceImpl.class, "putTaxCategory"));
@@ -168,11 +168,6 @@ public class ServletDataImpl implements ServletData {
 							TaxCategoryResourceImpl.class,
 							"putTaxCategoryBatch"));
 					put(
-						"mutation#createCommerceAdminSiteSettingGroupWarehouse",
-						new ObjectValuePair<>(
-							WarehouseResourceImpl.class,
-							"postCommerceAdminSiteSettingGroupWarehouse"));
-					put(
 						"mutation#deleteWarehouse",
 						new ObjectValuePair<>(
 							WarehouseResourceImpl.class, "deleteWarehouse"));
@@ -181,6 +176,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WarehouseResourceImpl.class,
 							"deleteWarehouseBatch"));
+					put(
+						"mutation#createCommerceAdminSiteSettingGroupWarehouse",
+						new ObjectValuePair<>(
+							WarehouseResourceImpl.class,
+							"postCommerceAdminSiteSettingGroupWarehouse"));
 					put(
 						"mutation#updateWarehouse",
 						new ObjectValuePair<>(

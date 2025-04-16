@@ -378,29 +378,6 @@ public abstract class BaseOptionValueResourceTestCase {
 	}
 
 	@Test
-	public void testPostOptionByExternalReferenceCodeOptionValue()
-		throws Exception {
-
-		OptionValue randomOptionValue = randomOptionValue();
-
-		OptionValue postOptionValue =
-			testPostOptionByExternalReferenceCodeOptionValue_addOptionValue(
-				randomOptionValue);
-
-		assertEquals(randomOptionValue, postOptionValue);
-		assertValid(postOptionValue);
-	}
-
-	protected OptionValue
-			testPostOptionByExternalReferenceCodeOptionValue_addOptionValue(
-				OptionValue optionValue)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetOptionIdOptionValuesPage() throws Exception {
 		Long id = testGetOptionIdOptionValuesPage_getId();
 		Long irrelevantId = testGetOptionIdOptionValuesPage_getIrrelevantId();
@@ -564,6 +541,29 @@ public abstract class BaseOptionValueResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostOptionByExternalReferenceCodeOptionValue()
+		throws Exception {
+
+		OptionValue randomOptionValue = randomOptionValue();
+
+		OptionValue postOptionValue =
+			testPostOptionByExternalReferenceCodeOptionValue_addOptionValue(
+				randomOptionValue);
+
+		assertEquals(randomOptionValue, postOptionValue);
+		assertValid(postOptionValue);
+	}
+
+	protected OptionValue
+			testPostOptionByExternalReferenceCodeOptionValue_addOptionValue(
+				OptionValue optionValue)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
