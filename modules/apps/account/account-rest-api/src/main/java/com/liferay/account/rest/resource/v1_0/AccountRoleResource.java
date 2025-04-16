@@ -44,12 +44,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountRoleResource {
 
-	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
-			String accountExternalReferenceCode, Long accountRoleId,
-			String accountUserExternalReferenceCode)
+	public void deleteAccountRoleUserAssociation(
+			Long accountId, Long accountRoleId, Long accountUserId)
 		throws Exception;
 
-	public void postAccountRoleUserAssociationByExternalReferenceCode(
+	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
 			String accountUserExternalReferenceCode)
 		throws Exception;
@@ -60,10 +59,6 @@ public interface AccountRoleResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public AccountRole postAccountRoleByExternalReferenceCode(
-			String externalReferenceCode, AccountRole accountRole)
-		throws Exception;
-
 	public Page<AccountRole> getAccountRolesPage(
 			Long accountId, String keywords, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
@@ -72,12 +67,17 @@ public interface AccountRoleResource {
 	public AccountRole postAccountRole(Long accountId, AccountRole accountRole)
 		throws Exception;
 
-	public void deleteAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+	public AccountRole postAccountRoleByExternalReferenceCode(
+			String externalReferenceCode, AccountRole accountRole)
 		throws Exception;
 
 	public void postAccountRoleUserAssociation(
 			Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception;
+
+	public void postAccountRoleUserAssociationByExternalReferenceCode(
+			String accountExternalReferenceCode, Long accountRoleId,
+			String accountUserExternalReferenceCode)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

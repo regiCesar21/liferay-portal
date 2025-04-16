@@ -49,9 +49,20 @@ public interface DataLayoutResource {
 	public void deleteDataDefinitionDataLayout(Long dataDefinitionId)
 		throws Exception;
 
+	public void deleteDataLayout(Long dataLayoutId) throws Exception;
+
+	public Response deleteDataLayoutBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DataLayout> getDataDefinitionDataLayoutsPage(
 			Long dataDefinitionId, String keywords, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public DataLayout getDataLayout(Long dataLayoutId) throws Exception;
+
+	public DataLayout getSiteDataLayoutByContentTypeByDataLayoutKey(
+			Long siteId, String contentType, String dataLayoutKey)
 		throws Exception;
 
 	public DataLayout postDataDefinitionDataLayout(
@@ -62,26 +73,15 @@ public interface DataLayoutResource {
 			Long dataDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteDataLayout(Long dataLayoutId) throws Exception;
-
-	public Response deleteDataLayoutBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public DataLayout getDataLayout(Long dataLayoutId) throws Exception;
-
-	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
-		throws Exception;
-
-	public Response putDataLayoutBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public Response postDataLayoutContext(
 			Long dataLayoutId,
 			DataLayoutRenderingContext dataLayoutRenderingContext)
 		throws Exception;
 
-	public DataLayout getSiteDataLayoutByContentTypeByDataLayoutKey(
-			Long siteId, String contentType, String dataLayoutKey)
+	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
+		throws Exception;
+
+	public Response putDataLayoutBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

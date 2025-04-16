@@ -51,10 +51,6 @@ public interface AccountUserResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public AccountUser postAccountUserByExternalReferenceCode(
-			String externalReferenceCode, AccountUser accountUser)
-		throws Exception;
-
 	public Page<AccountUser> getAccountUsersPage(
 			Long accountId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -63,6 +59,10 @@ public interface AccountUserResource {
 		throws Exception;
 
 	public AccountUser postAccountUser(Long accountId, AccountUser accountUser)
+		throws Exception;
+
+	public AccountUser postAccountUserByExternalReferenceCode(
+			String externalReferenceCode, AccountUser accountUser)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -44,15 +44,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductResource {
 
+	public Product getChannelProduct(
+			Long channelId, Long productId, Long accountId)
+		throws Exception;
+
 	public Page<Product> getChannelProductsPage(
 			Long channelId, Long accountId,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Product getChannelProduct(
-			Long channelId, Long productId, Long accountId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -636,27 +636,6 @@ public abstract class BaseAccountUserResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountUserByExternalReferenceCode() throws Exception {
-		AccountUser randomAccountUser = randomAccountUser();
-
-		AccountUser postAccountUser =
-			testPostAccountUserByExternalReferenceCode_addAccountUser(
-				randomAccountUser);
-
-		assertEquals(randomAccountUser, postAccountUser);
-		assertValid(postAccountUser);
-	}
-
-	protected AccountUser
-			testPostAccountUserByExternalReferenceCode_addAccountUser(
-				AccountUser accountUser)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetAccountUsersPage() throws Exception {
 		Long accountId = testGetAccountUsersPage_getAccountId();
 		Long irrelevantAccountId =
@@ -1111,6 +1090,27 @@ public abstract class BaseAccountUserResourceTestCase {
 
 	protected AccountUser testPostAccountUser_addAccountUser(
 			AccountUser accountUser)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountUserByExternalReferenceCode() throws Exception {
+		AccountUser randomAccountUser = randomAccountUser();
+
+		AccountUser postAccountUser =
+			testPostAccountUserByExternalReferenceCode_addAccountUser(
+				randomAccountUser);
+
+		assertEquals(randomAccountUser, postAccountUser);
+		assertValid(postAccountUser);
+	}
+
+	protected AccountUser
+			testPostAccountUserByExternalReferenceCode_addAccountUser(
+				AccountUser accountUser)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

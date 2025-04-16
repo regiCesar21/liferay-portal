@@ -45,6 +45,21 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountResource {
 
+	public void deleteAccount(Long accountId) throws Exception;
+
+	public Response deleteAccountBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteAccountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Account getAccount(Long accountId) throws Exception;
+
+	public Account getAccountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<Account> getAccountsPage(
 			String keywords,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -52,40 +67,25 @@ public interface AccountResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Account postAccount(Account account) throws Exception;
-
-	public Response postAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteAccountByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Account getAccountByExternalReferenceCode(
-			String externalReferenceCode)
+	public Account patchAccount(Long accountId, Account account)
 		throws Exception;
 
 	public Account patchAccountByExternalReferenceCode(
 			String externalReferenceCode, Account account)
 		throws Exception;
 
-	public Account putAccountByExternalReferenceCode(
-			String externalReferenceCode, Account account)
-		throws Exception;
+	public Account postAccount(Account account) throws Exception;
 
-	public void deleteAccount(Long accountId) throws Exception;
-
-	public Response deleteAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Account getAccount(Long accountId) throws Exception;
-
-	public Account patchAccount(Long accountId, Account account)
+	public Response postAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Account putAccount(Long accountId, Account account) throws Exception;
 
 	public Response putAccountBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Account putAccountByExternalReferenceCode(
+			String externalReferenceCode, Account account)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

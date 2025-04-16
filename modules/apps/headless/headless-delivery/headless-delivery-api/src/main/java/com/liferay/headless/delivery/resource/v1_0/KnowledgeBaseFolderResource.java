@@ -56,30 +56,22 @@ public interface KnowledgeBaseFolderResource {
 			Long knowledgeBaseFolderId)
 		throws Exception;
 
-	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception;
-
-	public KnowledgeBaseFolder putKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception;
-
-	public Response putKnowledgeBaseFolderBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
 	public Page<KnowledgeBaseFolder>
 			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
 				Long parentKnowledgeBaseFolderId, Pagination pagination)
 		throws Exception;
 
+	public Page<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
+			Long siteId, Pagination pagination)
+		throws Exception;
+
+	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
+			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception;
+
 	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
 			Long parentKnowledgeBaseFolderId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception;
-
-	public Page<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
-			Long siteId, Pagination pagination)
 		throws Exception;
 
 	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
@@ -88,6 +80,14 @@ public interface KnowledgeBaseFolderResource {
 
 	public Response postSiteKnowledgeBaseFolderBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public KnowledgeBaseFolder putKnowledgeBaseFolder(
+			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception;
+
+	public Response putKnowledgeBaseFolderBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

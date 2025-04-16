@@ -45,8 +45,39 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommentResource {
 
+	public void deleteComment(Long commentId) throws Exception;
+
+	public Response deleteCommentBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<Comment> getBlogPostingCommentsPage(
 			Long blogPostingId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Comment getComment(Long commentId) throws Exception;
+
+	public Page<Comment> getCommentCommentsPage(
+			Long parentCommentId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<Comment> getDocumentCommentsPage(
+			Long documentId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<Comment> getStructuredContentCommentsPage(
+			Long structuredContentId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
@@ -60,35 +91,7 @@ public interface CommentResource {
 			Long blogPostingId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteComment(Long commentId) throws Exception;
-
-	public Response deleteCommentBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Comment getComment(Long commentId) throws Exception;
-
-	public Comment putComment(Long commentId, Comment comment) throws Exception;
-
-	public Response putCommentBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Page<Comment> getCommentCommentsPage(
-			Long parentCommentId, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
 	public Comment postCommentComment(Long parentCommentId, Comment comment)
-		throws Exception;
-
-	public Page<Comment> getDocumentCommentsPage(
-			Long documentId, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Comment postDocumentComment(Long documentId, Comment comment)
@@ -98,20 +101,17 @@ public interface CommentResource {
 			Long documentId, String callbackURL, Object object)
 		throws Exception;
 
-	public Page<Comment> getStructuredContentCommentsPage(
-			Long structuredContentId, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
 	public Comment postStructuredContentComment(
 			Long structuredContentId, Comment comment)
 		throws Exception;
 
 	public Response postStructuredContentCommentBatch(
 			Long structuredContentId, String callbackURL, Object object)
+		throws Exception;
+
+	public Comment putComment(Long commentId, Comment comment) throws Exception;
+
+	public Response putCommentBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

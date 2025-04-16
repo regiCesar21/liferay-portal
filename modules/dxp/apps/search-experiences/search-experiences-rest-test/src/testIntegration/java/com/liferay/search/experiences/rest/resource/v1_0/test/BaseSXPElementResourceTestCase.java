@@ -194,6 +194,140 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSXPElement() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SXPElement sxpElement = testDeleteSXPElement_addSXPElement();
+
+		assertHttpResponseStatusCode(
+			204,
+			sxpElementResource.deleteSXPElementHttpResponse(
+				sxpElement.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			sxpElementResource.getSXPElementHttpResponse(sxpElement.getId()));
+		assertHttpResponseStatusCode(
+			404, sxpElementResource.getSXPElementHttpResponse(0L));
+	}
+
+	protected SXPElement testDeleteSXPElement_addSXPElement() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteSXPElement() throws Exception {
+
+		// No namespace
+
+		SXPElement sxpElement1 = testGraphQLDeleteSXPElement_addSXPElement();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSXPElement",
+						new HashMap<String, Object>() {
+							{
+								put("sxpElementId", sxpElement1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteSXPElement"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"sXPElement",
+					new HashMap<String, Object>() {
+						{
+							put("sxpElementId", sxpElement1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected SXPElement testGraphQLDeleteSXPElement_addSXPElement()
+		throws Exception {
+
+		return testGraphQLSXPElement_addSXPElement();
+	}
+
+	@Test
+	public void testGetSXPElement() throws Exception {
+		SXPElement postSXPElement = testGetSXPElement_addSXPElement();
+
+		SXPElement getSXPElement = sxpElementResource.getSXPElement(
+			postSXPElement.getId());
+
+		assertEquals(postSXPElement, getSXPElement);
+		assertValid(getSXPElement);
+	}
+
+	protected SXPElement testGetSXPElement_addSXPElement() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSXPElement() throws Exception {
+		SXPElement sxpElement = testGraphQLGetSXPElement_addSXPElement();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				sxpElement,
+				SXPElementSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"sXPElement",
+								new HashMap<String, Object>() {
+									{
+										put("sxpElementId", sxpElement.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/sXPElement"))));
+	}
+
+	@Test
+	public void testGraphQLGetSXPElementNotFound() throws Exception {
+		Long irrelevantSxpElementId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"sXPElement",
+						new HashMap<String, Object>() {
+							{
+								put("sxpElementId", irrelevantSxpElementId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected SXPElement testGraphQLGetSXPElement_addSXPElement()
+		throws Exception {
+
+		return testGraphQLSXPElement_addSXPElement();
+	}
+
+	@Test
+	public void testGetSXPElementExport() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetSXPElementsPage() throws Exception {
 		Page<SXPElement> page = sxpElementResource.getSXPElementsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -525,172 +659,6 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
-	public void testPostSXPElement() throws Exception {
-		SXPElement randomSXPElement = randomSXPElement();
-
-		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
-			randomSXPElement);
-
-		assertEquals(randomSXPElement, postSXPElement);
-		assertValid(postSXPElement);
-	}
-
-	protected SXPElement testPostSXPElement_addSXPElement(SXPElement sxpElement)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostSXPElementValidate() throws Exception {
-		SXPElement randomSXPElement = randomSXPElement();
-
-		SXPElement postSXPElement = testPostSXPElementValidate_addSXPElement(
-			randomSXPElement);
-
-		assertEquals(randomSXPElement, postSXPElement);
-		assertValid(postSXPElement);
-	}
-
-	protected SXPElement testPostSXPElementValidate_addSXPElement(
-			SXPElement sxpElement)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSXPElement() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		SXPElement sxpElement = testDeleteSXPElement_addSXPElement();
-
-		assertHttpResponseStatusCode(
-			204,
-			sxpElementResource.deleteSXPElementHttpResponse(
-				sxpElement.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			sxpElementResource.getSXPElementHttpResponse(sxpElement.getId()));
-		assertHttpResponseStatusCode(
-			404, sxpElementResource.getSXPElementHttpResponse(0L));
-	}
-
-	protected SXPElement testDeleteSXPElement_addSXPElement() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteSXPElement() throws Exception {
-
-		// No namespace
-
-		SXPElement sxpElement1 = testGraphQLDeleteSXPElement_addSXPElement();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSXPElement",
-						new HashMap<String, Object>() {
-							{
-								put("sxpElementId", sxpElement1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSXPElement"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"sXPElement",
-					new HashMap<String, Object>() {
-						{
-							put("sxpElementId", sxpElement1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected SXPElement testGraphQLDeleteSXPElement_addSXPElement()
-		throws Exception {
-
-		return testGraphQLSXPElement_addSXPElement();
-	}
-
-	@Test
-	public void testGetSXPElement() throws Exception {
-		SXPElement postSXPElement = testGetSXPElement_addSXPElement();
-
-		SXPElement getSXPElement = sxpElementResource.getSXPElement(
-			postSXPElement.getId());
-
-		assertEquals(postSXPElement, getSXPElement);
-		assertValid(getSXPElement);
-	}
-
-	protected SXPElement testGetSXPElement_addSXPElement() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSXPElement() throws Exception {
-		SXPElement sxpElement = testGraphQLGetSXPElement_addSXPElement();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				sxpElement,
-				SXPElementSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"sXPElement",
-								new HashMap<String, Object>() {
-									{
-										put("sxpElementId", sxpElement.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/sXPElement"))));
-	}
-
-	@Test
-	public void testGraphQLGetSXPElementNotFound() throws Exception {
-		Long irrelevantSxpElementId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"sXPElement",
-						new HashMap<String, Object>() {
-							{
-								put("sxpElementId", irrelevantSxpElementId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected SXPElement testGraphQLGetSXPElement_addSXPElement()
-		throws Exception {
-
-		return testGraphQLSXPElement_addSXPElement();
-	}
-
-	@Test
 	public void testPatchSXPElement() throws Exception {
 		SXPElement postSXPElement = testPatchSXPElement_addSXPElement();
 
@@ -718,6 +686,24 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
+	public void testPostSXPElement() throws Exception {
+		SXPElement randomSXPElement = randomSXPElement();
+
+		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
+			randomSXPElement);
+
+		assertEquals(randomSXPElement, postSXPElement);
+		assertValid(postSXPElement);
+	}
+
+	protected SXPElement testPostSXPElement_addSXPElement(SXPElement sxpElement)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostSXPElementCopy() throws Exception {
 		SXPElement randomSXPElement = randomSXPElement();
 
@@ -737,8 +723,22 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
-	public void testGetSXPElementExport() throws Exception {
-		Assert.assertTrue(false);
+	public void testPostSXPElementValidate() throws Exception {
+		SXPElement randomSXPElement = randomSXPElement();
+
+		SXPElement postSXPElement = testPostSXPElementValidate_addSXPElement(
+			randomSXPElement);
+
+		assertEquals(randomSXPElement, postSXPElement);
+		assertValid(postSXPElement);
+	}
+
+	protected SXPElement testPostSXPElementValidate_addSXPElement(
+			SXPElement sxpElement)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

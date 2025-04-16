@@ -34,12 +34,12 @@ public interface WorkflowDefinitionResource {
 		return new Builder();
 	}
 
-	public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
-			Pagination pagination)
+	public void deleteWorkflowDefinitionUndeploy(String name, String version)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getWorkflowDefinitionsPageHttpResponse(
-			Pagination pagination)
+	public HttpInvoker.HttpResponse
+			deleteWorkflowDefinitionUndeployHttpResponse(
+				String name, String version)
 		throws Exception;
 
 	public WorkflowDefinition getWorkflowDefinitionByName(String name)
@@ -47,6 +47,14 @@ public interface WorkflowDefinitionResource {
 
 	public HttpInvoker.HttpResponse getWorkflowDefinitionByNameHttpResponse(
 			String name)
+		throws Exception;
+
+	public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
+			Pagination pagination)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getWorkflowDefinitionsPageHttpResponse(
+			Pagination pagination)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinitionDeploy(
@@ -63,14 +71,6 @@ public interface WorkflowDefinitionResource {
 
 	public HttpInvoker.HttpResponse postWorkflowDefinitionSaveHttpResponse(
 			WorkflowDefinition workflowDefinition)
-		throws Exception;
-
-	public void deleteWorkflowDefinitionUndeploy(String name, String version)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			deleteWorkflowDefinitionUndeployHttpResponse(
-				String name, String version)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinitionUpdateActive(
@@ -191,12 +191,12 @@ public interface WorkflowDefinitionResource {
 	public static class WorkflowDefinitionResourceImpl
 		implements WorkflowDefinitionResource {
 
-		public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
-				Pagination pagination)
+		public void deleteWorkflowDefinitionUndeploy(
+				String name, String version)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowDefinitionsPageHttpResponse(pagination);
+				deleteWorkflowDefinitionUndeployHttpResponse(name, version);
 
 			String content = httpResponse.getContent();
 
@@ -246,7 +246,7 @@ public interface WorkflowDefinitionResource {
 			}
 
 			try {
-				return Page.of(content, WorkflowDefinitionSerDes::toDTO);
+				return;
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -257,8 +257,9 @@ public interface WorkflowDefinitionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getWorkflowDefinitionsPageHttpResponse(
-				Pagination pagination)
+		public HttpInvoker.HttpResponse
+				deleteWorkflowDefinitionUndeployHttpResponse(
+					String name, String version)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -280,19 +281,20 @@ public interface WorkflowDefinitionResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
+			if (name != null) {
+				httpInvoker.parameter("name", String.valueOf(name));
+			}
+
+			if (version != null) {
+				httpInvoker.parameter("version", String.valueOf(version));
 			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-workflow/v1.0/workflow-definitions");
+						"/o/headless-admin-workflow/v1.0/workflow-definitions/undeploy");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -398,6 +400,117 @@ public interface WorkflowDefinitionResource {
 						"/o/headless-admin-workflow/v1.0/workflow-definitions/by-name/{name}");
 
 			httpInvoker.path("name", name);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
+				Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getWorkflowDefinitionsPageHttpResponse(pagination);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, WorkflowDefinitionSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getWorkflowDefinitionsPageHttpResponse(
+				Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-workflow/v1.0/workflow-definitions");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -611,119 +724,6 @@ public interface WorkflowDefinitionResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-admin-workflow/v1.0/workflow-definitions/save");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteWorkflowDefinitionUndeploy(
-				String name, String version)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteWorkflowDefinitionUndeployHttpResponse(name, version);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				deleteWorkflowDefinitionUndeployHttpResponse(
-					String name, String version)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			if (name != null) {
-				httpInvoker.parameter("name", String.valueOf(name));
-			}
-
-			if (version != null) {
-				httpInvoker.parameter("version", String.valueOf(version));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-workflow/v1.0/workflow-definitions/undeploy");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

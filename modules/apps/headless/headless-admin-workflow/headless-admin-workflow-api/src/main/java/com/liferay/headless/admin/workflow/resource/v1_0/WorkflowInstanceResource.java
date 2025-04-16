@@ -45,23 +45,23 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowInstanceResource {
 
-	public Page<WorkflowInstance> getWorkflowInstancesPage(
-			String[] assetClassNames, Long[] assetPrimaryKeys,
-			Boolean completed, Pagination pagination)
-		throws Exception;
-
-	public WorkflowInstance postWorkflowInstanceSubmit(
-			WorkflowInstanceSubmit workflowInstanceSubmit)
-		throws Exception;
-
 	public void deleteWorkflowInstance(Long workflowInstanceId)
 		throws Exception;
 
 	public WorkflowInstance getWorkflowInstance(Long workflowInstanceId)
 		throws Exception;
 
+	public Page<WorkflowInstance> getWorkflowInstancesPage(
+			String[] assetClassNames, Long[] assetPrimaryKeys,
+			Boolean completed, Pagination pagination)
+		throws Exception;
+
 	public WorkflowInstance postWorkflowInstanceChangeTransition(
 			Long workflowInstanceId, ChangeTransition changeTransition)
+		throws Exception;
+
+	public WorkflowInstance postWorkflowInstanceSubmit(
+			WorkflowInstanceSubmit workflowInstanceSubmit)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

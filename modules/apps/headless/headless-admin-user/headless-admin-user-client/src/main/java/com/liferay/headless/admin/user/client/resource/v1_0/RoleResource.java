@@ -34,15 +34,13 @@ public interface RoleResource {
 		return new Builder();
 	}
 
-	public Page<Role> getRolesPage(Pagination pagination) throws Exception;
-
-	public HttpInvoker.HttpResponse getRolesPageHttpResponse(
-			Pagination pagination)
+	public void deleteOrganizationRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long organizationId)
 		throws Exception;
 
-	public Role getRole(Long roleId) throws Exception;
-
-	public HttpInvoker.HttpResponse getRoleHttpResponse(Long roleId)
+	public HttpInvoker.HttpResponse
+			deleteOrganizationRoleUserAccountAssociationHttpResponse(
+				Long roleId, Long userAccountId, Long organizationId)
 		throws Exception;
 
 	public void deleteRoleUserAccountAssociation(
@@ -54,20 +52,24 @@ public interface RoleResource {
 				Long roleId, Long userAccountId)
 		throws Exception;
 
-	public void postRoleUserAccountAssociation(Long roleId, Long userAccountId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postRoleUserAccountAssociationHttpResponse(
-			Long roleId, Long userAccountId)
-		throws Exception;
-
-	public void deleteOrganizationRoleUserAccountAssociation(
-			Long roleId, Long userAccountId, Long organizationId)
+	public void deleteSiteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long siteId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteOrganizationRoleUserAccountAssociationHttpResponse(
-				Long roleId, Long userAccountId, Long organizationId)
+			deleteSiteRoleUserAccountAssociationHttpResponse(
+				Long roleId, Long userAccountId, Long siteId)
+		throws Exception;
+
+	public Role getRole(Long roleId) throws Exception;
+
+	public HttpInvoker.HttpResponse getRoleHttpResponse(Long roleId)
+		throws Exception;
+
+	public Page<Role> getRolesPage(Pagination pagination) throws Exception;
+
+	public HttpInvoker.HttpResponse getRolesPageHttpResponse(
+			Pagination pagination)
 		throws Exception;
 
 	public void postOrganizationRoleUserAccountAssociation(
@@ -79,13 +81,11 @@ public interface RoleResource {
 				Long roleId, Long userAccountId, Long organizationId)
 		throws Exception;
 
-	public void deleteSiteRoleUserAccountAssociation(
-			Long roleId, Long userAccountId, Long siteId)
+	public void postRoleUserAccountAssociation(Long roleId, Long userAccountId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			deleteSiteRoleUserAccountAssociationHttpResponse(
-				Long roleId, Long userAccountId, Long siteId)
+	public HttpInvoker.HttpResponse postRoleUserAccountAssociationHttpResponse(
+			Long roleId, Long userAccountId)
 		throws Exception;
 
 	public void postSiteRoleUserAccountAssociation(
@@ -205,9 +205,13 @@ public interface RoleResource {
 
 	public static class RoleResourceImpl implements RoleResource {
 
-		public Page<Role> getRolesPage(Pagination pagination) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getRolesPageHttpResponse(
-				pagination);
+		public void deleteOrganizationRoleUserAccountAssociation(
+				Long roleId, Long userAccountId, Long organizationId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteOrganizationRoleUserAccountAssociationHttpResponse(
+					roleId, userAccountId, organizationId);
 
 			String content = httpResponse.getContent();
 
@@ -257,7 +261,7 @@ public interface RoleResource {
 			}
 
 			try {
-				return Page.of(content, RoleSerDes::toDTO);
+				return;
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -268,8 +272,9 @@ public interface RoleResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getRolesPageHttpResponse(
-				Pagination pagination)
+		public HttpInvoker.HttpResponse
+				deleteOrganizationRoleUserAccountAssociationHttpResponse(
+					Long roleId, Long userAccountId, Long organizationId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -291,120 +296,16 @@ public interface RoleResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/roles");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Role getRole(Long roleId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getRoleHttpResponse(roleId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return RoleSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse getRoleHttpResponse(Long roleId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/roles/{roleId}");
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}");
 
 			httpInvoker.path("roleId", roleId);
+			httpInvoker.path("userAccountId", userAccountId);
+			httpInvoker.path("organizationId", organizationId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -523,13 +424,13 @@ public interface RoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postRoleUserAccountAssociation(
-				Long roleId, Long userAccountId)
+		public void deleteSiteRoleUserAccountAssociation(
+				Long roleId, Long userAccountId, Long siteId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postRoleUserAccountAssociationHttpResponse(
-					roleId, userAccountId);
+				deleteSiteRoleUserAccountAssociationHttpResponse(
+					roleId, userAccountId, siteId);
 
 			String content = httpResponse.getContent();
 
@@ -591,119 +492,8 @@ public interface RoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postRoleUserAccountAssociationHttpResponse(
-					Long roleId, Long userAccountId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body("[]", "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}");
-
-			httpInvoker.path("roleId", roleId);
-			httpInvoker.path("userAccountId", userAccountId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteOrganizationRoleUserAccountAssociation(
-				Long roleId, Long userAccountId, Long organizationId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteOrganizationRoleUserAccountAssociationHttpResponse(
-					roleId, userAccountId, organizationId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				deleteOrganizationRoleUserAccountAssociationHttpResponse(
-					Long roleId, Long userAccountId, Long organizationId)
+				deleteSiteRoleUserAccountAssociationHttpResponse(
+					Long roleId, Long userAccountId, Long siteId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -730,11 +520,220 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}");
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}");
 
 			httpInvoker.path("roleId", roleId);
 			httpInvoker.path("userAccountId", userAccountId);
-			httpInvoker.path("organizationId", organizationId);
+			httpInvoker.path("siteId", siteId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Role getRole(Long roleId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getRoleHttpResponse(roleId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return RoleSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getRoleHttpResponse(Long roleId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-user/v1.0/roles/{roleId}");
+
+			httpInvoker.path("roleId", roleId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<Role> getRolesPage(Pagination pagination) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getRolesPageHttpResponse(
+				pagination);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, RoleSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getRolesPageHttpResponse(
+				Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-admin-user/v1.0/roles");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -856,13 +855,13 @@ public interface RoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteSiteRoleUserAccountAssociation(
-				Long roleId, Long userAccountId, Long siteId)
+		public void postRoleUserAccountAssociation(
+				Long roleId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteSiteRoleUserAccountAssociationHttpResponse(
-					roleId, userAccountId, siteId);
+				postRoleUserAccountAssociationHttpResponse(
+					roleId, userAccountId);
 
 			String content = httpResponse.getContent();
 
@@ -924,11 +923,13 @@ public interface RoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteSiteRoleUserAccountAssociationHttpResponse(
-					Long roleId, Long userAccountId, Long siteId)
+				postRoleUserAccountAssociationHttpResponse(
+					Long roleId, Long userAccountId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body("[]", "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -947,16 +948,15 @@ public interface RoleResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}");
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}");
 
 			httpInvoker.path("roleId", roleId);
 			httpInvoker.path("userAccountId", userAccountId);
-			httpInvoker.path("siteId", siteId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

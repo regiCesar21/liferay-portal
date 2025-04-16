@@ -205,32 +205,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprints(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public SXPBlueprintPage sXPBlueprints(
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sxpBlueprintResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sxpBlueprintResource -> new SXPBlueprintPage(
-				sxpBlueprintResource.getSXPBlueprintsPage(
-					search,
-					_filterBiFunction.apply(sxpBlueprintResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(
-						sxpBlueprintResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){actions, configuration, createDate, description, description_i18n, elementInstances, externalReferenceCode, id, modifiedDate, schemaVersion, title, title_i18n, userName, version}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -265,10 +239,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElements(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprints(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public SXPElementPage sXPElements(
+	public SXPBlueprintPage sXPBlueprints(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -277,14 +251,15 @@ public class Query {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_sxpElementResourceComponentServiceObjects,
+			_sxpBlueprintResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			sxpElementResource -> new SXPElementPage(
-				sxpElementResource.getSXPElementsPage(
+			sxpBlueprintResource -> new SXPBlueprintPage(
+				sxpBlueprintResource.getSXPBlueprintsPage(
 					search,
-					_filterBiFunction.apply(sxpElementResource, filterString),
+					_filterBiFunction.apply(sxpBlueprintResource, filterString),
 					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(sxpElementResource, sortsString))));
+					_sortsBiFunction.apply(
+						sxpBlueprintResource, sortsString))));
 	}
 
 	/**
@@ -318,6 +293,31 @@ public class Query {
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.getSXPElementExport(
 				sxpElementId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElements(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SXPElementPage sXPElements(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> new SXPElementPage(
+				sxpElementResource.getSXPElementsPage(
+					search,
+					_filterBiFunction.apply(sxpElementResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(sxpElementResource, sortsString))));
 	}
 
 	/**

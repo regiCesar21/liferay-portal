@@ -84,6 +84,10 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AppResourceImpl.class, "deleteAppBatch"));
 					put(
+						"mutation#createDataDefinitionApp",
+						new ObjectValuePair<>(
+							AppResourceImpl.class, "postDataDefinitionApp"));
+					put(
 						"mutation#updateApp",
 						new ObjectValuePair<>(AppResourceImpl.class, "putApp"));
 					put(
@@ -98,18 +102,14 @@ public class ServletDataImpl implements ServletData {
 						"mutation#updateAppUndeploy",
 						new ObjectValuePair<>(
 							AppResourceImpl.class, "putAppUndeploy"));
-					put(
-						"mutation#createDataDefinitionApp",
-						new ObjectValuePair<>(
-							AppResourceImpl.class, "postDataDefinitionApp"));
 
+					put(
+						"query#app",
+						new ObjectValuePair<>(AppResourceImpl.class, "getApp"));
 					put(
 						"query#apps",
 						new ObjectValuePair<>(
 							AppResourceImpl.class, "getAppsPage"));
-					put(
-						"query#app",
-						new ObjectValuePair<>(AppResourceImpl.class, "getApp"));
 					put(
 						"query#dataDefinitionApps",
 						new ObjectValuePair<>(

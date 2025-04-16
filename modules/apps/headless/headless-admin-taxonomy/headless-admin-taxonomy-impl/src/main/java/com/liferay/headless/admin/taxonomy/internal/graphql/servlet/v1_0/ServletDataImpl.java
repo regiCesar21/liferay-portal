@@ -88,6 +88,14 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#deleteKeyword",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class, "deleteKeyword"));
+					put(
+						"mutation#deleteKeywordBatch",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class, "deleteKeywordBatch"));
+					put(
 						"mutation#createAssetLibraryKeyword",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class,
@@ -98,22 +106,6 @@ public class ServletDataImpl implements ServletData {
 							KeywordResourceImpl.class,
 							"postAssetLibraryKeywordBatch"));
 					put(
-						"mutation#deleteKeyword",
-						new ObjectValuePair<>(
-							KeywordResourceImpl.class, "deleteKeyword"));
-					put(
-						"mutation#deleteKeywordBatch",
-						new ObjectValuePair<>(
-							KeywordResourceImpl.class, "deleteKeywordBatch"));
-					put(
-						"mutation#updateKeyword",
-						new ObjectValuePair<>(
-							KeywordResourceImpl.class, "putKeyword"));
-					put(
-						"mutation#updateKeywordBatch",
-						new ObjectValuePair<>(
-							KeywordResourceImpl.class, "putKeywordBatch"));
-					put(
 						"mutation#createSiteKeyword",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "postSiteKeyword"));
@@ -122,10 +114,13 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "postSiteKeywordBatch"));
 					put(
-						"mutation#createTaxonomyCategoryTaxonomyCategory",
+						"mutation#updateKeyword",
 						new ObjectValuePair<>(
-							TaxonomyCategoryResourceImpl.class,
-							"postTaxonomyCategoryTaxonomyCategory"));
+							KeywordResourceImpl.class, "putKeyword"));
+					put(
+						"mutation#updateKeywordBatch",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class, "putKeywordBatch"));
 					put(
 						"mutation#deleteTaxonomyCategory",
 						new ObjectValuePair<>(
@@ -142,15 +137,10 @@ public class ServletDataImpl implements ServletData {
 							TaxonomyCategoryResourceImpl.class,
 							"patchTaxonomyCategory"));
 					put(
-						"mutation#updateTaxonomyCategory",
+						"mutation#createTaxonomyCategoryTaxonomyCategory",
 						new ObjectValuePair<>(
 							TaxonomyCategoryResourceImpl.class,
-							"putTaxonomyCategory"));
-					put(
-						"mutation#updateTaxonomyCategoryBatch",
-						new ObjectValuePair<>(
-							TaxonomyCategoryResourceImpl.class,
-							"putTaxonomyCategoryBatch"));
+							"postTaxonomyCategoryTaxonomyCategory"));
 					put(
 						"mutation#createTaxonomyVocabularyTaxonomyCategory",
 						new ObjectValuePair<>(
@@ -161,6 +151,31 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TaxonomyCategoryResourceImpl.class,
 							"postTaxonomyVocabularyTaxonomyCategoryBatch"));
+					put(
+						"mutation#updateTaxonomyCategory",
+						new ObjectValuePair<>(
+							TaxonomyCategoryResourceImpl.class,
+							"putTaxonomyCategory"));
+					put(
+						"mutation#updateTaxonomyCategoryBatch",
+						new ObjectValuePair<>(
+							TaxonomyCategoryResourceImpl.class,
+							"putTaxonomyCategoryBatch"));
+					put(
+						"mutation#deleteTaxonomyVocabulary",
+						new ObjectValuePair<>(
+							TaxonomyVocabularyResourceImpl.class,
+							"deleteTaxonomyVocabulary"));
+					put(
+						"mutation#deleteTaxonomyVocabularyBatch",
+						new ObjectValuePair<>(
+							TaxonomyVocabularyResourceImpl.class,
+							"deleteTaxonomyVocabularyBatch"));
+					put(
+						"mutation#patchTaxonomyVocabulary",
+						new ObjectValuePair<>(
+							TaxonomyVocabularyResourceImpl.class,
+							"patchTaxonomyVocabulary"));
 					put(
 						"mutation#createAssetLibraryTaxonomyVocabulary",
 						new ObjectValuePair<>(
@@ -182,21 +197,6 @@ public class ServletDataImpl implements ServletData {
 							TaxonomyVocabularyResourceImpl.class,
 							"postSiteTaxonomyVocabularyBatch"));
 					put(
-						"mutation#deleteTaxonomyVocabulary",
-						new ObjectValuePair<>(
-							TaxonomyVocabularyResourceImpl.class,
-							"deleteTaxonomyVocabulary"));
-					put(
-						"mutation#deleteTaxonomyVocabularyBatch",
-						new ObjectValuePair<>(
-							TaxonomyVocabularyResourceImpl.class,
-							"deleteTaxonomyVocabularyBatch"));
-					put(
-						"mutation#patchTaxonomyVocabulary",
-						new ObjectValuePair<>(
-							TaxonomyVocabularyResourceImpl.class,
-							"patchTaxonomyVocabulary"));
-					put(
 						"mutation#updateTaxonomyVocabulary",
 						new ObjectValuePair<>(
 							TaxonomyVocabularyResourceImpl.class,
@@ -213,18 +213,23 @@ public class ServletDataImpl implements ServletData {
 							KeywordResourceImpl.class,
 							"getAssetLibraryKeywordsPage"));
 					put(
+						"query#keyword",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class, "getKeyword"));
+					put(
 						"query#keywordsRanked",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class,
 							"getKeywordsRankedPage"));
 					put(
-						"query#keyword",
-						new ObjectValuePair<>(
-							KeywordResourceImpl.class, "getKeyword"));
-					put(
 						"query#keywords",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "getSiteKeywordsPage"));
+					put(
+						"query#taxonomyCategory",
+						new ObjectValuePair<>(
+							TaxonomyCategoryResourceImpl.class,
+							"getTaxonomyCategory"));
 					put(
 						"query#taxonomyCategoryRanked",
 						new ObjectValuePair<>(
@@ -235,11 +240,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TaxonomyCategoryResourceImpl.class,
 							"getTaxonomyCategoryTaxonomyCategoriesPage"));
-					put(
-						"query#taxonomyCategory",
-						new ObjectValuePair<>(
-							TaxonomyCategoryResourceImpl.class,
-							"getTaxonomyCategory"));
 					put(
 						"query#taxonomyVocabularyTaxonomyCategories",
 						new ObjectValuePair<>(

@@ -310,56 +310,6 @@ public abstract class BaseCartItemResourceTestCase {
 	}
 
 	@Test
-	public void testPatchCartItem() throws Exception {
-		CartItem postCartItem = testPatchCartItem_addCartItem();
-
-		CartItem randomPatchCartItem = randomPatchCartItem();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		CartItem patchCartItem = cartItemResource.patchCartItem(
-			postCartItem.getId(), randomPatchCartItem);
-
-		CartItem expectedPatchCartItem = postCartItem.clone();
-
-		BeanTestUtil.copyProperties(randomPatchCartItem, expectedPatchCartItem);
-
-		CartItem getCartItem = cartItemResource.getCartItem(
-			patchCartItem.getId());
-
-		assertEquals(expectedPatchCartItem, getCartItem);
-		assertValid(getCartItem);
-	}
-
-	protected CartItem testPatchCartItem_addCartItem() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutCartItem() throws Exception {
-		CartItem postCartItem = testPutCartItem_addCartItem();
-
-		CartItem randomCartItem = randomCartItem();
-
-		CartItem putCartItem = cartItemResource.putCartItem(
-			postCartItem.getId(), randomCartItem);
-
-		assertEquals(randomCartItem, putCartItem);
-		assertValid(putCartItem);
-
-		CartItem getCartItem = cartItemResource.getCartItem(
-			putCartItem.getId());
-
-		assertEquals(randomCartItem, getCartItem);
-		assertValid(getCartItem);
-	}
-
-	protected CartItem testPutCartItem_addCartItem() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetCartItemsPage() throws Exception {
 		Long cartId = testGetCartItemsPage_getCartId();
 		Long irrelevantCartId = testGetCartItemsPage_getIrrelevantCartId();
@@ -557,6 +507,32 @@ public abstract class BaseCartItemResourceTestCase {
 	}
 
 	@Test
+	public void testPatchCartItem() throws Exception {
+		CartItem postCartItem = testPatchCartItem_addCartItem();
+
+		CartItem randomPatchCartItem = randomPatchCartItem();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CartItem patchCartItem = cartItemResource.patchCartItem(
+			postCartItem.getId(), randomPatchCartItem);
+
+		CartItem expectedPatchCartItem = postCartItem.clone();
+
+		BeanTestUtil.copyProperties(randomPatchCartItem, expectedPatchCartItem);
+
+		CartItem getCartItem = cartItemResource.getCartItem(
+			patchCartItem.getId());
+
+		assertEquals(expectedPatchCartItem, getCartItem);
+		assertValid(getCartItem);
+	}
+
+	protected CartItem testPatchCartItem_addCartItem() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostCartItem() throws Exception {
 		CartItem randomCartItem = randomCartItem();
 
@@ -569,6 +545,30 @@ public abstract class BaseCartItemResourceTestCase {
 	protected CartItem testPostCartItem_addCartItem(CartItem cartItem)
 		throws Exception {
 
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutCartItem() throws Exception {
+		CartItem postCartItem = testPutCartItem_addCartItem();
+
+		CartItem randomCartItem = randomCartItem();
+
+		CartItem putCartItem = cartItemResource.putCartItem(
+			postCartItem.getId(), randomCartItem);
+
+		assertEquals(randomCartItem, putCartItem);
+		assertValid(putCartItem);
+
+		CartItem getCartItem = cartItemResource.getCartItem(
+			putCartItem.getId());
+
+		assertEquals(randomCartItem, getCartItem);
+		assertValid(getCartItem);
+	}
+
+	protected CartItem testPutCartItem_addCartItem() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

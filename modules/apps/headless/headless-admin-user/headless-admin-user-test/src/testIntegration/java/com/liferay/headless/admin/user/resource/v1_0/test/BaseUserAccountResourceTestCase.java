@@ -205,6 +205,72 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteUserAccount() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.deleteUserAccountHttpResponse(
+				userAccount.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getUserAccountHttpResponse(
+				userAccount.getId()));
+		assertHttpResponseStatusCode(
+			404, userAccountResource.getUserAccountHttpResponse(0L));
+	}
+
+	protected UserAccount testDeleteUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteUserAccount() throws Exception {
+
+		// No namespace
+
+		UserAccount userAccount1 =
+			testGraphQLDeleteUserAccount_addUserAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteUserAccount",
+						new HashMap<String, Object>() {
+							{
+								put("userAccountId", userAccount1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteUserAccount"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"userAccount",
+					new HashMap<String, Object>() {
+						{
+							put("userAccountId", userAccount1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected UserAccount testGraphQLDeleteUserAccount_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
+	}
+
+	@Test
 	public void testGetMyUserAccount() throws Exception {
 		UserAccount postUserAccount = testGetMyUserAccount_addUserAccount();
 
@@ -1090,6 +1156,75 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetUserAccount() throws Exception {
+		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
+
+		UserAccount getUserAccount = userAccountResource.getUserAccount(
+			postUserAccount.getId());
+
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetUserAccount() throws Exception {
+		UserAccount userAccount = testGraphQLGetUserAccount_addUserAccount();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"userAccount",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"userAccountId",
+											userAccount.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/userAccount"))));
+	}
+
+	@Test
+	public void testGraphQLGetUserAccountNotFound() throws Exception {
+		Long irrelevantUserAccountId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"userAccount",
+						new HashMap<String, Object>() {
+							{
+								put("userAccountId", irrelevantUserAccountId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected UserAccount testGraphQLGetUserAccount_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
+	}
+
+	@Test
 	public void testGetUserAccountsPage() throws Exception {
 		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -1480,160 +1615,6 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostUserAccount() throws Exception {
-		UserAccount randomUserAccount = randomUserAccount();
-
-		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
-			randomUserAccount);
-
-		assertEquals(randomUserAccount, postUserAccount);
-		assertValid(postUserAccount);
-	}
-
-	protected UserAccount testPostUserAccount_addUserAccount(
-			UserAccount userAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteUserAccount() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.deleteUserAccountHttpResponse(
-				userAccount.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			userAccountResource.getUserAccountHttpResponse(
-				userAccount.getId()));
-		assertHttpResponseStatusCode(
-			404, userAccountResource.getUserAccountHttpResponse(0L));
-	}
-
-	protected UserAccount testDeleteUserAccount_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteUserAccount() throws Exception {
-
-		// No namespace
-
-		UserAccount userAccount1 =
-			testGraphQLDeleteUserAccount_addUserAccount();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteUserAccount",
-						new HashMap<String, Object>() {
-							{
-								put("userAccountId", userAccount1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteUserAccount"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"userAccount",
-					new HashMap<String, Object>() {
-						{
-							put("userAccountId", userAccount1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected UserAccount testGraphQLDeleteUserAccount_addUserAccount()
-		throws Exception {
-
-		return testGraphQLUserAccount_addUserAccount();
-	}
-
-	@Test
-	public void testGetUserAccount() throws Exception {
-		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
-
-		UserAccount getUserAccount = userAccountResource.getUserAccount(
-			postUserAccount.getId());
-
-		assertEquals(postUserAccount, getUserAccount);
-		assertValid(getUserAccount);
-	}
-
-	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetUserAccount() throws Exception {
-		UserAccount userAccount = testGraphQLGetUserAccount_addUserAccount();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				userAccount,
-				UserAccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"userAccount",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"userAccountId",
-											userAccount.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/userAccount"))));
-	}
-
-	@Test
-	public void testGraphQLGetUserAccountNotFound() throws Exception {
-		Long irrelevantUserAccountId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"userAccount",
-						new HashMap<String, Object>() {
-							{
-								put("userAccountId", irrelevantUserAccountId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected UserAccount testGraphQLGetUserAccount_addUserAccount()
-		throws Exception {
-
-		return testGraphQLUserAccount_addUserAccount();
-	}
-
-	@Test
 	public void testPatchUserAccount() throws Exception {
 		UserAccount postUserAccount = testPatchUserAccount_addUserAccount();
 
@@ -1656,6 +1637,25 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	protected UserAccount testPatchUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostUserAccount() throws Exception {
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
+			randomUserAccount);
+
+		assertEquals(randomUserAccount, postUserAccount);
+		assertValid(postUserAccount);
+	}
+
+	protected UserAccount testPostUserAccount_addUserAccount(
+			UserAccount userAccount)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

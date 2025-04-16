@@ -261,6 +261,32 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteBlogPostingMyRating() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPosting blogPosting =
+			testDeleteBlogPostingMyRating_addBlogPosting();
+
+		assertHttpResponseStatusCode(
+			204,
+			blogPostingResource.deleteBlogPostingMyRatingHttpResponse(
+				blogPosting.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingResource.getBlogPostingMyRatingHttpResponse(
+				blogPosting.getId()));
+		assertHttpResponseStatusCode(
+			404, blogPostingResource.getBlogPostingMyRatingHttpResponse(0L));
+	}
+
+	protected BlogPosting testDeleteBlogPostingMyRating_addBlogPosting()
+		throws Exception {
+
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Test
 	public void testGetBlogPosting() throws Exception {
 		BlogPosting postBlogPosting = testGetBlogPosting_addBlogPosting();
 
@@ -327,85 +353,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 		throws Exception {
 
 		return testGraphQLBlogPosting_addBlogPosting();
-	}
-
-	@Test
-	public void testPatchBlogPosting() throws Exception {
-		BlogPosting postBlogPosting = testPatchBlogPosting_addBlogPosting();
-
-		BlogPosting randomPatchBlogPosting = randomPatchBlogPosting();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		BlogPosting patchBlogPosting = blogPostingResource.patchBlogPosting(
-			postBlogPosting.getId(), randomPatchBlogPosting);
-
-		BlogPosting expectedPatchBlogPosting = postBlogPosting.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchBlogPosting, expectedPatchBlogPosting);
-
-		BlogPosting getBlogPosting = blogPostingResource.getBlogPosting(
-			patchBlogPosting.getId());
-
-		assertEquals(expectedPatchBlogPosting, getBlogPosting);
-		assertValid(getBlogPosting);
-	}
-
-	protected BlogPosting testPatchBlogPosting_addBlogPosting()
-		throws Exception {
-
-		return blogPostingResource.postSiteBlogPosting(
-			testGroup.getGroupId(), randomBlogPosting());
-	}
-
-	@Test
-	public void testPutBlogPosting() throws Exception {
-		BlogPosting postBlogPosting = testPutBlogPosting_addBlogPosting();
-
-		BlogPosting randomBlogPosting = randomBlogPosting();
-
-		BlogPosting putBlogPosting = blogPostingResource.putBlogPosting(
-			postBlogPosting.getId(), randomBlogPosting);
-
-		assertEquals(randomBlogPosting, putBlogPosting);
-		assertValid(putBlogPosting);
-
-		BlogPosting getBlogPosting = blogPostingResource.getBlogPosting(
-			putBlogPosting.getId());
-
-		assertEquals(randomBlogPosting, getBlogPosting);
-		assertValid(getBlogPosting);
-	}
-
-	protected BlogPosting testPutBlogPosting_addBlogPosting() throws Exception {
-		return blogPostingResource.postSiteBlogPosting(
-			testGroup.getGroupId(), randomBlogPosting());
-	}
-
-	@Test
-	public void testDeleteBlogPostingMyRating() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		BlogPosting blogPosting =
-			testDeleteBlogPostingMyRating_addBlogPosting();
-
-		assertHttpResponseStatusCode(
-			204,
-			blogPostingResource.deleteBlogPostingMyRatingHttpResponse(
-				blogPosting.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.getBlogPostingMyRatingHttpResponse(
-				blogPosting.getId()));
-		assertHttpResponseStatusCode(
-			404, blogPostingResource.getBlogPostingMyRatingHttpResponse(0L));
-	}
-
-	protected BlogPosting testDeleteBlogPostingMyRating_addBlogPosting()
-		throws Exception {
-
-		return blogPostingResource.postSiteBlogPosting(
-			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -874,6 +821,35 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testPatchBlogPosting() throws Exception {
+		BlogPosting postBlogPosting = testPatchBlogPosting_addBlogPosting();
+
+		BlogPosting randomPatchBlogPosting = randomPatchBlogPosting();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPosting patchBlogPosting = blogPostingResource.patchBlogPosting(
+			postBlogPosting.getId(), randomPatchBlogPosting);
+
+		BlogPosting expectedPatchBlogPosting = postBlogPosting.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchBlogPosting, expectedPatchBlogPosting);
+
+		BlogPosting getBlogPosting = blogPostingResource.getBlogPosting(
+			patchBlogPosting.getId());
+
+		assertEquals(expectedPatchBlogPosting, getBlogPosting);
+		assertValid(getBlogPosting);
+	}
+
+	protected BlogPosting testPatchBlogPosting_addBlogPosting()
+		throws Exception {
+
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Test
 	public void testPostSiteBlogPosting() throws Exception {
 		BlogPosting randomBlogPosting = randomBlogPosting();
 
@@ -900,6 +876,30 @@ public abstract class BaseBlogPostingResourceTestCase {
 			randomBlogPosting);
 
 		Assert.assertTrue(equals(randomBlogPosting, blogPosting));
+	}
+
+	@Test
+	public void testPutBlogPosting() throws Exception {
+		BlogPosting postBlogPosting = testPutBlogPosting_addBlogPosting();
+
+		BlogPosting randomBlogPosting = randomBlogPosting();
+
+		BlogPosting putBlogPosting = blogPostingResource.putBlogPosting(
+			postBlogPosting.getId(), randomBlogPosting);
+
+		assertEquals(randomBlogPosting, putBlogPosting);
+		assertValid(putBlogPosting);
+
+		BlogPosting getBlogPosting = blogPostingResource.getBlogPosting(
+			putBlogPosting.getId());
+
+		assertEquals(randomBlogPosting, getBlogPosting);
+		assertValid(getBlogPosting);
+	}
+
+	protected BlogPosting testPutBlogPosting_addBlogPosting() throws Exception {
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test

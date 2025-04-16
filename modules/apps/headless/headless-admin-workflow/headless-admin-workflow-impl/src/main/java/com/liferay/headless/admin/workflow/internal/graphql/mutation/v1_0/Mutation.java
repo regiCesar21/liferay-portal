@@ -93,6 +93,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteWorkflowDefinitionUndeploy(
+			@GraphQLName("name") String name,
+			@GraphQLName("version") String version)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.deleteWorkflowDefinitionUndeploy(
+					name, version));
+
+		return true;
+	}
+
+	@GraphQLField
 	public WorkflowDefinition createWorkflowDefinitionDeploy(
 			@GraphQLName("workflowDefinition") WorkflowDefinition
 				workflowDefinition)
@@ -121,22 +137,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteWorkflowDefinitionUndeploy(
-			@GraphQLName("name") String name,
-			@GraphQLName("version") String version)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_workflowDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			workflowDefinitionResource ->
-				workflowDefinitionResource.deleteWorkflowDefinitionUndeploy(
-					name, version));
-
-		return true;
-	}
-
-	@GraphQLField
 	public WorkflowDefinition createWorkflowDefinitionUpdateActive(
 			@GraphQLName("active") Boolean active,
 			@GraphQLName("name") String name,
@@ -149,20 +149,6 @@ public class Mutation {
 			workflowDefinitionResource ->
 				workflowDefinitionResource.postWorkflowDefinitionUpdateActive(
 					active, name, version));
-	}
-
-	@GraphQLField
-	public WorkflowInstance createWorkflowInstanceSubmit(
-			@GraphQLName("workflowInstanceSubmit") WorkflowInstanceSubmit
-				workflowInstanceSubmit)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_workflowInstanceResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			workflowInstanceResource ->
-				workflowInstanceResource.postWorkflowInstanceSubmit(
-					workflowInstanceSubmit));
 	}
 
 	@GraphQLField
@@ -195,27 +181,17 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public java.util.Collection<WorkflowTask> createWorkflowTasksPage(
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("workflowTasksBulkSelection")
-				WorkflowTasksBulkSelection workflowTasksBulkSelection)
+	public WorkflowInstance createWorkflowInstanceSubmit(
+			@GraphQLName("workflowInstanceSubmit") WorkflowInstanceSubmit
+				workflowInstanceSubmit)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_workflowTaskResourceComponentServiceObjects,
+			_workflowInstanceResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			workflowTaskResource -> {
-				Page paginationPage =
-					workflowTaskResource.postWorkflowTasksPage(
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							workflowTaskResource, sortsString),
-						workflowTasksBulkSelection);
-
-				return paginationPage.getItems();
-			});
+			workflowInstanceResource ->
+				workflowInstanceResource.postWorkflowInstanceSubmit(
+					workflowInstanceSubmit));
 	}
 
 	@GraphQLField
@@ -338,6 +314,30 @@ public class Mutation {
 			workflowTaskResource ->
 				workflowTaskResource.postWorkflowTaskUpdateDueDate(
 					workflowTaskId, workflowTaskAssignToMe));
+	}
+
+	@GraphQLField
+	public java.util.Collection<WorkflowTask> createWorkflowTasksPage(
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("workflowTasksBulkSelection")
+				WorkflowTasksBulkSelection workflowTasksBulkSelection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> {
+				Page paginationPage =
+					workflowTaskResource.postWorkflowTasksPage(
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							workflowTaskResource, sortsString),
+						workflowTasksBulkSelection);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField

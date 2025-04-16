@@ -317,59 +317,6 @@ public abstract class BaseCartCommentResourceTestCase {
 	}
 
 	@Test
-	public void testPatchCartComment() throws Exception {
-		CartComment postCartComment = testPatchCartComment_addCartComment();
-
-		CartComment randomPatchCartComment = randomPatchCartComment();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		CartComment patchCartComment = cartCommentResource.patchCartComment(
-			postCartComment.getId(), randomPatchCartComment);
-
-		CartComment expectedPatchCartComment = postCartComment.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchCartComment, expectedPatchCartComment);
-
-		CartComment getCartComment = cartCommentResource.getCartComment(
-			patchCartComment.getId());
-
-		assertEquals(expectedPatchCartComment, getCartComment);
-		assertValid(getCartComment);
-	}
-
-	protected CartComment testPatchCartComment_addCartComment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutCartComment() throws Exception {
-		CartComment postCartComment = testPutCartComment_addCartComment();
-
-		CartComment randomCartComment = randomCartComment();
-
-		CartComment putCartComment = cartCommentResource.putCartComment(
-			postCartComment.getId(), randomCartComment);
-
-		assertEquals(randomCartComment, putCartComment);
-		assertValid(putCartComment);
-
-		CartComment getCartComment = cartCommentResource.getCartComment(
-			putCartComment.getId());
-
-		assertEquals(randomCartComment, getCartComment);
-		assertValid(getCartComment);
-	}
-
-	protected CartComment testPutCartComment_addCartComment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetCartCommentsPage() throws Exception {
 		Long cartId = testGetCartCommentsPage_getCartId();
 		Long irrelevantCartId = testGetCartCommentsPage_getIrrelevantCartId();
@@ -579,6 +526,35 @@ public abstract class BaseCartCommentResourceTestCase {
 	}
 
 	@Test
+	public void testPatchCartComment() throws Exception {
+		CartComment postCartComment = testPatchCartComment_addCartComment();
+
+		CartComment randomPatchCartComment = randomPatchCartComment();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CartComment patchCartComment = cartCommentResource.patchCartComment(
+			postCartComment.getId(), randomPatchCartComment);
+
+		CartComment expectedPatchCartComment = postCartComment.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchCartComment, expectedPatchCartComment);
+
+		CartComment getCartComment = cartCommentResource.getCartComment(
+			patchCartComment.getId());
+
+		assertEquals(expectedPatchCartComment, getCartComment);
+		assertValid(getCartComment);
+	}
+
+	protected CartComment testPatchCartComment_addCartComment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostCartComment() throws Exception {
 		CartComment randomCartComment = randomCartComment();
 
@@ -593,6 +569,30 @@ public abstract class BaseCartCommentResourceTestCase {
 			CartComment cartComment)
 		throws Exception {
 
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutCartComment() throws Exception {
+		CartComment postCartComment = testPutCartComment_addCartComment();
+
+		CartComment randomCartComment = randomCartComment();
+
+		CartComment putCartComment = cartCommentResource.putCartComment(
+			postCartComment.getId(), randomCartComment);
+
+		assertEquals(randomCartComment, putCartComment);
+		assertValid(putCartComment);
+
+		CartComment getCartComment = cartCommentResource.getCartComment(
+			putCartComment.getId());
+
+		assertEquals(randomCartComment, getCartComment);
+		assertValid(getCartComment);
+	}
+
+	protected CartComment testPutCartComment_addCartComment() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

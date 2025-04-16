@@ -73,31 +73,6 @@ public class Mutation {
 			userAccountResourceComponentServiceObjects;
 	}
 
-	@GraphQLField(description = "Creates a new organization")
-	public Organization createOrganization(
-			@GraphQLName("organization") Organization organization)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_organizationResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			organizationResource -> organizationResource.postOrganization(
-				organization));
-	}
-
-	@GraphQLField
-	public Response createOrganizationBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_organizationResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			organizationResource -> organizationResource.postOrganizationBatch(
-				callbackURL, object));
-	}
-
 	@GraphQLField(description = "Deletes an organization.")
 	public boolean deleteOrganization(
 			@GraphQLName("organizationId") String organizationId)
@@ -141,6 +116,31 @@ public class Mutation {
 				organizationId, organization));
 	}
 
+	@GraphQLField(description = "Creates a new organization")
+	public Organization createOrganization(
+			@GraphQLName("organization") Organization organization)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource -> organizationResource.postOrganization(
+				organization));
+	}
+
+	@GraphQLField
+	public Response createOrganizationBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource -> organizationResource.postOrganizationBatch(
+				callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Replaces the organization with information sent in the request body. Any missing fields are deleted unless they are required."
 	)
@@ -169,36 +169,6 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField(description = "Unassociates a role with a user account")
-	public boolean deleteRoleUserAccountAssociation(
-			@GraphQLName("roleId") Long roleId,
-			@GraphQLName("userAccountId") Long userAccountId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_roleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			roleResource -> roleResource.deleteRoleUserAccountAssociation(
-				roleId, userAccountId));
-
-		return true;
-	}
-
-	@GraphQLField(description = "Associates a role with a user account")
-	public boolean createRoleUserAccountAssociation(
-			@GraphQLName("roleId") Long roleId,
-			@GraphQLName("userAccountId") Long userAccountId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_roleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			roleResource -> roleResource.postRoleUserAccountAssociation(
-				roleId, userAccountId));
-
-		return true;
-	}
-
 	@GraphQLField(
 		description = "Unassociates an organization role with a user account"
 	)
@@ -214,6 +184,37 @@ public class Mutation {
 			roleResource ->
 				roleResource.deleteOrganizationRoleUserAccountAssociation(
 					roleId, userAccountId, organizationId));
+
+		return true;
+	}
+
+	@GraphQLField(description = "Unassociates a role with a user account")
+	public boolean deleteRoleUserAccountAssociation(
+			@GraphQLName("roleId") Long roleId,
+			@GraphQLName("userAccountId") Long userAccountId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.deleteRoleUserAccountAssociation(
+				roleId, userAccountId));
+
+		return true;
+	}
+
+	@GraphQLField(description = "Unassociates a site role with a user account")
+	public boolean deleteSiteRoleUserAccountAssociation(
+			@GraphQLName("roleId") Long roleId,
+			@GraphQLName("userAccountId") Long userAccountId,
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.deleteSiteRoleUserAccountAssociation(
+				roleId, userAccountId, Long.valueOf(siteKey)));
 
 		return true;
 	}
@@ -237,18 +238,17 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField(description = "Unassociates a site role with a user account")
-	public boolean deleteSiteRoleUserAccountAssociation(
+	@GraphQLField(description = "Associates a role with a user account")
+	public boolean createRoleUserAccountAssociation(
 			@GraphQLName("roleId") Long roleId,
-			@GraphQLName("userAccountId") Long userAccountId,
-			@GraphQLName("siteKey") @NotEmpty String siteKey)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_roleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			roleResource -> roleResource.deleteSiteRoleUserAccountAssociation(
-				roleId, userAccountId, Long.valueOf(siteKey)));
+			roleResource -> roleResource.postRoleUserAccountAssociation(
+				roleId, userAccountId));
 
 		return true;
 	}
@@ -282,31 +282,6 @@ public class Mutation {
 					subscriptionId));
 
 		return true;
-	}
-
-	@GraphQLField(description = "Creates a new user account")
-	public UserAccount createUserAccount(
-			@GraphQLName("userAccount") UserAccount userAccount)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_userAccountResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			userAccountResource -> userAccountResource.postUserAccount(
-				userAccount));
-	}
-
-	@GraphQLField
-	public Response createUserAccountBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_userAccountResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			userAccountResource -> userAccountResource.postUserAccountBatch(
-				callbackURL, object));
 	}
 
 	@GraphQLField(description = "Deletes the user account")
@@ -349,6 +324,31 @@ public class Mutation {
 			this::_populateResourceContext,
 			userAccountResource -> userAccountResource.patchUserAccount(
 				userAccountId, userAccount));
+	}
+
+	@GraphQLField(description = "Creates a new user account")
+	public UserAccount createUserAccount(
+			@GraphQLName("userAccount") UserAccount userAccount)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> userAccountResource.postUserAccount(
+				userAccount));
+	}
+
+	@GraphQLField
+	public Response createUserAccountBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> userAccountResource.postUserAccountBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(

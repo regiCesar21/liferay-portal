@@ -193,6 +193,237 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteProduct() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Product product = testDeleteProduct_addProduct();
+
+		assertHttpResponseStatusCode(
+			204, productResource.deleteProductHttpResponse(product.getId()));
+
+		assertHttpResponseStatusCode(
+			404, productResource.getProductHttpResponse(product.getId()));
+		assertHttpResponseStatusCode(
+			404, productResource.getProductHttpResponse(0L));
+	}
+
+	protected Product testDeleteProduct_addProduct() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteProduct() throws Exception {
+
+		// No namespace
+
+		Product product1 = testGraphQLDeleteProduct_addProduct();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProduct",
+						new HashMap<String, Object>() {
+							{
+								put("id", product1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProduct"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"product",
+					new HashMap<String, Object>() {
+						{
+							put("id", product1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Product testGraphQLDeleteProduct_addProduct() throws Exception {
+		return testGraphQLProduct_addProduct();
+	}
+
+	@Test
+	public void testDeleteProductByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Product product = testDeleteProductByExternalReferenceCode_addProduct();
+
+		assertHttpResponseStatusCode(
+			204,
+			productResource.deleteProductByExternalReferenceCodeHttpResponse(
+				product.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productResource.getProductByExternalReferenceCodeHttpResponse(
+				product.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			productResource.getProductByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Product testDeleteProductByExternalReferenceCode_addProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetProduct() throws Exception {
+		Product postProduct = testGetProduct_addProduct();
+
+		Product getProduct = productResource.getProduct(postProduct.getId());
+
+		assertEquals(postProduct, getProduct);
+		assertValid(getProduct);
+	}
+
+	protected Product testGetProduct_addProduct() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProduct() throws Exception {
+		Product product = testGraphQLGetProduct_addProduct();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				product,
+				ProductSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"product",
+								new HashMap<String, Object>() {
+									{
+										put("id", product.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/product"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"product",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Product testGraphQLGetProduct_addProduct() throws Exception {
+		return testGraphQLProduct_addProduct();
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCode() throws Exception {
+		Product postProduct =
+			testGetProductByExternalReferenceCode_addProduct();
+
+		Product getProduct = productResource.getProductByExternalReferenceCode(
+			postProduct.getExternalReferenceCode());
+
+		assertEquals(postProduct, getProduct);
+		assertValid(getProduct);
+	}
+
+	protected Product testGetProductByExternalReferenceCode_addProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductByExternalReferenceCode()
+		throws Exception {
+
+		Product product =
+			testGraphQLGetProductByExternalReferenceCode_addProduct();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				product,
+				ProductSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												product.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Product testGraphQLGetProductByExternalReferenceCode_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
+	}
+
+	@Test
 	public void testGetProductsPage() throws Exception {
 		Page<Product> page = productResource.getProductsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -550,6 +781,16 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testPatchProduct() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchProductByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostProduct() throws Exception {
 		Product randomProduct = randomProduct();
 
@@ -564,121 +805,6 @@ public abstract class BaseProductResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteProductByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Product product = testDeleteProductByExternalReferenceCode_addProduct();
-
-		assertHttpResponseStatusCode(
-			204,
-			productResource.deleteProductByExternalReferenceCodeHttpResponse(
-				product.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			productResource.getProductByExternalReferenceCodeHttpResponse(
-				product.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			productResource.getProductByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Product testDeleteProductByExternalReferenceCode_addProduct()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetProductByExternalReferenceCode() throws Exception {
-		Product postProduct =
-			testGetProductByExternalReferenceCode_addProduct();
-
-		Product getProduct = productResource.getProductByExternalReferenceCode(
-			postProduct.getExternalReferenceCode());
-
-		assertEquals(postProduct, getProduct);
-		assertValid(getProduct);
-	}
-
-	protected Product testGetProductByExternalReferenceCode_addProduct()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductByExternalReferenceCode()
-		throws Exception {
-
-		Product product =
-			testGraphQLGetProductByExternalReferenceCode_addProduct();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				product,
-				ProductSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"productByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												product.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/productByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetProductByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"productByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Product testGraphQLGetProductByExternalReferenceCode_addProduct()
-		throws Exception {
-
-		return testGraphQLProduct_addProduct();
-	}
-
-	@Test
-	public void testPatchProductByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -699,132 +825,6 @@ public abstract class BaseProductResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteProduct() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Product product = testDeleteProduct_addProduct();
-
-		assertHttpResponseStatusCode(
-			204, productResource.deleteProductHttpResponse(product.getId()));
-
-		assertHttpResponseStatusCode(
-			404, productResource.getProductHttpResponse(product.getId()));
-		assertHttpResponseStatusCode(
-			404, productResource.getProductHttpResponse(0L));
-	}
-
-	protected Product testDeleteProduct_addProduct() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteProduct() throws Exception {
-
-		// No namespace
-
-		Product product1 = testGraphQLDeleteProduct_addProduct();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteProduct",
-						new HashMap<String, Object>() {
-							{
-								put("id", product1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteProduct"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"product",
-					new HashMap<String, Object>() {
-						{
-							put("id", product1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Product testGraphQLDeleteProduct_addProduct() throws Exception {
-		return testGraphQLProduct_addProduct();
-	}
-
-	@Test
-	public void testGetProduct() throws Exception {
-		Product postProduct = testGetProduct_addProduct();
-
-		Product getProduct = productResource.getProduct(postProduct.getId());
-
-		assertEquals(postProduct, getProduct);
-		assertValid(getProduct);
-	}
-
-	protected Product testGetProduct_addProduct() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProduct() throws Exception {
-		Product product = testGraphQLGetProduct_addProduct();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				product,
-				ProductSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"product",
-								new HashMap<String, Object>() {
-									{
-										put("id", product.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/product"))));
-	}
-
-	@Test
-	public void testGraphQLGetProductNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"product",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Product testGraphQLGetProduct_addProduct() throws Exception {
-		return testGraphQLProduct_addProduct();
-	}
-
-	@Test
-	public void testPatchProduct() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Test

@@ -176,6 +176,72 @@ public abstract class BaseTaxCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteTaxCategory() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TaxCategory taxCategory = testDeleteTaxCategory_addTaxCategory();
+
+		assertHttpResponseStatusCode(
+			204,
+			taxCategoryResource.deleteTaxCategoryHttpResponse(
+				taxCategory.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			taxCategoryResource.getTaxCategoryHttpResponse(
+				taxCategory.getId()));
+		assertHttpResponseStatusCode(
+			404, taxCategoryResource.getTaxCategoryHttpResponse(0L));
+	}
+
+	protected TaxCategory testDeleteTaxCategory_addTaxCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteTaxCategory() throws Exception {
+
+		// No namespace
+
+		TaxCategory taxCategory1 =
+			testGraphQLDeleteTaxCategory_addTaxCategory();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteTaxCategory",
+						new HashMap<String, Object>() {
+							{
+								put("id", taxCategory1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteTaxCategory"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"taxCategory",
+					new HashMap<String, Object>() {
+						{
+							put("id", taxCategory1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected TaxCategory testGraphQLDeleteTaxCategory_addTaxCategory()
+		throws Exception {
+
+		return testGraphQLTaxCategory_addTaxCategory();
+	}
+
+	@Test
 	public void testGetCommerceAdminSiteSettingGroupTaxCategoryPage()
 		throws Exception {
 
@@ -371,95 +437,6 @@ public abstract class BaseTaxCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPostCommerceAdminSiteSettingGroupTaxCategory()
-		throws Exception {
-
-		TaxCategory randomTaxCategory = randomTaxCategory();
-
-		TaxCategory postTaxCategory =
-			testPostCommerceAdminSiteSettingGroupTaxCategory_addTaxCategory(
-				randomTaxCategory);
-
-		assertEquals(randomTaxCategory, postTaxCategory);
-		assertValid(postTaxCategory);
-	}
-
-	protected TaxCategory
-			testPostCommerceAdminSiteSettingGroupTaxCategory_addTaxCategory(
-				TaxCategory taxCategory)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteTaxCategory() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		TaxCategory taxCategory = testDeleteTaxCategory_addTaxCategory();
-
-		assertHttpResponseStatusCode(
-			204,
-			taxCategoryResource.deleteTaxCategoryHttpResponse(
-				taxCategory.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			taxCategoryResource.getTaxCategoryHttpResponse(
-				taxCategory.getId()));
-		assertHttpResponseStatusCode(
-			404, taxCategoryResource.getTaxCategoryHttpResponse(0L));
-	}
-
-	protected TaxCategory testDeleteTaxCategory_addTaxCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteTaxCategory() throws Exception {
-
-		// No namespace
-
-		TaxCategory taxCategory1 =
-			testGraphQLDeleteTaxCategory_addTaxCategory();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteTaxCategory",
-						new HashMap<String, Object>() {
-							{
-								put("id", taxCategory1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteTaxCategory"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"taxCategory",
-					new HashMap<String, Object>() {
-						{
-							put("id", taxCategory1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected TaxCategory testGraphQLDeleteTaxCategory_addTaxCategory()
-		throws Exception {
-
-		return testGraphQLTaxCategory_addTaxCategory();
-	}
-
-	@Test
 	public void testGetTaxCategory() throws Exception {
 		TaxCategory postTaxCategory = testGetTaxCategory_addTaxCategory();
 
@@ -524,6 +501,29 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		throws Exception {
 
 		return testGraphQLTaxCategory_addTaxCategory();
+	}
+
+	@Test
+	public void testPostCommerceAdminSiteSettingGroupTaxCategory()
+		throws Exception {
+
+		TaxCategory randomTaxCategory = randomTaxCategory();
+
+		TaxCategory postTaxCategory =
+			testPostCommerceAdminSiteSettingGroupTaxCategory_addTaxCategory(
+				randomTaxCategory);
+
+		assertEquals(randomTaxCategory, postTaxCategory);
+		assertValid(postTaxCategory);
+	}
+
+	protected TaxCategory
+			testPostCommerceAdminSiteSettingGroupTaxCategory_addTaxCategory(
+				TaxCategory taxCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

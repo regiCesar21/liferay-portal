@@ -53,42 +53,11 @@ public interface KnowledgeBaseArticleResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public KnowledgeBaseArticle getKnowledgeBaseArticle(
-			Long knowledgeBaseArticleId)
-		throws Exception;
-
-	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
-			Long knowledgeBaseArticleId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception;
-
-	public KnowledgeBaseArticle putKnowledgeBaseArticle(
-			Long knowledgeBaseArticleId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception;
-
-	public Response putKnowledgeBaseArticleBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
 		throws Exception;
 
-	public Rating getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
-		throws Exception;
-
-	public Rating postKnowledgeBaseArticleMyRating(
-			Long knowledgeBaseArticleId, Rating rating)
-		throws Exception;
-
-	public Rating putKnowledgeBaseArticleMyRating(
-			Long knowledgeBaseArticleId, Rating rating)
-		throws Exception;
-
-	public void putKnowledgeBaseArticleSubscribe(Long knowledgeBaseArticleId)
-		throws Exception;
-
-	public void putKnowledgeBaseArticleUnsubscribe(Long knowledgeBaseArticleId)
+	public KnowledgeBaseArticle getKnowledgeBaseArticle(
+			Long knowledgeBaseArticleId)
 		throws Exception;
 
 	public Page<KnowledgeBaseArticle>
@@ -101,9 +70,7 @@ public interface KnowledgeBaseArticleResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			Long parentKnowledgeBaseArticleId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
+	public Rating getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
 		throws Exception;
 
 	public Page<KnowledgeBaseArticle>
@@ -115,6 +82,28 @@ public interface KnowledgeBaseArticleResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
+	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+			Long parentKnowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
+	public Rating postKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception;
+
 	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
 			Long knowledgeBaseFolderId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
@@ -124,20 +113,31 @@ public interface KnowledgeBaseArticleResource {
 			Long knowledgeBaseFolderId, String callbackURL, Object object)
 		throws Exception;
 
-	public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
-			Long siteId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
 	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
 			Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
 	public Response postSiteKnowledgeBaseArticleBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public KnowledgeBaseArticle putKnowledgeBaseArticle(
+			Long knowledgeBaseArticleId,
+			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
+	public Response putKnowledgeBaseArticleBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public Rating putKnowledgeBaseArticleMyRating(
+			Long knowledgeBaseArticleId, Rating rating)
+		throws Exception;
+
+	public void putKnowledgeBaseArticleSubscribe(Long knowledgeBaseArticleId)
+		throws Exception;
+
+	public void putKnowledgeBaseArticleUnsubscribe(Long knowledgeBaseArticleId)
 		throws Exception;
 
 	public void putSiteKnowledgeBaseArticleSubscribe(Long siteId)

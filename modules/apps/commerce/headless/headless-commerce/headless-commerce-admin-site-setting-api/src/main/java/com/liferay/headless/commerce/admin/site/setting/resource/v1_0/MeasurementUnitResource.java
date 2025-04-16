@@ -45,22 +45,22 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MeasurementUnitResource {
 
-	public Page<MeasurementUnit>
-			getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-				Long groupId, Integer type, Pagination pagination)
-		throws Exception;
-
-	public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
-			Long groupId, MeasurementUnit measurementUnit)
-		throws Exception;
-
 	public Response deleteMeasurementUnit(Long id) throws Exception;
 
 	public Response deleteMeasurementUnitBatch(
 			String callbackURL, Object object)
 		throws Exception;
 
+	public Page<MeasurementUnit>
+			getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+				Long groupId, Integer type, Pagination pagination)
+		throws Exception;
+
 	public MeasurementUnit getMeasurementUnit(Long id) throws Exception;
+
+	public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
+			Long groupId, MeasurementUnit measurementUnit)
+		throws Exception;
 
 	public Response putMeasurementUnit(Long id, MeasurementUnit measurementUnit)
 		throws Exception;

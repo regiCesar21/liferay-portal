@@ -88,29 +88,6 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#createAccount",
-						new ObjectValuePair<>(
-							AccountResourceImpl.class, "postAccount"));
-					put(
-						"mutation#createAccountBatch",
-						new ObjectValuePair<>(
-							AccountResourceImpl.class, "postAccountBatch"));
-					put(
-						"mutation#deleteAccountByExternalReferenceCode",
-						new ObjectValuePair<>(
-							AccountResourceImpl.class,
-							"deleteAccountByExternalReferenceCode"));
-					put(
-						"mutation#patchAccountByExternalReferenceCode",
-						new ObjectValuePair<>(
-							AccountResourceImpl.class,
-							"patchAccountByExternalReferenceCode"));
-					put(
-						"mutation#updateAccountByExternalReferenceCode",
-						new ObjectValuePair<>(
-							AccountResourceImpl.class,
-							"putAccountByExternalReferenceCode"));
-					put(
 						"mutation#deleteAccount",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "deleteAccount"));
@@ -119,9 +96,27 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "deleteAccountBatch"));
 					put(
+						"mutation#deleteAccountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"deleteAccountByExternalReferenceCode"));
+					put(
 						"mutation#patchAccount",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "patchAccount"));
+					put(
+						"mutation#patchAccountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"patchAccountByExternalReferenceCode"));
+					put(
+						"mutation#createAccount",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class, "postAccount"));
+					put(
+						"mutation#createAccountBatch",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class, "postAccountBatch"));
 					put(
 						"mutation#updateAccount",
 						new ObjectValuePair<>(
@@ -131,57 +126,62 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "putAccountBatch"));
 					put(
-						"mutation#deleteAccountRoleUserAssociationByExternalReferenceCode",
+						"mutation#updateAccountByExternalReferenceCode",
 						new ObjectValuePair<>(
-							AccountRoleResourceImpl.class,
-							"deleteAccountRoleUserAssociationByExternalReferenceCode"));
-					put(
-						"mutation#createAccountRoleUserAssociationByExternalReferenceCode",
-						new ObjectValuePair<>(
-							AccountRoleResourceImpl.class,
-							"postAccountRoleUserAssociationByExternalReferenceCode"));
-					put(
-						"mutation#createAccountRoleByExternalReferenceCode",
-						new ObjectValuePair<>(
-							AccountRoleResourceImpl.class,
-							"postAccountRoleByExternalReferenceCode"));
-					put(
-						"mutation#createAccountRole",
-						new ObjectValuePair<>(
-							AccountRoleResourceImpl.class, "postAccountRole"));
+							AccountResourceImpl.class,
+							"putAccountByExternalReferenceCode"));
 					put(
 						"mutation#deleteAccountRoleUserAssociation",
 						new ObjectValuePair<>(
 							AccountRoleResourceImpl.class,
 							"deleteAccountRoleUserAssociation"));
 					put(
+						"mutation#deleteAccountRoleUserAssociationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class,
+							"deleteAccountRoleUserAssociationByExternalReferenceCode"));
+					put(
+						"mutation#createAccountRole",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class, "postAccountRole"));
+					put(
+						"mutation#createAccountRoleByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class,
+							"postAccountRoleByExternalReferenceCode"));
+					put(
 						"mutation#createAccountRoleUserAssociation",
 						new ObjectValuePair<>(
 							AccountRoleResourceImpl.class,
 							"postAccountRoleUserAssociation"));
 					put(
-						"mutation#createAccountUserByExternalReferenceCode",
+						"mutation#createAccountRoleUserAssociationByExternalReferenceCode",
 						new ObjectValuePair<>(
-							AccountUserResourceImpl.class,
-							"postAccountUserByExternalReferenceCode"));
+							AccountRoleResourceImpl.class,
+							"postAccountRoleUserAssociationByExternalReferenceCode"));
 					put(
 						"mutation#createAccountUser",
 						new ObjectValuePair<>(
 							AccountUserResourceImpl.class, "postAccountUser"));
+					put(
+						"mutation#createAccountUserByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountUserResourceImpl.class,
+							"postAccountUserByExternalReferenceCode"));
 
 					put(
-						"query#accounts",
+						"query#account",
 						new ObjectValuePair<>(
-							AccountResourceImpl.class, "getAccountsPage"));
+							AccountResourceImpl.class, "getAccount"));
 					put(
 						"query#accountByExternalReferenceCode",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class,
 							"getAccountByExternalReferenceCode"));
 					put(
-						"query#account",
+						"query#accounts",
 						new ObjectValuePair<>(
-							AccountResourceImpl.class, "getAccount"));
+							AccountResourceImpl.class, "getAccountsPage"));
 					put(
 						"query#accountRolesByExternalReferenceCode",
 						new ObjectValuePair<>(

@@ -156,15 +156,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							IndexResourceImpl.class, "patchIndexesReindex"));
 					put(
-						"mutation#createProcessInstance",
-						new ObjectValuePair<>(
-							InstanceResourceImpl.class, "postProcessInstance"));
-					put(
-						"mutation#createProcessInstanceBatch",
-						new ObjectValuePair<>(
-							InstanceResourceImpl.class,
-							"postProcessInstanceBatch"));
-					put(
 						"mutation#deleteProcessInstance",
 						new ObjectValuePair<>(
 							InstanceResourceImpl.class,
@@ -180,6 +171,19 @@ public class ServletDataImpl implements ServletData {
 							InstanceResourceImpl.class,
 							"patchProcessInstanceComplete"));
 					put(
+						"mutation#createProcessInstance",
+						new ObjectValuePair<>(
+							InstanceResourceImpl.class, "postProcessInstance"));
+					put(
+						"mutation#createProcessInstanceBatch",
+						new ObjectValuePair<>(
+							InstanceResourceImpl.class,
+							"postProcessInstanceBatch"));
+					put(
+						"mutation#deleteProcessNode",
+						new ObjectValuePair<>(
+							NodeResourceImpl.class, "deleteProcessNode"));
+					put(
 						"mutation#createProcessNode",
 						new ObjectValuePair<>(
 							NodeResourceImpl.class, "postProcessNode"));
@@ -187,18 +191,6 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createProcessNodeBatch",
 						new ObjectValuePair<>(
 							NodeResourceImpl.class, "postProcessNodeBatch"));
-					put(
-						"mutation#deleteProcessNode",
-						new ObjectValuePair<>(
-							NodeResourceImpl.class, "deleteProcessNode"));
-					put(
-						"mutation#createProcess",
-						new ObjectValuePair<>(
-							ProcessResourceImpl.class, "postProcess"));
-					put(
-						"mutation#createProcessBatch",
-						new ObjectValuePair<>(
-							ProcessResourceImpl.class, "postProcessBatch"));
 					put(
 						"mutation#deleteProcess",
 						new ObjectValuePair<>(
@@ -208,6 +200,14 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProcessResourceImpl.class, "deleteProcessBatch"));
 					put(
+						"mutation#createProcess",
+						new ObjectValuePair<>(
+							ProcessResourceImpl.class, "postProcess"));
+					put(
+						"mutation#createProcessBatch",
+						new ObjectValuePair<>(
+							ProcessResourceImpl.class, "postProcessBatch"));
+					put(
 						"mutation#updateProcess",
 						new ObjectValuePair<>(
 							ProcessResourceImpl.class, "putProcess"));
@@ -215,14 +215,6 @@ public class ServletDataImpl implements ServletData {
 						"mutation#updateProcessBatch",
 						new ObjectValuePair<>(
 							ProcessResourceImpl.class, "putProcessBatch"));
-					put(
-						"mutation#createProcessSLA",
-						new ObjectValuePair<>(
-							SLAResourceImpl.class, "postProcessSLA"));
-					put(
-						"mutation#createProcessSLABatch",
-						new ObjectValuePair<>(
-							SLAResourceImpl.class, "postProcessSLABatch"));
 					put(
 						"mutation#deleteSLA",
 						new ObjectValuePair<>(
@@ -232,20 +224,20 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SLAResourceImpl.class, "deleteSLABatch"));
 					put(
+						"mutation#createProcessSLA",
+						new ObjectValuePair<>(
+							SLAResourceImpl.class, "postProcessSLA"));
+					put(
+						"mutation#createProcessSLABatch",
+						new ObjectValuePair<>(
+							SLAResourceImpl.class, "postProcessSLABatch"));
+					put(
 						"mutation#updateSLA",
 						new ObjectValuePair<>(SLAResourceImpl.class, "putSLA"));
 					put(
 						"mutation#updateSLABatch",
 						new ObjectValuePair<>(
 							SLAResourceImpl.class, "putSLABatch"));
-					put(
-						"mutation#createProcessTask",
-						new ObjectValuePair<>(
-							TaskResourceImpl.class, "postProcessTask"));
-					put(
-						"mutation#createProcessTaskBatch",
-						new ObjectValuePair<>(
-							TaskResourceImpl.class, "postProcessTaskBatch"));
 					put(
 						"mutation#deleteProcessTask",
 						new ObjectValuePair<>(
@@ -259,6 +251,14 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TaskResourceImpl.class,
 							"patchProcessTaskComplete"));
+					put(
+						"mutation#createProcessTask",
+						new ObjectValuePair<>(
+							TaskResourceImpl.class, "postProcessTask"));
+					put(
+						"mutation#createProcessTaskBatch",
+						new ObjectValuePair<>(
+							TaskResourceImpl.class, "postProcessTaskBatch"));
 					put(
 						"mutation#createProcessTasksPage",
 						new ObjectValuePair<>(
@@ -278,14 +278,14 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							IndexResourceImpl.class, "getIndexesPage"));
 					put(
+						"query#processInstance",
+						new ObjectValuePair<>(
+							InstanceResourceImpl.class, "getProcessInstance"));
+					put(
 						"query#processInstances",
 						new ObjectValuePair<>(
 							InstanceResourceImpl.class,
 							"getProcessInstancesPage"));
-					put(
-						"query#processInstance",
-						new ObjectValuePair<>(
-							InstanceResourceImpl.class, "getProcessInstance"));
 					put(
 						"query#processNodes",
 						new ObjectValuePair<>(
@@ -304,15 +304,15 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProcessResourceImpl.class, "getProcessTitle"));
 					put(
-						"query#processMetrics",
-						new ObjectValuePair<>(
-							ProcessMetricResourceImpl.class,
-							"getProcessMetricsPage"));
-					put(
 						"query#processMetric",
 						new ObjectValuePair<>(
 							ProcessMetricResourceImpl.class,
 							"getProcessMetric"));
+					put(
+						"query#processMetrics",
+						new ObjectValuePair<>(
+							ProcessMetricResourceImpl.class,
+							"getProcessMetricsPage"));
 					put(
 						"query#reindexStatus",
 						new ObjectValuePair<>(
@@ -330,13 +330,13 @@ public class ServletDataImpl implements ServletData {
 						"query#sLA",
 						new ObjectValuePair<>(SLAResourceImpl.class, "getSLA"));
 					put(
-						"query#processTasks",
-						new ObjectValuePair<>(
-							TaskResourceImpl.class, "getProcessTasksPage"));
-					put(
 						"query#processTask",
 						new ObjectValuePair<>(
 							TaskResourceImpl.class, "getProcessTask"));
+					put(
+						"query#processTasks",
+						new ObjectValuePair<>(
+							TaskResourceImpl.class, "getProcessTasksPage"));
 					put(
 						"query#timeRanges",
 						new ObjectValuePair<>(

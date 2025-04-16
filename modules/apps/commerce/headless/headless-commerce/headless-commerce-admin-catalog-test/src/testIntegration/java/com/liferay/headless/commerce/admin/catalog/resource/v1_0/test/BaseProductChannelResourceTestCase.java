@@ -253,78 +253,6 @@ public abstract class BaseProductChannelResourceTestCase {
 	}
 
 	@Test
-	public void testGetProductChannel() throws Exception {
-		ProductChannel postProductChannel =
-			testGetProductChannel_addProductChannel();
-
-		ProductChannel getProductChannel =
-			productChannelResource.getProductChannel(
-				postProductChannel.getId());
-
-		assertEquals(postProductChannel, getProductChannel);
-		assertValid(getProductChannel);
-	}
-
-	protected ProductChannel testGetProductChannel_addProductChannel()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductChannel() throws Exception {
-		ProductChannel productChannel =
-			testGraphQLGetProductChannel_addProductChannel();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				productChannel,
-				ProductChannelSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"productChannel",
-								new HashMap<String, Object>() {
-									{
-										put("id", productChannel.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/productChannel"))));
-	}
-
-	@Test
-	public void testGraphQLGetProductChannelNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"productChannel",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ProductChannel testGraphQLGetProductChannel_addProductChannel()
-		throws Exception {
-
-		return testGraphQLProductChannel_addProductChannel();
-	}
-
-	@Test
 	public void testGetProductByExternalReferenceCodeProductChannelsPage()
 		throws Exception {
 
@@ -532,6 +460,78 @@ public abstract class BaseProductChannelResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGetProductChannel() throws Exception {
+		ProductChannel postProductChannel =
+			testGetProductChannel_addProductChannel();
+
+		ProductChannel getProductChannel =
+			productChannelResource.getProductChannel(
+				postProductChannel.getId());
+
+		assertEquals(postProductChannel, getProductChannel);
+		assertValid(getProductChannel);
+	}
+
+	protected ProductChannel testGetProductChannel_addProductChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductChannel() throws Exception {
+		ProductChannel productChannel =
+			testGraphQLGetProductChannel_addProductChannel();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productChannel,
+				ProductChannelSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productChannel",
+								new HashMap<String, Object>() {
+									{
+										put("id", productChannel.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/productChannel"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductChannelNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productChannel",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductChannel testGraphQLGetProductChannel_addProductChannel()
+		throws Exception {
+
+		return testGraphQLProductChannel_addProductChannel();
 	}
 
 	@Test

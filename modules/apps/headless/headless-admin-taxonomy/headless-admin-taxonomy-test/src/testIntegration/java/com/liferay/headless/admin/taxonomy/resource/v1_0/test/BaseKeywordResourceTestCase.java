@@ -201,6 +201,63 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteKeyword() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword = testDeleteKeyword_addKeyword();
+
+		assertHttpResponseStatusCode(
+			204, keywordResource.deleteKeywordHttpResponse(keyword.getId()));
+
+		assertHttpResponseStatusCode(
+			404, keywordResource.getKeywordHttpResponse(keyword.getId()));
+		assertHttpResponseStatusCode(
+			404, keywordResource.getKeywordHttpResponse(0L));
+	}
+
+	protected Keyword testDeleteKeyword_addKeyword() throws Exception {
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
+	public void testGraphQLDeleteKeyword() throws Exception {
+
+		// No namespace
+
+		Keyword keyword1 = testGraphQLDeleteKeyword_addKeyword();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteKeyword",
+						new HashMap<String, Object>() {
+							{
+								put("keywordId", keyword1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteKeyword"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"keyword",
+					new HashMap<String, Object>() {
+						{
+							put("keywordId", keyword1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Keyword testGraphQLDeleteKeyword_addKeyword() throws Exception {
+		return testGraphQLKeyword_addKeyword();
+	}
+
+	@Test
 	public void testGetAssetLibraryKeywordsPage() throws Exception {
 		Long assetLibraryId =
 			testGetAssetLibraryKeywordsPage_getAssetLibraryId();
@@ -612,21 +669,67 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
-	public void testPostAssetLibraryKeyword() throws Exception {
-		Keyword randomKeyword = randomKeyword();
+	public void testGetKeyword() throws Exception {
+		Keyword postKeyword = testGetKeyword_addKeyword();
 
-		Keyword postKeyword = testPostAssetLibraryKeyword_addKeyword(
-			randomKeyword);
+		Keyword getKeyword = keywordResource.getKeyword(postKeyword.getId());
 
-		assertEquals(randomKeyword, postKeyword);
-		assertValid(postKeyword);
+		assertEquals(postKeyword, getKeyword);
+		assertValid(getKeyword);
 	}
 
-	protected Keyword testPostAssetLibraryKeyword_addKeyword(Keyword keyword)
-		throws Exception {
+	protected Keyword testGetKeyword_addKeyword() throws Exception {
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
 
-		return keywordResource.postAssetLibraryKeyword(
-			testGetAssetLibraryKeywordsPage_getAssetLibraryId(), keyword);
+	@Test
+	public void testGraphQLGetKeyword() throws Exception {
+		Keyword keyword = testGraphQLGetKeyword_addKeyword();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				keyword,
+				KeywordSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"keyword",
+								new HashMap<String, Object>() {
+									{
+										put("keywordId", keyword.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/keyword"))));
+	}
+
+	@Test
+	public void testGraphQLGetKeywordNotFound() throws Exception {
+		Long irrelevantKeywordId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"keyword",
+						new HashMap<String, Object>() {
+							{
+								put("keywordId", irrelevantKeywordId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Keyword testGraphQLGetKeyword_addKeyword() throws Exception {
+		return testGraphQLKeyword_addKeyword();
 	}
 
 	@Test
@@ -744,150 +847,6 @@ public abstract class BaseKeywordResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteKeyword() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Keyword keyword = testDeleteKeyword_addKeyword();
-
-		assertHttpResponseStatusCode(
-			204, keywordResource.deleteKeywordHttpResponse(keyword.getId()));
-
-		assertHttpResponseStatusCode(
-			404, keywordResource.getKeywordHttpResponse(keyword.getId()));
-		assertHttpResponseStatusCode(
-			404, keywordResource.getKeywordHttpResponse(0L));
-	}
-
-	protected Keyword testDeleteKeyword_addKeyword() throws Exception {
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
-	}
-
-	@Test
-	public void testGraphQLDeleteKeyword() throws Exception {
-
-		// No namespace
-
-		Keyword keyword1 = testGraphQLDeleteKeyword_addKeyword();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteKeyword",
-						new HashMap<String, Object>() {
-							{
-								put("keywordId", keyword1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteKeyword"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"keyword",
-					new HashMap<String, Object>() {
-						{
-							put("keywordId", keyword1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Keyword testGraphQLDeleteKeyword_addKeyword() throws Exception {
-		return testGraphQLKeyword_addKeyword();
-	}
-
-	@Test
-	public void testGetKeyword() throws Exception {
-		Keyword postKeyword = testGetKeyword_addKeyword();
-
-		Keyword getKeyword = keywordResource.getKeyword(postKeyword.getId());
-
-		assertEquals(postKeyword, getKeyword);
-		assertValid(getKeyword);
-	}
-
-	protected Keyword testGetKeyword_addKeyword() throws Exception {
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
-	}
-
-	@Test
-	public void testGraphQLGetKeyword() throws Exception {
-		Keyword keyword = testGraphQLGetKeyword_addKeyword();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				keyword,
-				KeywordSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"keyword",
-								new HashMap<String, Object>() {
-									{
-										put("keywordId", keyword.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/keyword"))));
-	}
-
-	@Test
-	public void testGraphQLGetKeywordNotFound() throws Exception {
-		Long irrelevantKeywordId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"keyword",
-						new HashMap<String, Object>() {
-							{
-								put("keywordId", irrelevantKeywordId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Keyword testGraphQLGetKeyword_addKeyword() throws Exception {
-		return testGraphQLKeyword_addKeyword();
-	}
-
-	@Test
-	public void testPutKeyword() throws Exception {
-		Keyword postKeyword = testPutKeyword_addKeyword();
-
-		Keyword randomKeyword = randomKeyword();
-
-		Keyword putKeyword = keywordResource.putKeyword(
-			postKeyword.getId(), randomKeyword);
-
-		assertEquals(randomKeyword, putKeyword);
-		assertValid(putKeyword);
-
-		Keyword getKeyword = keywordResource.getKeyword(putKeyword.getId());
-
-		assertEquals(randomKeyword, getKeyword);
-		assertValid(getKeyword);
-	}
-
-	protected Keyword testPutKeyword_addKeyword() throws Exception {
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
 	}
 
 	@Test
@@ -1319,6 +1278,24 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testPostAssetLibraryKeyword() throws Exception {
+		Keyword randomKeyword = randomKeyword();
+
+		Keyword postKeyword = testPostAssetLibraryKeyword_addKeyword(
+			randomKeyword);
+
+		assertEquals(randomKeyword, postKeyword);
+		assertValid(postKeyword);
+	}
+
+	protected Keyword testPostAssetLibraryKeyword_addKeyword(Keyword keyword)
+		throws Exception {
+
+		return keywordResource.postAssetLibraryKeyword(
+			testGetAssetLibraryKeywordsPage_getAssetLibraryId(), keyword);
+	}
+
+	@Test
 	public void testPostSiteKeyword() throws Exception {
 		Keyword randomKeyword = randomKeyword();
 
@@ -1342,6 +1319,29 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword = testGraphQLKeyword_addKeyword(randomKeyword);
 
 		Assert.assertTrue(equals(randomKeyword, keyword));
+	}
+
+	@Test
+	public void testPutKeyword() throws Exception {
+		Keyword postKeyword = testPutKeyword_addKeyword();
+
+		Keyword randomKeyword = randomKeyword();
+
+		Keyword putKeyword = keywordResource.putKeyword(
+			postKeyword.getId(), randomKeyword);
+
+		assertEquals(randomKeyword, putKeyword);
+		assertValid(putKeyword);
+
+		Keyword getKeyword = keywordResource.getKeyword(putKeyword.getId());
+
+		assertEquals(randomKeyword, getKeyword);
+		assertValid(getKeyword);
+	}
+
+	protected Keyword testPutKeyword_addKeyword() throws Exception {
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
 	}
 
 	@Rule

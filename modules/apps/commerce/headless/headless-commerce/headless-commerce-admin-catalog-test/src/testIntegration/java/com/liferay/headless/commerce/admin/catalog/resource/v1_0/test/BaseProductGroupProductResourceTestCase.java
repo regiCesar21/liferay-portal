@@ -458,30 +458,6 @@ public abstract class BaseProductGroupProductResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductGroupByExternalReferenceCodeProductGroupProduct()
-		throws Exception {
-
-		ProductGroupProduct randomProductGroupProduct =
-			randomProductGroupProduct();
-
-		ProductGroupProduct postProductGroupProduct =
-			testPostProductGroupByExternalReferenceCodeProductGroupProduct_addProductGroupProduct(
-				randomProductGroupProduct);
-
-		assertEquals(randomProductGroupProduct, postProductGroupProduct);
-		assertValid(postProductGroupProduct);
-	}
-
-	protected ProductGroupProduct
-			testPostProductGroupByExternalReferenceCodeProductGroupProduct_addProductGroupProduct(
-				ProductGroupProduct productGroupProduct)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetProductGroupIdProductGroupProductsPage()
 		throws Exception {
 
@@ -691,6 +667,30 @@ public abstract class BaseProductGroupProductResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostProductGroupByExternalReferenceCodeProductGroupProduct()
+		throws Exception {
+
+		ProductGroupProduct randomProductGroupProduct =
+			randomProductGroupProduct();
+
+		ProductGroupProduct postProductGroupProduct =
+			testPostProductGroupByExternalReferenceCodeProductGroupProduct_addProductGroupProduct(
+				randomProductGroupProduct);
+
+		assertEquals(randomProductGroupProduct, postProductGroupProduct);
+		assertValid(postProductGroupProduct);
+	}
+
+	protected ProductGroupProduct
+			testPostProductGroupByExternalReferenceCodeProductGroupProduct_addProductGroupProduct(
+				ProductGroupProduct productGroupProduct)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

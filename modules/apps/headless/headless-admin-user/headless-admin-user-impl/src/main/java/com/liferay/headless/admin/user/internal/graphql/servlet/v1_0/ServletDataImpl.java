@@ -122,16 +122,6 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#createOrganization",
-						new ObjectValuePair<>(
-							OrganizationResourceImpl.class,
-							"postOrganization"));
-					put(
-						"mutation#createOrganizationBatch",
-						new ObjectValuePair<>(
-							OrganizationResourceImpl.class,
-							"postOrganizationBatch"));
-					put(
 						"mutation#deleteOrganization",
 						new ObjectValuePair<>(
 							OrganizationResourceImpl.class,
@@ -147,6 +137,16 @@ public class ServletDataImpl implements ServletData {
 							OrganizationResourceImpl.class,
 							"patchOrganization"));
 					put(
+						"mutation#createOrganization",
+						new ObjectValuePair<>(
+							OrganizationResourceImpl.class,
+							"postOrganization"));
+					put(
+						"mutation#createOrganizationBatch",
+						new ObjectValuePair<>(
+							OrganizationResourceImpl.class,
+							"postOrganizationBatch"));
+					put(
 						"mutation#updateOrganization",
 						new ObjectValuePair<>(
 							OrganizationResourceImpl.class, "putOrganization"));
@@ -156,30 +156,30 @@ public class ServletDataImpl implements ServletData {
 							OrganizationResourceImpl.class,
 							"putOrganizationBatch"));
 					put(
+						"mutation#deleteOrganizationRoleUserAccountAssociation",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class,
+							"deleteOrganizationRoleUserAccountAssociation"));
+					put(
 						"mutation#deleteRoleUserAccountAssociation",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,
 							"deleteRoleUserAccountAssociation"));
 					put(
-						"mutation#createRoleUserAccountAssociation",
+						"mutation#deleteSiteRoleUserAccountAssociation",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,
-							"postRoleUserAccountAssociation"));
-					put(
-						"mutation#deleteOrganizationRoleUserAccountAssociation",
-						new ObjectValuePair<>(
-							RoleResourceImpl.class,
-							"deleteOrganizationRoleUserAccountAssociation"));
+							"deleteSiteRoleUserAccountAssociation"));
 					put(
 						"mutation#createOrganizationRoleUserAccountAssociation",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,
 							"postOrganizationRoleUserAccountAssociation"));
 					put(
-						"mutation#deleteSiteRoleUserAccountAssociation",
+						"mutation#createRoleUserAccountAssociation",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,
-							"deleteSiteRoleUserAccountAssociation"));
+							"postRoleUserAccountAssociation"));
 					put(
 						"mutation#createSiteRoleUserAccountAssociation",
 						new ObjectValuePair<>(
@@ -190,15 +190,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SubscriptionResourceImpl.class,
 							"deleteMyUserAccountSubscription"));
-					put(
-						"mutation#createUserAccount",
-						new ObjectValuePair<>(
-							UserAccountResourceImpl.class, "postUserAccount"));
-					put(
-						"mutation#createUserAccountBatch",
-						new ObjectValuePair<>(
-							UserAccountResourceImpl.class,
-							"postUserAccountBatch"));
 					put(
 						"mutation#deleteUserAccount",
 						new ObjectValuePair<>(
@@ -213,6 +204,15 @@ public class ServletDataImpl implements ServletData {
 						"mutation#patchUserAccount",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class, "patchUserAccount"));
+					put(
+						"mutation#createUserAccount",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class, "postUserAccount"));
+					put(
+						"mutation#createUserAccountBatch",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"postUserAccountBatch"));
 					put(
 						"mutation#updateUserAccount",
 						new ObjectValuePair<>(
@@ -238,11 +238,6 @@ public class ServletDataImpl implements ServletData {
 							EmailAddressResourceImpl.class,
 							"getUserAccountEmailAddressesPage"));
 					put(
-						"query#organizations",
-						new ObjectValuePair<>(
-							OrganizationResourceImpl.class,
-							"getOrganizationsPage"));
-					put(
 						"query#organization",
 						new ObjectValuePair<>(
 							OrganizationResourceImpl.class, "getOrganization"));
@@ -251,6 +246,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							OrganizationResourceImpl.class,
 							"getOrganizationOrganizationsPage"));
+					put(
+						"query#organizations",
+						new ObjectValuePair<>(
+							OrganizationResourceImpl.class,
+							"getOrganizationsPage"));
 					put(
 						"query#organizationPhones",
 						new ObjectValuePair<>(
@@ -281,13 +281,13 @@ public class ServletDataImpl implements ServletData {
 							PostalAddressResourceImpl.class,
 							"getUserAccountPostalAddressesPage"));
 					put(
-						"query#roles",
-						new ObjectValuePair<>(
-							RoleResourceImpl.class, "getRolesPage"));
-					put(
 						"query#role",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class, "getRole"));
+					put(
+						"query#roles",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "getRolesPage"));
 					put(
 						"query#segments",
 						new ObjectValuePair<>(
@@ -308,24 +308,24 @@ public class ServletDataImpl implements ServletData {
 							SiteResourceImpl.class,
 							"getMyUserAccountSitesPage"));
 					put(
+						"query#site",
+						new ObjectValuePair<>(
+							SiteResourceImpl.class, "getSite"));
+					put(
 						"query#byFriendlyUrlPath",
 						new ObjectValuePair<>(
 							SiteResourceImpl.class,
 							"getSiteByFriendlyUrlPath"));
 					put(
-						"query#site",
+						"query#myUserAccountSubscription",
 						new ObjectValuePair<>(
-							SiteResourceImpl.class, "getSite"));
+							SubscriptionResourceImpl.class,
+							"getMyUserAccountSubscription"));
 					put(
 						"query#myUserAccountSubscriptions",
 						new ObjectValuePair<>(
 							SubscriptionResourceImpl.class,
 							"getMyUserAccountSubscriptionsPage"));
-					put(
-						"query#myUserAccountSubscription",
-						new ObjectValuePair<>(
-							SubscriptionResourceImpl.class,
-							"getMyUserAccountSubscription"));
 					put(
 						"query#myUserAccount",
 						new ObjectValuePair<>(
@@ -341,14 +341,14 @@ public class ServletDataImpl implements ServletData {
 							UserAccountResourceImpl.class,
 							"getSiteUserAccountsPage"));
 					put(
+						"query#userAccount",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class, "getUserAccount"));
+					put(
 						"query#userAccounts",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,
 							"getUserAccountsPage"));
-					put(
-						"query#userAccount",
-						new ObjectValuePair<>(
-							UserAccountResourceImpl.class, "getUserAccount"));
 					put(
 						"query#organizationWebUrls",
 						new ObjectValuePair<>(

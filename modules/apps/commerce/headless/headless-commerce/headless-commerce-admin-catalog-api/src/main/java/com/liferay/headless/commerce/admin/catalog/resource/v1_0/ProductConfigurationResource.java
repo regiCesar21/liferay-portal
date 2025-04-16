@@ -46,12 +46,12 @@ public interface ProductConfigurationResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public ProductConfiguration getProductIdConfiguration(Long id)
+		throws Exception;
+
 	public Response patchProductByExternalReferenceCodeConfiguration(
 			String externalReferenceCode,
 			ProductConfiguration productConfiguration)
-		throws Exception;
-
-	public ProductConfiguration getProductIdConfiguration(Long id)
 		throws Exception;
 
 	public Response patchProductIdConfiguration(

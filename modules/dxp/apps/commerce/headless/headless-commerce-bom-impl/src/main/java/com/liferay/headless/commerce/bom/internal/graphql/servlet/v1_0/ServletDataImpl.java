@@ -86,6 +86,10 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#deleteAreaIdSpot",
+						new ObjectValuePair<>(
+							SpotResourceImpl.class, "deleteAreaIdSpot"));
+					put(
 						"mutation#createAreaIdSpot",
 						new ObjectValuePair<>(
 							SpotResourceImpl.class, "postAreaIdSpot"));
@@ -93,10 +97,6 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createAreaIdSpotBatch",
 						new ObjectValuePair<>(
 							SpotResourceImpl.class, "postAreaIdSpotBatch"));
-					put(
-						"mutation#deleteAreaIdSpot",
-						new ObjectValuePair<>(
-							SpotResourceImpl.class, "deleteAreaIdSpot"));
 					put(
 						"mutation#updateAreaIdSpot",
 						new ObjectValuePair<>(

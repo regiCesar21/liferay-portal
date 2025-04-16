@@ -53,13 +53,6 @@ public interface NavigationMenuResource {
 	public NavigationMenu getNavigationMenu(Long navigationMenuId)
 		throws Exception;
 
-	public NavigationMenu putNavigationMenu(
-			Long navigationMenuId, NavigationMenu navigationMenu)
-		throws Exception;
-
-	public Response putNavigationMenuBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public Page<NavigationMenu> getSiteNavigationMenusPage(
 			Long siteId, Pagination pagination)
 		throws Exception;
@@ -70,6 +63,13 @@ public interface NavigationMenuResource {
 
 	public Response postSiteNavigationMenuBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public NavigationMenu putNavigationMenu(
+			Long navigationMenuId, NavigationMenu navigationMenu)
+		throws Exception;
+
+	public Response putNavigationMenuBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

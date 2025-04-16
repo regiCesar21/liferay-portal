@@ -80,14 +80,6 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#createChannel",
-						new ObjectValuePair<>(
-							ChannelResourceImpl.class, "postChannel"));
-					put(
-						"mutation#createChannelBatch",
-						new ObjectValuePair<>(
-							ChannelResourceImpl.class, "postChannelBatch"));
-					put(
 						"mutation#deleteChannel",
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class, "deleteChannel"));
@@ -100,6 +92,14 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class, "patchChannel"));
 					put(
+						"mutation#createChannel",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class, "postChannel"));
+					put(
+						"mutation#createChannelBatch",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class, "postChannelBatch"));
+					put(
 						"mutation#updateChannel",
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class, "putChannel"));
@@ -109,13 +109,13 @@ public class ServletDataImpl implements ServletData {
 							ChannelResourceImpl.class, "putChannelBatch"));
 
 					put(
-						"query#channels",
-						new ObjectValuePair<>(
-							ChannelResourceImpl.class, "getChannelsPage"));
-					put(
 						"query#channel",
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class, "getChannel"));
+					put(
+						"query#channels",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class, "getChannelsPage"));
 					put(
 						"query#taxCategories",
 						new ObjectValuePair<>(

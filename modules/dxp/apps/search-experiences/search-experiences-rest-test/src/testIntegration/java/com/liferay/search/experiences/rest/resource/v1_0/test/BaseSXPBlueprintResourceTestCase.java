@@ -194,6 +194,149 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSXPBlueprint() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SXPBlueprint sxpBlueprint = testDeleteSXPBlueprint_addSXPBlueprint();
+
+		assertHttpResponseStatusCode(
+			204,
+			sxpBlueprintResource.deleteSXPBlueprintHttpResponse(
+				sxpBlueprint.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			sxpBlueprintResource.getSXPBlueprintHttpResponse(
+				sxpBlueprint.getId()));
+		assertHttpResponseStatusCode(
+			404, sxpBlueprintResource.getSXPBlueprintHttpResponse(0L));
+	}
+
+	protected SXPBlueprint testDeleteSXPBlueprint_addSXPBlueprint()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteSXPBlueprint() throws Exception {
+
+		// No namespace
+
+		SXPBlueprint sxpBlueprint1 =
+			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSXPBlueprint",
+						new HashMap<String, Object>() {
+							{
+								put("sxpBlueprintId", sxpBlueprint1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteSXPBlueprint"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"sXPBlueprint",
+					new HashMap<String, Object>() {
+						{
+							put("sxpBlueprintId", sxpBlueprint1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected SXPBlueprint testGraphQLDeleteSXPBlueprint_addSXPBlueprint()
+		throws Exception {
+
+		return testGraphQLSXPBlueprint_addSXPBlueprint();
+	}
+
+	@Test
+	public void testGetSXPBlueprint() throws Exception {
+		SXPBlueprint postSXPBlueprint = testGetSXPBlueprint_addSXPBlueprint();
+
+		SXPBlueprint getSXPBlueprint = sxpBlueprintResource.getSXPBlueprint(
+			postSXPBlueprint.getId());
+
+		assertEquals(postSXPBlueprint, getSXPBlueprint);
+		assertValid(getSXPBlueprint);
+	}
+
+	protected SXPBlueprint testGetSXPBlueprint_addSXPBlueprint()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSXPBlueprint() throws Exception {
+		SXPBlueprint sxpBlueprint =
+			testGraphQLGetSXPBlueprint_addSXPBlueprint();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				sxpBlueprint,
+				SXPBlueprintSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"sXPBlueprint",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"sxpBlueprintId",
+											sxpBlueprint.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/sXPBlueprint"))));
+	}
+
+	@Test
+	public void testGraphQLGetSXPBlueprintNotFound() throws Exception {
+		Long irrelevantSxpBlueprintId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"sXPBlueprint",
+						new HashMap<String, Object>() {
+							{
+								put("sxpBlueprintId", irrelevantSxpBlueprintId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected SXPBlueprint testGraphQLGetSXPBlueprint_addSXPBlueprint()
+		throws Exception {
+
+		return testGraphQLSXPBlueprint_addSXPBlueprint();
+	}
+
+	@Test
+	public void testGetSXPBlueprintExport() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetSXPBlueprintsPage() throws Exception {
 		Page<SXPBlueprint> page = sxpBlueprintResource.getSXPBlueprintsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -545,182 +688,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
-	public void testPostSXPBlueprint() throws Exception {
-		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
-
-		SXPBlueprint postSXPBlueprint = testPostSXPBlueprint_addSXPBlueprint(
-			randomSXPBlueprint);
-
-		assertEquals(randomSXPBlueprint, postSXPBlueprint);
-		assertValid(postSXPBlueprint);
-	}
-
-	protected SXPBlueprint testPostSXPBlueprint_addSXPBlueprint(
-			SXPBlueprint sxpBlueprint)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostSXPBlueprintValidate() throws Exception {
-		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
-
-		SXPBlueprint postSXPBlueprint =
-			testPostSXPBlueprintValidate_addSXPBlueprint(randomSXPBlueprint);
-
-		assertEquals(randomSXPBlueprint, postSXPBlueprint);
-		assertValid(postSXPBlueprint);
-	}
-
-	protected SXPBlueprint testPostSXPBlueprintValidate_addSXPBlueprint(
-			SXPBlueprint sxpBlueprint)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSXPBlueprint() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		SXPBlueprint sxpBlueprint = testDeleteSXPBlueprint_addSXPBlueprint();
-
-		assertHttpResponseStatusCode(
-			204,
-			sxpBlueprintResource.deleteSXPBlueprintHttpResponse(
-				sxpBlueprint.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			sxpBlueprintResource.getSXPBlueprintHttpResponse(
-				sxpBlueprint.getId()));
-		assertHttpResponseStatusCode(
-			404, sxpBlueprintResource.getSXPBlueprintHttpResponse(0L));
-	}
-
-	protected SXPBlueprint testDeleteSXPBlueprint_addSXPBlueprint()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteSXPBlueprint() throws Exception {
-
-		// No namespace
-
-		SXPBlueprint sxpBlueprint1 =
-			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSXPBlueprint",
-						new HashMap<String, Object>() {
-							{
-								put("sxpBlueprintId", sxpBlueprint1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSXPBlueprint"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"sXPBlueprint",
-					new HashMap<String, Object>() {
-						{
-							put("sxpBlueprintId", sxpBlueprint1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected SXPBlueprint testGraphQLDeleteSXPBlueprint_addSXPBlueprint()
-		throws Exception {
-
-		return testGraphQLSXPBlueprint_addSXPBlueprint();
-	}
-
-	@Test
-	public void testGetSXPBlueprint() throws Exception {
-		SXPBlueprint postSXPBlueprint = testGetSXPBlueprint_addSXPBlueprint();
-
-		SXPBlueprint getSXPBlueprint = sxpBlueprintResource.getSXPBlueprint(
-			postSXPBlueprint.getId());
-
-		assertEquals(postSXPBlueprint, getSXPBlueprint);
-		assertValid(getSXPBlueprint);
-	}
-
-	protected SXPBlueprint testGetSXPBlueprint_addSXPBlueprint()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSXPBlueprint() throws Exception {
-		SXPBlueprint sxpBlueprint =
-			testGraphQLGetSXPBlueprint_addSXPBlueprint();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				sxpBlueprint,
-				SXPBlueprintSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"sXPBlueprint",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"sxpBlueprintId",
-											sxpBlueprint.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/sXPBlueprint"))));
-	}
-
-	@Test
-	public void testGraphQLGetSXPBlueprintNotFound() throws Exception {
-		Long irrelevantSxpBlueprintId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"sXPBlueprint",
-						new HashMap<String, Object>() {
-							{
-								put("sxpBlueprintId", irrelevantSxpBlueprintId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected SXPBlueprint testGraphQLGetSXPBlueprint_addSXPBlueprint()
-		throws Exception {
-
-		return testGraphQLSXPBlueprint_addSXPBlueprint();
-	}
-
-	@Test
 	public void testPatchSXPBlueprint() throws Exception {
 		SXPBlueprint postSXPBlueprint = testPatchSXPBlueprint_addSXPBlueprint();
 
@@ -750,6 +717,25 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
+	public void testPostSXPBlueprint() throws Exception {
+		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
+
+		SXPBlueprint postSXPBlueprint = testPostSXPBlueprint_addSXPBlueprint(
+			randomSXPBlueprint);
+
+		assertEquals(randomSXPBlueprint, postSXPBlueprint);
+		assertValid(postSXPBlueprint);
+	}
+
+	protected SXPBlueprint testPostSXPBlueprint_addSXPBlueprint(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostSXPBlueprintCopy() throws Exception {
 		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
 
@@ -769,8 +755,22 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
-	public void testGetSXPBlueprintExport() throws Exception {
-		Assert.assertTrue(false);
+	public void testPostSXPBlueprintValidate() throws Exception {
+		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
+
+		SXPBlueprint postSXPBlueprint =
+			testPostSXPBlueprintValidate_addSXPBlueprint(randomSXPBlueprint);
+
+		assertEquals(randomSXPBlueprint, postSXPBlueprint);
+		assertValid(postSXPBlueprint);
+	}
+
+	protected SXPBlueprint testPostSXPBlueprintValidate_addSXPBlueprint(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

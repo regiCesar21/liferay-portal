@@ -47,12 +47,42 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DocumentResource {
 
+	public void deleteDocument(Long documentId) throws Exception;
+
+	public Response deleteDocumentBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteDocumentMyRating(Long documentId) throws Exception;
+
 	public Page<Document> getAssetLibraryDocumentsPage(
 			Long assetLibraryId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Document getDocument(Long documentId) throws Exception;
+
+	public Page<Document> getDocumentFolderDocumentsPage(
+			Long documentFolderId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Rating getDocumentMyRating(Long documentId) throws Exception;
+
+	public Page<Document> getSiteDocumentsPage(
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Document patchDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception;
 
 	public Document postAssetLibraryDocument(
@@ -64,14 +94,6 @@ public interface DocumentResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public Page<Document> getDocumentFolderDocumentsPage(
-			Long documentFolderId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
 	public Document postDocumentFolderDocument(
 			Long documentFolderId, MultipartBody multipartBody)
 		throws Exception;
@@ -81,14 +103,15 @@ public interface DocumentResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteDocument(Long documentId) throws Exception;
-
-	public Response deleteDocumentBatch(String callbackURL, Object object)
+	public Rating postDocumentMyRating(Long documentId, Rating rating)
 		throws Exception;
 
-	public Document getDocument(Long documentId) throws Exception;
+	public Document postSiteDocument(Long siteId, MultipartBody multipartBody)
+		throws Exception;
 
-	public Document patchDocument(Long documentId, MultipartBody multipartBody)
+	public Response postSiteDocumentBatch(
+			Long siteId, MultipartBody multipartBody, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public Document putDocument(Long documentId, MultipartBody multipartBody)
@@ -98,30 +121,7 @@ public interface DocumentResource {
 			MultipartBody multipartBody, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteDocumentMyRating(Long documentId) throws Exception;
-
-	public Rating getDocumentMyRating(Long documentId) throws Exception;
-
-	public Rating postDocumentMyRating(Long documentId, Rating rating)
-		throws Exception;
-
 	public Rating putDocumentMyRating(Long documentId, Rating rating)
-		throws Exception;
-
-	public Page<Document> getSiteDocumentsPage(
-			Long siteId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Document postSiteDocument(Long siteId, MultipartBody multipartBody)
-		throws Exception;
-
-	public Response postSiteDocumentBatch(
-			Long siteId, MultipartBody multipartBody, String callbackURL,
-			Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

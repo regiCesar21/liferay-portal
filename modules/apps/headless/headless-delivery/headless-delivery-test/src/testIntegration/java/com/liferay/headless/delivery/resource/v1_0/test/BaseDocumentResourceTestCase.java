@@ -214,6 +214,89 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDocument() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Document document = testDeleteDocument_addDocument();
+
+		assertHttpResponseStatusCode(
+			204, documentResource.deleteDocumentHttpResponse(document.getId()));
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document.getId()));
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(0L));
+	}
+
+	protected Document testDeleteDocument_addDocument() throws Exception {
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	@Test
+	public void testGraphQLDeleteDocument() throws Exception {
+
+		// No namespace
+
+		Document document1 = testGraphQLDeleteDocument_addDocument();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDocument",
+						new HashMap<String, Object>() {
+							{
+								put("documentId", document1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDocument"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"document",
+					new HashMap<String, Object>() {
+						{
+							put("documentId", document1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Document testGraphQLDeleteDocument_addDocument()
+		throws Exception {
+
+		return testGraphQLDocument_addDocument();
+	}
+
+	@Test
+	public void testDeleteDocumentMyRating() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Document document = testDeleteDocumentMyRating_addDocument();
+
+		assertHttpResponseStatusCode(
+			204,
+			documentResource.deleteDocumentMyRatingHttpResponse(
+				document.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentResource.getDocumentMyRatingHttpResponse(document.getId()));
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentMyRatingHttpResponse(0L));
+	}
+
+	protected Document testDeleteDocumentMyRating_addDocument()
+		throws Exception {
+
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	@Test
 	public void testGetAssetLibraryDocumentsPage() throws Exception {
 		Long assetLibraryId =
 			testGetAssetLibraryDocumentsPage_getAssetLibraryId();
@@ -636,27 +719,68 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testPostAssetLibraryDocument() throws Exception {
-		Document randomDocument = randomDocument();
+	public void testGetDocument() throws Exception {
+		Document postDocument = testGetDocument_addDocument();
 
-		Map<String, File> multipartFiles = getMultipartFiles();
+		Document getDocument = documentResource.getDocument(
+			postDocument.getId());
 
-		Document postDocument = testPostAssetLibraryDocument_addDocument(
-			randomDocument, multipartFiles);
-
-		assertEquals(randomDocument, postDocument);
-		assertValid(postDocument);
-
-		assertValid(postDocument, multipartFiles);
+		assertEquals(postDocument, getDocument);
+		assertValid(getDocument);
 	}
 
-	protected Document testPostAssetLibraryDocument_addDocument(
-			Document document, Map<String, File> multipartFiles)
-		throws Exception {
+	protected Document testGetDocument_addDocument() throws Exception {
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
 
-		return documentResource.postAssetLibraryDocument(
-			testGetAssetLibraryDocumentsPage_getAssetLibraryId(), document,
-			multipartFiles);
+	@Test
+	public void testGraphQLGetDocument() throws Exception {
+		Document document = testGraphQLGetDocument_addDocument();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				document,
+				DocumentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"document",
+								new HashMap<String, Object>() {
+									{
+										put("documentId", document.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/document"))));
+	}
+
+	@Test
+	public void testGraphQLGetDocumentNotFound() throws Exception {
+		Long irrelevantDocumentId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"document",
+						new HashMap<String, Object>() {
+							{
+								put("documentId", irrelevantDocumentId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Document testGraphQLGetDocument_addDocument() throws Exception {
+		return testGraphQLDocument_addDocument();
 	}
 
 	@Test
@@ -1085,236 +1209,6 @@ public abstract class BaseDocumentResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostDocumentFolderDocument() throws Exception {
-		Document randomDocument = randomDocument();
-
-		Map<String, File> multipartFiles = getMultipartFiles();
-
-		Document postDocument = testPostDocumentFolderDocument_addDocument(
-			randomDocument, multipartFiles);
-
-		assertEquals(randomDocument, postDocument);
-		assertValid(postDocument);
-
-		assertValid(postDocument, multipartFiles);
-	}
-
-	protected Document testPostDocumentFolderDocument_addDocument(
-			Document document, Map<String, File> multipartFiles)
-		throws Exception {
-
-		return documentResource.postDocumentFolderDocument(
-			testGetDocumentFolderDocumentsPage_getDocumentFolderId(), document,
-			multipartFiles);
-	}
-
-	@Test
-	public void testDeleteDocument() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Document document = testDeleteDocument_addDocument();
-
-		assertHttpResponseStatusCode(
-			204, documentResource.deleteDocumentHttpResponse(document.getId()));
-
-		assertHttpResponseStatusCode(
-			404, documentResource.getDocumentHttpResponse(document.getId()));
-		assertHttpResponseStatusCode(
-			404, documentResource.getDocumentHttpResponse(0L));
-	}
-
-	protected Document testDeleteDocument_addDocument() throws Exception {
-		return documentResource.postSiteDocument(
-			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
-	}
-
-	@Test
-	public void testGraphQLDeleteDocument() throws Exception {
-
-		// No namespace
-
-		Document document1 = testGraphQLDeleteDocument_addDocument();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDocument",
-						new HashMap<String, Object>() {
-							{
-								put("documentId", document1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDocument"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"document",
-					new HashMap<String, Object>() {
-						{
-							put("documentId", document1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Document testGraphQLDeleteDocument_addDocument()
-		throws Exception {
-
-		return testGraphQLDocument_addDocument();
-	}
-
-	@Test
-	public void testGetDocument() throws Exception {
-		Document postDocument = testGetDocument_addDocument();
-
-		Document getDocument = documentResource.getDocument(
-			postDocument.getId());
-
-		assertEquals(postDocument, getDocument);
-		assertValid(getDocument);
-	}
-
-	protected Document testGetDocument_addDocument() throws Exception {
-		return documentResource.postSiteDocument(
-			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
-	}
-
-	@Test
-	public void testGraphQLGetDocument() throws Exception {
-		Document document = testGraphQLGetDocument_addDocument();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				document,
-				DocumentSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"document",
-								new HashMap<String, Object>() {
-									{
-										put("documentId", document.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/document"))));
-	}
-
-	@Test
-	public void testGraphQLGetDocumentNotFound() throws Exception {
-		Long irrelevantDocumentId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"document",
-						new HashMap<String, Object>() {
-							{
-								put("documentId", irrelevantDocumentId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Document testGraphQLGetDocument_addDocument() throws Exception {
-		return testGraphQLDocument_addDocument();
-	}
-
-	@Test
-	public void testPatchDocument() throws Exception {
-		Document postDocument = testPatchDocument_addDocument();
-
-		Document randomPatchDocument = randomPatchDocument();
-
-		Map<String, File> multipartFiles = getMultipartFiles();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Document patchDocument = documentResource.patchDocument(
-			postDocument.getId(), randomPatchDocument, multipartFiles);
-
-		Document expectedPatchDocument = postDocument.clone();
-
-		BeanTestUtil.copyProperties(randomPatchDocument, expectedPatchDocument);
-
-		Document getDocument = documentResource.getDocument(
-			patchDocument.getId());
-
-		assertEquals(expectedPatchDocument, getDocument);
-		assertValid(getDocument);
-
-		assertValid(getDocument, multipartFiles);
-	}
-
-	protected Document testPatchDocument_addDocument() throws Exception {
-		return documentResource.postSiteDocument(
-			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
-	}
-
-	@Test
-	public void testPutDocument() throws Exception {
-		Document postDocument = testPutDocument_addDocument();
-
-		Document randomDocument = randomDocument();
-
-		Map<String, File> multipartFiles = getMultipartFiles();
-
-		Document putDocument = documentResource.putDocument(
-			postDocument.getId(), randomDocument, multipartFiles);
-
-		assertEquals(randomDocument, putDocument);
-		assertValid(putDocument);
-
-		Document getDocument = documentResource.getDocument(
-			putDocument.getId());
-
-		assertEquals(randomDocument, getDocument);
-		assertValid(getDocument);
-
-		assertValid(getDocument, multipartFiles);
-	}
-
-	protected Document testPutDocument_addDocument() throws Exception {
-		return documentResource.postSiteDocument(
-			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
-	}
-
-	@Test
-	public void testDeleteDocumentMyRating() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Document document = testDeleteDocumentMyRating_addDocument();
-
-		assertHttpResponseStatusCode(
-			204,
-			documentResource.deleteDocumentMyRatingHttpResponse(
-				document.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			documentResource.getDocumentMyRatingHttpResponse(document.getId()));
-		assertHttpResponseStatusCode(
-			404, documentResource.getDocumentMyRatingHttpResponse(0L));
-	}
-
-	protected Document testDeleteDocumentMyRating_addDocument()
-		throws Exception {
-
-		return documentResource.postSiteDocument(
-			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
 	@Test
@@ -1751,6 +1645,84 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testPatchDocument() throws Exception {
+		Document postDocument = testPatchDocument_addDocument();
+
+		Document randomPatchDocument = randomPatchDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Document patchDocument = documentResource.patchDocument(
+			postDocument.getId(), randomPatchDocument, multipartFiles);
+
+		Document expectedPatchDocument = postDocument.clone();
+
+		BeanTestUtil.copyProperties(randomPatchDocument, expectedPatchDocument);
+
+		Document getDocument = documentResource.getDocument(
+			patchDocument.getId());
+
+		assertEquals(expectedPatchDocument, getDocument);
+		assertValid(getDocument);
+
+		assertValid(getDocument, multipartFiles);
+	}
+
+	protected Document testPatchDocument_addDocument() throws Exception {
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	@Test
+	public void testPostAssetLibraryDocument() throws Exception {
+		Document randomDocument = randomDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document postDocument = testPostAssetLibraryDocument_addDocument(
+			randomDocument, multipartFiles);
+
+		assertEquals(randomDocument, postDocument);
+		assertValid(postDocument);
+
+		assertValid(postDocument, multipartFiles);
+	}
+
+	protected Document testPostAssetLibraryDocument_addDocument(
+			Document document, Map<String, File> multipartFiles)
+		throws Exception {
+
+		return documentResource.postAssetLibraryDocument(
+			testGetAssetLibraryDocumentsPage_getAssetLibraryId(), document,
+			multipartFiles);
+	}
+
+	@Test
+	public void testPostDocumentFolderDocument() throws Exception {
+		Document randomDocument = randomDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document postDocument = testPostDocumentFolderDocument_addDocument(
+			randomDocument, multipartFiles);
+
+		assertEquals(randomDocument, postDocument);
+		assertValid(postDocument);
+
+		assertValid(postDocument, multipartFiles);
+	}
+
+	protected Document testPostDocumentFolderDocument_addDocument(
+			Document document, Map<String, File> multipartFiles)
+		throws Exception {
+
+		return documentResource.postDocumentFolderDocument(
+			testGetDocumentFolderDocumentsPage_getDocumentFolderId(), document,
+			multipartFiles);
+	}
+
+	@Test
 	public void testPostSiteDocument() throws Exception {
 		Document randomDocument = randomDocument();
 
@@ -1771,6 +1743,34 @@ public abstract class BaseDocumentResourceTestCase {
 
 		return documentResource.postSiteDocument(
 			testGetSiteDocumentsPage_getSiteId(), document, multipartFiles);
+	}
+
+	@Test
+	public void testPutDocument() throws Exception {
+		Document postDocument = testPutDocument_addDocument();
+
+		Document randomDocument = randomDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document putDocument = documentResource.putDocument(
+			postDocument.getId(), randomDocument, multipartFiles);
+
+		assertEquals(randomDocument, putDocument);
+		assertValid(putDocument);
+
+		Document getDocument = documentResource.getDocument(
+			putDocument.getId());
+
+		assertEquals(randomDocument, getDocument);
+		assertValid(getDocument);
+
+		assertValid(getDocument, multipartFiles);
+	}
+
+	protected Document testPutDocument_addDocument() throws Exception {
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
 	@Rule

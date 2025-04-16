@@ -45,21 +45,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SXPElementResource {
 
-	public Page<SXPElement> getSXPElementsPage(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception;
-
-	public Response postSXPElementBatch(
-			SXPElement sxpElement, String callbackURL, Object object)
-		throws Exception;
-
-	public SXPElement postSXPElementValidate(String string) throws Exception;
-
 	public void deleteSXPElement(Long sxpElementId) throws Exception;
 
 	public Response deleteSXPElementBatch(
@@ -68,12 +53,27 @@ public interface SXPElementResource {
 
 	public SXPElement getSXPElement(Long sxpElementId) throws Exception;
 
+	public Response getSXPElementExport(Long sxpElementId) throws Exception;
+
+	public Page<SXPElement> getSXPElementsPage(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public SXPElement patchSXPElement(Long sxpElementId, SXPElement sxpElement)
+		throws Exception;
+
+	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception;
+
+	public Response postSXPElementBatch(
+			SXPElement sxpElement, String callbackURL, Object object)
 		throws Exception;
 
 	public SXPElement postSXPElementCopy(Long sxpElementId) throws Exception;
 
-	public Response getSXPElementExport(Long sxpElementId) throws Exception;
+	public SXPElement postSXPElementValidate(String string) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

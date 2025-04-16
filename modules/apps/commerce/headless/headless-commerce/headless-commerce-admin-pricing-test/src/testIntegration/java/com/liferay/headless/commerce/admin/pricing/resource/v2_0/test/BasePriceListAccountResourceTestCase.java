@@ -404,29 +404,6 @@ public abstract class BasePriceListAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostPriceListByExternalReferenceCodePriceListAccount()
-		throws Exception {
-
-		PriceListAccount randomPriceListAccount = randomPriceListAccount();
-
-		PriceListAccount postPriceListAccount =
-			testPostPriceListByExternalReferenceCodePriceListAccount_addPriceListAccount(
-				randomPriceListAccount);
-
-		assertEquals(randomPriceListAccount, postPriceListAccount);
-		assertValid(postPriceListAccount);
-	}
-
-	protected PriceListAccount
-			testPostPriceListByExternalReferenceCodePriceListAccount_addPriceListAccount(
-				PriceListAccount priceListAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetPriceListIdPriceListAccountsPage() throws Exception {
 		Long id = testGetPriceListIdPriceListAccountsPage_getId();
 		Long irrelevantId =
@@ -864,6 +841,29 @@ public abstract class BasePriceListAccountResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostPriceListByExternalReferenceCodePriceListAccount()
+		throws Exception {
+
+		PriceListAccount randomPriceListAccount = randomPriceListAccount();
+
+		PriceListAccount postPriceListAccount =
+			testPostPriceListByExternalReferenceCodePriceListAccount_addPriceListAccount(
+				randomPriceListAccount);
+
+		assertEquals(randomPriceListAccount, postPriceListAccount);
+		assertValid(postPriceListAccount);
+	}
+
+	protected PriceListAccount
+			testPostPriceListByExternalReferenceCodePriceListAccount_addPriceListAccount(
+				PriceListAccount priceListAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

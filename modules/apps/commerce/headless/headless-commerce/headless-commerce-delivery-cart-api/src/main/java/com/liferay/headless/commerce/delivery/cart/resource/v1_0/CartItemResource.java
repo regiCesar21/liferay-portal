@@ -52,19 +52,19 @@ public interface CartItemResource {
 
 	public CartItem getCartItem(Long cartItemId) throws Exception;
 
+	public Page<CartItem> getCartItemsPage(Long cartId, Pagination pagination)
+		throws Exception;
+
 	public CartItem patchCartItem(Long cartItemId, CartItem cartItem)
+		throws Exception;
+
+	public CartItem postCartItem(Long cartId, CartItem cartItem)
 		throws Exception;
 
 	public CartItem putCartItem(Long cartItemId, CartItem cartItem)
 		throws Exception;
 
 	public Response putCartItemBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Page<CartItem> getCartItemsPage(Long cartId, Pagination pagination)
-		throws Exception;
-
-	public CartItem postCartItem(Long cartId, CartItem cartItem)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

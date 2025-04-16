@@ -185,6 +185,233 @@ public abstract class BaseOptionResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteOption() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Option option = testDeleteOption_addOption();
+
+		assertHttpResponseStatusCode(
+			204, optionResource.deleteOptionHttpResponse(option.getId()));
+
+		assertHttpResponseStatusCode(
+			404, optionResource.getOptionHttpResponse(option.getId()));
+		assertHttpResponseStatusCode(
+			404, optionResource.getOptionHttpResponse(0L));
+	}
+
+	protected Option testDeleteOption_addOption() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOption() throws Exception {
+
+		// No namespace
+
+		Option option1 = testGraphQLDeleteOption_addOption();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOption",
+						new HashMap<String, Object>() {
+							{
+								put("id", option1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOption"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"option",
+					new HashMap<String, Object>() {
+						{
+							put("id", option1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Option testGraphQLDeleteOption_addOption() throws Exception {
+		return testGraphQLOption_addOption();
+	}
+
+	@Test
+	public void testDeleteOptionByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Option option = testDeleteOptionByExternalReferenceCode_addOption();
+
+		assertHttpResponseStatusCode(
+			204,
+			optionResource.deleteOptionByExternalReferenceCodeHttpResponse(
+				option.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			optionResource.getOptionByExternalReferenceCodeHttpResponse(
+				option.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			optionResource.getOptionByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Option testDeleteOptionByExternalReferenceCode_addOption()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetOption() throws Exception {
+		Option postOption = testGetOption_addOption();
+
+		Option getOption = optionResource.getOption(postOption.getId());
+
+		assertEquals(postOption, getOption);
+		assertValid(getOption);
+	}
+
+	protected Option testGetOption_addOption() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOption() throws Exception {
+		Option option = testGraphQLGetOption_addOption();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				option,
+				OptionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"option",
+								new HashMap<String, Object>() {
+									{
+										put("id", option.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/option"))));
+	}
+
+	@Test
+	public void testGraphQLGetOptionNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"option",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Option testGraphQLGetOption_addOption() throws Exception {
+		return testGraphQLOption_addOption();
+	}
+
+	@Test
+	public void testGetOptionByExternalReferenceCode() throws Exception {
+		Option postOption = testGetOptionByExternalReferenceCode_addOption();
+
+		Option getOption = optionResource.getOptionByExternalReferenceCode(
+			postOption.getExternalReferenceCode());
+
+		assertEquals(postOption, getOption);
+		assertValid(getOption);
+	}
+
+	protected Option testGetOptionByExternalReferenceCode_addOption()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOptionByExternalReferenceCode() throws Exception {
+		Option option = testGraphQLGetOptionByExternalReferenceCode_addOption();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				option,
+				OptionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"optionByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												option.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/optionByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetOptionByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"optionByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Option testGraphQLGetOptionByExternalReferenceCode_addOption()
+		throws Exception {
+
+		return testGraphQLOption_addOption();
+	}
+
+	@Test
 	public void testGetOptionsPage() throws Exception {
 		Page<Option> page = optionResource.getOptionsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -542,6 +769,16 @@ public abstract class BaseOptionResourceTestCase {
 	}
 
 	@Test
+	public void testPatchOption() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchOptionByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostOption() throws Exception {
 		Option randomOption = randomOption();
 
@@ -554,243 +791,6 @@ public abstract class BaseOptionResourceTestCase {
 	protected Option testPostOption_addOption(Option option) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOptionByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Option option = testDeleteOptionByExternalReferenceCode_addOption();
-
-		assertHttpResponseStatusCode(
-			204,
-			optionResource.deleteOptionByExternalReferenceCodeHttpResponse(
-				option.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			optionResource.getOptionByExternalReferenceCodeHttpResponse(
-				option.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			optionResource.getOptionByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Option testDeleteOptionByExternalReferenceCode_addOption()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetOptionByExternalReferenceCode() throws Exception {
-		Option postOption = testGetOptionByExternalReferenceCode_addOption();
-
-		Option getOption = optionResource.getOptionByExternalReferenceCode(
-			postOption.getExternalReferenceCode());
-
-		assertEquals(postOption, getOption);
-		assertValid(getOption);
-	}
-
-	protected Option testGetOptionByExternalReferenceCode_addOption()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOptionByExternalReferenceCode() throws Exception {
-		Option option = testGraphQLGetOptionByExternalReferenceCode_addOption();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				option,
-				OptionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"optionByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												option.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/optionByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetOptionByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"optionByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Option testGraphQLGetOptionByExternalReferenceCode_addOption()
-		throws Exception {
-
-		return testGraphQLOption_addOption();
-	}
-
-	@Test
-	public void testPatchOptionByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testDeleteOption() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Option option = testDeleteOption_addOption();
-
-		assertHttpResponseStatusCode(
-			204, optionResource.deleteOptionHttpResponse(option.getId()));
-
-		assertHttpResponseStatusCode(
-			404, optionResource.getOptionHttpResponse(option.getId()));
-		assertHttpResponseStatusCode(
-			404, optionResource.getOptionHttpResponse(0L));
-	}
-
-	protected Option testDeleteOption_addOption() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteOption() throws Exception {
-
-		// No namespace
-
-		Option option1 = testGraphQLDeleteOption_addOption();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOption",
-						new HashMap<String, Object>() {
-							{
-								put("id", option1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOption"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"option",
-					new HashMap<String, Object>() {
-						{
-							put("id", option1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Option testGraphQLDeleteOption_addOption() throws Exception {
-		return testGraphQLOption_addOption();
-	}
-
-	@Test
-	public void testGetOption() throws Exception {
-		Option postOption = testGetOption_addOption();
-
-		Option getOption = optionResource.getOption(postOption.getId());
-
-		assertEquals(postOption, getOption);
-		assertValid(getOption);
-	}
-
-	protected Option testGetOption_addOption() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOption() throws Exception {
-		Option option = testGraphQLGetOption_addOption();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				option,
-				OptionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"option",
-								new HashMap<String, Object>() {
-									{
-										put("id", option.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/option"))));
-	}
-
-	@Test
-	public void testGraphQLGetOptionNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"option",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Option testGraphQLGetOption_addOption() throws Exception {
-		return testGraphQLOption_addOption();
-	}
-
-	@Test
-	public void testPatchOption() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Rule

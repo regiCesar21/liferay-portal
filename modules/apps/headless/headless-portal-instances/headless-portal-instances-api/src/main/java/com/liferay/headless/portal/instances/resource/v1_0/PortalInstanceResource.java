@@ -42,20 +42,20 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PortalInstanceResource {
 
-	public Page<PortalInstance> getPortalInstancesPage(Boolean skipDefault)
-		throws Exception;
-
-	public PortalInstance postPortalInstance(
-			String initializerKey, PortalInstance portalInstance)
-		throws Exception;
-
 	public void deletePortalInstance(String portalInstanceId) throws Exception;
 
 	public PortalInstance getPortalInstance(String portalInstanceId)
 		throws Exception;
 
+	public Page<PortalInstance> getPortalInstancesPage(Boolean skipDefault)
+		throws Exception;
+
 	public PortalInstance patchPortalInstance(
 			String portalInstanceId, PortalInstance portalInstance)
+		throws Exception;
+
+	public PortalInstance postPortalInstance(
+			String initializerKey, PortalInstance portalInstance)
 		throws Exception;
 
 	public void putPortalInstanceActivate(String portalInstanceId)

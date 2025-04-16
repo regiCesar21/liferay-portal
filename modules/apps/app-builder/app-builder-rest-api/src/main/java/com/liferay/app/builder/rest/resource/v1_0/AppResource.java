@@ -45,18 +45,32 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AppResource {
 
-	public Page<App> getAppsPage(
-			Boolean active, String[] deploymentTypes, String keywords,
-			String scope, Long[] userIds, Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
 	public void deleteApp(Long appId) throws Exception;
 
 	public Response deleteAppBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public App getApp(Long appId) throws Exception;
+
+	public Page<App> getAppsPage(
+			Boolean active, String[] deploymentTypes, String keywords,
+			String scope, Long[] userIds, Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<App> getDataDefinitionAppsPage(
+			Long dataDefinitionId, String keywords, String scope,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<App> getSiteAppsPage(
+			Long siteId, String keywords, String scope, Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public App postDataDefinitionApp(Long dataDefinitionId, App app)
+		throws Exception;
 
 	public App putApp(Long appId, App app) throws Exception;
 
@@ -66,20 +80,6 @@ public interface AppResource {
 	public Response putAppDeploy(Long appId) throws Exception;
 
 	public Response putAppUndeploy(Long appId) throws Exception;
-
-	public Page<App> getDataDefinitionAppsPage(
-			Long dataDefinitionId, String keywords, String scope,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public App postDataDefinitionApp(Long dataDefinitionId, App app)
-		throws Exception;
-
-	public Page<App> getSiteAppsPage(
-			Long siteId, String keywords, String scope, Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

@@ -213,6 +213,68 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDataLayout() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataLayout dataLayout = testDeleteDataLayout_addDataLayout();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataLayoutResource.deleteDataLayoutHttpResponse(
+				dataLayout.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataLayoutResource.getDataLayoutHttpResponse(dataLayout.getId()));
+		assertHttpResponseStatusCode(
+			404, dataLayoutResource.getDataLayoutHttpResponse(0L));
+	}
+
+	protected DataLayout testDeleteDataLayout_addDataLayout() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteDataLayout() throws Exception {
+
+		// No namespace
+
+		DataLayout dataLayout1 = testGraphQLDeleteDataLayout_addDataLayout();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDataLayout",
+						new HashMap<String, Object>() {
+							{
+								put("dataLayoutId", dataLayout1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDataLayout"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataLayout",
+					new HashMap<String, Object>() {
+						{
+							put("dataLayoutId", dataLayout1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected DataLayout testGraphQLDeleteDataLayout_addDataLayout()
+		throws Exception {
+
+		return testGraphQLDataLayout_addDataLayout();
+	}
+
+	@Test
 	public void testGetDataDefinitionDataLayoutsPage() throws Exception {
 		Long dataDefinitionId =
 			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId();
@@ -553,88 +615,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataLayout() throws Exception {
-		DataLayout randomDataLayout = randomDataLayout();
-
-		DataLayout postDataLayout =
-			testPostDataDefinitionDataLayout_addDataLayout(randomDataLayout);
-
-		assertEquals(randomDataLayout, postDataLayout);
-		assertValid(postDataLayout);
-	}
-
-	protected DataLayout testPostDataDefinitionDataLayout_addDataLayout(
-			DataLayout dataLayout)
-		throws Exception {
-
-		return dataLayoutResource.postDataDefinitionDataLayout(
-			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
-			dataLayout);
-	}
-
-	@Test
-	public void testDeleteDataLayout() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataLayout dataLayout = testDeleteDataLayout_addDataLayout();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataLayoutResource.deleteDataLayoutHttpResponse(
-				dataLayout.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataLayoutResource.getDataLayoutHttpResponse(dataLayout.getId()));
-		assertHttpResponseStatusCode(
-			404, dataLayoutResource.getDataLayoutHttpResponse(0L));
-	}
-
-	protected DataLayout testDeleteDataLayout_addDataLayout() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteDataLayout() throws Exception {
-
-		// No namespace
-
-		DataLayout dataLayout1 = testGraphQLDeleteDataLayout_addDataLayout();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDataLayout",
-						new HashMap<String, Object>() {
-							{
-								put("dataLayoutId", dataLayout1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDataLayout"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"dataLayout",
-					new HashMap<String, Object>() {
-						{
-							put("dataLayoutId", dataLayout1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected DataLayout testGraphQLDeleteDataLayout_addDataLayout()
-		throws Exception {
-
-		return testGraphQLDataLayout_addDataLayout();
-	}
-
-	@Test
 	public void testGetDataLayout() throws Exception {
 		DataLayout postDataLayout = testGetDataLayout_addDataLayout();
 
@@ -699,35 +679,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 		throws Exception {
 
 		return testGraphQLDataLayout_addDataLayout();
-	}
-
-	@Test
-	public void testPutDataLayout() throws Exception {
-		DataLayout postDataLayout = testPutDataLayout_addDataLayout();
-
-		DataLayout randomDataLayout = randomDataLayout();
-
-		DataLayout putDataLayout = dataLayoutResource.putDataLayout(
-			postDataLayout.getId(), randomDataLayout);
-
-		assertEquals(randomDataLayout, putDataLayout);
-		assertValid(putDataLayout);
-
-		DataLayout getDataLayout = dataLayoutResource.getDataLayout(
-			putDataLayout.getId());
-
-		assertEquals(randomDataLayout, getDataLayout);
-		assertValid(getDataLayout);
-	}
-
-	protected DataLayout testPutDataLayout_addDataLayout() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostDataLayoutContext() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -849,6 +800,55 @@ public abstract class BaseDataLayoutResourceTestCase {
 		throws Exception {
 
 		return testGraphQLDataLayout_addDataLayout();
+	}
+
+	@Test
+	public void testPostDataDefinitionDataLayout() throws Exception {
+		DataLayout randomDataLayout = randomDataLayout();
+
+		DataLayout postDataLayout =
+			testPostDataDefinitionDataLayout_addDataLayout(randomDataLayout);
+
+		assertEquals(randomDataLayout, postDataLayout);
+		assertValid(postDataLayout);
+	}
+
+	protected DataLayout testPostDataDefinitionDataLayout_addDataLayout(
+			DataLayout dataLayout)
+		throws Exception {
+
+		return dataLayoutResource.postDataDefinitionDataLayout(
+			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
+			dataLayout);
+	}
+
+	@Test
+	public void testPostDataLayoutContext() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPutDataLayout() throws Exception {
+		DataLayout postDataLayout = testPutDataLayout_addDataLayout();
+
+		DataLayout randomDataLayout = randomDataLayout();
+
+		DataLayout putDataLayout = dataLayoutResource.putDataLayout(
+			postDataLayout.getId(), randomDataLayout);
+
+		assertEquals(randomDataLayout, putDataLayout);
+		assertValid(putDataLayout);
+
+		DataLayout getDataLayout = dataLayoutResource.getDataLayout(
+			putDataLayout.getId());
+
+		assertEquals(randomDataLayout, getDataLayout);
+		assertValid(getDataLayout);
+	}
+
+	protected DataLayout testPutDataLayout_addDataLayout() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected DataLayout testGraphQLDataLayout_addDataLayout()

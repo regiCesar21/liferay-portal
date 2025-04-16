@@ -53,22 +53,22 @@ public interface CartResource {
 
 	public Cart getCart(Long cartId) throws Exception;
 
-	public Cart patchCart(Long cartId, Cart cart) throws Exception;
-
-	public Cart putCart(Long cartId, Cart cart) throws Exception;
-
-	public Response putCartBatch(String callbackURL, Object object)
+	public Page<Cart> getChannelCartsPage(Long channelId, Pagination pagination)
 		throws Exception;
+
+	public Cart patchCart(Long cartId, Cart cart) throws Exception;
 
 	public Cart postCartCheckout(Long cartId) throws Exception;
 
 	public Cart postCartCouponCode(Long cartId, CouponCode couponCode)
 		throws Exception;
 
-	public Page<Cart> getChannelCartsPage(Long channelId, Pagination pagination)
-		throws Exception;
-
 	public Cart postChannelCart(Long channelId, Cart cart) throws Exception;
+
+	public Cart putCart(Long cartId, Cart cart) throws Exception;
+
+	public Response putCartBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

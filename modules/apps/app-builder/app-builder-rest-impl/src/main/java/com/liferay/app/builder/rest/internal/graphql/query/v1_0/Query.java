@@ -49,6 +49,18 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {app(appId: ___){active, appDeployments, dataDefinitionId, dataDefinitionName, dataLayoutId, dataListViewId, dataRecordCollectionId, dateCreated, dateModified, id, name, scope, siteId, userId, version}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public App app(@GraphQLName("appId") Long appId) throws Exception {
+		return _applyComponentServiceObjects(
+			_appResourceComponentServiceObjects, this::_populateResourceContext,
+			appResource -> appResource.getApp(appId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {apps(active: ___, deploymentTypes: ___, keywords: ___, page: ___, pageSize: ___, scope: ___, sorts: ___, userIds: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -70,18 +82,6 @@ public class Query {
 					active, deploymentTypes, keywords, scope, userIds,
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(appResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {app(appId: ___){active, appDeployments, dataDefinitionId, dataDefinitionName, dataLayoutId, dataListViewId, dataRecordCollectionId, dateCreated, dateModified, id, name, scope, siteId, userId, version}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public App app(@GraphQLName("appId") Long appId) throws Exception {
-		return _applyComponentServiceObjects(
-			_appResourceComponentServiceObjects, this::_populateResourceContext,
-			appResource -> appResource.getApp(appId));
 	}
 
 	/**

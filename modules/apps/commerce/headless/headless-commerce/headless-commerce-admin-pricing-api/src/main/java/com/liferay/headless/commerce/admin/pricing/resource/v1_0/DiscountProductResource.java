@@ -56,12 +56,12 @@ public interface DiscountProductResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public DiscountProduct postDiscountByExternalReferenceCodeDiscountProduct(
-			String externalReferenceCode, DiscountProduct discountProduct)
-		throws Exception;
-
 	public Page<DiscountProduct> getDiscountIdDiscountProductsPage(
 			Long id, Pagination pagination)
+		throws Exception;
+
+	public DiscountProduct postDiscountByExternalReferenceCodeDiscountProduct(
+			String externalReferenceCode, DiscountProduct discountProduct)
 		throws Exception;
 
 	public DiscountProduct postDiscountIdDiscountProduct(

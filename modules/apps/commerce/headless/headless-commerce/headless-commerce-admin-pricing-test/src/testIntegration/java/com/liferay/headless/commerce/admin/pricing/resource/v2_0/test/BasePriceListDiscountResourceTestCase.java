@@ -405,29 +405,6 @@ public abstract class BasePriceListDiscountResourceTestCase {
 	}
 
 	@Test
-	public void testPostPriceListByExternalReferenceCodePriceListDiscount()
-		throws Exception {
-
-		PriceListDiscount randomPriceListDiscount = randomPriceListDiscount();
-
-		PriceListDiscount postPriceListDiscount =
-			testPostPriceListByExternalReferenceCodePriceListDiscount_addPriceListDiscount(
-				randomPriceListDiscount);
-
-		assertEquals(randomPriceListDiscount, postPriceListDiscount);
-		assertValid(postPriceListDiscount);
-	}
-
-	protected PriceListDiscount
-			testPostPriceListByExternalReferenceCodePriceListDiscount_addPriceListDiscount(
-				PriceListDiscount priceListDiscount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetPriceListIdPriceListDiscountsPage() throws Exception {
 		Long id = testGetPriceListIdPriceListDiscountsPage_getId();
 		Long irrelevantId =
@@ -609,6 +586,29 @@ public abstract class BasePriceListDiscountResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostPriceListByExternalReferenceCodePriceListDiscount()
+		throws Exception {
+
+		PriceListDiscount randomPriceListDiscount = randomPriceListDiscount();
+
+		PriceListDiscount postPriceListDiscount =
+			testPostPriceListByExternalReferenceCodePriceListDiscount_addPriceListDiscount(
+				randomPriceListDiscount);
+
+		assertEquals(randomPriceListDiscount, postPriceListDiscount);
+		assertValid(postPriceListDiscount);
+	}
+
+	protected PriceListDiscount
+			testPostPriceListByExternalReferenceCodePriceListDiscount_addPriceListDiscount(
+				PriceListDiscount priceListDiscount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

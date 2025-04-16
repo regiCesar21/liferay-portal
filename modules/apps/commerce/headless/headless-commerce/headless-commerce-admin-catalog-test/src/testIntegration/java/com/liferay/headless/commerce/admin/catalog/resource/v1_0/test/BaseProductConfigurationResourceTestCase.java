@@ -204,13 +204,6 @@ public abstract class BaseProductConfigurationResourceTestCase {
 	}
 
 	@Test
-	public void testPatchProductByExternalReferenceCodeConfiguration()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetProductIdConfiguration() throws Exception {
 		Assert.assertTrue(false);
 	}
@@ -225,6 +218,13 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPatchProductByExternalReferenceCodeConfiguration()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

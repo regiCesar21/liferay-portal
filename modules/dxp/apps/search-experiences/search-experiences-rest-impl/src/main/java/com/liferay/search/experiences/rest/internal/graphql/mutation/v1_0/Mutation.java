@@ -65,44 +65,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public SXPBlueprint createSXPBlueprint(
-			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sxpBlueprintResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sxpBlueprintResource -> sxpBlueprintResource.postSXPBlueprint(
-				sxpBlueprint));
-	}
-
-	@GraphQLField
-	public Response createSXPBlueprintBatch(
-			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sxpBlueprintResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sxpBlueprintResource -> sxpBlueprintResource.postSXPBlueprintBatch(
-				sxpBlueprint, callbackURL, object));
-	}
-
-	@GraphQLField
-	public SXPBlueprint createSXPBlueprintValidate(
-			@GraphQLName("string") String string)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sxpBlueprintResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sxpBlueprintResource ->
-				sxpBlueprintResource.postSXPBlueprintValidate(string));
-	}
-
-	@GraphQLField
 	public boolean deleteSXPBlueprint(
 			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId)
 		throws Exception {
@@ -145,6 +107,32 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public SXPBlueprint createSXPBlueprint(
+			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource -> sxpBlueprintResource.postSXPBlueprint(
+				sxpBlueprint));
+	}
+
+	@GraphQLField
+	public Response createSXPBlueprintBatch(
+			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource -> sxpBlueprintResource.postSXPBlueprintBatch(
+				sxpBlueprint, callbackURL, object));
+	}
+
+	@GraphQLField
 	public SXPBlueprint createSXPBlueprintCopy(
 			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId)
 		throws Exception {
@@ -157,41 +145,15 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public SXPElement createSXPElement(
-			@GraphQLName("sxpElement") SXPElement sxpElement)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sxpElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sxpElementResource -> sxpElementResource.postSXPElement(
-				sxpElement));
-	}
-
-	@GraphQLField
-	public Response createSXPElementBatch(
-			@GraphQLName("sxpElement") SXPElement sxpElement,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sxpElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sxpElementResource -> sxpElementResource.postSXPElementBatch(
-				sxpElement, callbackURL, object));
-	}
-
-	@GraphQLField
-	public SXPElement createSXPElementValidate(
+	public SXPBlueprint createSXPBlueprintValidate(
 			@GraphQLName("string") String string)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_sxpElementResourceComponentServiceObjects,
+			_sxpBlueprintResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			sxpElementResource -> sxpElementResource.postSXPElementValidate(
-				string));
+			sxpBlueprintResource ->
+				sxpBlueprintResource.postSXPBlueprintValidate(string));
 	}
 
 	@GraphQLField
@@ -236,6 +198,32 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public SXPElement createSXPElement(
+			@GraphQLName("sxpElement") SXPElement sxpElement)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> sxpElementResource.postSXPElement(
+				sxpElement));
+	}
+
+	@GraphQLField
+	public Response createSXPElementBatch(
+			@GraphQLName("sxpElement") SXPElement sxpElement,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> sxpElementResource.postSXPElementBatch(
+				sxpElement, callbackURL, object));
+	}
+
+	@GraphQLField
 	public SXPElement createSXPElementCopy(
 			@GraphQLName("sxpElementId") Long sxpElementId)
 		throws Exception {
@@ -245,6 +233,18 @@ public class Mutation {
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.postSXPElementCopy(
 				sxpElementId));
+	}
+
+	@GraphQLField
+	public SXPElement createSXPElementValidate(
+			@GraphQLName("string") String string)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> sxpElementResource.postSXPElementValidate(
+				string));
 	}
 
 	@GraphQLField

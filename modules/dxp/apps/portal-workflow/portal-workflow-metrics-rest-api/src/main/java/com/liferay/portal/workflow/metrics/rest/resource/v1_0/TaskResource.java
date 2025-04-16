@@ -46,22 +46,22 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TaskResource {
 
-	public Page<Task> getProcessTasksPage(Long processId) throws Exception;
-
-	public Task postProcessTask(Long processId, Task task) throws Exception;
-
-	public Response postProcessTaskBatch(
-			Long processId, String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteProcessTask(Long processId, Long taskId) throws Exception;
 
 	public Task getProcessTask(Long processId, Long taskId) throws Exception;
+
+	public Page<Task> getProcessTasksPage(Long processId) throws Exception;
 
 	public void patchProcessTask(Long processId, Long taskId, Task task)
 		throws Exception;
 
 	public void patchProcessTaskComplete(Long processId, Long taskId, Task task)
+		throws Exception;
+
+	public Task postProcessTask(Long processId, Task task) throws Exception;
+
+	public Response postProcessTaskBatch(
+			Long processId, String callbackURL, Object object)
 		throws Exception;
 
 	public Page<Task> postProcessTasksPage(

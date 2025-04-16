@@ -122,32 +122,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public FormRecord updateFormRecord(
-			@GraphQLName("formRecordId") Long formRecordId,
-			@GraphQLName("formRecord") FormRecord formRecord)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_formRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			formRecordResource -> formRecordResource.putFormRecord(
-				formRecordId, formRecord));
-	}
-
-	@GraphQLField
-	public Response updateFormRecordBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_formRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			formRecordResource -> formRecordResource.putFormRecordBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
 	public FormRecord createFormFormRecord(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("formRecord") FormRecord formRecord)
@@ -172,6 +146,32 @@ public class Mutation {
 			this::_populateResourceContext,
 			formRecordResource -> formRecordResource.postFormFormRecordBatch(
 				formId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public FormRecord updateFormRecord(
+			@GraphQLName("formRecordId") Long formRecordId,
+			@GraphQLName("formRecord") FormRecord formRecord)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_formRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formRecordResource -> formRecordResource.putFormRecord(
+				formRecordId, formRecord));
+	}
+
+	@GraphQLField
+	public Response updateFormRecordBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_formRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formRecordResource -> formRecordResource.putFormRecordBatch(
+				callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

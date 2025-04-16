@@ -185,6 +185,41 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountRoleUserAssociation() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountRole accountRole =
+			testDeleteAccountRoleUserAssociation_addAccountRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountRoleResource.deleteAccountRoleUserAssociationHttpResponse(
+				testDeleteAccountRoleUserAssociation_getAccountId(accountRole),
+				accountRole.getId(),
+				testDeleteAccountRoleUserAssociation_getAccountUserId()));
+	}
+
+	protected Long testDeleteAccountRoleUserAssociation_getAccountId(
+			AccountRole accountRole)
+		throws Exception {
+
+		return accountRole.getAccountId();
+	}
+
+	protected Long testDeleteAccountRoleUserAssociation_getAccountUserId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AccountRole testDeleteAccountRoleUserAssociation_addAccountRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteAccountRoleUserAssociationByExternalReferenceCode()
 		throws Exception {
 
@@ -219,35 +254,6 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 	protected AccountRole
 			testDeleteAccountRoleUserAssociationByExternalReferenceCode_addAccountRole()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostAccountRoleUserAssociationByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountRole accountRole =
-			testPostAccountRoleUserAssociationByExternalReferenceCode_addAccountRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			accountRoleResource.
-				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
-					null, accountRole.getId(), null));
-
-		assertHttpResponseStatusCode(
-			404,
-			accountRoleResource.
-				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
-					null, 0L, null));
-	}
-
-	protected AccountRole
-			testPostAccountRoleUserAssociationByExternalReferenceCode_addAccountRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -592,27 +598,6 @@ public abstract class BaseAccountRoleResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostAccountRoleByExternalReferenceCode() throws Exception {
-		AccountRole randomAccountRole = randomAccountRole();
-
-		AccountRole postAccountRole =
-			testPostAccountRoleByExternalReferenceCode_addAccountRole(
-				randomAccountRole);
-
-		assertEquals(randomAccountRole, postAccountRole);
-		assertValid(postAccountRole);
-	}
-
-	protected AccountRole
-			testPostAccountRoleByExternalReferenceCode_addAccountRole(
-				AccountRole accountRole)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -986,34 +971,20 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountRoleUserAssociation() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountRole accountRole =
-			testDeleteAccountRoleUserAssociation_addAccountRole();
+	public void testPostAccountRoleByExternalReferenceCode() throws Exception {
+		AccountRole randomAccountRole = randomAccountRole();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountRoleResource.deleteAccountRoleUserAssociationHttpResponse(
-				testDeleteAccountRoleUserAssociation_getAccountId(accountRole),
-				accountRole.getId(),
-				testDeleteAccountRoleUserAssociation_getAccountUserId()));
+		AccountRole postAccountRole =
+			testPostAccountRoleByExternalReferenceCode_addAccountRole(
+				randomAccountRole);
+
+		assertEquals(randomAccountRole, postAccountRole);
+		assertValid(postAccountRole);
 	}
 
-	protected Long testDeleteAccountRoleUserAssociation_getAccountId(
-			AccountRole accountRole)
-		throws Exception {
-
-		return accountRole.getAccountId();
-	}
-
-	protected Long testDeleteAccountRoleUserAssociation_getAccountUserId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected AccountRole testDeleteAccountRoleUserAssociation_addAccountRole()
+	protected AccountRole
+			testPostAccountRoleByExternalReferenceCode_addAccountRole(
+				AccountRole accountRole)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1038,6 +1009,35 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	protected AccountRole testPostAccountRoleUserAssociation_addAccountRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountRoleUserAssociationByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountRole accountRole =
+			testPostAccountRoleUserAssociationByExternalReferenceCode_addAccountRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountRoleResource.
+				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+					null, accountRole.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountRoleResource.
+				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+					null, 0L, null));
+	}
+
+	protected AccountRole
+			testPostAccountRoleUserAssociationByExternalReferenceCode_addAccountRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

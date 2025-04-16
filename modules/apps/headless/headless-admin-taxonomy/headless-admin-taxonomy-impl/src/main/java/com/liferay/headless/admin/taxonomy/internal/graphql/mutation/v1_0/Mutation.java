@@ -65,33 +65,6 @@ public class Mutation {
 			taxonomyVocabularyResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
-	public Keyword createAssetLibraryKeyword(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("keyword") Keyword keyword)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> keywordResource.postAssetLibraryKeyword(
-				Long.valueOf(assetLibraryId), keyword));
-	}
-
-	@GraphQLField
-	public Response createAssetLibraryKeywordBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> keywordResource.postAssetLibraryKeywordBatch(
-				Long.valueOf(assetLibraryId), callbackURL, object));
-	}
-
 	@GraphQLField(
 		description = "Deletes the keyword and returns a 204 if the operation succeeds."
 	)
@@ -119,22 +92,22 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required."
-	)
-	public Keyword updateKeyword(
-			@GraphQLName("keywordId") Long keywordId,
+	@GraphQLField
+	public Keyword createAssetLibraryKeyword(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 			@GraphQLName("keyword") Keyword keyword)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			keywordResource -> keywordResource.putKeyword(keywordId, keyword));
+			keywordResource -> keywordResource.postAssetLibraryKeyword(
+				Long.valueOf(assetLibraryId), keyword));
 	}
 
 	@GraphQLField
-	public Response updateKeywordBatch(
+	public Response createAssetLibraryKeywordBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -142,8 +115,8 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			keywordResource -> keywordResource.putKeywordBatch(
-				callbackURL, object));
+			keywordResource -> keywordResource.postAssetLibraryKeywordBatch(
+				Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
 	@GraphQLField(description = "Inserts a new keyword in a Site.")
@@ -173,19 +146,31 @@ public class Mutation {
 				Long.valueOf(siteKey), callbackURL, object));
 	}
 
-	@GraphQLField(description = "Inserts a new child taxonomy category.")
-	public TaxonomyCategory createTaxonomyCategoryTaxonomyCategory(
-			@GraphQLName("parentTaxonomyCategoryId") String
-				parentTaxonomyCategoryId,
-			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
+	@GraphQLField(
+		description = "Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required."
+	)
+	public Keyword updateKeyword(
+			@GraphQLName("keywordId") Long keywordId,
+			@GraphQLName("keyword") Keyword keyword)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_taxonomyCategoryResourceComponentServiceObjects,
+			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			taxonomyCategoryResource ->
-				taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
-					parentTaxonomyCategoryId, taxonomyCategory));
+			keywordResource -> keywordResource.putKeyword(keywordId, keyword));
+	}
+
+	@GraphQLField
+	public Response updateKeywordBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.putKeywordBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -235,11 +220,10 @@ public class Mutation {
 					taxonomyCategoryId, taxonomyCategory));
 	}
 
-	@GraphQLField(
-		description = "Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required."
-	)
-	public TaxonomyCategory updateTaxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") String taxonomyCategoryId,
+	@GraphQLField(description = "Inserts a new child taxonomy category.")
+	public TaxonomyCategory createTaxonomyCategoryTaxonomyCategory(
+			@GraphQLName("parentTaxonomyCategoryId") String
+				parentTaxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -247,22 +231,8 @@ public class Mutation {
 			_taxonomyCategoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			taxonomyCategoryResource ->
-				taxonomyCategoryResource.putTaxonomyCategory(
-					taxonomyCategoryId, taxonomyCategory));
-	}
-
-	@GraphQLField
-	public Response updateTaxonomyCategoryBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_taxonomyCategoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taxonomyCategoryResource ->
-				taxonomyCategoryResource.putTaxonomyCategoryBatch(
-					callbackURL, object));
+				taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+					parentTaxonomyCategoryId, taxonomyCategory));
 	}
 
 	@GraphQLField(
@@ -295,6 +265,84 @@ public class Mutation {
 				taxonomyCategoryResource.
 					postTaxonomyVocabularyTaxonomyCategoryBatch(
 						taxonomyVocabularyId, callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required."
+	)
+	public TaxonomyCategory updateTaxonomyCategory(
+			@GraphQLName("taxonomyCategoryId") String taxonomyCategoryId,
+			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.putTaxonomyCategory(
+					taxonomyCategoryId, taxonomyCategory));
+	}
+
+	@GraphQLField
+	public Response updateTaxonomyCategoryBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.putTaxonomyCategoryBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Deletes the taxonomy vocabulary and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteTaxonomyVocabulary(
+			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.deleteTaxonomyVocabulary(
+					taxonomyVocabularyId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteTaxonomyVocabularyBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.deleteTaxonomyVocabularyBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body. Any other fields are left untouched."
+	)
+	public TaxonomyVocabulary patchTaxonomyVocabulary(
+			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
+			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
+				taxonomyVocabulary)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.patchTaxonomyVocabulary(
+					taxonomyVocabularyId, taxonomyVocabulary));
 	}
 
 	@GraphQLField
@@ -356,54 +404,6 @@ public class Mutation {
 			taxonomyVocabularyResource ->
 				taxonomyVocabularyResource.postSiteTaxonomyVocabularyBatch(
 					Long.valueOf(siteKey), callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the taxonomy vocabulary and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteTaxonomyVocabulary(
-			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_taxonomyVocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taxonomyVocabularyResource ->
-				taxonomyVocabularyResource.deleteTaxonomyVocabulary(
-					taxonomyVocabularyId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteTaxonomyVocabularyBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_taxonomyVocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taxonomyVocabularyResource ->
-				taxonomyVocabularyResource.deleteTaxonomyVocabularyBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Updates only the fields received in the request body. Any other fields are left untouched."
-	)
-	public TaxonomyVocabulary patchTaxonomyVocabulary(
-			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
-			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
-				taxonomyVocabulary)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_taxonomyVocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taxonomyVocabularyResource ->
-				taxonomyVocabularyResource.patchTaxonomyVocabulary(
-					taxonomyVocabularyId, taxonomyVocabulary));
 	}
 
 	@GraphQLField(

@@ -46,23 +46,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface InstanceResource {
 
-	public Page<Instance> getProcessInstancesPage(
-			Long processId, Long[] assigneeIds, Long[] classPKs,
-			Boolean completed, Date dateEnd, Date dateStart,
-			String[] slaStatuses, String[] taskNames, Pagination pagination)
-		throws Exception;
-
-	public Instance postProcessInstance(Long processId, Instance instance)
-		throws Exception;
-
-	public Response postProcessInstanceBatch(
-			Long processId, String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteProcessInstance(Long processId, Long instanceId)
 		throws Exception;
 
 	public Instance getProcessInstance(Long processId, Long instanceId)
+		throws Exception;
+
+	public Page<Instance> getProcessInstancesPage(
+			Long processId, Long[] assigneeIds, Long[] classPKs,
+			Boolean completed, Date dateEnd, Date dateStart,
+			String[] slaStatuses, String[] taskNames, Pagination pagination)
 		throws Exception;
 
 	public void patchProcessInstance(
@@ -71,6 +64,13 @@ public interface InstanceResource {
 
 	public void patchProcessInstanceComplete(
 			Long processId, Long instanceId, Instance instance)
+		throws Exception;
+
+	public Instance postProcessInstance(Long processId, Instance instance)
+		throws Exception;
+
+	public Response postProcessInstanceBatch(
+			Long processId, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

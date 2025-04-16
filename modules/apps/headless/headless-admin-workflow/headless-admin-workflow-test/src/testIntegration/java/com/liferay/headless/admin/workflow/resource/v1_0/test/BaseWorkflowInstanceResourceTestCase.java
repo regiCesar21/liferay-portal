@@ -185,6 +185,155 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteWorkflowInstance() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WorkflowInstance workflowInstance =
+			testDeleteWorkflowInstance_addWorkflowInstance();
+
+		assertHttpResponseStatusCode(
+			204,
+			workflowInstanceResource.deleteWorkflowInstanceHttpResponse(
+				workflowInstance.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			workflowInstanceResource.getWorkflowInstanceHttpResponse(
+				workflowInstance.getId()));
+		assertHttpResponseStatusCode(
+			404, workflowInstanceResource.getWorkflowInstanceHttpResponse(0L));
+	}
+
+	protected WorkflowInstance testDeleteWorkflowInstance_addWorkflowInstance()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteWorkflowInstance() throws Exception {
+
+		// No namespace
+
+		WorkflowInstance workflowInstance1 =
+			testGraphQLDeleteWorkflowInstance_addWorkflowInstance();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWorkflowInstance",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"workflowInstanceId",
+									workflowInstance1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWorkflowInstance"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"workflowInstance",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"workflowInstanceId",
+								workflowInstance1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected WorkflowInstance
+			testGraphQLDeleteWorkflowInstance_addWorkflowInstance()
+		throws Exception {
+
+		return testGraphQLWorkflowInstance_addWorkflowInstance();
+	}
+
+	@Test
+	public void testGetWorkflowInstance() throws Exception {
+		WorkflowInstance postWorkflowInstance =
+			testGetWorkflowInstance_addWorkflowInstance();
+
+		WorkflowInstance getWorkflowInstance =
+			workflowInstanceResource.getWorkflowInstance(
+				postWorkflowInstance.getId());
+
+		assertEquals(postWorkflowInstance, getWorkflowInstance);
+		assertValid(getWorkflowInstance);
+	}
+
+	protected WorkflowInstance testGetWorkflowInstance_addWorkflowInstance()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetWorkflowInstance() throws Exception {
+		WorkflowInstance workflowInstance =
+			testGraphQLGetWorkflowInstance_addWorkflowInstance();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				workflowInstance,
+				WorkflowInstanceSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"workflowInstance",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"workflowInstanceId",
+											workflowInstance.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/workflowInstance"))));
+	}
+
+	@Test
+	public void testGraphQLGetWorkflowInstanceNotFound() throws Exception {
+		Long irrelevantWorkflowInstanceId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"workflowInstance",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"workflowInstanceId",
+									irrelevantWorkflowInstanceId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected WorkflowInstance
+			testGraphQLGetWorkflowInstance_addWorkflowInstance()
+		throws Exception {
+
+		return testGraphQLWorkflowInstance_addWorkflowInstance();
+	}
+
+	@Test
 	public void testGetWorkflowInstancesPage() throws Exception {
 		Page<WorkflowInstance> page =
 			workflowInstanceResource.getWorkflowInstancesPage(
@@ -383,176 +532,6 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 	}
 
 	@Test
-	public void testPostWorkflowInstanceSubmit() throws Exception {
-		WorkflowInstance randomWorkflowInstance = randomWorkflowInstance();
-
-		WorkflowInstance postWorkflowInstance =
-			testPostWorkflowInstanceSubmit_addWorkflowInstance(
-				randomWorkflowInstance);
-
-		assertEquals(randomWorkflowInstance, postWorkflowInstance);
-		assertValid(postWorkflowInstance);
-	}
-
-	protected WorkflowInstance
-			testPostWorkflowInstanceSubmit_addWorkflowInstance(
-				WorkflowInstance workflowInstance)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteWorkflowInstance() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WorkflowInstance workflowInstance =
-			testDeleteWorkflowInstance_addWorkflowInstance();
-
-		assertHttpResponseStatusCode(
-			204,
-			workflowInstanceResource.deleteWorkflowInstanceHttpResponse(
-				workflowInstance.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			workflowInstanceResource.getWorkflowInstanceHttpResponse(
-				workflowInstance.getId()));
-		assertHttpResponseStatusCode(
-			404, workflowInstanceResource.getWorkflowInstanceHttpResponse(0L));
-	}
-
-	protected WorkflowInstance testDeleteWorkflowInstance_addWorkflowInstance()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteWorkflowInstance() throws Exception {
-
-		// No namespace
-
-		WorkflowInstance workflowInstance1 =
-			testGraphQLDeleteWorkflowInstance_addWorkflowInstance();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteWorkflowInstance",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"workflowInstanceId",
-									workflowInstance1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteWorkflowInstance"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"workflowInstance",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"workflowInstanceId",
-								workflowInstance1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected WorkflowInstance
-			testGraphQLDeleteWorkflowInstance_addWorkflowInstance()
-		throws Exception {
-
-		return testGraphQLWorkflowInstance_addWorkflowInstance();
-	}
-
-	@Test
-	public void testGetWorkflowInstance() throws Exception {
-		WorkflowInstance postWorkflowInstance =
-			testGetWorkflowInstance_addWorkflowInstance();
-
-		WorkflowInstance getWorkflowInstance =
-			workflowInstanceResource.getWorkflowInstance(
-				postWorkflowInstance.getId());
-
-		assertEquals(postWorkflowInstance, getWorkflowInstance);
-		assertValid(getWorkflowInstance);
-	}
-
-	protected WorkflowInstance testGetWorkflowInstance_addWorkflowInstance()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetWorkflowInstance() throws Exception {
-		WorkflowInstance workflowInstance =
-			testGraphQLGetWorkflowInstance_addWorkflowInstance();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				workflowInstance,
-				WorkflowInstanceSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"workflowInstance",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"workflowInstanceId",
-											workflowInstance.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/workflowInstance"))));
-	}
-
-	@Test
-	public void testGraphQLGetWorkflowInstanceNotFound() throws Exception {
-		Long irrelevantWorkflowInstanceId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"workflowInstance",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"workflowInstanceId",
-									irrelevantWorkflowInstanceId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected WorkflowInstance
-			testGraphQLGetWorkflowInstance_addWorkflowInstance()
-		throws Exception {
-
-		return testGraphQLWorkflowInstance_addWorkflowInstance();
-	}
-
-	@Test
 	public void testPostWorkflowInstanceChangeTransition() throws Exception {
 		WorkflowInstance randomWorkflowInstance = randomWorkflowInstance();
 
@@ -566,6 +545,27 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 	protected WorkflowInstance
 			testPostWorkflowInstanceChangeTransition_addWorkflowInstance(
+				WorkflowInstance workflowInstance)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostWorkflowInstanceSubmit() throws Exception {
+		WorkflowInstance randomWorkflowInstance = randomWorkflowInstance();
+
+		WorkflowInstance postWorkflowInstance =
+			testPostWorkflowInstanceSubmit_addWorkflowInstance(
+				randomWorkflowInstance);
+
+		assertEquals(randomWorkflowInstance, postWorkflowInstance);
+		assertValid(postWorkflowInstance);
+	}
+
+	protected WorkflowInstance
+			testPostWorkflowInstanceSubmit_addWorkflowInstance(
 				WorkflowInstance workflowInstance)
 		throws Exception {
 

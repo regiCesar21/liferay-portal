@@ -45,6 +45,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TaxonomyCategoryResource {
 
+	public void deleteTaxonomyCategory(String taxonomyCategoryId)
+		throws Exception;
+
+	public Response deleteTaxonomyCategoryBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public TaxonomyCategory getTaxonomyCategory(String taxonomyCategoryId)
+		throws Exception;
+
 	public Page<TaxonomyCategory> getTaxonomyCategoryRankedPage(
 			Long siteId, Pagination pagination)
 		throws Exception;
@@ -56,36 +66,19 @@ public interface TaxonomyCategoryResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			String parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception;
-
-	public void deleteTaxonomyCategory(String taxonomyCategoryId)
-		throws Exception;
-
-	public Response deleteTaxonomyCategoryBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public TaxonomyCategory getTaxonomyCategory(String taxonomyCategoryId)
+	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
+			Long taxonomyVocabularyId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public TaxonomyCategory patchTaxonomyCategory(
 			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
-	public TaxonomyCategory putTaxonomyCategory(
-			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
-		throws Exception;
-
-	public Response putTaxonomyCategoryBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
-			Long taxonomyVocabularyId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
+	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
+			String parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
@@ -94,6 +87,13 @@ public interface TaxonomyCategoryResource {
 
 	public Response postTaxonomyVocabularyTaxonomyCategoryBatch(
 			Long taxonomyVocabularyId, String callbackURL, Object object)
+		throws Exception;
+
+	public TaxonomyCategory putTaxonomyCategory(
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+		throws Exception;
+
+	public Response putTaxonomyCategoryBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

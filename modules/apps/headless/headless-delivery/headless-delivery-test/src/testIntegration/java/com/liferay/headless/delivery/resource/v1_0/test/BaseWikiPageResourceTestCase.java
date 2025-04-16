@@ -189,6 +189,65 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteWikiPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiPage wikiPage = testDeleteWikiPage_addWikiPage();
+
+		assertHttpResponseStatusCode(
+			204, wikiPageResource.deleteWikiPageHttpResponse(wikiPage.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.getWikiPageHttpResponse(wikiPage.getId()));
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.getWikiPageHttpResponse(0L));
+	}
+
+	protected WikiPage testDeleteWikiPage_addWikiPage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteWikiPage() throws Exception {
+
+		// No namespace
+
+		WikiPage wikiPage1 = testGraphQLDeleteWikiPage_addWikiPage();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWikiPage",
+						new HashMap<String, Object>() {
+							{
+								put("wikiPageId", wikiPage1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWikiPage"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"wikiPage",
+					new HashMap<String, Object>() {
+						{
+							put("wikiPageId", wikiPage1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected WikiPage testGraphQLDeleteWikiPage_addWikiPage()
+		throws Exception {
+
+		return testGraphQLWikiPage_addWikiPage();
+	}
+
+	@Test
 	public void testGetWikiNodeWikiPagesPage() throws Exception {
 		Long wikiNodeId = testGetWikiNodeWikiPagesPage_getWikiNodeId();
 		Long irrelevantWikiNodeId =
@@ -583,21 +642,68 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
-	public void testPostWikiNodeWikiPage() throws Exception {
-		WikiPage randomWikiPage = randomWikiPage();
+	public void testGetWikiPage() throws Exception {
+		WikiPage postWikiPage = testGetWikiPage_addWikiPage();
 
-		WikiPage postWikiPage = testPostWikiNodeWikiPage_addWikiPage(
-			randomWikiPage);
+		WikiPage getWikiPage = wikiPageResource.getWikiPage(
+			postWikiPage.getId());
 
-		assertEquals(randomWikiPage, postWikiPage);
-		assertValid(postWikiPage);
+		assertEquals(postWikiPage, getWikiPage);
+		assertValid(getWikiPage);
 	}
 
-	protected WikiPage testPostWikiNodeWikiPage_addWikiPage(WikiPage wikiPage)
-		throws Exception {
+	protected WikiPage testGetWikiPage_addWikiPage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
-		return wikiPageResource.postWikiNodeWikiPage(
-			testGetWikiNodeWikiPagesPage_getWikiNodeId(), wikiPage);
+	@Test
+	public void testGraphQLGetWikiPage() throws Exception {
+		WikiPage wikiPage = testGraphQLGetWikiPage_addWikiPage();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				wikiPage,
+				WikiPageSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"wikiPage",
+								new HashMap<String, Object>() {
+									{
+										put("wikiPageId", wikiPage.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/wikiPage"))));
+	}
+
+	@Test
+	public void testGraphQLGetWikiPageNotFound() throws Exception {
+		Long irrelevantWikiPageId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"wikiPage",
+						new HashMap<String, Object>() {
+							{
+								put("wikiPageId", irrelevantWikiPageId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected WikiPage testGraphQLGetWikiPage_addWikiPage() throws Exception {
+		return testGraphQLWikiPage_addWikiPage();
 	}
 
 	@Test
@@ -682,6 +788,24 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
+	public void testPostWikiNodeWikiPage() throws Exception {
+		WikiPage randomWikiPage = randomWikiPage();
+
+		WikiPage postWikiPage = testPostWikiNodeWikiPage_addWikiPage(
+			randomWikiPage);
+
+		assertEquals(randomWikiPage, postWikiPage);
+		assertValid(postWikiPage);
+	}
+
+	protected WikiPage testPostWikiNodeWikiPage_addWikiPage(WikiPage wikiPage)
+		throws Exception {
+
+		return wikiPageResource.postWikiNodeWikiPage(
+			testGetWikiNodeWikiPagesPage_getWikiNodeId(), wikiPage);
+	}
+
+	@Test
 	public void testPostWikiPageWikiPage() throws Exception {
 		WikiPage randomWikiPage = randomWikiPage();
 
@@ -697,130 +821,6 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		return wikiPageResource.postWikiPageWikiPage(
 			testGetWikiPageWikiPagesPage_getParentWikiPageId(), wikiPage);
-	}
-
-	@Test
-	public void testDeleteWikiPage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WikiPage wikiPage = testDeleteWikiPage_addWikiPage();
-
-		assertHttpResponseStatusCode(
-			204, wikiPageResource.deleteWikiPageHttpResponse(wikiPage.getId()));
-
-		assertHttpResponseStatusCode(
-			404, wikiPageResource.getWikiPageHttpResponse(wikiPage.getId()));
-		assertHttpResponseStatusCode(
-			404, wikiPageResource.getWikiPageHttpResponse(0L));
-	}
-
-	protected WikiPage testDeleteWikiPage_addWikiPage() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteWikiPage() throws Exception {
-
-		// No namespace
-
-		WikiPage wikiPage1 = testGraphQLDeleteWikiPage_addWikiPage();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteWikiPage",
-						new HashMap<String, Object>() {
-							{
-								put("wikiPageId", wikiPage1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteWikiPage"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"wikiPage",
-					new HashMap<String, Object>() {
-						{
-							put("wikiPageId", wikiPage1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected WikiPage testGraphQLDeleteWikiPage_addWikiPage()
-		throws Exception {
-
-		return testGraphQLWikiPage_addWikiPage();
-	}
-
-	@Test
-	public void testGetWikiPage() throws Exception {
-		WikiPage postWikiPage = testGetWikiPage_addWikiPage();
-
-		WikiPage getWikiPage = wikiPageResource.getWikiPage(
-			postWikiPage.getId());
-
-		assertEquals(postWikiPage, getWikiPage);
-		assertValid(getWikiPage);
-	}
-
-	protected WikiPage testGetWikiPage_addWikiPage() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetWikiPage() throws Exception {
-		WikiPage wikiPage = testGraphQLGetWikiPage_addWikiPage();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				wikiPage,
-				WikiPageSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"wikiPage",
-								new HashMap<String, Object>() {
-									{
-										put("wikiPageId", wikiPage.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/wikiPage"))));
-	}
-
-	@Test
-	public void testGraphQLGetWikiPageNotFound() throws Exception {
-		Long irrelevantWikiPageId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"wikiPage",
-						new HashMap<String, Object>() {
-							{
-								put("wikiPageId", irrelevantWikiPageId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected WikiPage testGraphQLGetWikiPage_addWikiPage() throws Exception {
-		return testGraphQLWikiPage_addWikiPage();
 	}
 
 	@Test

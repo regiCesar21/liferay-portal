@@ -34,6 +34,15 @@ public interface AccountRoleResource {
 		return new Builder();
 	}
 
+	public void deleteAccountRoleUserAssociation(
+			Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteAccountRoleUserAssociationHttpResponse(
+				Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception;
+
 	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
 			String accountExternalReferenceCode, Long accountRoleId,
 			String accountUserExternalReferenceCode)
@@ -41,17 +50,6 @@ public interface AccountRoleResource {
 
 	public HttpInvoker.HttpResponse
 			deleteAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
-				String accountExternalReferenceCode, Long accountRoleId,
-				String accountUserExternalReferenceCode)
-		throws Exception;
-
-	public void postAccountRoleUserAssociationByExternalReferenceCode(
-			String accountExternalReferenceCode, Long accountRoleId,
-			String accountUserExternalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String accountUserExternalReferenceCode)
 		throws Exception;
@@ -65,15 +63,6 @@ public interface AccountRoleResource {
 			getAccountRolesByExternalReferenceCodePageHttpResponse(
 				String externalReferenceCode, String keywords,
 				Pagination pagination, String sortString)
-		throws Exception;
-
-	public AccountRole postAccountRoleByExternalReferenceCode(
-			String externalReferenceCode, AccountRole accountRole)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postAccountRoleByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode, AccountRole accountRole)
 		throws Exception;
 
 	public Page<AccountRole> getAccountRolesPage(
@@ -93,13 +82,13 @@ public interface AccountRoleResource {
 			Long accountId, AccountRole accountRole)
 		throws Exception;
 
-	public void deleteAccountRoleUserAssociation(
-			Long accountId, Long accountRoleId, Long accountUserId)
+	public AccountRole postAccountRoleByExternalReferenceCode(
+			String externalReferenceCode, AccountRole accountRole)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAccountRoleUserAssociationHttpResponse(
-				Long accountId, Long accountRoleId, Long accountUserId)
+			postAccountRoleByExternalReferenceCodeHttpResponse(
+				String externalReferenceCode, AccountRole accountRole)
 		throws Exception;
 
 	public void postAccountRoleUserAssociation(
@@ -108,6 +97,17 @@ public interface AccountRoleResource {
 
 	public HttpInvoker.HttpResponse postAccountRoleUserAssociationHttpResponse(
 			Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception;
+
+	public void postAccountRoleUserAssociationByExternalReferenceCode(
+			String accountExternalReferenceCode, Long accountRoleId,
+			String accountUserExternalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String accountUserExternalReferenceCode)
 		throws Exception;
 
 	public static class Builder {
@@ -218,6 +218,116 @@ public interface AccountRoleResource {
 
 	public static class AccountRoleResourceImpl implements AccountRoleResource {
 
+		public void deleteAccountRoleUserAssociation(
+				Long accountId, Long accountRoleId, Long accountUserId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteAccountRoleUserAssociationHttpResponse(
+					accountId, accountRoleId, accountUserId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteAccountRoleUserAssociationHttpResponse(
+					Long accountId, Long accountRoleId, Long accountUserId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/account-rest/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}");
+
+			httpInvoker.path("accountId", accountId);
+			httpInvoker.path("accountRoleId", accountRoleId);
+			httpInvoker.path("accountUserId", accountUserId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		public void deleteAccountRoleUserAssociationByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String accountUserExternalReferenceCode)
@@ -313,124 +423,6 @@ public interface AccountRoleResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/account-rest/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}");
-
-			httpInvoker.path(
-				"accountExternalReferenceCode", accountExternalReferenceCode);
-			httpInvoker.path("accountRoleId", accountRoleId);
-			httpInvoker.path(
-				"accountUserExternalReferenceCode",
-				accountUserExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void postAccountRoleUserAssociationByExternalReferenceCode(
-				String accountExternalReferenceCode, Long accountRoleId,
-				String accountUserExternalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
-					accountExternalReferenceCode, accountRoleId,
-					accountUserExternalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
-					String accountExternalReferenceCode, Long accountRoleId,
-					String accountUserExternalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body("[]", "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -561,116 +553,6 @@ public interface AccountRoleResource {
 			if (sortString != null) {
 				httpInvoker.parameter("sort", sortString);
 			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/account-rest/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public AccountRole postAccountRoleByExternalReferenceCode(
-				String externalReferenceCode, AccountRole accountRole)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postAccountRoleByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, accountRole);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return AccountRoleSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postAccountRoleByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode, AccountRole accountRole)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(accountRole.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -919,13 +801,13 @@ public interface AccountRoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAccountRoleUserAssociation(
-				Long accountId, Long accountRoleId, Long accountUserId)
+		public AccountRole postAccountRoleByExternalReferenceCode(
+				String externalReferenceCode, AccountRole accountRole)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountRoleUserAssociationHttpResponse(
-					accountId, accountRoleId, accountUserId);
+				postAccountRoleByExternalReferenceCodeHttpResponse(
+					externalReferenceCode, accountRole);
 
 			String content = httpResponse.getContent();
 
@@ -975,7 +857,7 @@ public interface AccountRoleResource {
 			}
 
 			try {
-				return;
+				return AccountRoleSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -987,11 +869,13 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAccountRoleUserAssociationHttpResponse(
-					Long accountId, Long accountRoleId, Long accountUserId)
+				postAccountRoleByExternalReferenceCodeHttpResponse(
+					String externalReferenceCode, AccountRole accountRole)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(accountRole.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1010,16 +894,14 @@ public interface AccountRoleResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/account-rest/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}");
+						"/o/account-rest/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles");
 
-			httpInvoker.path("accountId", accountId);
-			httpInvoker.path("accountRoleId", accountRoleId);
-			httpInvoker.path("accountUserId", accountUserId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1132,6 +1014,124 @@ public interface AccountRoleResource {
 			httpInvoker.path("accountId", accountId);
 			httpInvoker.path("accountRoleId", accountRoleId);
 			httpInvoker.path("accountUserId", accountUserId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void postAccountRoleUserAssociationByExternalReferenceCode(
+				String accountExternalReferenceCode, Long accountRoleId,
+				String accountUserExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+					accountExternalReferenceCode, accountRoleId,
+					accountUserExternalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
+					String accountExternalReferenceCode, Long accountRoleId,
+					String accountUserExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body("[]", "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/account-rest/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}");
+
+			httpInvoker.path(
+				"accountExternalReferenceCode", accountExternalReferenceCode);
+			httpInvoker.path("accountRoleId", accountRoleId);
+			httpInvoker.path(
+				"accountUserExternalReferenceCode",
+				accountUserExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

@@ -183,6 +183,144 @@ public abstract class BaseSpecificationResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSpecification() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Specification specification =
+			testDeleteSpecification_addSpecification();
+
+		assertHttpResponseStatusCode(
+			204,
+			specificationResource.deleteSpecificationHttpResponse(
+				specification.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			specificationResource.getSpecificationHttpResponse(
+				specification.getId()));
+		assertHttpResponseStatusCode(
+			404, specificationResource.getSpecificationHttpResponse(0L));
+	}
+
+	protected Specification testDeleteSpecification_addSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteSpecification() throws Exception {
+
+		// No namespace
+
+		Specification specification1 =
+			testGraphQLDeleteSpecification_addSpecification();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteSpecification",
+						new HashMap<String, Object>() {
+							{
+								put("id", specification1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteSpecification"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"specification",
+					new HashMap<String, Object>() {
+						{
+							put("id", specification1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Specification testGraphQLDeleteSpecification_addSpecification()
+		throws Exception {
+
+		return testGraphQLSpecification_addSpecification();
+	}
+
+	@Test
+	public void testGetSpecification() throws Exception {
+		Specification postSpecification =
+			testGetSpecification_addSpecification();
+
+		Specification getSpecification = specificationResource.getSpecification(
+			postSpecification.getId());
+
+		assertEquals(postSpecification, getSpecification);
+		assertValid(getSpecification);
+	}
+
+	protected Specification testGetSpecification_addSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSpecification() throws Exception {
+		Specification specification =
+			testGraphQLGetSpecification_addSpecification();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				specification,
+				SpecificationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"specification",
+								new HashMap<String, Object>() {
+									{
+										put("id", specification.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/specification"))));
+	}
+
+	@Test
+	public void testGraphQLGetSpecificationNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"specification",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Specification testGraphQLGetSpecification_addSpecification()
+		throws Exception {
+
+		return testGraphQLSpecification_addSpecification();
+	}
+
+	@Test
 	public void testGetSpecificationsPage() throws Exception {
 		Page<Specification> page = specificationResource.getSpecificationsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -600,6 +738,11 @@ public abstract class BaseSpecificationResourceTestCase {
 	}
 
 	@Test
+	public void testPatchSpecification() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostSpecification() throws Exception {
 		Specification randomSpecification = randomSpecification();
 
@@ -616,149 +759,6 @@ public abstract class BaseSpecificationResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteSpecification() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Specification specification =
-			testDeleteSpecification_addSpecification();
-
-		assertHttpResponseStatusCode(
-			204,
-			specificationResource.deleteSpecificationHttpResponse(
-				specification.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			specificationResource.getSpecificationHttpResponse(
-				specification.getId()));
-		assertHttpResponseStatusCode(
-			404, specificationResource.getSpecificationHttpResponse(0L));
-	}
-
-	protected Specification testDeleteSpecification_addSpecification()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteSpecification() throws Exception {
-
-		// No namespace
-
-		Specification specification1 =
-			testGraphQLDeleteSpecification_addSpecification();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteSpecification",
-						new HashMap<String, Object>() {
-							{
-								put("id", specification1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteSpecification"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"specification",
-					new HashMap<String, Object>() {
-						{
-							put("id", specification1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Specification testGraphQLDeleteSpecification_addSpecification()
-		throws Exception {
-
-		return testGraphQLSpecification_addSpecification();
-	}
-
-	@Test
-	public void testGetSpecification() throws Exception {
-		Specification postSpecification =
-			testGetSpecification_addSpecification();
-
-		Specification getSpecification = specificationResource.getSpecification(
-			postSpecification.getId());
-
-		assertEquals(postSpecification, getSpecification);
-		assertValid(getSpecification);
-	}
-
-	protected Specification testGetSpecification_addSpecification()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSpecification() throws Exception {
-		Specification specification =
-			testGraphQLGetSpecification_addSpecification();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				specification,
-				SpecificationSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"specification",
-								new HashMap<String, Object>() {
-									{
-										put("id", specification.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/specification"))));
-	}
-
-	@Test
-	public void testGraphQLGetSpecificationNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"specification",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Specification testGraphQLGetSpecification_addSpecification()
-		throws Exception {
-
-		return testGraphQLSpecification_addSpecification();
-	}
-
-	@Test
-	public void testPatchSpecification() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Rule

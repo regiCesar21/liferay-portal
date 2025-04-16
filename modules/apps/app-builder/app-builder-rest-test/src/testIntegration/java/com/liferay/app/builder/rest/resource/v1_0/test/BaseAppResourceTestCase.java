@@ -186,6 +186,126 @@ public abstract class BaseAppResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteApp() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		App app = testDeleteApp_addApp();
+
+		assertHttpResponseStatusCode(
+			204, appResource.deleteAppHttpResponse(app.getId()));
+
+		assertHttpResponseStatusCode(
+			404, appResource.getAppHttpResponse(app.getId()));
+		assertHttpResponseStatusCode(404, appResource.getAppHttpResponse(0L));
+	}
+
+	protected App testDeleteApp_addApp() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteApp() throws Exception {
+
+		// No namespace
+
+		App app1 = testGraphQLDeleteApp_addApp();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteApp",
+						new HashMap<String, Object>() {
+							{
+								put("appId", app1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteApp"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"app",
+					new HashMap<String, Object>() {
+						{
+							put("appId", app1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected App testGraphQLDeleteApp_addApp() throws Exception {
+		return testGraphQLApp_addApp();
+	}
+
+	@Test
+	public void testGetApp() throws Exception {
+		App postApp = testGetApp_addApp();
+
+		App getApp = appResource.getApp(postApp.getId());
+
+		assertEquals(postApp, getApp);
+		assertValid(getApp);
+	}
+
+	protected App testGetApp_addApp() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetApp() throws Exception {
+		App app = testGraphQLGetApp_addApp();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				app,
+				AppSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"app",
+								new HashMap<String, Object>() {
+									{
+										put("appId", app.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/app"))));
+	}
+
+	@Test
+	public void testGraphQLGetAppNotFound() throws Exception {
+		Long irrelevantAppId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"app",
+						new HashMap<String, Object>() {
+							{
+								put("appId", irrelevantAppId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected App testGraphQLGetApp_addApp() throws Exception {
+		return testGraphQLApp_addApp();
+	}
+
+	@Test
 	public void testGetAppsPage() throws Exception {
 		Page<App> page = appResource.getAppsPage(
 			null, null, null, RandomTestUtil.randomString(), null,
@@ -469,158 +589,6 @@ public abstract class BaseAppResourceTestCase {
 
 	protected App testGraphQLGetAppsPage_addApp() throws Exception {
 		return testGraphQLApp_addApp();
-	}
-
-	@Test
-	public void testDeleteApp() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		App app = testDeleteApp_addApp();
-
-		assertHttpResponseStatusCode(
-			204, appResource.deleteAppHttpResponse(app.getId()));
-
-		assertHttpResponseStatusCode(
-			404, appResource.getAppHttpResponse(app.getId()));
-		assertHttpResponseStatusCode(404, appResource.getAppHttpResponse(0L));
-	}
-
-	protected App testDeleteApp_addApp() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteApp() throws Exception {
-
-		// No namespace
-
-		App app1 = testGraphQLDeleteApp_addApp();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteApp",
-						new HashMap<String, Object>() {
-							{
-								put("appId", app1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteApp"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"app",
-					new HashMap<String, Object>() {
-						{
-							put("appId", app1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected App testGraphQLDeleteApp_addApp() throws Exception {
-		return testGraphQLApp_addApp();
-	}
-
-	@Test
-	public void testGetApp() throws Exception {
-		App postApp = testGetApp_addApp();
-
-		App getApp = appResource.getApp(postApp.getId());
-
-		assertEquals(postApp, getApp);
-		assertValid(getApp);
-	}
-
-	protected App testGetApp_addApp() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetApp() throws Exception {
-		App app = testGraphQLGetApp_addApp();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				app,
-				AppSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"app",
-								new HashMap<String, Object>() {
-									{
-										put("appId", app.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/app"))));
-	}
-
-	@Test
-	public void testGraphQLGetAppNotFound() throws Exception {
-		Long irrelevantAppId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"app",
-						new HashMap<String, Object>() {
-							{
-								put("appId", irrelevantAppId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected App testGraphQLGetApp_addApp() throws Exception {
-		return testGraphQLApp_addApp();
-	}
-
-	@Test
-	public void testPutApp() throws Exception {
-		App postApp = testPutApp_addApp();
-
-		App randomApp = randomApp();
-
-		App putApp = appResource.putApp(postApp.getId(), randomApp);
-
-		assertEquals(randomApp, putApp);
-		assertValid(putApp);
-
-		App getApp = appResource.getApp(putApp.getId());
-
-		assertEquals(randomApp, getApp);
-		assertValid(getApp);
-	}
-
-	protected App testPutApp_addApp() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutAppDeploy() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutAppUndeploy() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -922,21 +890,6 @@ public abstract class BaseAppResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionApp() throws Exception {
-		App randomApp = randomApp();
-
-		App postApp = testPostDataDefinitionApp_addApp(randomApp);
-
-		assertEquals(randomApp, postApp);
-		assertValid(postApp);
-	}
-
-	protected App testPostDataDefinitionApp_addApp(App app) throws Exception {
-		return appResource.postDataDefinitionApp(
-			testGetDataDefinitionAppsPage_getDataDefinitionId(), app);
-	}
-
-	@Test
 	public void testGetSiteAppsPage() throws Exception {
 		Long siteId = testGetSiteAppsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteAppsPage_getIrrelevantSiteId();
@@ -1207,6 +1160,53 @@ public abstract class BaseAppResourceTestCase {
 
 	protected Long testGetSiteAppsPage_getIrrelevantSiteId() throws Exception {
 		return irrelevantGroup.getGroupId();
+	}
+
+	@Test
+	public void testPostDataDefinitionApp() throws Exception {
+		App randomApp = randomApp();
+
+		App postApp = testPostDataDefinitionApp_addApp(randomApp);
+
+		assertEquals(randomApp, postApp);
+		assertValid(postApp);
+	}
+
+	protected App testPostDataDefinitionApp_addApp(App app) throws Exception {
+		return appResource.postDataDefinitionApp(
+			testGetDataDefinitionAppsPage_getDataDefinitionId(), app);
+	}
+
+	@Test
+	public void testPutApp() throws Exception {
+		App postApp = testPutApp_addApp();
+
+		App randomApp = randomApp();
+
+		App putApp = appResource.putApp(postApp.getId(), randomApp);
+
+		assertEquals(randomApp, putApp);
+		assertValid(putApp);
+
+		App getApp = appResource.getApp(putApp.getId());
+
+		assertEquals(randomApp, getApp);
+		assertValid(getApp);
+	}
+
+	protected App testPutApp_addApp() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAppDeploy() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPutAppUndeploy() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected App testGraphQLApp_addApp() throws Exception {

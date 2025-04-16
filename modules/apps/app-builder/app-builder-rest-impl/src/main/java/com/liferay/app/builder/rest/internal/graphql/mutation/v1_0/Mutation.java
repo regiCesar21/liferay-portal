@@ -66,6 +66,18 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public App createDataDefinitionApp(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("app") App app)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_appResourceComponentServiceObjects, this::_populateResourceContext,
+			appResource -> appResource.postDataDefinitionApp(
+				dataDefinitionId, app));
+	}
+
+	@GraphQLField
 	public App updateApp(
 			@GraphQLName("appId") Long appId, @GraphQLName("app") App app)
 		throws Exception {
@@ -102,18 +114,6 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_appResourceComponentServiceObjects, this::_populateResourceContext,
 			appResource -> appResource.putAppUndeploy(appId));
-	}
-
-	@GraphQLField
-	public App createDataDefinitionApp(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
-			@GraphQLName("app") App app)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_appResourceComponentServiceObjects, this::_populateResourceContext,
-			appResource -> appResource.postDataDefinitionApp(
-				dataDefinitionId, app));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

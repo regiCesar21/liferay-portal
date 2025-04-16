@@ -188,6 +188,81 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDataRecordCollection() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataRecordCollection dataRecordCollection =
+			testDeleteDataRecordCollection_addDataRecordCollection();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataRecordCollectionResource.deleteDataRecordCollectionHttpResponse(
+				dataRecordCollection.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataRecordCollectionResource.getDataRecordCollectionHttpResponse(
+				dataRecordCollection.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			dataRecordCollectionResource.getDataRecordCollectionHttpResponse(
+				0L));
+	}
+
+	protected DataRecordCollection
+			testDeleteDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteDataRecordCollection() throws Exception {
+
+		// No namespace
+
+		DataRecordCollection dataRecordCollection1 =
+			testGraphQLDeleteDataRecordCollection_addDataRecordCollection();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDataRecordCollection",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"dataRecordCollectionId",
+									dataRecordCollection1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDataRecordCollection"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataRecordCollection",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"dataRecordCollectionId",
+								dataRecordCollection1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected DataRecordCollection
+			testGraphQLDeleteDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		return testGraphQLDataRecordCollection_addDataRecordCollection();
+	}
+
+	@Test
 	public void testGetDataDefinitionDataRecordCollection() throws Exception {
 		DataRecordCollection postDataRecordCollection =
 			testGetDataDefinitionDataRecordCollection_addDataRecordCollection();
@@ -522,105 +597,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataRecordCollection() throws Exception {
-		DataRecordCollection randomDataRecordCollection =
-			randomDataRecordCollection();
-
-		DataRecordCollection postDataRecordCollection =
-			testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
-				randomDataRecordCollection);
-
-		assertEquals(randomDataRecordCollection, postDataRecordCollection);
-		assertValid(postDataRecordCollection);
-	}
-
-	protected DataRecordCollection
-			testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
-				DataRecordCollection dataRecordCollection)
-		throws Exception {
-
-		return dataRecordCollectionResource.
-			postDataDefinitionDataRecordCollection(
-				testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId(),
-				dataRecordCollection);
-	}
-
-	@Test
-	public void testDeleteDataRecordCollection() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataRecordCollection dataRecordCollection =
-			testDeleteDataRecordCollection_addDataRecordCollection();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataRecordCollectionResource.deleteDataRecordCollectionHttpResponse(
-				dataRecordCollection.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataRecordCollectionResource.getDataRecordCollectionHttpResponse(
-				dataRecordCollection.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			dataRecordCollectionResource.getDataRecordCollectionHttpResponse(
-				0L));
-	}
-
-	protected DataRecordCollection
-			testDeleteDataRecordCollection_addDataRecordCollection()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteDataRecordCollection() throws Exception {
-
-		// No namespace
-
-		DataRecordCollection dataRecordCollection1 =
-			testGraphQLDeleteDataRecordCollection_addDataRecordCollection();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDataRecordCollection",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"dataRecordCollectionId",
-									dataRecordCollection1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDataRecordCollection"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"dataRecordCollection",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"dataRecordCollectionId",
-								dataRecordCollection1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected DataRecordCollection
-			testGraphQLDeleteDataRecordCollection_addDataRecordCollection()
-		throws Exception {
-
-		return testGraphQLDataRecordCollection_addDataRecordCollection();
-	}
-
-	@Test
 	public void testGetDataRecordCollection() throws Exception {
 		DataRecordCollection postDataRecordCollection =
 			testGetDataRecordCollection_addDataRecordCollection();
@@ -699,34 +675,10 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testPutDataRecordCollection() throws Exception {
-		DataRecordCollection postDataRecordCollection =
-			testPutDataRecordCollection_addDataRecordCollection();
-
-		DataRecordCollection randomDataRecordCollection =
-			randomDataRecordCollection();
-
-		DataRecordCollection putDataRecordCollection =
-			dataRecordCollectionResource.putDataRecordCollection(
-				postDataRecordCollection.getId(), randomDataRecordCollection);
-
-		assertEquals(randomDataRecordCollection, putDataRecordCollection);
-		assertValid(putDataRecordCollection);
-
-		DataRecordCollection getDataRecordCollection =
-			dataRecordCollectionResource.getDataRecordCollection(
-				putDataRecordCollection.getId());
-
-		assertEquals(randomDataRecordCollection, getDataRecordCollection);
-		assertValid(getDataRecordCollection);
-	}
-
-	protected DataRecordCollection
-			testPutDataRecordCollection_addDataRecordCollection()
+	public void testGetDataRecordCollectionPermissionByCurrentUser()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -747,60 +699,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutDataRecordCollectionPermissionsPage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataRecordCollection dataRecordCollection =
-			testPutDataRecordCollectionPermissionsPage_addDataRecordCollection();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			dataRecordCollectionResource.
-				putDataRecordCollectionPermissionsPageHttpResponse(
-					dataRecordCollection.getId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"VIEW"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataRecordCollectionResource.
-				putDataRecordCollectionPermissionsPageHttpResponse(
-					0L,
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected DataRecordCollection
-			testPutDataRecordCollectionPermissionsPage_addDataRecordCollection()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetDataRecordCollectionPermissionByCurrentUser()
-		throws Exception {
-
-		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -919,6 +817,108 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		throws Exception {
 
 		return testGraphQLDataRecordCollection_addDataRecordCollection();
+	}
+
+	@Test
+	public void testPostDataDefinitionDataRecordCollection() throws Exception {
+		DataRecordCollection randomDataRecordCollection =
+			randomDataRecordCollection();
+
+		DataRecordCollection postDataRecordCollection =
+			testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
+				randomDataRecordCollection);
+
+		assertEquals(randomDataRecordCollection, postDataRecordCollection);
+		assertValid(postDataRecordCollection);
+	}
+
+	protected DataRecordCollection
+			testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
+				DataRecordCollection dataRecordCollection)
+		throws Exception {
+
+		return dataRecordCollectionResource.
+			postDataDefinitionDataRecordCollection(
+				testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId(),
+				dataRecordCollection);
+	}
+
+	@Test
+	public void testPutDataRecordCollection() throws Exception {
+		DataRecordCollection postDataRecordCollection =
+			testPutDataRecordCollection_addDataRecordCollection();
+
+		DataRecordCollection randomDataRecordCollection =
+			randomDataRecordCollection();
+
+		DataRecordCollection putDataRecordCollection =
+			dataRecordCollectionResource.putDataRecordCollection(
+				postDataRecordCollection.getId(), randomDataRecordCollection);
+
+		assertEquals(randomDataRecordCollection, putDataRecordCollection);
+		assertValid(putDataRecordCollection);
+
+		DataRecordCollection getDataRecordCollection =
+			dataRecordCollectionResource.getDataRecordCollection(
+				putDataRecordCollection.getId());
+
+		assertEquals(randomDataRecordCollection, getDataRecordCollection);
+		assertValid(getDataRecordCollection);
+	}
+
+	protected DataRecordCollection
+			testPutDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutDataRecordCollectionPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataRecordCollection dataRecordCollection =
+			testPutDataRecordCollectionPermissionsPage_addDataRecordCollection();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			dataRecordCollectionResource.
+				putDataRecordCollectionPermissionsPageHttpResponse(
+					dataRecordCollection.getId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataRecordCollectionResource.
+				putDataRecordCollectionPermissionsPageHttpResponse(
+					0L,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected DataRecordCollection
+			testPutDataRecordCollectionPermissionsPage_addDataRecordCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected DataRecordCollection

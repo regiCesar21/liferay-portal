@@ -115,21 +115,6 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#createSXPBlueprint",
-						new ObjectValuePair<>(
-							SXPBlueprintResourceImpl.class,
-							"postSXPBlueprint"));
-					put(
-						"mutation#createSXPBlueprintBatch",
-						new ObjectValuePair<>(
-							SXPBlueprintResourceImpl.class,
-							"postSXPBlueprintBatch"));
-					put(
-						"mutation#createSXPBlueprintValidate",
-						new ObjectValuePair<>(
-							SXPBlueprintResourceImpl.class,
-							"postSXPBlueprintValidate"));
-					put(
 						"mutation#deleteSXPBlueprint",
 						new ObjectValuePair<>(
 							SXPBlueprintResourceImpl.class,
@@ -145,24 +130,25 @@ public class ServletDataImpl implements ServletData {
 							SXPBlueprintResourceImpl.class,
 							"patchSXPBlueprint"));
 					put(
+						"mutation#createSXPBlueprint",
+						new ObjectValuePair<>(
+							SXPBlueprintResourceImpl.class,
+							"postSXPBlueprint"));
+					put(
+						"mutation#createSXPBlueprintBatch",
+						new ObjectValuePair<>(
+							SXPBlueprintResourceImpl.class,
+							"postSXPBlueprintBatch"));
+					put(
 						"mutation#createSXPBlueprintCopy",
 						new ObjectValuePair<>(
 							SXPBlueprintResourceImpl.class,
 							"postSXPBlueprintCopy"));
 					put(
-						"mutation#createSXPElement",
+						"mutation#createSXPBlueprintValidate",
 						new ObjectValuePair<>(
-							SXPElementResourceImpl.class, "postSXPElement"));
-					put(
-						"mutation#createSXPElementBatch",
-						new ObjectValuePair<>(
-							SXPElementResourceImpl.class,
-							"postSXPElementBatch"));
-					put(
-						"mutation#createSXPElementValidate",
-						new ObjectValuePair<>(
-							SXPElementResourceImpl.class,
-							"postSXPElementValidate"));
+							SXPBlueprintResourceImpl.class,
+							"postSXPBlueprintValidate"));
 					put(
 						"mutation#deleteSXPElement",
 						new ObjectValuePair<>(
@@ -177,10 +163,24 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SXPElementResourceImpl.class, "patchSXPElement"));
 					put(
+						"mutation#createSXPElement",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class, "postSXPElement"));
+					put(
+						"mutation#createSXPElementBatch",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class,
+							"postSXPElementBatch"));
+					put(
 						"mutation#createSXPElementCopy",
 						new ObjectValuePair<>(
 							SXPElementResourceImpl.class,
 							"postSXPElementCopy"));
+					put(
+						"mutation#createSXPElementValidate",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class,
+							"postSXPElementValidate"));
 					put(
 						"mutation#createSearch",
 						new ObjectValuePair<>(
@@ -207,11 +207,6 @@ public class ServletDataImpl implements ServletData {
 							QueryPrefilterContributorResourceImpl.class,
 							"getQueryPrefilterContributorsPage"));
 					put(
-						"query#sXPBlueprints",
-						new ObjectValuePair<>(
-							SXPBlueprintResourceImpl.class,
-							"getSXPBlueprintsPage"));
-					put(
 						"query#sXPBlueprint",
 						new ObjectValuePair<>(
 							SXPBlueprintResourceImpl.class, "getSXPBlueprint"));
@@ -221,10 +216,10 @@ public class ServletDataImpl implements ServletData {
 							SXPBlueprintResourceImpl.class,
 							"getSXPBlueprintExport"));
 					put(
-						"query#sXPElements",
+						"query#sXPBlueprints",
 						new ObjectValuePair<>(
-							SXPElementResourceImpl.class,
-							"getSXPElementsPage"));
+							SXPBlueprintResourceImpl.class,
+							"getSXPBlueprintsPage"));
 					put(
 						"query#sXPElement",
 						new ObjectValuePair<>(
@@ -234,6 +229,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SXPElementResourceImpl.class,
 							"getSXPElementExport"));
+					put(
+						"query#sXPElements",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class,
+							"getSXPElementsPage"));
 					put(
 						"query#sXPParameterContributorDefinitions",
 						new ObjectValuePair<>(

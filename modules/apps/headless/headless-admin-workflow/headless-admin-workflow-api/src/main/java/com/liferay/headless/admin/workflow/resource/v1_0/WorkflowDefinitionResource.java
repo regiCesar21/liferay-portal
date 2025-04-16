@@ -43,11 +43,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowDefinitionResource {
 
-	public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
-			Pagination pagination)
+	public void deleteWorkflowDefinitionUndeploy(String name, String version)
 		throws Exception;
 
 	public WorkflowDefinition getWorkflowDefinitionByName(String name)
+		throws Exception;
+
+	public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
+			Pagination pagination)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinitionDeploy(
@@ -56,9 +59,6 @@ public interface WorkflowDefinitionResource {
 
 	public WorkflowDefinition postWorkflowDefinitionSave(
 			WorkflowDefinition workflowDefinition)
-		throws Exception;
-
-	public void deleteWorkflowDefinitionUndeploy(String name, String version)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinitionUpdateActive(

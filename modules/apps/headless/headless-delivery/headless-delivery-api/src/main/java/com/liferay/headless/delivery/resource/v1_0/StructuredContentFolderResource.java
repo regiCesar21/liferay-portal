@@ -45,6 +45,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface StructuredContentFolderResource {
 
+	public void deleteStructuredContentFolder(Long structuredContentFolderId)
+		throws Exception;
+
+	public Response deleteStructuredContentFolderBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<StructuredContentFolder>
 			getAssetLibraryStructuredContentFoldersPage(
 				Long assetLibraryId, Boolean flatten, String search,
@@ -52,15 +59,6 @@ public interface StructuredContentFolderResource {
 				com.liferay.portal.kernel.search.filter.Filter filter,
 				Pagination pagination,
 				com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public StructuredContentFolder postAssetLibraryStructuredContentFolder(
-			Long assetLibraryId,
-			StructuredContentFolder structuredContentFolder)
-		throws Exception;
-
-	public Response postAssetLibraryStructuredContentFolderBatch(
-			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
 	public Page<StructuredContentFolder> getSiteStructuredContentFoldersPage(
@@ -71,12 +69,8 @@ public interface StructuredContentFolderResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public StructuredContentFolder postSiteStructuredContentFolder(
-			Long siteId, StructuredContentFolder structuredContentFolder)
-		throws Exception;
-
-	public Response postSiteStructuredContentFolderBatch(
-			Long siteId, String callbackURL, Object object)
+	public StructuredContentFolder getStructuredContentFolder(
+			Long structuredContentFolderId)
 		throws Exception;
 
 	public Page<StructuredContentFolder>
@@ -88,26 +82,32 @@ public interface StructuredContentFolderResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public StructuredContentFolder patchStructuredContentFolder(
+			Long structuredContentFolderId,
+			StructuredContentFolder structuredContentFolder)
+		throws Exception;
+
+	public StructuredContentFolder postAssetLibraryStructuredContentFolder(
+			Long assetLibraryId,
+			StructuredContentFolder structuredContentFolder)
+		throws Exception;
+
+	public Response postAssetLibraryStructuredContentFolderBatch(
+			Long assetLibraryId, String callbackURL, Object object)
+		throws Exception;
+
+	public StructuredContentFolder postSiteStructuredContentFolder(
+			Long siteId, StructuredContentFolder structuredContentFolder)
+		throws Exception;
+
+	public Response postSiteStructuredContentFolderBatch(
+			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
 	public StructuredContentFolder
 			postStructuredContentFolderStructuredContentFolder(
 				Long parentStructuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
-		throws Exception;
-
-	public void deleteStructuredContentFolder(Long structuredContentFolderId)
-		throws Exception;
-
-	public Response deleteStructuredContentFolderBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public StructuredContentFolder getStructuredContentFolder(
-			Long structuredContentFolderId)
-		throws Exception;
-
-	public StructuredContentFolder patchStructuredContentFolder(
-			Long structuredContentFolderId,
-			StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
 	public StructuredContentFolder putStructuredContentFolder(

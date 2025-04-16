@@ -44,6 +44,17 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response deleteAreaIdSpot(
+			@GraphQLName("id") Long id, @GraphQLName("spotId") Long spotId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_spotResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			spotResource -> spotResource.deleteAreaIdSpot(id, spotId));
+	}
+
+	@GraphQLField
 	public Spot createAreaIdSpot(
 			@GraphQLName("id") Long id, @GraphQLName("spot") Spot spot)
 		throws Exception {
@@ -65,17 +76,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			spotResource -> spotResource.postAreaIdSpotBatch(
 				callbackURL, object));
-	}
-
-	@GraphQLField
-	public Response deleteAreaIdSpot(
-			@GraphQLName("id") Long id, @GraphQLName("spotId") Long spotId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_spotResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			spotResource -> spotResource.deleteAreaIdSpot(id, spotId));
 	}
 
 	@GraphQLField

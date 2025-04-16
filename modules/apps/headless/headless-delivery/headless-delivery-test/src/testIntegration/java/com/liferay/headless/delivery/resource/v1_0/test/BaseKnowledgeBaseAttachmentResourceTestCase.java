@@ -196,6 +196,83 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteKnowledgeBaseAttachment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		KnowledgeBaseAttachment knowledgeBaseAttachment =
+			testDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseAttachmentResource.
+				deleteKnowledgeBaseAttachmentHttpResponse(
+					knowledgeBaseAttachment.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				getKnowledgeBaseAttachmentHttpResponse(
+					knowledgeBaseAttachment.getId()));
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				getKnowledgeBaseAttachmentHttpResponse(0L));
+	}
+
+	protected KnowledgeBaseAttachment
+			testDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteKnowledgeBaseAttachment() throws Exception {
+
+		// No namespace
+
+		KnowledgeBaseAttachment knowledgeBaseAttachment1 =
+			testGraphQLDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteKnowledgeBaseAttachment",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"knowledgeBaseAttachmentId",
+									knowledgeBaseAttachment1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteKnowledgeBaseAttachment"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"knowledgeBaseAttachment",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"knowledgeBaseAttachmentId",
+								knowledgeBaseAttachment1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected KnowledgeBaseAttachment
+			testGraphQLDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		return testGraphQLKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
+	}
+
+	@Test
 	public void testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage()
 		throws Exception {
 
@@ -315,115 +392,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	}
 
 	@Test
-	public void testPostKnowledgeBaseArticleKnowledgeBaseAttachment()
-		throws Exception {
-
-		KnowledgeBaseAttachment randomKnowledgeBaseAttachment =
-			randomKnowledgeBaseAttachment();
-
-		Map<String, File> multipartFiles = getMultipartFiles();
-
-		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
-			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
-				randomKnowledgeBaseAttachment, multipartFiles);
-
-		assertEquals(
-			randomKnowledgeBaseAttachment, postKnowledgeBaseAttachment);
-		assertValid(postKnowledgeBaseAttachment);
-
-		assertValid(postKnowledgeBaseAttachment, multipartFiles);
-	}
-
-	protected KnowledgeBaseAttachment
-			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
-				KnowledgeBaseAttachment knowledgeBaseAttachment,
-				Map<String, File> multipartFiles)
-		throws Exception {
-
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId(),
-				knowledgeBaseAttachment, multipartFiles);
-	}
-
-	@Test
-	public void testDeleteKnowledgeBaseAttachment() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		KnowledgeBaseAttachment knowledgeBaseAttachment =
-			testDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
-
-		assertHttpResponseStatusCode(
-			204,
-			knowledgeBaseAttachmentResource.
-				deleteKnowledgeBaseAttachmentHttpResponse(
-					knowledgeBaseAttachment.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			knowledgeBaseAttachmentResource.
-				getKnowledgeBaseAttachmentHttpResponse(
-					knowledgeBaseAttachment.getId()));
-		assertHttpResponseStatusCode(
-			404,
-			knowledgeBaseAttachmentResource.
-				getKnowledgeBaseAttachmentHttpResponse(0L));
-	}
-
-	protected KnowledgeBaseAttachment
-			testDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteKnowledgeBaseAttachment() throws Exception {
-
-		// No namespace
-
-		KnowledgeBaseAttachment knowledgeBaseAttachment1 =
-			testGraphQLDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteKnowledgeBaseAttachment",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"knowledgeBaseAttachmentId",
-									knowledgeBaseAttachment1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteKnowledgeBaseAttachment"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"knowledgeBaseAttachment",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"knowledgeBaseAttachmentId",
-								knowledgeBaseAttachment1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected KnowledgeBaseAttachment
-			testGraphQLDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
-		throws Exception {
-
-		return testGraphQLKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
-	}
-
-	@Test
 	public void testGetKnowledgeBaseAttachment() throws Exception {
 		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
 			testGetKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
@@ -501,6 +469,38 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		throws Exception {
 
 		return testGraphQLKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
+	}
+
+	@Test
+	public void testPostKnowledgeBaseArticleKnowledgeBaseAttachment()
+		throws Exception {
+
+		KnowledgeBaseAttachment randomKnowledgeBaseAttachment =
+			randomKnowledgeBaseAttachment();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
+			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
+				randomKnowledgeBaseAttachment, multipartFiles);
+
+		assertEquals(
+			randomKnowledgeBaseAttachment, postKnowledgeBaseAttachment);
+		assertValid(postKnowledgeBaseAttachment);
+
+		assertValid(postKnowledgeBaseAttachment, multipartFiles);
+	}
+
+	protected KnowledgeBaseAttachment
+			testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
+				KnowledgeBaseAttachment knowledgeBaseAttachment,
+				Map<String, File> multipartFiles)
+		throws Exception {
+
+		return knowledgeBaseAttachmentResource.
+			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId(),
+				knowledgeBaseAttachment, multipartFiles);
 	}
 
 	protected KnowledgeBaseAttachment

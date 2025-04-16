@@ -45,8 +45,26 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface KeywordResource {
 
+	public void deleteKeyword(Long keywordId) throws Exception;
+
+	public Response deleteKeywordBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<Keyword> getAssetLibraryKeywordsPage(
 			Long assetLibraryId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Keyword getKeyword(Long keywordId) throws Exception;
+
+	public Page<Keyword> getKeywordsRankedPage(
+			String search, Long siteId, Pagination pagination)
+		throws Exception;
+
+	public Page<Keyword> getSiteKeywordsPage(
+			Long siteId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
@@ -59,34 +77,16 @@ public interface KeywordResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
-	public Page<Keyword> getKeywordsRankedPage(
-			String search, Long siteId, Pagination pagination)
-		throws Exception;
-
-	public void deleteKeyword(Long keywordId) throws Exception;
-
-	public Response deleteKeywordBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Keyword getKeyword(Long keywordId) throws Exception;
-
-	public Keyword putKeyword(Long keywordId, Keyword keyword) throws Exception;
-
-	public Response putKeywordBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Page<Keyword> getSiteKeywordsPage(
-			Long siteId, String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
 	public Keyword postSiteKeyword(Long siteId, Keyword keyword)
 		throws Exception;
 
 	public Response postSiteKeywordBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public Keyword putKeyword(Long keywordId, Keyword keyword) throws Exception;
+
+	public Response putKeywordBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

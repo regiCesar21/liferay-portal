@@ -45,12 +45,40 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DocumentFolderResource {
 
+	public void deleteDocumentFolder(Long documentFolderId) throws Exception;
+
+	public Response deleteDocumentFolderBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DocumentFolder> getAssetLibraryDocumentFoldersPage(
 			Long assetLibraryId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public DocumentFolder getDocumentFolder(Long documentFolderId)
+		throws Exception;
+
+	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
+			Long parentDocumentFolderId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Page<DocumentFolder> getSiteDocumentFoldersPage(
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public DocumentFolder patchDocumentFolder(
+			Long documentFolderId, DocumentFolder documentFolder)
 		throws Exception;
 
 	public DocumentFolder postAssetLibraryDocumentFolder(
@@ -61,16 +89,16 @@ public interface DocumentFolderResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteDocumentFolder(Long documentFolderId) throws Exception;
-
-	public Response deleteDocumentFolderBatch(String callbackURL, Object object)
+	public DocumentFolder postDocumentFolderDocumentFolder(
+			Long parentDocumentFolderId, DocumentFolder documentFolder)
 		throws Exception;
 
-	public DocumentFolder getDocumentFolder(Long documentFolderId)
+	public DocumentFolder postSiteDocumentFolder(
+			Long siteId, DocumentFolder documentFolder)
 		throws Exception;
 
-	public DocumentFolder patchDocumentFolder(
-			Long documentFolderId, DocumentFolder documentFolder)
+	public Response postSiteDocumentFolderBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public DocumentFolder putDocumentFolder(
@@ -84,34 +112,6 @@ public interface DocumentFolderResource {
 		throws Exception;
 
 	public void putDocumentFolderUnsubscribe(Long documentFolderId)
-		throws Exception;
-
-	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
-			Long parentDocumentFolderId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public DocumentFolder postDocumentFolderDocumentFolder(
-			Long parentDocumentFolderId, DocumentFolder documentFolder)
-		throws Exception;
-
-	public Page<DocumentFolder> getSiteDocumentFoldersPage(
-			Long siteId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public DocumentFolder postSiteDocumentFolder(
-			Long siteId, DocumentFolder documentFolder)
-		throws Exception;
-
-	public Response postSiteDocumentFolderBatch(
-			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -178,6 +178,68 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDataRecord() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataRecord dataRecord = testDeleteDataRecord_addDataRecord();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataRecordResource.deleteDataRecordHttpResponse(
+				dataRecord.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataRecordResource.getDataRecordHttpResponse(dataRecord.getId()));
+		assertHttpResponseStatusCode(
+			404, dataRecordResource.getDataRecordHttpResponse(0L));
+	}
+
+	protected DataRecord testDeleteDataRecord_addDataRecord() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteDataRecord() throws Exception {
+
+		// No namespace
+
+		DataRecord dataRecord1 = testGraphQLDeleteDataRecord_addDataRecord();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDataRecord",
+						new HashMap<String, Object>() {
+							{
+								put("dataRecordId", dataRecord1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDataRecord"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataRecord",
+					new HashMap<String, Object>() {
+						{
+							put("dataRecordId", dataRecord1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected DataRecord testGraphQLDeleteDataRecord_addDataRecord()
+		throws Exception {
+
+		return testGraphQLDataRecord_addDataRecord();
+	}
+
+	@Test
 	public void testGetDataDefinitionDataRecordsPage() throws Exception {
 		Long dataDefinitionId =
 			testGetDataDefinitionDataRecordsPage_getDataDefinitionId();
@@ -518,23 +580,75 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataRecord() throws Exception {
-		DataRecord randomDataRecord = randomDataRecord();
+	public void testGetDataRecord() throws Exception {
+		DataRecord postDataRecord = testGetDataRecord_addDataRecord();
 
-		DataRecord postDataRecord =
-			testPostDataDefinitionDataRecord_addDataRecord(randomDataRecord);
+		DataRecord getDataRecord = dataRecordResource.getDataRecord(
+			postDataRecord.getId());
 
-		assertEquals(randomDataRecord, postDataRecord);
-		assertValid(postDataRecord);
+		assertEquals(postDataRecord, getDataRecord);
+		assertValid(getDataRecord);
 	}
 
-	protected DataRecord testPostDataDefinitionDataRecord_addDataRecord(
-			DataRecord dataRecord)
+	protected DataRecord testGetDataRecord_addDataRecord() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetDataRecord() throws Exception {
+		DataRecord dataRecord = testGraphQLGetDataRecord_addDataRecord();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				dataRecord,
+				DataRecordSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"dataRecord",
+								new HashMap<String, Object>() {
+									{
+										put("dataRecordId", dataRecord.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/dataRecord"))));
+	}
+
+	@Test
+	public void testGraphQLGetDataRecordNotFound() throws Exception {
+		Long irrelevantDataRecordId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"dataRecord",
+						new HashMap<String, Object>() {
+							{
+								put("dataRecordId", irrelevantDataRecordId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected DataRecord testGraphQLGetDataRecord_addDataRecord()
 		throws Exception {
 
-		return dataRecordResource.postDataDefinitionDataRecord(
-			testGetDataDefinitionDataRecordsPage_getDataDefinitionId(),
-			dataRecord);
+		return testGraphQLDataRecord_addDataRecord();
+	}
+
+	@Test
+	public void testGetDataRecordCollectionDataRecordExport() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -882,161 +996,6 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataRecordCollectionDataRecord() throws Exception {
-		DataRecord randomDataRecord = randomDataRecord();
-
-		DataRecord postDataRecord =
-			testPostDataRecordCollectionDataRecord_addDataRecord(
-				randomDataRecord);
-
-		assertEquals(randomDataRecord, postDataRecord);
-		assertValid(postDataRecord);
-	}
-
-	protected DataRecord testPostDataRecordCollectionDataRecord_addDataRecord(
-			DataRecord dataRecord)
-		throws Exception {
-
-		return dataRecordResource.postDataRecordCollectionDataRecord(
-			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
-			dataRecord);
-	}
-
-	@Test
-	public void testGetDataRecordCollectionDataRecordExport() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testDeleteDataRecord() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataRecord dataRecord = testDeleteDataRecord_addDataRecord();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataRecordResource.deleteDataRecordHttpResponse(
-				dataRecord.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataRecordResource.getDataRecordHttpResponse(dataRecord.getId()));
-		assertHttpResponseStatusCode(
-			404, dataRecordResource.getDataRecordHttpResponse(0L));
-	}
-
-	protected DataRecord testDeleteDataRecord_addDataRecord() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteDataRecord() throws Exception {
-
-		// No namespace
-
-		DataRecord dataRecord1 = testGraphQLDeleteDataRecord_addDataRecord();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDataRecord",
-						new HashMap<String, Object>() {
-							{
-								put("dataRecordId", dataRecord1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDataRecord"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"dataRecord",
-					new HashMap<String, Object>() {
-						{
-							put("dataRecordId", dataRecord1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected DataRecord testGraphQLDeleteDataRecord_addDataRecord()
-		throws Exception {
-
-		return testGraphQLDataRecord_addDataRecord();
-	}
-
-	@Test
-	public void testGetDataRecord() throws Exception {
-		DataRecord postDataRecord = testGetDataRecord_addDataRecord();
-
-		DataRecord getDataRecord = dataRecordResource.getDataRecord(
-			postDataRecord.getId());
-
-		assertEquals(postDataRecord, getDataRecord);
-		assertValid(getDataRecord);
-	}
-
-	protected DataRecord testGetDataRecord_addDataRecord() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetDataRecord() throws Exception {
-		DataRecord dataRecord = testGraphQLGetDataRecord_addDataRecord();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				dataRecord,
-				DataRecordSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"dataRecord",
-								new HashMap<String, Object>() {
-									{
-										put("dataRecordId", dataRecord.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/dataRecord"))));
-	}
-
-	@Test
-	public void testGraphQLGetDataRecordNotFound() throws Exception {
-		Long irrelevantDataRecordId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"dataRecord",
-						new HashMap<String, Object>() {
-							{
-								put("dataRecordId", irrelevantDataRecordId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected DataRecord testGraphQLGetDataRecord_addDataRecord()
-		throws Exception {
-
-		return testGraphQLDataRecord_addDataRecord();
-	}
-
-	@Test
 	public void testPatchDataRecord() throws Exception {
 		DataRecord postDataRecord = testPatchDataRecord_addDataRecord();
 
@@ -1061,6 +1020,47 @@ public abstract class BaseDataRecordResourceTestCase {
 	protected DataRecord testPatchDataRecord_addDataRecord() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostDataDefinitionDataRecord() throws Exception {
+		DataRecord randomDataRecord = randomDataRecord();
+
+		DataRecord postDataRecord =
+			testPostDataDefinitionDataRecord_addDataRecord(randomDataRecord);
+
+		assertEquals(randomDataRecord, postDataRecord);
+		assertValid(postDataRecord);
+	}
+
+	protected DataRecord testPostDataDefinitionDataRecord_addDataRecord(
+			DataRecord dataRecord)
+		throws Exception {
+
+		return dataRecordResource.postDataDefinitionDataRecord(
+			testGetDataDefinitionDataRecordsPage_getDataDefinitionId(),
+			dataRecord);
+	}
+
+	@Test
+	public void testPostDataRecordCollectionDataRecord() throws Exception {
+		DataRecord randomDataRecord = randomDataRecord();
+
+		DataRecord postDataRecord =
+			testPostDataRecordCollectionDataRecord_addDataRecord(
+				randomDataRecord);
+
+		assertEquals(randomDataRecord, postDataRecord);
+		assertValid(postDataRecord);
+	}
+
+	protected DataRecord testPostDataRecordCollectionDataRecord_addDataRecord(
+			DataRecord dataRecord)
+		throws Exception {
+
+		return dataRecordResource.postDataRecordCollectionDataRecord(
+			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
+			dataRecord);
 	}
 
 	@Test

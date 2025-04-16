@@ -46,30 +46,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WarehouseItemResource {
 
-	public Response deleteWarehouseItemByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public WarehouseItem getWarehouseItemByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchWarehouseItemByExternalReferenceCode(
-			String externalReferenceCode, WarehouseItem warehouseItem)
-		throws Exception;
-
-	public WarehouseItem postWarehouseItemByExternalReferenceCode(
-			String externalReferenceCode, WarehouseItem warehouseItem)
-		throws Exception;
-
 	public Response deleteWarehouseItem(Long id) throws Exception;
 
 	public Response deleteWarehouseItemBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public WarehouseItem getWarehouseItem(Long id) throws Exception;
-
-	public Response patchWarehouseItem(Long id, WarehouseItem warehouseItem)
+	public Response deleteWarehouseItemByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<WarehouseItem>
@@ -77,20 +60,37 @@ public interface WarehouseItemResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public WarehouseItem postWarehousByExternalReferenceCodeWarehouseItem(
+	public Page<WarehouseItem> getWarehousIdWarehouseItemsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
+	public WarehouseItem getWarehouseItem(Long id) throws Exception;
+
+	public WarehouseItem getWarehouseItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Page<WarehouseItem> getWarehouseItemsUpdatedPage(
+			Date end, Date start, Pagination pagination)
+		throws Exception;
+
+	public Response patchWarehouseItem(Long id, WarehouseItem warehouseItem)
+		throws Exception;
+
+	public Response patchWarehouseItemByExternalReferenceCode(
 			String externalReferenceCode, WarehouseItem warehouseItem)
 		throws Exception;
 
-	public Page<WarehouseItem> getWarehousIdWarehouseItemsPage(
-			Long id, Pagination pagination)
+	public WarehouseItem postWarehousByExternalReferenceCodeWarehouseItem(
+			String externalReferenceCode, WarehouseItem warehouseItem)
 		throws Exception;
 
 	public WarehouseItem postWarehousIdWarehouseItem(
 			Long id, WarehouseItem warehouseItem)
 		throws Exception;
 
-	public Page<WarehouseItem> getWarehouseItemsUpdatedPage(
-			Date end, Date start, Pagination pagination)
+	public WarehouseItem postWarehouseItemByExternalReferenceCode(
+			String externalReferenceCode, WarehouseItem warehouseItem)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

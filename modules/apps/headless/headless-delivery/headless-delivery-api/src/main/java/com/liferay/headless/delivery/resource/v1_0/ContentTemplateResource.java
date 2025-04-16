@@ -52,16 +52,16 @@ public interface ContentTemplateResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public ContentTemplate getSiteContentTemplate(
+			Long siteId, String contentTemplateId)
+		throws Exception;
+
 	public Page<ContentTemplate> getSiteContentTemplatesPage(
 			Long siteId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public ContentTemplate getSiteContentTemplate(
-			Long siteId, String contentTemplateId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
