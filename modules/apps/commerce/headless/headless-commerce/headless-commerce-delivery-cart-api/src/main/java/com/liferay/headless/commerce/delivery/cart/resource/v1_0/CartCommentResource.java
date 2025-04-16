@@ -52,8 +52,15 @@ public interface CartCommentResource {
 
 	public CartComment getCartComment(Long cartCommentId) throws Exception;
 
+	public Page<CartComment> getCartCommentsPage(
+			Long cartId, Pagination pagination)
+		throws Exception;
+
 	public CartComment patchCartComment(
 			Long cartCommentId, CartComment cartComment)
+		throws Exception;
+
+	public CartComment postCartComment(Long cartId, CartComment cartComment)
 		throws Exception;
 
 	public CartComment putCartComment(
@@ -61,13 +68,6 @@ public interface CartCommentResource {
 		throws Exception;
 
 	public Response putCartCommentBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Page<CartComment> getCartCommentsPage(
-			Long cartId, Pagination pagination)
-		throws Exception;
-
-	public CartComment postCartComment(Long cartId, CartComment cartComment)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

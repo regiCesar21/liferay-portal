@@ -110,25 +110,10 @@ public class ServletDataImpl implements ServletData {
 							DataDefinitionResourceImpl.class,
 							"deleteDataDefinitionBatch"));
 					put(
-						"mutation#updateDataDefinition",
-						new ObjectValuePair<>(
-							DataDefinitionResourceImpl.class,
-							"putDataDefinition"));
-					put(
-						"mutation#updateDataDefinitionBatch",
-						new ObjectValuePair<>(
-							DataDefinitionResourceImpl.class,
-							"putDataDefinitionBatch"));
-					put(
 						"mutation#createDataDefinitionDataDefinitionPermission",
 						new ObjectValuePair<>(
 							DataDefinitionResourceImpl.class,
 							"postDataDefinitionDataDefinitionPermission"));
-					put(
-						"mutation#createSiteDataDefinitionPermission",
-						new ObjectValuePair<>(
-							DataDefinitionResourceImpl.class,
-							"postSiteDataDefinitionPermission"));
 					put(
 						"mutation#createSiteDataDefinition",
 						new ObjectValuePair<>(
@@ -140,15 +125,20 @@ public class ServletDataImpl implements ServletData {
 							DataDefinitionResourceImpl.class,
 							"postSiteDataDefinitionBatch"));
 					put(
-						"mutation#createDataDefinitionDataLayout",
+						"mutation#createSiteDataDefinitionPermission",
 						new ObjectValuePair<>(
-							DataLayoutResourceImpl.class,
-							"postDataDefinitionDataLayout"));
+							DataDefinitionResourceImpl.class,
+							"postSiteDataDefinitionPermission"));
 					put(
-						"mutation#createDataDefinitionDataLayoutBatch",
+						"mutation#updateDataDefinition",
 						new ObjectValuePair<>(
-							DataLayoutResourceImpl.class,
-							"postDataDefinitionDataLayoutBatch"));
+							DataDefinitionResourceImpl.class,
+							"putDataDefinition"));
+					put(
+						"mutation#updateDataDefinitionBatch",
+						new ObjectValuePair<>(
+							DataDefinitionResourceImpl.class,
+							"putDataDefinitionBatch"));
 					put(
 						"mutation#deleteDataLayout",
 						new ObjectValuePair<>(
@@ -159,14 +149,15 @@ public class ServletDataImpl implements ServletData {
 							DataLayoutResourceImpl.class,
 							"deleteDataLayoutBatch"));
 					put(
-						"mutation#updateDataLayout",
-						new ObjectValuePair<>(
-							DataLayoutResourceImpl.class, "putDataLayout"));
-					put(
-						"mutation#updateDataLayoutBatch",
+						"mutation#createDataDefinitionDataLayout",
 						new ObjectValuePair<>(
 							DataLayoutResourceImpl.class,
-							"putDataLayoutBatch"));
+							"postDataDefinitionDataLayout"));
+					put(
+						"mutation#createDataDefinitionDataLayoutBatch",
+						new ObjectValuePair<>(
+							DataLayoutResourceImpl.class,
+							"postDataDefinitionDataLayoutBatch"));
 					put(
 						"mutation#createDataLayoutDataLayoutPermission",
 						new ObjectValuePair<>(
@@ -178,15 +169,14 @@ public class ServletDataImpl implements ServletData {
 							DataLayoutResourceImpl.class,
 							"postSiteDataLayoutPermission"));
 					put(
-						"mutation#createDataDefinitionDataListView",
+						"mutation#updateDataLayout",
 						new ObjectValuePair<>(
-							DataListViewResourceImpl.class,
-							"postDataDefinitionDataListView"));
+							DataLayoutResourceImpl.class, "putDataLayout"));
 					put(
-						"mutation#createDataDefinitionDataListViewBatch",
+						"mutation#updateDataLayoutBatch",
 						new ObjectValuePair<>(
-							DataListViewResourceImpl.class,
-							"postDataDefinitionDataListViewBatch"));
+							DataLayoutResourceImpl.class,
+							"putDataLayoutBatch"));
 					put(
 						"mutation#deleteDataListView",
 						new ObjectValuePair<>(
@@ -198,6 +188,16 @@ public class ServletDataImpl implements ServletData {
 							DataListViewResourceImpl.class,
 							"deleteDataListViewBatch"));
 					put(
+						"mutation#createDataDefinitionDataListView",
+						new ObjectValuePair<>(
+							DataListViewResourceImpl.class,
+							"postDataDefinitionDataListView"));
+					put(
+						"mutation#createDataDefinitionDataListViewBatch",
+						new ObjectValuePair<>(
+							DataListViewResourceImpl.class,
+							"postDataDefinitionDataListViewBatch"));
+					put(
 						"mutation#updateDataListView",
 						new ObjectValuePair<>(
 							DataListViewResourceImpl.class, "putDataListView"));
@@ -206,6 +206,15 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DataListViewResourceImpl.class,
 							"putDataListViewBatch"));
+					put(
+						"mutation#deleteDataRecord",
+						new ObjectValuePair<>(
+							DataRecordResourceImpl.class, "deleteDataRecord"));
+					put(
+						"mutation#deleteDataRecordBatch",
+						new ObjectValuePair<>(
+							DataRecordResourceImpl.class,
+							"deleteDataRecordBatch"));
 					put(
 						"mutation#createDataDefinitionDataRecord",
 						new ObjectValuePair<>(
@@ -227,15 +236,6 @@ public class ServletDataImpl implements ServletData {
 							DataRecordResourceImpl.class,
 							"postDataRecordCollectionDataRecordBatch"));
 					put(
-						"mutation#deleteDataRecord",
-						new ObjectValuePair<>(
-							DataRecordResourceImpl.class, "deleteDataRecord"));
-					put(
-						"mutation#deleteDataRecordBatch",
-						new ObjectValuePair<>(
-							DataRecordResourceImpl.class,
-							"deleteDataRecordBatch"));
-					put(
 						"mutation#updateDataRecord",
 						new ObjectValuePair<>(
 							DataRecordResourceImpl.class, "putDataRecord"));
@@ -244,16 +244,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DataRecordResourceImpl.class,
 							"putDataRecordBatch"));
-					put(
-						"mutation#createDataDefinitionDataRecordCollection",
-						new ObjectValuePair<>(
-							DataRecordCollectionResourceImpl.class,
-							"postDataDefinitionDataRecordCollection"));
-					put(
-						"mutation#createDataDefinitionDataRecordCollectionBatch",
-						new ObjectValuePair<>(
-							DataRecordCollectionResourceImpl.class,
-							"postDataDefinitionDataRecordCollectionBatch"));
 					put(
 						"mutation#deleteDataRecordCollection",
 						new ObjectValuePair<>(
@@ -265,15 +255,15 @@ public class ServletDataImpl implements ServletData {
 							DataRecordCollectionResourceImpl.class,
 							"deleteDataRecordCollectionBatch"));
 					put(
-						"mutation#updateDataRecordCollection",
+						"mutation#createDataDefinitionDataRecordCollection",
 						new ObjectValuePair<>(
 							DataRecordCollectionResourceImpl.class,
-							"putDataRecordCollection"));
+							"postDataDefinitionDataRecordCollection"));
 					put(
-						"mutation#updateDataRecordCollectionBatch",
+						"mutation#createDataDefinitionDataRecordCollectionBatch",
 						new ObjectValuePair<>(
 							DataRecordCollectionResourceImpl.class,
-							"putDataRecordCollectionBatch"));
+							"postDataDefinitionDataRecordCollectionBatch"));
 					put(
 						"mutation#createDataRecordCollectionDataRecordCollectionPermission",
 						new ObjectValuePair<>(
@@ -284,27 +274,37 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DataRecordCollectionResourceImpl.class,
 							"postSiteDataRecordCollectionPermission"));
-
 					put(
-						"query#dataDefinitionDataDefinitionFieldFieldTypes",
+						"mutation#updateDataRecordCollection",
 						new ObjectValuePair<>(
-							DataDefinitionResourceImpl.class,
-							"getDataDefinitionDataDefinitionFieldFieldTypes"));
+							DataRecordCollectionResourceImpl.class,
+							"putDataRecordCollection"));
+					put(
+						"mutation#updateDataRecordCollectionBatch",
+						new ObjectValuePair<>(
+							DataRecordCollectionResourceImpl.class,
+							"putDataRecordCollectionBatch"));
+
 					put(
 						"query#dataDefinition",
 						new ObjectValuePair<>(
 							DataDefinitionResourceImpl.class,
 							"getDataDefinition"));
 					put(
-						"query#dataDefinitions",
+						"query#dataDefinitionDataDefinitionFieldFieldTypes",
 						new ObjectValuePair<>(
 							DataDefinitionResourceImpl.class,
-							"getSiteDataDefinitionsPage"));
+							"getDataDefinitionDataDefinitionFieldFieldTypes"));
 					put(
 						"query#siteDataDefinition",
 						new ObjectValuePair<>(
 							DataDefinitionResourceImpl.class,
 							"getSiteDataDefinition"));
+					put(
+						"query#dataDefinitions",
+						new ObjectValuePair<>(
+							DataDefinitionResourceImpl.class,
+							"getSiteDataDefinitionsPage"));
 					put(
 						"query#dataDefinitionDataLayouts",
 						new ObjectValuePair<>(
@@ -315,14 +315,14 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DataLayoutResourceImpl.class, "getDataLayout"));
 					put(
+						"query#siteDataLayout",
+						new ObjectValuePair<>(
+							DataLayoutResourceImpl.class, "getSiteDataLayout"));
+					put(
 						"query#dataLayouts",
 						new ObjectValuePair<>(
 							DataLayoutResourceImpl.class,
 							"getSiteDataLayoutsPage"));
-					put(
-						"query#siteDataLayout",
-						new ObjectValuePair<>(
-							DataLayoutResourceImpl.class, "getSiteDataLayout"));
 					put(
 						"query#dataDefinitionDataListViews",
 						new ObjectValuePair<>(
@@ -338,19 +338,19 @@ public class ServletDataImpl implements ServletData {
 							DataRecordResourceImpl.class,
 							"getDataDefinitionDataRecordsPage"));
 					put(
-						"query#dataRecordCollectionDataRecords",
+						"query#dataRecord",
 						new ObjectValuePair<>(
-							DataRecordResourceImpl.class,
-							"getDataRecordCollectionDataRecordsPage"));
+							DataRecordResourceImpl.class, "getDataRecord"));
 					put(
 						"query#dataRecordCollectionDataRecordExport",
 						new ObjectValuePair<>(
 							DataRecordResourceImpl.class,
 							"getDataRecordCollectionDataRecordExport"));
 					put(
-						"query#dataRecord",
+						"query#dataRecordCollectionDataRecords",
 						new ObjectValuePair<>(
-							DataRecordResourceImpl.class, "getDataRecord"));
+							DataRecordResourceImpl.class,
+							"getDataRecordCollectionDataRecordsPage"));
 					put(
 						"query#dataDefinitionDataRecordCollections",
 						new ObjectValuePair<>(
@@ -362,15 +362,15 @@ public class ServletDataImpl implements ServletData {
 							DataRecordCollectionResourceImpl.class,
 							"getDataRecordCollection"));
 					put(
-						"query#dataRecordCollections",
-						new ObjectValuePair<>(
-							DataRecordCollectionResourceImpl.class,
-							"getSiteDataRecordCollectionsPage"));
-					put(
 						"query#siteDataRecordCollection",
 						new ObjectValuePair<>(
 							DataRecordCollectionResourceImpl.class,
 							"getSiteDataRecordCollection"));
+					put(
+						"query#dataRecordCollections",
+						new ObjectValuePair<>(
+							DataRecordCollectionResourceImpl.class,
+							"getSiteDataRecordCollectionsPage"));
 
 					put(
 						"query#DataRecordCollection.dataDefinition",

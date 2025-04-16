@@ -186,6 +186,68 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDataLayout() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataLayout dataLayout = testDeleteDataLayout_addDataLayout();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataLayoutResource.deleteDataLayoutHttpResponse(
+				dataLayout.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataLayoutResource.getDataLayoutHttpResponse(dataLayout.getId()));
+		assertHttpResponseStatusCode(
+			404, dataLayoutResource.getDataLayoutHttpResponse(0L));
+	}
+
+	protected DataLayout testDeleteDataLayout_addDataLayout() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteDataLayout() throws Exception {
+
+		// No namespace
+
+		DataLayout dataLayout1 = testGraphQLDeleteDataLayout_addDataLayout();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDataLayout",
+						new HashMap<String, Object>() {
+							{
+								put("dataLayoutId", dataLayout1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDataLayout"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataLayout",
+					new HashMap<String, Object>() {
+						{
+							put("dataLayoutId", dataLayout1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected DataLayout testGraphQLDeleteDataLayout_addDataLayout()
+		throws Exception {
+
+		return testGraphQLDataLayout_addDataLayout();
+	}
+
+	@Test
 	public void testGetDataDefinitionDataLayoutsPage() throws Exception {
 		Long dataDefinitionId =
 			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId();
@@ -526,88 +588,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataLayout() throws Exception {
-		DataLayout randomDataLayout = randomDataLayout();
-
-		DataLayout postDataLayout =
-			testPostDataDefinitionDataLayout_addDataLayout(randomDataLayout);
-
-		assertEquals(randomDataLayout, postDataLayout);
-		assertValid(postDataLayout);
-	}
-
-	protected DataLayout testPostDataDefinitionDataLayout_addDataLayout(
-			DataLayout dataLayout)
-		throws Exception {
-
-		return dataLayoutResource.postDataDefinitionDataLayout(
-			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
-			dataLayout);
-	}
-
-	@Test
-	public void testDeleteDataLayout() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataLayout dataLayout = testDeleteDataLayout_addDataLayout();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataLayoutResource.deleteDataLayoutHttpResponse(
-				dataLayout.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataLayoutResource.getDataLayoutHttpResponse(dataLayout.getId()));
-		assertHttpResponseStatusCode(
-			404, dataLayoutResource.getDataLayoutHttpResponse(0L));
-	}
-
-	protected DataLayout testDeleteDataLayout_addDataLayout() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteDataLayout() throws Exception {
-
-		// No namespace
-
-		DataLayout dataLayout1 = testGraphQLDeleteDataLayout_addDataLayout();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDataLayout",
-						new HashMap<String, Object>() {
-							{
-								put("dataLayoutId", dataLayout1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDataLayout"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"dataLayout",
-					new HashMap<String, Object>() {
-						{
-							put("dataLayoutId", dataLayout1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected DataLayout testGraphQLDeleteDataLayout_addDataLayout()
-		throws Exception {
-
-		return testGraphQLDataLayout_addDataLayout();
-	}
-
-	@Test
 	public void testGetDataLayout() throws Exception {
 		DataLayout postDataLayout = testGetDataLayout_addDataLayout();
 
@@ -675,51 +655,24 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPutDataLayout() throws Exception {
-		DataLayout postDataLayout = testPutDataLayout_addDataLayout();
+	public void testGetSiteDataLayout() throws Exception {
+		DataLayout postDataLayout = testGetSiteDataLayout_addDataLayout();
 
-		DataLayout randomDataLayout = randomDataLayout();
+		DataLayout getDataLayout = dataLayoutResource.getSiteDataLayout(
+			testGetSiteDataLayout_getSiteId(postDataLayout),
+			postDataLayout.getDataLayoutKey());
 
-		DataLayout putDataLayout = dataLayoutResource.putDataLayout(
-			postDataLayout.getId(), randomDataLayout);
-
-		assertEquals(randomDataLayout, putDataLayout);
-		assertValid(putDataLayout);
-
-		DataLayout getDataLayout = dataLayoutResource.getDataLayout(
-			putDataLayout.getId());
-
-		assertEquals(randomDataLayout, getDataLayout);
+		assertEquals(postDataLayout, getDataLayout);
 		assertValid(getDataLayout);
 	}
 
-	protected DataLayout testPutDataLayout_addDataLayout() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	protected Long testGetSiteDataLayout_getSiteId(DataLayout dataLayout)
+		throws Exception {
+
+		return dataLayout.getSiteId();
 	}
 
-	@Test
-	public void testPostDataLayoutDataLayoutPermission() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataLayout dataLayout =
-			testPostDataLayoutDataLayoutPermission_addDataLayout();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			204,
-			dataLayoutResource.postDataLayoutDataLayoutPermissionHttpResponse(
-				dataLayout.getId(), null, null));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataLayoutResource.postDataLayoutDataLayoutPermissionHttpResponse(
-				0L, null, null));
-	}
-
-	protected DataLayout testPostDataLayoutDataLayoutPermission_addDataLayout()
+	protected DataLayout testGetSiteDataLayout_addDataLayout()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -727,31 +680,74 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteDataLayoutPermission() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataLayout dataLayout =
-			testPostSiteDataLayoutPermission_addDataLayout();
+	public void testGraphQLGetSiteDataLayout() throws Exception {
+		DataLayout dataLayout = testGraphQLGetSiteDataLayout_addDataLayout();
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
+		// No namespace
 
-		assertHttpResponseStatusCode(
-			204,
-			dataLayoutResource.postSiteDataLayoutPermissionHttpResponse(
-				dataLayout.getSiteId(), null, null));
+		Assert.assertTrue(
+			equals(
+				dataLayout,
+				DataLayoutSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteDataLayout",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												testGraphQLGetSiteDataLayout_getSiteId(
+													dataLayout) + "\"");
 
-		assertHttpResponseStatusCode(
-			404,
-			dataLayoutResource.postSiteDataLayoutPermissionHttpResponse(
-				dataLayout.getSiteId(), null, null));
+										put(
+											"dataLayoutKey",
+											"\"" +
+												dataLayout.getDataLayoutKey() +
+													"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/siteDataLayout"))));
 	}
 
-	protected DataLayout testPostSiteDataLayoutPermission_addDataLayout()
+	protected Long testGraphQLGetSiteDataLayout_getSiteId(DataLayout dataLayout)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dataLayout.getSiteId();
+	}
+
+	@Test
+	public void testGraphQLGetSiteDataLayoutNotFound() throws Exception {
+		String irrelevantDataLayoutKey =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteDataLayout",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put("dataLayoutKey", irrelevantDataLayoutKey);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected DataLayout testGraphQLGetSiteDataLayout_addDataLayout()
+		throws Exception {
+
+		return testGraphQLDataLayout_addDataLayout();
 	}
 
 	@Test
@@ -1103,24 +1099,47 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteDataLayout() throws Exception {
-		DataLayout postDataLayout = testGetSiteDataLayout_addDataLayout();
+	public void testPostDataDefinitionDataLayout() throws Exception {
+		DataLayout randomDataLayout = randomDataLayout();
 
-		DataLayout getDataLayout = dataLayoutResource.getSiteDataLayout(
-			testGetSiteDataLayout_getSiteId(postDataLayout),
-			postDataLayout.getDataLayoutKey());
+		DataLayout postDataLayout =
+			testPostDataDefinitionDataLayout_addDataLayout(randomDataLayout);
 
-		assertEquals(postDataLayout, getDataLayout);
-		assertValid(getDataLayout);
+		assertEquals(randomDataLayout, postDataLayout);
+		assertValid(postDataLayout);
 	}
 
-	protected Long testGetSiteDataLayout_getSiteId(DataLayout dataLayout)
+	protected DataLayout testPostDataDefinitionDataLayout_addDataLayout(
+			DataLayout dataLayout)
 		throws Exception {
 
-		return dataLayout.getSiteId();
+		return dataLayoutResource.postDataDefinitionDataLayout(
+			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
+			dataLayout);
 	}
 
-	protected DataLayout testGetSiteDataLayout_addDataLayout()
+	@Test
+	public void testPostDataLayoutDataLayoutPermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataLayout dataLayout =
+			testPostDataLayoutDataLayoutPermission_addDataLayout();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			dataLayoutResource.postDataLayoutDataLayoutPermissionHttpResponse(
+				dataLayout.getId(), null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataLayoutResource.postDataLayoutDataLayoutPermissionHttpResponse(
+				0L, null, null));
+	}
+
+	protected DataLayout testPostDataLayoutDataLayoutPermission_addDataLayout()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1128,74 +1147,55 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteDataLayout() throws Exception {
-		DataLayout dataLayout = testGraphQLGetSiteDataLayout_addDataLayout();
+	public void testPostSiteDataLayoutPermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataLayout dataLayout =
+			testPostSiteDataLayoutPermission_addDataLayout();
 
-		// No namespace
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
 
-		Assert.assertTrue(
-			equals(
-				dataLayout,
-				DataLayoutSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"siteDataLayout",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteKey",
-											"\"" +
-												testGraphQLGetSiteDataLayout_getSiteId(
-													dataLayout) + "\"");
+		assertHttpResponseStatusCode(
+			204,
+			dataLayoutResource.postSiteDataLayoutPermissionHttpResponse(
+				dataLayout.getSiteId(), null, null));
 
-										put(
-											"dataLayoutKey",
-											"\"" +
-												dataLayout.getDataLayoutKey() +
-													"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/siteDataLayout"))));
+		assertHttpResponseStatusCode(
+			404,
+			dataLayoutResource.postSiteDataLayoutPermissionHttpResponse(
+				dataLayout.getSiteId(), null, null));
 	}
 
-	protected Long testGraphQLGetSiteDataLayout_getSiteId(DataLayout dataLayout)
+	protected DataLayout testPostSiteDataLayoutPermission_addDataLayout()
 		throws Exception {
 
-		return dataLayout.getSiteId();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGraphQLGetSiteDataLayoutNotFound() throws Exception {
-		String irrelevantDataLayoutKey =
-			"\"" + RandomTestUtil.randomString() + "\"";
+	public void testPutDataLayout() throws Exception {
+		DataLayout postDataLayout = testPutDataLayout_addDataLayout();
 
-		// No namespace
+		DataLayout randomDataLayout = randomDataLayout();
 
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"siteDataLayout",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-								put("dataLayoutKey", irrelevantDataLayoutKey);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+		DataLayout putDataLayout = dataLayoutResource.putDataLayout(
+			postDataLayout.getId(), randomDataLayout);
+
+		assertEquals(randomDataLayout, putDataLayout);
+		assertValid(putDataLayout);
+
+		DataLayout getDataLayout = dataLayoutResource.getDataLayout(
+			putDataLayout.getId());
+
+		assertEquals(randomDataLayout, getDataLayout);
+		assertValid(getDataLayout);
 	}
 
-	protected DataLayout testGraphQLGetSiteDataLayout_addDataLayout()
-		throws Exception {
-
-		return testGraphQLDataLayout_addDataLayout();
+	protected DataLayout testPutDataLayout_addDataLayout() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected DataLayout testGraphQLDataLayout_addDataLayout()

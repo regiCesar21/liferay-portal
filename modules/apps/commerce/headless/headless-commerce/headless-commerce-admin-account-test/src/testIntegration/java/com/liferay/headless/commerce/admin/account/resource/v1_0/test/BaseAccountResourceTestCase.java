@@ -188,10 +188,86 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testPostAccountGroupByExternalReferenceCodeAccount()
+	public void testDeleteAccount() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Account account = testDeleteAccount_addAccount();
+
+		assertHttpResponseStatusCode(
+			204, accountResource.deleteAccountHttpResponse(account.getId()));
+
+		assertHttpResponseStatusCode(
+			404, accountResource.getAccountHttpResponse(account.getId()));
+		assertHttpResponseStatusCode(
+			404, accountResource.getAccountHttpResponse(0L));
+	}
+
+	protected Account testDeleteAccount_addAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccount() throws Exception {
+
+		// No namespace
+
+		Account account1 = testGraphQLDeleteAccount_addAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccount",
+						new HashMap<String, Object>() {
+							{
+								put("id", account1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteAccount"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"account",
+					new HashMap<String, Object>() {
+						{
+							put("id", account1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Account testGraphQLDeleteAccount_addAccount() throws Exception {
+		return testGraphQLAccount_addAccount();
+	}
+
+	@Test
+	public void testDeleteAccountByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Account account = testDeleteAccountByExternalReferenceCode_addAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountResource.deleteAccountByExternalReferenceCodeHttpResponse(
+				account.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountResource.getAccountByExternalReferenceCodeHttpResponse(
+				account.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			accountResource.getAccountByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Account testDeleteAccountByExternalReferenceCode_addAccount()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -224,6 +300,154 @@ public abstract class BaseAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccount() throws Exception {
+		Account postAccount = testGetAccount_addAccount();
+
+		Account getAccount = accountResource.getAccount(postAccount.getId());
+
+		assertEquals(postAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	protected Account testGetAccount_addAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccount() throws Exception {
+		Account account = testGraphQLGetAccount_addAccount();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"account",
+								new HashMap<String, Object>() {
+									{
+										put("id", account.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/account"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"account",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Account testGraphQLGetAccount_addAccount() throws Exception {
+		return testGraphQLAccount_addAccount();
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCode() throws Exception {
+		Account postAccount =
+			testGetAccountByExternalReferenceCode_addAccount();
+
+		Account getAccount = accountResource.getAccountByExternalReferenceCode(
+			postAccount.getExternalReferenceCode());
+
+		assertEquals(postAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	protected Account testGetAccountByExternalReferenceCode_addAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCode()
+		throws Exception {
+
+		Account account =
+			testGraphQLGetAccountByExternalReferenceCode_addAccount();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												account.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Account testGraphQLGetAccountByExternalReferenceCode_addAccount()
+		throws Exception {
+
+		return testGraphQLAccount_addAccount();
 	}
 
 	@Test
@@ -584,6 +808,16 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testPatchAccount() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchAccountByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostAccount() throws Exception {
 		Account randomAccount = randomAccount();
 
@@ -601,248 +835,14 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteAccountByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Account account = testDeleteAccountByExternalReferenceCode_addAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			accountResource.deleteAccountByExternalReferenceCodeHttpResponse(
-				account.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			accountResource.getAccountByExternalReferenceCodeHttpResponse(
-				account.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			accountResource.getAccountByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Account testDeleteAccountByExternalReferenceCode_addAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAccountByExternalReferenceCode() throws Exception {
-		Account postAccount =
-			testGetAccountByExternalReferenceCode_addAccount();
-
-		Account getAccount = accountResource.getAccountByExternalReferenceCode(
-			postAccount.getExternalReferenceCode());
-
-		assertEquals(postAccount, getAccount);
-		assertValid(getAccount);
-	}
-
-	protected Account testGetAccountByExternalReferenceCode_addAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccountByExternalReferenceCode()
-		throws Exception {
-
-		Account account =
-			testGraphQLGetAccountByExternalReferenceCode_addAccount();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				account,
-				AccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"accountByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												account.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/accountByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetAccountByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"accountByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Account testGraphQLGetAccountByExternalReferenceCode_addAccount()
-		throws Exception {
-
-		return testGraphQLAccount_addAccount();
-	}
-
-	@Test
-	public void testPatchAccountByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testPostAccountByExternalReferenceCodeLogo() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testDeleteAccount() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Account account = testDeleteAccount_addAccount();
+	public void testPostAccountGroupByExternalReferenceCodeAccount()
+		throws Exception {
 
-		assertHttpResponseStatusCode(
-			204, accountResource.deleteAccountHttpResponse(account.getId()));
-
-		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(account.getId()));
-		assertHttpResponseStatusCode(
-			404, accountResource.getAccountHttpResponse(0L));
-	}
-
-	protected Account testDeleteAccount_addAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteAccount() throws Exception {
-
-		// No namespace
-
-		Account account1 = testGraphQLDeleteAccount_addAccount();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteAccount",
-						new HashMap<String, Object>() {
-							{
-								put("id", account1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteAccount"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"account",
-					new HashMap<String, Object>() {
-						{
-							put("id", account1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Account testGraphQLDeleteAccount_addAccount() throws Exception {
-		return testGraphQLAccount_addAccount();
-	}
-
-	@Test
-	public void testGetAccount() throws Exception {
-		Account postAccount = testGetAccount_addAccount();
-
-		Account getAccount = accountResource.getAccount(postAccount.getId());
-
-		assertEquals(postAccount, getAccount);
-		assertValid(getAccount);
-	}
-
-	protected Account testGetAccount_addAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccount() throws Exception {
-		Account account = testGraphQLGetAccount_addAccount();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				account,
-				AccountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"account",
-								new HashMap<String, Object>() {
-									{
-										put("id", account.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/account"))));
-	}
-
-	@Test
-	public void testGraphQLGetAccountNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"account",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Account testGraphQLGetAccount_addAccount() throws Exception {
-		return testGraphQLAccount_addAccount();
-	}
-
-	@Test
-	public void testPatchAccount() throws Exception {
 		Assert.assertTrue(false);
 	}
 

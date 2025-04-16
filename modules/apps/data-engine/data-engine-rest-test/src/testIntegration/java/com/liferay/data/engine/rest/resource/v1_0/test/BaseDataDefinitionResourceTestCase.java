@@ -189,13 +189,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testGetDataDefinitionDataDefinitionFieldFieldTypes()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testDeleteDataDefinition() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataDefinition dataDefinition =
@@ -341,27 +334,34 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testPutDataDefinition() throws Exception {
+	public void testGetDataDefinitionDataDefinitionFieldFieldTypes()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetSiteDataDefinition() throws Exception {
 		DataDefinition postDataDefinition =
-			testPutDataDefinition_addDataDefinition();
-
-		DataDefinition randomDataDefinition = randomDataDefinition();
-
-		DataDefinition putDataDefinition =
-			dataDefinitionResource.putDataDefinition(
-				postDataDefinition.getId(), randomDataDefinition);
-
-		assertEquals(randomDataDefinition, putDataDefinition);
-		assertValid(putDataDefinition);
+			testGetSiteDataDefinition_addDataDefinition();
 
 		DataDefinition getDataDefinition =
-			dataDefinitionResource.getDataDefinition(putDataDefinition.getId());
+			dataDefinitionResource.getSiteDataDefinition(
+				testGetSiteDataDefinition_getSiteId(postDataDefinition),
+				postDataDefinition.getDataDefinitionKey());
 
-		assertEquals(randomDataDefinition, getDataDefinition);
+		assertEquals(postDataDefinition, getDataDefinition);
 		assertValid(getDataDefinition);
 	}
 
-	protected DataDefinition testPutDataDefinition_addDataDefinition()
+	protected Long testGetSiteDataDefinition_getSiteId(
+			DataDefinition dataDefinition)
+		throws Exception {
+
+		return dataDefinition.getSiteId();
+	}
+
+	protected DataDefinition testGetSiteDataDefinition_addDataDefinition()
 		throws Exception {
 
 		return dataDefinitionResource.postSiteDataDefinition(
@@ -369,65 +369,80 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataDefinitionPermission()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
+	public void testGraphQLGetSiteDataDefinition() throws Exception {
 		DataDefinition dataDefinition =
-			testPostDataDefinitionDataDefinitionPermission_addDataDefinition();
+			testGraphQLGetSiteDataDefinition_addDataDefinition();
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
+		// No namespace
 
-		assertHttpResponseStatusCode(
-			204,
-			dataDefinitionResource.
-				postDataDefinitionDataDefinitionPermissionHttpResponse(
-					dataDefinition.getId(), null, null));
+		Assert.assertTrue(
+			equals(
+				dataDefinition,
+				DataDefinitionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteDataDefinition",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												testGraphQLGetSiteDataDefinition_getSiteId(
+													dataDefinition) + "\"");
 
-		assertHttpResponseStatusCode(
-			404,
-			dataDefinitionResource.
-				postDataDefinitionDataDefinitionPermissionHttpResponse(
-					0L, null, null));
+										put(
+											"dataDefinitionKey",
+											"\"" +
+												dataDefinition.
+													getDataDefinitionKey() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/siteDataDefinition"))));
 	}
 
-	protected DataDefinition
-			testPostDataDefinitionDataDefinitionPermission_addDataDefinition()
+	protected Long testGraphQLGetSiteDataDefinition_getSiteId(
+			DataDefinition dataDefinition)
 		throws Exception {
 
-		return dataDefinitionResource.postSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
+		return dataDefinition.getSiteId();
 	}
 
 	@Test
-	public void testPostSiteDataDefinitionPermission() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataDefinition dataDefinition =
-			testPostSiteDataDefinitionPermission_addDataDefinition();
+	public void testGraphQLGetSiteDataDefinitionNotFound() throws Exception {
+		String irrelevantDataDefinitionKey =
+			"\"" + RandomTestUtil.randomString() + "\"";
 
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
+		// No namespace
 
-		assertHttpResponseStatusCode(
-			204,
-			dataDefinitionResource.postSiteDataDefinitionPermissionHttpResponse(
-				dataDefinition.getSiteId(), null, null));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataDefinitionResource.postSiteDataDefinitionPermissionHttpResponse(
-				dataDefinition.getSiteId(), null, null));
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteDataDefinition",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"dataDefinitionKey",
+									irrelevantDataDefinitionKey);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	protected DataDefinition
-			testPostSiteDataDefinitionPermission_addDataDefinition()
+			testGraphQLGetSiteDataDefinition_addDataDefinition()
 		throws Exception {
 
-		return dataDefinitionResource.postSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
+		return testGraphQLDataDefinition_addDataDefinition();
 	}
 
 	@Test
@@ -832,6 +847,39 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testPostDataDefinitionDataDefinitionPermission()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataDefinition dataDefinition =
+			testPostDataDefinitionDataDefinitionPermission_addDataDefinition();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			204,
+			dataDefinitionResource.
+				postDataDefinitionDataDefinitionPermissionHttpResponse(
+					dataDefinition.getId(), null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataDefinitionResource.
+				postDataDefinitionDataDefinitionPermissionHttpResponse(
+					0L, null, null));
+	}
+
+	protected DataDefinition
+			testPostDataDefinitionDataDefinitionPermission_addDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinition(
+			testGroup.getGroupId(), randomDataDefinition());
+	}
+
+	@Test
 	public void testPostSiteDataDefinition() throws Exception {
 		DataDefinition randomDataDefinition = randomDataDefinition();
 
@@ -861,27 +909,28 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteDataDefinition() throws Exception {
-		DataDefinition postDataDefinition =
-			testGetSiteDataDefinition_addDataDefinition();
+	public void testPostSiteDataDefinitionPermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataDefinition dataDefinition =
+			testPostSiteDataDefinitionPermission_addDataDefinition();
 
-		DataDefinition getDataDefinition =
-			dataDefinitionResource.getSiteDataDefinition(
-				testGetSiteDataDefinition_getSiteId(postDataDefinition),
-				postDataDefinition.getDataDefinitionKey());
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
 
-		assertEquals(postDataDefinition, getDataDefinition);
-		assertValid(getDataDefinition);
+		assertHttpResponseStatusCode(
+			204,
+			dataDefinitionResource.postSiteDataDefinitionPermissionHttpResponse(
+				dataDefinition.getSiteId(), null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataDefinitionResource.postSiteDataDefinitionPermissionHttpResponse(
+				dataDefinition.getSiteId(), null, null));
 	}
 
-	protected Long testGetSiteDataDefinition_getSiteId(
-			DataDefinition dataDefinition)
-		throws Exception {
-
-		return dataDefinition.getSiteId();
-	}
-
-	protected DataDefinition testGetSiteDataDefinition_addDataDefinition()
+	protected DataDefinition
+			testPostSiteDataDefinitionPermission_addDataDefinition()
 		throws Exception {
 
 		return dataDefinitionResource.postSiteDataDefinition(
@@ -889,80 +938,31 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteDataDefinition() throws Exception {
-		DataDefinition dataDefinition =
-			testGraphQLGetSiteDataDefinition_addDataDefinition();
+	public void testPutDataDefinition() throws Exception {
+		DataDefinition postDataDefinition =
+			testPutDataDefinition_addDataDefinition();
 
-		// No namespace
+		DataDefinition randomDataDefinition = randomDataDefinition();
 
-		Assert.assertTrue(
-			equals(
-				dataDefinition,
-				DataDefinitionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"siteDataDefinition",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteKey",
-											"\"" +
-												testGraphQLGetSiteDataDefinition_getSiteId(
-													dataDefinition) + "\"");
+		DataDefinition putDataDefinition =
+			dataDefinitionResource.putDataDefinition(
+				postDataDefinition.getId(), randomDataDefinition);
 
-										put(
-											"dataDefinitionKey",
-											"\"" +
-												dataDefinition.
-													getDataDefinitionKey() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/siteDataDefinition"))));
+		assertEquals(randomDataDefinition, putDataDefinition);
+		assertValid(putDataDefinition);
+
+		DataDefinition getDataDefinition =
+			dataDefinitionResource.getDataDefinition(putDataDefinition.getId());
+
+		assertEquals(randomDataDefinition, getDataDefinition);
+		assertValid(getDataDefinition);
 	}
 
-	protected Long testGraphQLGetSiteDataDefinition_getSiteId(
-			DataDefinition dataDefinition)
+	protected DataDefinition testPutDataDefinition_addDataDefinition()
 		throws Exception {
 
-		return dataDefinition.getSiteId();
-	}
-
-	@Test
-	public void testGraphQLGetSiteDataDefinitionNotFound() throws Exception {
-		String irrelevantDataDefinitionKey =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"siteDataDefinition",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-								put(
-									"dataDefinitionKey",
-									irrelevantDataDefinitionKey);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected DataDefinition
-			testGraphQLGetSiteDataDefinition_addDataDefinition()
-		throws Exception {
-
-		return testGraphQLDataDefinition_addDataDefinition();
+		return dataDefinitionResource.postSiteDataDefinition(
+			testGroup.getGroupId(), randomDataDefinition());
 	}
 
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)

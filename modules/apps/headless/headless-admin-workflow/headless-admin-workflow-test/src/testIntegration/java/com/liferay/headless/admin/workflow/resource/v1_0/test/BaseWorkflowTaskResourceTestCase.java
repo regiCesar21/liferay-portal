@@ -350,6 +350,78 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
+	public void testGetWorkflowTask() throws Exception {
+		WorkflowTask postWorkflowTask = testGetWorkflowTask_addWorkflowTask();
+
+		WorkflowTask getWorkflowTask = workflowTaskResource.getWorkflowTask(
+			postWorkflowTask.getId());
+
+		assertEquals(postWorkflowTask, getWorkflowTask);
+		assertValid(getWorkflowTask);
+	}
+
+	protected WorkflowTask testGetWorkflowTask_addWorkflowTask()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetWorkflowTask() throws Exception {
+		WorkflowTask workflowTask =
+			testGraphQLGetWorkflowTask_addWorkflowTask();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				workflowTask,
+				WorkflowTaskSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"workflowTask",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"workflowTaskId",
+											workflowTask.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/workflowTask"))));
+	}
+
+	@Test
+	public void testGraphQLGetWorkflowTaskNotFound() throws Exception {
+		Long irrelevantWorkflowTaskId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"workflowTask",
+						new HashMap<String, Object>() {
+							{
+								put("workflowTaskId", irrelevantWorkflowTaskId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected WorkflowTask testGraphQLGetWorkflowTask_addWorkflowTask()
+		throws Exception {
+
+		return testGraphQLWorkflowTask_addWorkflowTask();
+	}
+
+	@Test
 	public void testGetWorkflowTasksAssignedToMePage() throws Exception {
 		Page<WorkflowTask> page =
 			workflowTaskResource.getWorkflowTasksAssignedToMePage(
@@ -611,78 +683,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetWorkflowTask() throws Exception {
-		WorkflowTask postWorkflowTask = testGetWorkflowTask_addWorkflowTask();
-
-		WorkflowTask getWorkflowTask = workflowTaskResource.getWorkflowTask(
-			postWorkflowTask.getId());
-
-		assertEquals(postWorkflowTask, getWorkflowTask);
-		assertValid(getWorkflowTask);
-	}
-
-	protected WorkflowTask testGetWorkflowTask_addWorkflowTask()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetWorkflowTask() throws Exception {
-		WorkflowTask workflowTask =
-			testGraphQLGetWorkflowTask_addWorkflowTask();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				workflowTask,
-				WorkflowTaskSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"workflowTask",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"workflowTaskId",
-											workflowTask.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/workflowTask"))));
-	}
-
-	@Test
-	public void testGraphQLGetWorkflowTaskNotFound() throws Exception {
-		Long irrelevantWorkflowTaskId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"workflowTask",
-						new HashMap<String, Object>() {
-							{
-								put("workflowTaskId", irrelevantWorkflowTaskId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected WorkflowTask testGraphQLGetWorkflowTask_addWorkflowTask()
-		throws Exception {
-
-		return testGraphQLWorkflowTask_addWorkflowTask();
 	}
 
 	@Test

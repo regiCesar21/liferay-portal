@@ -45,12 +45,22 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WikiPageResource {
 
+	public void deleteWikiPage(Long wikiPageId) throws Exception;
+
+	public Response deleteWikiPageBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<WikiPage> getWikiNodeWikiPagesPage(
 			Long wikiNodeId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public WikiPage getWikiPage(Long wikiPageId) throws Exception;
+
+	public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
 		throws Exception;
 
 	public WikiPage postWikiNodeWikiPage(Long wikiNodeId, WikiPage wikiPage)
@@ -60,29 +70,19 @@ public interface WikiPageResource {
 			Long wikiNodeId, String callbackURL, Object object)
 		throws Exception;
 
-	public void putWikiPageSubscribe(Long wikiPageId) throws Exception;
-
-	public void putWikiPageUnsubscribe(Long wikiPageId) throws Exception;
-
-	public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
-		throws Exception;
-
 	public WikiPage postWikiPageWikiPage(
 			Long parentWikiPageId, WikiPage wikiPage)
 		throws Exception;
-
-	public void deleteWikiPage(Long wikiPageId) throws Exception;
-
-	public Response deleteWikiPageBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public WikiPage getWikiPage(Long wikiPageId) throws Exception;
 
 	public WikiPage putWikiPage(Long wikiPageId, WikiPage wikiPage)
 		throws Exception;
 
 	public Response putWikiPageBatch(String callbackURL, Object object)
 		throws Exception;
+
+	public void putWikiPageSubscribe(Long wikiPageId) throws Exception;
+
+	public void putWikiPageUnsubscribe(Long wikiPageId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

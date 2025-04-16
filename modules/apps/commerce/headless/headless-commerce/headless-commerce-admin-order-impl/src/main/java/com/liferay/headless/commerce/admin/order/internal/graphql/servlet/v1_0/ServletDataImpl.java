@@ -118,24 +118,6 @@ public class ServletDataImpl implements ServletData {
 							BillingAddressResourceImpl.class,
 							"patchOrderIdBillingAddress"));
 					put(
-						"mutation#createOrder",
-						new ObjectValuePair<>(
-							OrderResourceImpl.class, "postOrder"));
-					put(
-						"mutation#createOrderBatch",
-						new ObjectValuePair<>(
-							OrderResourceImpl.class, "postOrderBatch"));
-					put(
-						"mutation#deleteOrderByExternalReferenceCode",
-						new ObjectValuePair<>(
-							OrderResourceImpl.class,
-							"deleteOrderByExternalReferenceCode"));
-					put(
-						"mutation#patchOrderByExternalReferenceCode",
-						new ObjectValuePair<>(
-							OrderResourceImpl.class,
-							"patchOrderByExternalReferenceCode"));
-					put(
 						"mutation#deleteOrder",
 						new ObjectValuePair<>(
 							OrderResourceImpl.class, "deleteOrder"));
@@ -144,19 +126,27 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							OrderResourceImpl.class, "deleteOrderBatch"));
 					put(
+						"mutation#deleteOrderByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OrderResourceImpl.class,
+							"deleteOrderByExternalReferenceCode"));
+					put(
 						"mutation#patchOrder",
 						new ObjectValuePair<>(
 							OrderResourceImpl.class, "patchOrder"));
 					put(
-						"mutation#deleteOrderItemByExternalReferenceCode",
+						"mutation#patchOrderByExternalReferenceCode",
 						new ObjectValuePair<>(
-							OrderItemResourceImpl.class,
-							"deleteOrderItemByExternalReferenceCode"));
+							OrderResourceImpl.class,
+							"patchOrderByExternalReferenceCode"));
 					put(
-						"mutation#patchOrderItemByExternalReferenceCode",
+						"mutation#createOrder",
 						new ObjectValuePair<>(
-							OrderItemResourceImpl.class,
-							"patchOrderItemByExternalReferenceCode"));
+							OrderResourceImpl.class, "postOrder"));
+					put(
+						"mutation#createOrderBatch",
+						new ObjectValuePair<>(
+							OrderResourceImpl.class, "postOrderBatch"));
 					put(
 						"mutation#deleteOrderItem",
 						new ObjectValuePair<>(
@@ -167,9 +157,19 @@ public class ServletDataImpl implements ServletData {
 							OrderItemResourceImpl.class,
 							"deleteOrderItemBatch"));
 					put(
+						"mutation#deleteOrderItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OrderItemResourceImpl.class,
+							"deleteOrderItemByExternalReferenceCode"));
+					put(
 						"mutation#patchOrderItem",
 						new ObjectValuePair<>(
 							OrderItemResourceImpl.class, "patchOrderItem"));
+					put(
+						"mutation#patchOrderItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OrderItemResourceImpl.class,
+							"patchOrderItemByExternalReferenceCode"));
 					put(
 						"mutation#createOrderByExternalReferenceCodeOrderItem",
 						new ObjectValuePair<>(
@@ -186,16 +186,6 @@ public class ServletDataImpl implements ServletData {
 							OrderItemResourceImpl.class,
 							"postOrderIdOrderItemBatch"));
 					put(
-						"mutation#deleteOrderNoteByExternalReferenceCode",
-						new ObjectValuePair<>(
-							OrderNoteResourceImpl.class,
-							"deleteOrderNoteByExternalReferenceCode"));
-					put(
-						"mutation#patchOrderNoteByExternalReferenceCode",
-						new ObjectValuePair<>(
-							OrderNoteResourceImpl.class,
-							"patchOrderNoteByExternalReferenceCode"));
-					put(
 						"mutation#deleteOrderNote",
 						new ObjectValuePair<>(
 							OrderNoteResourceImpl.class, "deleteOrderNote"));
@@ -205,9 +195,19 @@ public class ServletDataImpl implements ServletData {
 							OrderNoteResourceImpl.class,
 							"deleteOrderNoteBatch"));
 					put(
+						"mutation#deleteOrderNoteByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OrderNoteResourceImpl.class,
+							"deleteOrderNoteByExternalReferenceCode"));
+					put(
 						"mutation#patchOrderNote",
 						new ObjectValuePair<>(
 							OrderNoteResourceImpl.class, "patchOrderNote"));
+					put(
+						"mutation#patchOrderNoteByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OrderNoteResourceImpl.class,
+							"patchOrderNoteByExternalReferenceCode"));
 					put(
 						"mutation#createOrderByExternalReferenceCodeOrderNote",
 						new ObjectValuePair<>(
@@ -263,27 +263,18 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class, "getOrderIdChannel"));
 					put(
-						"query#orders",
+						"query#order",
 						new ObjectValuePair<>(
-							OrderResourceImpl.class, "getOrdersPage"));
+							OrderResourceImpl.class, "getOrder"));
 					put(
 						"query#orderByExternalReferenceCode",
 						new ObjectValuePair<>(
 							OrderResourceImpl.class,
 							"getOrderByExternalReferenceCode"));
 					put(
-						"query#order",
+						"query#orders",
 						new ObjectValuePair<>(
-							OrderResourceImpl.class, "getOrder"));
-					put(
-						"query#orderItemByExternalReferenceCode",
-						new ObjectValuePair<>(
-							OrderItemResourceImpl.class,
-							"getOrderItemByExternalReferenceCode"));
-					put(
-						"query#orderItem",
-						new ObjectValuePair<>(
-							OrderItemResourceImpl.class, "getOrderItem"));
+							OrderResourceImpl.class, "getOrdersPage"));
 					put(
 						"query#orderByExternalReferenceCodeOrderItems",
 						new ObjectValuePair<>(
@@ -295,14 +286,14 @@ public class ServletDataImpl implements ServletData {
 							OrderItemResourceImpl.class,
 							"getOrderIdOrderItemsPage"));
 					put(
-						"query#orderNoteByExternalReferenceCode",
+						"query#orderItem",
 						new ObjectValuePair<>(
-							OrderNoteResourceImpl.class,
-							"getOrderNoteByExternalReferenceCode"));
+							OrderItemResourceImpl.class, "getOrderItem"));
 					put(
-						"query#orderNote",
+						"query#orderItemByExternalReferenceCode",
 						new ObjectValuePair<>(
-							OrderNoteResourceImpl.class, "getOrderNote"));
+							OrderItemResourceImpl.class,
+							"getOrderItemByExternalReferenceCode"));
 					put(
 						"query#orderByExternalReferenceCodeOrderNotes",
 						new ObjectValuePair<>(
@@ -313,6 +304,15 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							OrderNoteResourceImpl.class,
 							"getOrderIdOrderNotesPage"));
+					put(
+						"query#orderNote",
+						new ObjectValuePair<>(
+							OrderNoteResourceImpl.class, "getOrderNote"));
+					put(
+						"query#orderNoteByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OrderNoteResourceImpl.class,
+							"getOrderNoteByExternalReferenceCode"));
 					put(
 						"query#orderByExternalReferenceCodeShippingAddress",
 						new ObjectValuePair<>(

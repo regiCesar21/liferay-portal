@@ -44,6 +44,30 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteSLA(@GraphQLName("slaId") Long slaId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_slaResourceComponentServiceObjects, this::_populateResourceContext,
+			slaResource -> slaResource.deleteSLA(slaId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteSLABatch(
+			@GraphQLName("slaId") Long slaId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_slaResourceComponentServiceObjects, this::_populateResourceContext,
+			slaResource -> slaResource.deleteSLABatch(
+				slaId, callbackURL, object));
+	}
+
+	@GraphQLField
 	public SLA createProcessSLA(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("sla") SLA sla)
@@ -66,30 +90,6 @@ public class Mutation {
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
 			slaResource -> slaResource.postProcessSLABatch(
 				processId, sla, callbackURL, object));
-	}
-
-	@GraphQLField
-	public boolean deleteSLA(@GraphQLName("slaId") Long slaId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_slaResourceComponentServiceObjects, this::_populateResourceContext,
-			slaResource -> slaResource.deleteSLA(slaId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteSLABatch(
-			@GraphQLName("slaId") Long slaId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_slaResourceComponentServiceObjects, this::_populateResourceContext,
-			slaResource -> slaResource.deleteSLABatch(
-				slaId, callbackURL, object));
 	}
 
 	@GraphQLField

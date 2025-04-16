@@ -44,9 +44,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RoleResource {
 
-	public Page<Role> getRolesPage(Pagination pagination) throws Exception;
-
 	public Role getRole(Long roleId) throws Exception;
+
+	public Page<Role> getRolesPage(Pagination pagination) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

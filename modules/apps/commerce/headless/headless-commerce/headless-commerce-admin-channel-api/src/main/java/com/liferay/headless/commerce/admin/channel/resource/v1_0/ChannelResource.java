@@ -45,18 +45,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ChannelResource {
 
-	public Page<Channel> getChannelsPage(
-			String search,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
-	public Channel postChannel(Channel channel) throws Exception;
-
-	public Response postChannelBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteChannel(Long channelId) throws Exception;
 
 	public Response deleteChannelBatch(String callbackURL, Object object)
@@ -64,7 +52,19 @@ public interface ChannelResource {
 
 	public Channel getChannel(Long channelId) throws Exception;
 
+	public Page<Channel> getChannelsPage(
+			String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public Channel patchChannel(Long channelId, Channel channel)
+		throws Exception;
+
+	public Channel postChannel(Channel channel) throws Exception;
+
+	public Response postChannelBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Channel putChannel(Long channelId, Channel channel) throws Exception;

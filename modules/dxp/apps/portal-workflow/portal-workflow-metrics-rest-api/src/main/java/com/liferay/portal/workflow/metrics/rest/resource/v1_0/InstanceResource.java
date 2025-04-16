@@ -45,13 +45,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface InstanceResource {
 
+	public Instance getProcessInstance(Long processId, Long instanceId)
+		throws Exception;
+
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, Long[] assigneeUserIds, Date dateEnd,
 			Date dateStart, String[] slaStatuses, String[] statuses,
 			String[] taskKeys, Pagination pagination)
-		throws Exception;
-
-	public Instance getProcessInstance(Long processId, Long instanceId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

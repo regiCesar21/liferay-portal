@@ -46,38 +46,38 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountGroupResource {
 
-	public Page<AccountGroup> getAccountGroupsPage(
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
+	public Response deleteAccountGroup(Long id) throws Exception;
 
-	public AccountGroup postAccountGroup(AccountGroup accountGroup)
-		throws Exception;
-
-	public Response postAccountGroupBatch(String callbackURL, Object object)
+	public Response deleteAccountGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response deleteAccountGroupByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
+	public AccountGroup getAccountGroup(Long id) throws Exception;
+
 	public AccountGroup getAccountGroupByExternalReferenceCode(
 			String externalReferenceCode)
+		throws Exception;
+
+	public Page<AccountGroup> getAccountGroupsPage(
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Response patchAccountGroup(Long id, AccountGroup accountGroup)
 		throws Exception;
 
 	public Response patchAccountGroupByExternalReferenceCode(
 			String externalReferenceCode, AccountGroup accountGroup)
 		throws Exception;
 
-	public Response deleteAccountGroup(Long id) throws Exception;
-
-	public Response deleteAccountGroupBatch(String callbackURL, Object object)
+	public AccountGroup postAccountGroup(AccountGroup accountGroup)
 		throws Exception;
 
-	public AccountGroup getAccountGroup(Long id) throws Exception;
-
-	public Response patchAccountGroup(Long id, AccountGroup accountGroup)
+	public Response postAccountGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

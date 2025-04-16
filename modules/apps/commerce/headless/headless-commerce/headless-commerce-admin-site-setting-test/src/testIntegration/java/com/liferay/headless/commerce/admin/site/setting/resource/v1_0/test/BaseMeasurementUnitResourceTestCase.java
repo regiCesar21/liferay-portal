@@ -180,6 +180,74 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteMeasurementUnit() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MeasurementUnit measurementUnit =
+			testDeleteMeasurementUnit_addMeasurementUnit();
+
+		assertHttpResponseStatusCode(
+			204,
+			measurementUnitResource.deleteMeasurementUnitHttpResponse(
+				measurementUnit.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			measurementUnitResource.getMeasurementUnitHttpResponse(
+				measurementUnit.getId()));
+		assertHttpResponseStatusCode(
+			404, measurementUnitResource.getMeasurementUnitHttpResponse(0L));
+	}
+
+	protected MeasurementUnit testDeleteMeasurementUnit_addMeasurementUnit()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteMeasurementUnit() throws Exception {
+
+		// No namespace
+
+		MeasurementUnit measurementUnit1 =
+			testGraphQLDeleteMeasurementUnit_addMeasurementUnit();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteMeasurementUnit",
+						new HashMap<String, Object>() {
+							{
+								put("id", measurementUnit1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteMeasurementUnit"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"measurementUnit",
+					new HashMap<String, Object>() {
+						{
+							put("id", measurementUnit1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected MeasurementUnit
+			testGraphQLDeleteMeasurementUnit_addMeasurementUnit()
+		throws Exception {
+
+		return testGraphQLMeasurementUnit_addMeasurementUnit();
+	}
+
+	@Test
 	public void testGetCommerceAdminSiteSettingGroupMeasurementUnitPage()
 		throws Exception {
 
@@ -388,97 +456,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 	}
 
 	@Test
-	public void testPostCommerceAdminSiteSettingGroupMeasurementUnit()
-		throws Exception {
-
-		MeasurementUnit randomMeasurementUnit = randomMeasurementUnit();
-
-		MeasurementUnit postMeasurementUnit =
-			testPostCommerceAdminSiteSettingGroupMeasurementUnit_addMeasurementUnit(
-				randomMeasurementUnit);
-
-		assertEquals(randomMeasurementUnit, postMeasurementUnit);
-		assertValid(postMeasurementUnit);
-	}
-
-	protected MeasurementUnit
-			testPostCommerceAdminSiteSettingGroupMeasurementUnit_addMeasurementUnit(
-				MeasurementUnit measurementUnit)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteMeasurementUnit() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MeasurementUnit measurementUnit =
-			testDeleteMeasurementUnit_addMeasurementUnit();
-
-		assertHttpResponseStatusCode(
-			204,
-			measurementUnitResource.deleteMeasurementUnitHttpResponse(
-				measurementUnit.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			measurementUnitResource.getMeasurementUnitHttpResponse(
-				measurementUnit.getId()));
-		assertHttpResponseStatusCode(
-			404, measurementUnitResource.getMeasurementUnitHttpResponse(0L));
-	}
-
-	protected MeasurementUnit testDeleteMeasurementUnit_addMeasurementUnit()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteMeasurementUnit() throws Exception {
-
-		// No namespace
-
-		MeasurementUnit measurementUnit1 =
-			testGraphQLDeleteMeasurementUnit_addMeasurementUnit();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteMeasurementUnit",
-						new HashMap<String, Object>() {
-							{
-								put("id", measurementUnit1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteMeasurementUnit"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"measurementUnit",
-					new HashMap<String, Object>() {
-						{
-							put("id", measurementUnit1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected MeasurementUnit
-			testGraphQLDeleteMeasurementUnit_addMeasurementUnit()
-		throws Exception {
-
-		return testGraphQLMeasurementUnit_addMeasurementUnit();
-	}
-
-	@Test
 	public void testGetMeasurementUnit() throws Exception {
 		MeasurementUnit postMeasurementUnit =
 			testGetMeasurementUnit_addMeasurementUnit();
@@ -548,6 +525,29 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		throws Exception {
 
 		return testGraphQLMeasurementUnit_addMeasurementUnit();
+	}
+
+	@Test
+	public void testPostCommerceAdminSiteSettingGroupMeasurementUnit()
+		throws Exception {
+
+		MeasurementUnit randomMeasurementUnit = randomMeasurementUnit();
+
+		MeasurementUnit postMeasurementUnit =
+			testPostCommerceAdminSiteSettingGroupMeasurementUnit_addMeasurementUnit(
+				randomMeasurementUnit);
+
+		assertEquals(randomMeasurementUnit, postMeasurementUnit);
+		assertValid(postMeasurementUnit);
+	}
+
+	protected MeasurementUnit
+			testPostCommerceAdminSiteSettingGroupMeasurementUnit_addMeasurementUnit(
+				MeasurementUnit measurementUnit)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

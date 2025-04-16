@@ -253,105 +253,6 @@ public abstract class BaseDiscountRuleResourceTestCase {
 	}
 
 	@Test
-	public void testGetDiscountRule() throws Exception {
-		DiscountRule postDiscountRule = testGetDiscountRule_addDiscountRule();
-
-		DiscountRule getDiscountRule = discountRuleResource.getDiscountRule(
-			postDiscountRule.getId());
-
-		assertEquals(postDiscountRule, getDiscountRule);
-		assertValid(getDiscountRule);
-	}
-
-	protected DiscountRule testGetDiscountRule_addDiscountRule()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetDiscountRule() throws Exception {
-		DiscountRule discountRule =
-			testGraphQLGetDiscountRule_addDiscountRule();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				discountRule,
-				DiscountRuleSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"discountRule",
-								new HashMap<String, Object>() {
-									{
-										put("id", discountRule.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/discountRule"))));
-	}
-
-	@Test
-	public void testGraphQLGetDiscountRuleNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"discountRule",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected DiscountRule testGraphQLGetDiscountRule_addDiscountRule()
-		throws Exception {
-
-		return testGraphQLDiscountRule_addDiscountRule();
-	}
-
-	@Test
-	public void testPatchDiscountRule() throws Exception {
-		DiscountRule postDiscountRule = testPatchDiscountRule_addDiscountRule();
-
-		DiscountRule randomPatchDiscountRule = randomPatchDiscountRule();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountRule patchDiscountRule = discountRuleResource.patchDiscountRule(
-			postDiscountRule.getId(), randomPatchDiscountRule);
-
-		DiscountRule expectedPatchDiscountRule = postDiscountRule.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchDiscountRule, expectedPatchDiscountRule);
-
-		DiscountRule getDiscountRule = discountRuleResource.getDiscountRule(
-			patchDiscountRule.getId());
-
-		assertEquals(expectedPatchDiscountRule, getDiscountRule);
-		assertValid(getDiscountRule);
-	}
-
-	protected DiscountRule testPatchDiscountRule_addDiscountRule()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetDiscountByExternalReferenceCodeDiscountRulesPage()
 		throws Exception {
 
@@ -552,29 +453,6 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostDiscountByExternalReferenceCodeDiscountRule()
-		throws Exception {
-
-		DiscountRule randomDiscountRule = randomDiscountRule();
-
-		DiscountRule postDiscountRule =
-			testPostDiscountByExternalReferenceCodeDiscountRule_addDiscountRule(
-				randomDiscountRule);
-
-		assertEquals(randomDiscountRule, postDiscountRule);
-		assertValid(postDiscountRule);
-	}
-
-	protected DiscountRule
-			testPostDiscountByExternalReferenceCodeDiscountRule_addDiscountRule(
-				DiscountRule discountRule)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1002,6 +880,128 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGetDiscountRule() throws Exception {
+		DiscountRule postDiscountRule = testGetDiscountRule_addDiscountRule();
+
+		DiscountRule getDiscountRule = discountRuleResource.getDiscountRule(
+			postDiscountRule.getId());
+
+		assertEquals(postDiscountRule, getDiscountRule);
+		assertValid(getDiscountRule);
+	}
+
+	protected DiscountRule testGetDiscountRule_addDiscountRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetDiscountRule() throws Exception {
+		DiscountRule discountRule =
+			testGraphQLGetDiscountRule_addDiscountRule();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				discountRule,
+				DiscountRuleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"discountRule",
+								new HashMap<String, Object>() {
+									{
+										put("id", discountRule.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/discountRule"))));
+	}
+
+	@Test
+	public void testGraphQLGetDiscountRuleNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"discountRule",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected DiscountRule testGraphQLGetDiscountRule_addDiscountRule()
+		throws Exception {
+
+		return testGraphQLDiscountRule_addDiscountRule();
+	}
+
+	@Test
+	public void testPatchDiscountRule() throws Exception {
+		DiscountRule postDiscountRule = testPatchDiscountRule_addDiscountRule();
+
+		DiscountRule randomPatchDiscountRule = randomPatchDiscountRule();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountRule patchDiscountRule = discountRuleResource.patchDiscountRule(
+			postDiscountRule.getId(), randomPatchDiscountRule);
+
+		DiscountRule expectedPatchDiscountRule = postDiscountRule.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchDiscountRule, expectedPatchDiscountRule);
+
+		DiscountRule getDiscountRule = discountRuleResource.getDiscountRule(
+			patchDiscountRule.getId());
+
+		assertEquals(expectedPatchDiscountRule, getDiscountRule);
+		assertValid(getDiscountRule);
+	}
+
+	protected DiscountRule testPatchDiscountRule_addDiscountRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostDiscountByExternalReferenceCodeDiscountRule()
+		throws Exception {
+
+		DiscountRule randomDiscountRule = randomDiscountRule();
+
+		DiscountRule postDiscountRule =
+			testPostDiscountByExternalReferenceCodeDiscountRule_addDiscountRule(
+				randomDiscountRule);
+
+		assertEquals(randomDiscountRule, postDiscountRule);
+		assertValid(postDiscountRule);
+	}
+
+	protected DiscountRule
+			testPostDiscountByExternalReferenceCodeDiscountRule_addDiscountRule(
+				DiscountRule discountRule)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

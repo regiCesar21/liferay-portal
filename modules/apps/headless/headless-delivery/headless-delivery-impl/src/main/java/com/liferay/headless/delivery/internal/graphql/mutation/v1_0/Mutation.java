@@ -239,6 +239,22 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the blog post rating of the user who authenticated the request."
+	)
+	public boolean deleteBlogPostingMyRating(
+			@GraphQLName("blogPostingId") Long blogPostingId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource ->
+				blogPostingResource.deleteBlogPostingMyRating(blogPostingId));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Updates the blog post using only the fields received in the request body. Any other fields are left untouched. Returns the updated blog post."
 	)
 	public BlogPosting patchBlogPosting(
@@ -251,6 +267,48 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.patchBlogPosting(
 				blogPostingId, blogPosting));
+	}
+
+	@GraphQLField(
+		description = "Creates a new blog post rating by the user who authenticated the request."
+	)
+	public Rating createBlogPostingMyRating(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.postBlogPostingMyRating(
+				blogPostingId, rating));
+	}
+
+	@GraphQLField(description = "Creates a new blog post.")
+	public BlogPosting createSiteBlogPosting(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("blogPosting") BlogPosting blogPosting)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.postSiteBlogPosting(
+				Long.valueOf(siteKey), blogPosting));
+	}
+
+	@GraphQLField
+	public Response createSiteBlogPostingBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.postSiteBlogPostingBatch(
+				Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -282,37 +340,6 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Deletes the blog post rating of the user who authenticated the request."
-	)
-	public boolean deleteBlogPostingMyRating(
-			@GraphQLName("blogPostingId") Long blogPostingId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingResource ->
-				blogPostingResource.deleteBlogPostingMyRating(blogPostingId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Creates a new blog post rating by the user who authenticated the request."
-	)
-	public Rating createBlogPostingMyRating(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingResource -> blogPostingResource.postBlogPostingMyRating(
-				blogPostingId, rating));
-	}
-
-	@GraphQLField(
 		description = "Replaces an existing blog post rating by the user who authenticated the request."
 	)
 	public Rating updateBlogPostingMyRating(
@@ -325,33 +352,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.putBlogPostingMyRating(
 				blogPostingId, rating));
-	}
-
-	@GraphQLField(description = "Creates a new blog post.")
-	public BlogPosting createSiteBlogPosting(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("blogPosting") BlogPosting blogPosting)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingResource -> blogPostingResource.postSiteBlogPosting(
-				Long.valueOf(siteKey), blogPosting));
-	}
-
-	@GraphQLField
-	public Response createSiteBlogPostingBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			blogPostingResource -> blogPostingResource.postSiteBlogPostingBatch(
-				Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField
@@ -449,33 +449,6 @@ public class Mutation {
 					Long.valueOf(siteKey), multipartBody, callbackURL, object));
 	}
 
-	@GraphQLField(description = "Creates a new comment on the blog post.")
-	public Comment createBlogPostingComment(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("comment") Comment comment)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource -> commentResource.postBlogPostingComment(
-				blogPostingId, comment));
-	}
-
-	@GraphQLField
-	public Response createBlogPostingCommentBatch(
-			@GraphQLName("blogPostingId") Long blogPostingId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			commentResource -> commentResource.postBlogPostingCommentBatch(
-				blogPostingId, callbackURL, object));
-	}
-
 	@GraphQLField(
 		description = "Deletes the comment and returns a 204 if the operation succeeded."
 	)
@@ -503,22 +476,22 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless they are required."
-	)
-	public Comment updateComment(
-			@GraphQLName("commentId") Long commentId,
+	@GraphQLField(description = "Creates a new comment on the blog post.")
+	public Comment createBlogPostingComment(
+			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			commentResource -> commentResource.putComment(commentId, comment));
+			commentResource -> commentResource.postBlogPostingComment(
+				blogPostingId, comment));
 	}
 
 	@GraphQLField
-	public Response updateCommentBatch(
+	public Response createBlogPostingCommentBatch(
+			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -526,8 +499,8 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			commentResource -> commentResource.putCommentBatch(
-				callbackURL, object));
+			commentResource -> commentResource.postBlogPostingCommentBatch(
+				blogPostingId, callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -603,6 +576,95 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public Comment updateComment(
+			@GraphQLName("commentId") Long commentId,
+			@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.putComment(commentId, comment));
+	}
+
+	@GraphQLField
+	public Response updateCommentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.putCommentBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Deletes the document and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteDocument(@GraphQLName("documentId") Long documentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.deleteDocument(documentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDocumentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.deleteDocumentBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Deletes the document's rating and returns a 204 if the operation succeeded."
+	)
+	public boolean deleteDocumentMyRating(
+			@GraphQLName("documentId") Long documentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.deleteDocumentMyRating(
+				documentId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
+	@GraphQLName(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
+		value = "patchDocumentDocumentIdMultipartBody"
+	)
+	public Document patchDocument(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.patchDocument(
+				documentId, multipartBody));
+	}
+
+	@GraphQLField(
 		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
 	)
 	@GraphQLName(
@@ -638,21 +700,43 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Deletes the document and returns a 204 if the operation succeeds."
+		description = "Creates a new rating for the document, by the user who authenticated the request."
 	)
-	public boolean deleteDocument(@GraphQLName("documentId") Long documentId)
+	public Rating createDocumentMyRating(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			documentResource -> documentResource.deleteDocument(documentId));
+			documentResource -> documentResource.postDocumentMyRating(
+				documentId, rating));
+	}
 
-		return true;
+	@GraphQLField(
+		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
+	@GraphQLName(
+		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
+		value = "postSiteDocumentSiteIdMultipartBody"
+	)
+	public Document createSiteDocument(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postSiteDocument(
+				Long.valueOf(siteKey), multipartBody));
 	}
 
 	@GraphQLField
-	public Response deleteDocumentBatch(
+	public Response createSiteDocumentBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -660,27 +744,8 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			documentResource -> documentResource.deleteDocumentBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
-	)
-	@GraphQLName(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
-		value = "patchDocumentDocumentIdMultipartBody"
-	)
-	public Document patchDocument(
-			@GraphQLName("documentId") Long documentId,
-			@GraphQLName("multipartBody") MultipartBody multipartBody)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.patchDocument(
-				documentId, multipartBody));
+			documentResource -> documentResource.postSiteDocumentBatch(
+				Long.valueOf(siteKey), multipartBody, callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -717,37 +782,6 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Deletes the document's rating and returns a 204 if the operation succeeded."
-	)
-	public boolean deleteDocumentMyRating(
-			@GraphQLName("documentId") Long documentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.deleteDocumentMyRating(
-				documentId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Creates a new rating for the document, by the user who authenticated the request."
-	)
-	public Rating createDocumentMyRating(
-			@GraphQLName("documentId") Long documentId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.postDocumentMyRating(
-				documentId, rating));
-	}
-
-	@GraphQLField(
 		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
 	public Rating updateDocumentMyRating(
@@ -760,40 +794,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentResource -> documentResource.putDocumentMyRating(
 				documentId, rating));
-	}
-
-	@GraphQLField(
-		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
-	)
-	@GraphQLName(
-		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
-		value = "postSiteDocumentSiteIdMultipartBody"
-	)
-	public Document createSiteDocument(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("multipartBody") MultipartBody multipartBody)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.postSiteDocument(
-				Long.valueOf(siteKey), multipartBody));
-	}
-
-	@GraphQLField
-	public Response createSiteDocumentBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("multipartBody") MultipartBody multipartBody,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.postSiteDocumentBatch(
-				Long.valueOf(siteKey), multipartBody, callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -840,6 +840,51 @@ public class Mutation {
 			documentFolderResource ->
 				documentFolderResource.patchDocumentFolder(
 					documentFolderId, documentFolder));
+	}
+
+	@GraphQLField(
+		description = "Creates a new folder in a folder identified by `parentDocumentFolderId`."
+	)
+	public DocumentFolder createDocumentFolderDocumentFolder(
+			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
+			@GraphQLName("documentFolder") DocumentFolder documentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postDocumentFolderDocumentFolder(
+					parentDocumentFolderId, documentFolder));
+	}
+
+	@GraphQLField(description = "Creates a new document folder.")
+	public DocumentFolder createSiteDocumentFolder(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("documentFolder") DocumentFolder documentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postSiteDocumentFolder(
+					Long.valueOf(siteKey), documentFolder));
+	}
+
+	@GraphQLField
+	public Response createSiteDocumentFolderBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postSiteDocumentFolderBatch(
+					Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -902,51 +947,6 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Creates a new folder in a folder identified by `parentDocumentFolderId`."
-	)
-	public DocumentFolder createDocumentFolderDocumentFolder(
-			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
-			@GraphQLName("documentFolder") DocumentFolder documentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.postDocumentFolderDocumentFolder(
-					parentDocumentFolderId, documentFolder));
-	}
-
-	@GraphQLField(description = "Creates a new document folder.")
-	public DocumentFolder createSiteDocumentFolder(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("documentFolder") DocumentFolder documentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.postSiteDocumentFolder(
-					Long.valueOf(siteKey), documentFolder));
-	}
-
-	@GraphQLField
-	public Response createSiteDocumentFolderBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentFolderResource ->
-				documentFolderResource.postSiteDocumentFolderBatch(
-					Long.valueOf(siteKey), callbackURL, object));
-	}
-
-	@GraphQLField(
 		description = "Deletes the knowledge base article and returns a 204 if the operation succeeds."
 	)
 	public boolean deleteKnowledgeBaseArticle(
@@ -978,54 +978,6 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched."
-	)
-	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
-			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.patchKnowledgeBaseArticle(
-					knowledgeBaseArticleId, knowledgeBaseArticle));
-	}
-
-	@GraphQLField(
-		description = "Replaces the knowledge base article with the information sent in the request body. Any missing fields are deleted, unless they are required."
-	)
-	public KnowledgeBaseArticle updateKnowledgeBaseArticle(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
-			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
-				knowledgeBaseArticle)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.putKnowledgeBaseArticle(
-					knowledgeBaseArticleId, knowledgeBaseArticle));
-	}
-
-	@GraphQLField
-	public Response updateKnowledgeBaseArticleBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.putKnowledgeBaseArticleBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField(
 		description = "Deletes the knowledge base article's rating and returns a 204 if the operation succeeds."
 	)
 	public boolean deleteKnowledgeBaseArticleMyRating(
@@ -1043,65 +995,20 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Creates a rating for the knowledge base article."
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	public Rating createKnowledgeBaseArticleMyRating(
+	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
-			@GraphQLName("rating") Rating rating)
+			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.postKnowledgeBaseArticleMyRating(
-					knowledgeBaseArticleId, rating));
-	}
-
-	@GraphQLField(
-		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
-	)
-	public Rating updateKnowledgeBaseArticleMyRating(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.putKnowledgeBaseArticleMyRating(
-					knowledgeBaseArticleId, rating));
-	}
-
-	@GraphQLField
-	public boolean updateKnowledgeBaseArticleSubscribe(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.putKnowledgeBaseArticleSubscribe(
-					knowledgeBaseArticleId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public boolean updateKnowledgeBaseArticleUnsubscribe(
-			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseArticleResource ->
-				knowledgeBaseArticleResource.putKnowledgeBaseArticleUnsubscribe(
-					knowledgeBaseArticleId));
-
-		return true;
+				knowledgeBaseArticleResource.patchKnowledgeBaseArticle(
+					knowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
 	@GraphQLField(
@@ -1121,6 +1028,22 @@ public class Mutation {
 				knowledgeBaseArticleResource.
 					postKnowledgeBaseArticleKnowledgeBaseArticle(
 						parentKnowledgeBaseArticleId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField(
+		description = "Creates a rating for the knowledge base article."
+	)
+	public Rating createKnowledgeBaseArticleMyRating(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.postKnowledgeBaseArticleMyRating(
+					knowledgeBaseArticleId, rating));
 	}
 
 	@GraphQLField(
@@ -1187,6 +1110,83 @@ public class Mutation {
 					Long.valueOf(siteKey), callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Replaces the knowledge base article with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public KnowledgeBaseArticle updateKnowledgeBaseArticle(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticle(
+					knowledgeBaseArticleId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	public Response updateKnowledgeBaseArticleBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticleBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public Rating updateKnowledgeBaseArticleMyRating(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticleMyRating(
+					knowledgeBaseArticleId, rating));
+	}
+
+	@GraphQLField
+	public boolean updateKnowledgeBaseArticleSubscribe(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticleSubscribe(
+					knowledgeBaseArticleId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateKnowledgeBaseArticleUnsubscribe(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticleUnsubscribe(
+					knowledgeBaseArticleId));
+
+		return true;
+	}
+
 	@GraphQLField
 	public boolean updateSiteKnowledgeBaseArticleSubscribe(
 			@GraphQLName("siteKey") @NotEmpty String siteKey)
@@ -1217,6 +1217,38 @@ public class Mutation {
 						Long.valueOf(siteKey)));
 
 		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the knowledge base file attachment and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteKnowledgeBaseAttachment(
+			@GraphQLName("knowledgeBaseAttachmentId") Long
+				knowledgeBaseAttachmentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
+					knowledgeBaseAttachmentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteKnowledgeBaseAttachmentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.
+					deleteKnowledgeBaseAttachmentBatch(callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1258,38 +1290,6 @@ public class Mutation {
 					postKnowledgeBaseArticleKnowledgeBaseAttachmentBatch(
 						knowledgeBaseArticleId, multipartBody, callbackURL,
 						object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the knowledge base file attachment and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteKnowledgeBaseAttachment(
-			@GraphQLName("knowledgeBaseAttachmentId") Long
-				knowledgeBaseAttachmentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_knowledgeBaseAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseAttachmentResource ->
-				knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
-					knowledgeBaseAttachmentId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteKnowledgeBaseAttachmentBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseAttachmentResource ->
-				knowledgeBaseAttachmentResource.
-					deleteKnowledgeBaseAttachmentBatch(callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1341,37 +1341,6 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Replaces the knowledge base folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
-	)
-	public KnowledgeBaseFolder updateKnowledgeBaseFolder(
-			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
-			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
-				knowledgeBaseFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseFolderResource ->
-				knowledgeBaseFolderResource.putKnowledgeBaseFolder(
-					knowledgeBaseFolderId, knowledgeBaseFolder));
-	}
-
-	@GraphQLField
-	public Response updateKnowledgeBaseFolderBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseFolderResource ->
-				knowledgeBaseFolderResource.putKnowledgeBaseFolderBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField(
 		description = "Creates a knowledge base folder inside the parent folder."
 	)
 	public KnowledgeBaseFolder createKnowledgeBaseFolderKnowledgeBaseFolder(
@@ -1418,6 +1387,37 @@ public class Mutation {
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolderBatch(
 					Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Replaces the knowledge base folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public KnowledgeBaseFolder updateKnowledgeBaseFolder(
+			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
+				knowledgeBaseFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.putKnowledgeBaseFolder(
+					knowledgeBaseFolderId, knowledgeBaseFolder));
+	}
+
+	@GraphQLField
+	public Response updateKnowledgeBaseFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.putKnowledgeBaseFolderBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1565,6 +1565,23 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the message board message's rating and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteMessageBoardMessageMyRating(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.deleteMessageBoardMessageMyRating(
+					messageBoardMessageId));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
 	public MessageBoardMessage patchMessageBoardMessage(
@@ -1579,6 +1596,75 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.patchMessageBoardMessage(
 					messageBoardMessageId, messageBoardMessage));
+	}
+
+	@GraphQLField(
+		description = "Creates a child message board message of the parent message."
+	)
+	public MessageBoardMessage createMessageBoardMessageMessageBoardMessage(
+			@GraphQLName("parentMessageBoardMessageId") Long
+				parentMessageBoardMessageId,
+			@GraphQLName("messageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardMessageMessageBoardMessage(
+						parentMessageBoardMessageId, messageBoardMessage));
+	}
+
+	@GraphQLField(
+		description = "Creates a rating for the message board message."
+	)
+	public Rating createMessageBoardMessageMyRating(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.postMessageBoardMessageMyRating(
+					messageBoardMessageId, rating));
+	}
+
+	@GraphQLField(
+		description = "Creates a new message in the message board thread."
+	)
+	public MessageBoardMessage createMessageBoardThreadMessageBoardMessage(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("messageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardThreadMessageBoardMessage(
+						messageBoardThreadId, messageBoardMessage));
+	}
+
+	@GraphQLField
+	public Response createMessageBoardThreadMessageBoardMessageBatch(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardThreadMessageBoardMessageBatch(
+						messageBoardThreadId, callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1610,39 +1696,6 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.putMessageBoardMessageBatch(
 					callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the message board message's rating and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteMessageBoardMessageMyRating(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.deleteMessageBoardMessageMyRating(
-					messageBoardMessageId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Creates a rating for the message board message."
-	)
-	public Rating createMessageBoardMessageMyRating(
-			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.postMessageBoardMessageMyRating(
-					messageBoardMessageId, rating));
 	}
 
 	@GraphQLField(
@@ -1692,59 +1745,6 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Creates a child message board message of the parent message."
-	)
-	public MessageBoardMessage createMessageBoardMessageMessageBoardMessage(
-			@GraphQLName("parentMessageBoardMessageId") Long
-				parentMessageBoardMessageId,
-			@GraphQLName("messageBoardMessage") MessageBoardMessage
-				messageBoardMessage)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.
-					postMessageBoardMessageMessageBoardMessage(
-						parentMessageBoardMessageId, messageBoardMessage));
-	}
-
-	@GraphQLField(
-		description = "Creates a new message in the message board thread."
-	)
-	public MessageBoardMessage createMessageBoardThreadMessageBoardMessage(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("messageBoardMessage") MessageBoardMessage
-				messageBoardMessage)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.
-					postMessageBoardThreadMessageBoardMessage(
-						messageBoardThreadId, messageBoardMessage));
-	}
-
-	@GraphQLField
-	public Response createMessageBoardThreadMessageBoardMessageBatch(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardMessageResource ->
-				messageBoardMessageResource.
-					postMessageBoardThreadMessageBoardMessageBatch(
-						messageBoardThreadId, callbackURL, object));
-	}
-
-	@GraphQLField(
 		description = "Deletes the message board section and returns a 204 if the operation succeeds."
 	)
 	public boolean deleteMessageBoardSection(
@@ -1790,6 +1790,55 @@ public class Mutation {
 			messageBoardSectionResource ->
 				messageBoardSectionResource.patchMessageBoardSection(
 					messageBoardSectionId, messageBoardSection));
+	}
+
+	@GraphQLField(
+		description = "Creates a new message board section in the parent section."
+	)
+	public MessageBoardSection createMessageBoardSectionMessageBoardSection(
+			@GraphQLName("parentMessageBoardSectionId") Long
+				parentMessageBoardSectionId,
+			@GraphQLName("messageBoardSection") MessageBoardSection
+				messageBoardSection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.
+					postMessageBoardSectionMessageBoardSection(
+						parentMessageBoardSectionId, messageBoardSection));
+	}
+
+	@GraphQLField(description = "Creates a new message board section.")
+	public MessageBoardSection createSiteMessageBoardSection(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("messageBoardSection") MessageBoardSection
+				messageBoardSection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.postSiteMessageBoardSection(
+					Long.valueOf(siteKey), messageBoardSection));
+	}
+
+	@GraphQLField
+	public Response createSiteMessageBoardSectionBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.postSiteMessageBoardSectionBatch(
+					Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1854,52 +1903,68 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Creates a new message board section in the parent section."
+		description = "Deletes the message board thread and returns a 204 if the operation succeeds."
 	)
-	public MessageBoardSection createMessageBoardSectionMessageBoardSection(
-			@GraphQLName("parentMessageBoardSectionId") Long
-				parentMessageBoardSectionId,
-			@GraphQLName("messageBoardSection") MessageBoardSection
-				messageBoardSection)
+	public boolean deleteMessageBoardThread(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
-			_messageBoardSectionResourceComponentServiceObjects,
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			messageBoardSectionResource ->
-				messageBoardSectionResource.
-					postMessageBoardSectionMessageBoardSection(
-						parentMessageBoardSectionId, messageBoardSection));
-	}
+			messageBoardThreadResource ->
+				messageBoardThreadResource.deleteMessageBoardThread(
+					messageBoardThreadId));
 
-	@GraphQLField(description = "Creates a new message board section.")
-	public MessageBoardSection createSiteMessageBoardSection(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("messageBoardSection") MessageBoardSection
-				messageBoardSection)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardSectionResource ->
-				messageBoardSectionResource.postSiteMessageBoardSection(
-					Long.valueOf(siteKey), messageBoardSection));
+		return true;
 	}
 
 	@GraphQLField
-	public Response createSiteMessageBoardSectionBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
+	public Response deleteMessageBoardThreadBatch(
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_messageBoardSectionResourceComponentServiceObjects,
+			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			messageBoardSectionResource ->
-				messageBoardSectionResource.postSiteMessageBoardSectionBatch(
-					Long.valueOf(siteKey), callbackURL, object));
+			messageBoardThreadResource ->
+				messageBoardThreadResource.deleteMessageBoardThreadBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Deletes the message board thread's rating and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteMessageBoardThreadMyRating(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.deleteMessageBoardThreadMyRating(
+					messageBoardThreadId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	public MessageBoardThread patchMessageBoardThread(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("messageBoardThread") MessageBoardThread
+				messageBoardThread)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.patchMessageBoardThread(
+					messageBoardThreadId, messageBoardThread));
 	}
 
 	@GraphQLField(
@@ -1936,42 +2001,23 @@ public class Mutation {
 						messageBoardSectionId, callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Deletes the message board thread and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteMessageBoardThread(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.deleteMessageBoardThread(
-					messageBoardThreadId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteMessageBoardThreadBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
+	@GraphQLField(description = "Creates the message board thread's rating.")
+	public Rating createMessageBoardThreadMyRating(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageBoardThreadResource ->
-				messageBoardThreadResource.deleteMessageBoardThreadBatch(
-					callbackURL, object));
+				messageBoardThreadResource.postMessageBoardThreadMyRating(
+					messageBoardThreadId, rating));
 	}
 
-	@GraphQLField(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched."
-	)
-	public MessageBoardThread patchMessageBoardThread(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+	@GraphQLField(description = "Creates a new message board thread.")
+	public MessageBoardThread createSiteMessageBoardThread(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
 		throws Exception {
@@ -1980,8 +2026,23 @@ public class Mutation {
 			_messageBoardThreadResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			messageBoardThreadResource ->
-				messageBoardThreadResource.patchMessageBoardThread(
-					messageBoardThreadId, messageBoardThread));
+				messageBoardThreadResource.postSiteMessageBoardThread(
+					Long.valueOf(siteKey), messageBoardThread));
+	}
+
+	@GraphQLField
+	public Response createSiteMessageBoardThreadBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.postSiteMessageBoardThreadBatch(
+					Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -2013,37 +2074,6 @@ public class Mutation {
 			messageBoardThreadResource ->
 				messageBoardThreadResource.putMessageBoardThreadBatch(
 					callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Deletes the message board thread's rating and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteMessageBoardThreadMyRating(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.deleteMessageBoardThreadMyRating(
-					messageBoardThreadId));
-
-		return true;
-	}
-
-	@GraphQLField(description = "Creates the message board thread's rating.")
-	public Rating createMessageBoardThreadMyRating(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.postMessageBoardThreadMyRating(
-					messageBoardThreadId, rating));
 	}
 
 	@GraphQLField(
@@ -2092,34 +2122,69 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField(description = "Creates a new message board thread.")
-	public MessageBoardThread createSiteMessageBoardThread(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("messageBoardThread") MessageBoardThread
-				messageBoardThread)
+	@GraphQLField(
+		description = "Deletes the structured content and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteStructuredContent(
+			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.postSiteMessageBoardThread(
-					Long.valueOf(siteKey), messageBoardThread));
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContent(
+					structuredContentId));
+
+		return true;
 	}
 
 	@GraphQLField
-	public Response createSiteMessageBoardThreadBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
+	public Response deleteStructuredContentBatch(
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
+			_structuredContentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.postSiteMessageBoardThreadBatch(
-					Long.valueOf(siteKey), callbackURL, object));
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContentBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Deletes the structured content's rating and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteStructuredContentMyRating(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContentMyRating(
+					structuredContentId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	public StructuredContent patchStructuredContent(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.patchStructuredContent(
+					structuredContentId, structuredContent));
 	}
 
 	@GraphQLField(description = "Creates a new structured content.")
@@ -2188,82 +2253,18 @@ public class Mutation {
 						structuredContentFolderId, callbackURL, object));
 	}
 
-	@GraphQLField
-	public boolean updateStructuredContentSubscribe(
-			@GraphQLName("structuredContentId") Long structuredContentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.putStructuredContentSubscribe(
-					structuredContentId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public boolean updateStructuredContentUnsubscribe(
-			@GraphQLName("structuredContentId") Long structuredContentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.putStructuredContentUnsubscribe(
-					structuredContentId));
-
-		return true;
-	}
-
-	@GraphQLField(
-		description = "Deletes the structured content and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteStructuredContent(
-			@GraphQLName("structuredContentId") Long structuredContentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.deleteStructuredContent(
-					structuredContentId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteStructuredContentBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.deleteStructuredContentBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched."
-	)
-	public StructuredContent patchStructuredContent(
+	@GraphQLField(description = "Create a rating for the structured content.")
+	public Rating createStructuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId,
-			@GraphQLName("structuredContent") StructuredContent
-				structuredContent)
+			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			structuredContentResource ->
-				structuredContentResource.patchStructuredContent(
-					structuredContentId, structuredContent));
+				structuredContentResource.postStructuredContentMyRating(
+					structuredContentId, rating));
 	}
 
 	@GraphQLField(
@@ -2298,37 +2299,6 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Deletes the structured content's rating and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteStructuredContentMyRating(
-			@GraphQLName("structuredContentId") Long structuredContentId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.deleteStructuredContentMyRating(
-					structuredContentId));
-
-		return true;
-	}
-
-	@GraphQLField(description = "Create a rating for the structured content.")
-	public Rating createStructuredContentMyRating(
-			@GraphQLName("structuredContentId") Long structuredContentId,
-			@GraphQLName("rating") Rating rating)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.postStructuredContentMyRating(
-					structuredContentId, rating));
-	}
-
-	@GraphQLField(
 		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
 	public Rating updateStructuredContentMyRating(
@@ -2342,6 +2312,86 @@ public class Mutation {
 			structuredContentResource ->
 				structuredContentResource.putStructuredContentMyRating(
 					structuredContentId, rating));
+	}
+
+	@GraphQLField
+	public boolean updateStructuredContentSubscribe(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putStructuredContentSubscribe(
+					structuredContentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateStructuredContentUnsubscribe(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putStructuredContentUnsubscribe(
+					structuredContentId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the structured content folder and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteStructuredContentFolder(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.deleteStructuredContentFolder(
+					structuredContentFolderId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteStructuredContentFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					deleteStructuredContentFolderBatch(callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	public StructuredContentFolder patchStructuredContentFolder(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
+			@GraphQLName("structuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.patchStructuredContentFolder(
+					structuredContentFolderId, structuredContentFolder));
 	}
 
 	@GraphQLField(description = "Creates a new structured content folder.")
@@ -2394,56 +2444,6 @@ public class Mutation {
 					postStructuredContentFolderStructuredContentFolder(
 						parentStructuredContentFolderId,
 						structuredContentFolder));
-	}
-
-	@GraphQLField(
-		description = "Deletes the structured content folder and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteStructuredContentFolder(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.deleteStructuredContentFolder(
-					structuredContentFolderId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteStructuredContentFolderBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.
-					deleteStructuredContentFolderBatch(callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Updates only the fields received in the request body, leaving any other fields untouched."
-	)
-	public StructuredContentFolder patchStructuredContentFolder(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId,
-			@GraphQLName("structuredContentFolder") StructuredContentFolder
-				structuredContentFolder)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentFolderResource ->
-				structuredContentFolderResource.patchStructuredContentFolder(
-					structuredContentFolderId, structuredContentFolder));
 	}
 
 	@GraphQLField(
@@ -2512,6 +2512,33 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField(
+		description = "Deletes the wiki node and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteWikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.deleteWikiNode(wikiNodeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteWikiNodeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.deleteWikiNodeBatch(
+				callbackURL, object));
+	}
+
 	@GraphQLField(description = "Creates a new wiki node")
 	public WikiNode createSiteWikiNode(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -2537,6 +2564,34 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiNodeResource -> wikiNodeResource.postSiteWikiNodeBatch(
 				Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Replaces the wiki node with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public WikiNode updateWikiNode(
+			@GraphQLName("wikiNodeId") Long wikiNodeId,
+			@GraphQLName("wikiNode") WikiNode wikiNode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.putWikiNode(
+				wikiNodeId, wikiNode));
+	}
+
+	@GraphQLField
+	public Response updateWikiNodeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.putWikiNodeBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -2568,57 +2623,29 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Deletes the wiki node and returns a 204 if the operation succeeds."
+		description = "Deletes the wiki page and returns a 204 if the operation succeeds."
 	)
-	public boolean deleteWikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
+	public boolean deleteWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
-			_wikiNodeResourceComponentServiceObjects,
+			_wikiPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			wikiNodeResource -> wikiNodeResource.deleteWikiNode(wikiNodeId));
+			wikiPageResource -> wikiPageResource.deleteWikiPage(wikiPageId));
 
 		return true;
 	}
 
 	@GraphQLField
-	public Response deleteWikiNodeBatch(
+	public Response deleteWikiPageBatch(
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_wikiNodeResourceComponentServiceObjects,
+			_wikiPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			wikiNodeResource -> wikiNodeResource.deleteWikiNodeBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Replaces the wiki node with the information sent in the request body. Any missing fields are deleted, unless they are required."
-	)
-	public WikiNode updateWikiNode(
-			@GraphQLName("wikiNodeId") Long wikiNodeId,
-			@GraphQLName("wikiNode") WikiNode wikiNode)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_wikiNodeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wikiNodeResource -> wikiNodeResource.putWikiNode(
-				wikiNodeId, wikiNode));
-	}
-
-	@GraphQLField
-	public Response updateWikiNodeBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_wikiNodeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wikiNodeResource -> wikiNodeResource.putWikiNodeBatch(
+			wikiPageResource -> wikiPageResource.deleteWikiPageBatch(
 				callbackURL, object));
 	}
 
@@ -2649,34 +2676,6 @@ public class Mutation {
 				wikiNodeId, callbackURL, object));
 	}
 
-	@GraphQLField
-	public boolean updateWikiPageSubscribe(
-			@GraphQLName("wikiPageId") Long wikiPageId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_wikiPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wikiPageResource -> wikiPageResource.putWikiPageSubscribe(
-				wikiPageId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public boolean updateWikiPageUnsubscribe(
-			@GraphQLName("wikiPageId") Long wikiPageId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_wikiPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wikiPageResource -> wikiPageResource.putWikiPageUnsubscribe(
-				wikiPageId));
-
-		return true;
-	}
-
 	@GraphQLField(
 		description = "Creates a child wiki page of the parent wiki page."
 	)
@@ -2690,33 +2689,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiPageResource -> wikiPageResource.postWikiPageWikiPage(
 				parentWikiPageId, wikiPage));
-	}
-
-	@GraphQLField(
-		description = "Deletes the wiki page and returns a 204 if the operation succeeds."
-	)
-	public boolean deleteWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_wikiPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wikiPageResource -> wikiPageResource.deleteWikiPage(wikiPageId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteWikiPageBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_wikiPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			wikiPageResource -> wikiPageResource.deleteWikiPageBatch(
-				callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -2745,6 +2717,34 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiPageResource -> wikiPageResource.putWikiPageBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateWikiPageSubscribe(
+			@GraphQLName("wikiPageId") Long wikiPageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.putWikiPageSubscribe(
+				wikiPageId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateWikiPageUnsubscribe(
+			@GraphQLName("wikiPageId") Long wikiPageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.putWikiPageUnsubscribe(
+				wikiPageId));
+
+		return true;
 	}
 
 	@GraphQLField(

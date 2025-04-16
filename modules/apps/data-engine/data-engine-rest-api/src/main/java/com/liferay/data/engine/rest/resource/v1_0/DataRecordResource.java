@@ -45,8 +45,23 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataRecordResource {
 
+	public void deleteDataRecord(Long dataRecordId) throws Exception;
+
+	public Response deleteDataRecordBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DataRecord> getDataDefinitionDataRecordsPage(
 			Long dataDefinitionId, Pagination pagination)
+		throws Exception;
+
+	public DataRecord getDataRecord(Long dataRecordId) throws Exception;
+
+	public String getDataRecordCollectionDataRecordExport(
+			Long dataRecordCollectionId, Pagination pagination)
+		throws Exception;
+
+	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
+			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception;
 
 	public DataRecord postDataDefinitionDataRecord(
@@ -57,10 +72,6 @@ public interface DataRecordResource {
 			Long dataDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
-	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
-			Long dataRecordCollectionId, Pagination pagination)
-		throws Exception;
-
 	public DataRecord postDataRecordCollectionDataRecord(
 			Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception;
@@ -68,17 +79,6 @@ public interface DataRecordResource {
 	public Response postDataRecordCollectionDataRecordBatch(
 			Long dataRecordCollectionId, String callbackURL, Object object)
 		throws Exception;
-
-	public String getDataRecordCollectionDataRecordExport(
-			Long dataRecordCollectionId, Pagination pagination)
-		throws Exception;
-
-	public void deleteDataRecord(Long dataRecordId) throws Exception;
-
-	public Response deleteDataRecordBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public DataRecord getDataRecord(Long dataRecordId) throws Exception;
 
 	public DataRecord putDataRecord(Long dataRecordId, DataRecord dataRecord)
 		throws Exception;

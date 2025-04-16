@@ -45,10 +45,17 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataListViewResource {
 
+	public void deleteDataListView(Long dataListViewId) throws Exception;
+
+	public Response deleteDataListViewBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DataListView> getDataDefinitionDataListViewsPage(
 			Long dataDefinitionId, String keywords, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
+
+	public DataListView getDataListView(Long dataListViewId) throws Exception;
 
 	public DataListView postDataDefinitionDataListView(
 			Long dataDefinitionId, DataListView dataListView)
@@ -57,13 +64,6 @@ public interface DataListViewResource {
 	public Response postDataDefinitionDataListViewBatch(
 			Long dataDefinitionId, String callbackURL, Object object)
 		throws Exception;
-
-	public void deleteDataListView(Long dataListViewId) throws Exception;
-
-	public Response deleteDataListViewBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public DataListView getDataListView(Long dataListViewId) throws Exception;
 
 	public DataListView putDataListView(
 			Long dataListViewId, DataListView dataListView)

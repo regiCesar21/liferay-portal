@@ -186,6 +186,262 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountGroup() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountGroup accountGroup = testDeleteAccountGroup_addAccountGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountGroupResource.deleteAccountGroupHttpResponse(
+				accountGroup.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup.getId()));
+		assertHttpResponseStatusCode(
+			404, accountGroupResource.getAccountGroupHttpResponse(0L));
+	}
+
+	protected AccountGroup testDeleteAccountGroup_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccountGroup() throws Exception {
+
+		// No namespace
+
+		AccountGroup accountGroup1 =
+			testGraphQLDeleteAccountGroup_addAccountGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccountGroup",
+						new HashMap<String, Object>() {
+							{
+								put("id", accountGroup1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteAccountGroup"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"accountGroup",
+					new HashMap<String, Object>() {
+						{
+							put("id", accountGroup1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected AccountGroup testGraphQLDeleteAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
+	}
+
+	@Test
+	public void testDeleteAccountGroupByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountGroup accountGroup =
+			testDeleteAccountGroupByExternalReferenceCode_addAccountGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountGroupResource.
+				deleteAccountGroupByExternalReferenceCodeHttpResponse(
+					accountGroup.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.
+				getAccountGroupByExternalReferenceCodeHttpResponse(
+					accountGroup.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.
+				getAccountGroupByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected AccountGroup
+			testDeleteAccountGroupByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccountGroup() throws Exception {
+		AccountGroup postAccountGroup = testGetAccountGroup_addAccountGroup();
+
+		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
+			postAccountGroup.getId());
+
+		assertEquals(postAccountGroup, getAccountGroup);
+		assertValid(getAccountGroup);
+	}
+
+	protected AccountGroup testGetAccountGroup_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountGroup() throws Exception {
+		AccountGroup accountGroup =
+			testGraphQLGetAccountGroup_addAccountGroup();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				accountGroup,
+				AccountGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountGroup",
+								new HashMap<String, Object>() {
+									{
+										put("id", accountGroup.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/accountGroup"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountGroupNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountGroup",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected AccountGroup testGraphQLGetAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
+	}
+
+	@Test
+	public void testGetAccountGroupByExternalReferenceCode() throws Exception {
+		AccountGroup postAccountGroup =
+			testGetAccountGroupByExternalReferenceCode_addAccountGroup();
+
+		AccountGroup getAccountGroup =
+			accountGroupResource.getAccountGroupByExternalReferenceCode(
+				postAccountGroup.getExternalReferenceCode());
+
+		assertEquals(postAccountGroup, getAccountGroup);
+		assertValid(getAccountGroup);
+	}
+
+	protected AccountGroup
+			testGetAccountGroupByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountGroupByExternalReferenceCode()
+		throws Exception {
+
+		AccountGroup accountGroup =
+			testGraphQLGetAccountGroupByExternalReferenceCode_addAccountGroup();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				accountGroup,
+				AccountGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountGroupByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												accountGroup.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountGroupByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountGroupByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountGroupByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected AccountGroup
+			testGraphQLGetAccountGroupByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
+	}
+
+	@Test
 	public void testGetAccountGroupsPage() throws Exception {
 		Page<AccountGroup> page = accountGroupResource.getAccountGroupsPage(
 			null, Pagination.of(1, 10), null);
@@ -588,6 +844,18 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
+	public void testPatchAccountGroup() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchAccountGroupByExternalReferenceCode()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostAccountGroup() throws Exception {
 		AccountGroup randomAccountGroup = randomAccountGroup();
 
@@ -604,274 +872,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteAccountGroupByExternalReferenceCode()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountGroup accountGroup =
-			testDeleteAccountGroupByExternalReferenceCode_addAccountGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			accountGroupResource.
-				deleteAccountGroupByExternalReferenceCodeHttpResponse(
-					accountGroup.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.
-				getAccountGroupByExternalReferenceCodeHttpResponse(
-					accountGroup.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.
-				getAccountGroupByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected AccountGroup
-			testDeleteAccountGroupByExternalReferenceCode_addAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetAccountGroupByExternalReferenceCode() throws Exception {
-		AccountGroup postAccountGroup =
-			testGetAccountGroupByExternalReferenceCode_addAccountGroup();
-
-		AccountGroup getAccountGroup =
-			accountGroupResource.getAccountGroupByExternalReferenceCode(
-				postAccountGroup.getExternalReferenceCode());
-
-		assertEquals(postAccountGroup, getAccountGroup);
-		assertValid(getAccountGroup);
-	}
-
-	protected AccountGroup
-			testGetAccountGroupByExternalReferenceCode_addAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccountGroupByExternalReferenceCode()
-		throws Exception {
-
-		AccountGroup accountGroup =
-			testGraphQLGetAccountGroupByExternalReferenceCode_addAccountGroup();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				accountGroup,
-				AccountGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"accountGroupByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												accountGroup.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/accountGroupByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetAccountGroupByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"accountGroupByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected AccountGroup
-			testGraphQLGetAccountGroupByExternalReferenceCode_addAccountGroup()
-		throws Exception {
-
-		return testGraphQLAccountGroup_addAccountGroup();
-	}
-
-	@Test
-	public void testPatchAccountGroupByExternalReferenceCode()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testDeleteAccountGroup() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountGroup accountGroup = testDeleteAccountGroup_addAccountGroup();
-
-		assertHttpResponseStatusCode(
-			204,
-			accountGroupResource.deleteAccountGroupHttpResponse(
-				accountGroup.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.getAccountGroupHttpResponse(
-				accountGroup.getId()));
-		assertHttpResponseStatusCode(
-			404, accountGroupResource.getAccountGroupHttpResponse(0L));
-	}
-
-	protected AccountGroup testDeleteAccountGroup_addAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteAccountGroup() throws Exception {
-
-		// No namespace
-
-		AccountGroup accountGroup1 =
-			testGraphQLDeleteAccountGroup_addAccountGroup();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteAccountGroup",
-						new HashMap<String, Object>() {
-							{
-								put("id", accountGroup1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteAccountGroup"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"accountGroup",
-					new HashMap<String, Object>() {
-						{
-							put("id", accountGroup1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected AccountGroup testGraphQLDeleteAccountGroup_addAccountGroup()
-		throws Exception {
-
-		return testGraphQLAccountGroup_addAccountGroup();
-	}
-
-	@Test
-	public void testGetAccountGroup() throws Exception {
-		AccountGroup postAccountGroup = testGetAccountGroup_addAccountGroup();
-
-		AccountGroup getAccountGroup = accountGroupResource.getAccountGroup(
-			postAccountGroup.getId());
-
-		assertEquals(postAccountGroup, getAccountGroup);
-		assertValid(getAccountGroup);
-	}
-
-	protected AccountGroup testGetAccountGroup_addAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetAccountGroup() throws Exception {
-		AccountGroup accountGroup =
-			testGraphQLGetAccountGroup_addAccountGroup();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				accountGroup,
-				AccountGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"accountGroup",
-								new HashMap<String, Object>() {
-									{
-										put("id", accountGroup.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/accountGroup"))));
-	}
-
-	@Test
-	public void testGraphQLGetAccountGroupNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"accountGroup",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected AccountGroup testGraphQLGetAccountGroup_addAccountGroup()
-		throws Exception {
-
-		return testGraphQLAccountGroup_addAccountGroup();
-	}
-
-	@Test
-	public void testPatchAccountGroup() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Rule

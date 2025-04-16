@@ -45,11 +45,25 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TaxonomyVocabularyResource {
 
+	public void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
+		throws Exception;
+
+	public Response deleteTaxonomyVocabularyBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
 			Long siteId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public TaxonomyVocabulary getTaxonomyVocabulary(Long taxonomyVocabularyId)
+		throws Exception;
+
+	public TaxonomyVocabulary patchTaxonomyVocabulary(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 
 	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
@@ -58,20 +72,6 @@ public interface TaxonomyVocabularyResource {
 
 	public Response postSiteTaxonomyVocabularyBatch(
 			Long siteId, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
-		throws Exception;
-
-	public Response deleteTaxonomyVocabularyBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public TaxonomyVocabulary getTaxonomyVocabulary(Long taxonomyVocabularyId)
-		throws Exception;
-
-	public TaxonomyVocabulary patchTaxonomyVocabulary(
-			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 
 	public TaxonomyVocabulary putTaxonomyVocabulary(

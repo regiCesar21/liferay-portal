@@ -230,6 +230,27 @@ public abstract class BaseWarehouseResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteWarehousId() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Warehouse warehouse = testDeleteWarehousId_addWarehouse();
+
+		assertHttpResponseStatusCode(
+			204,
+			warehouseResource.deleteWarehousIdHttpResponse(warehouse.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			warehouseResource.getWarehousIdHttpResponse(warehouse.getId()));
+		assertHttpResponseStatusCode(
+			404, warehouseResource.getWarehousIdHttpResponse(0L));
+	}
+
+	protected Warehouse testDeleteWarehousId_addWarehouse() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetWarehousByExternalReferenceCode() throws Exception {
 		Warehouse postWarehouse =
 			testGetWarehousByExternalReferenceCode_addWarehouse();
@@ -316,32 +337,6 @@ public abstract class BaseWarehouseResourceTestCase {
 	}
 
 	@Test
-	public void testPatchWarehousByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testDeleteWarehousId() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Warehouse warehouse = testDeleteWarehousId_addWarehouse();
-
-		assertHttpResponseStatusCode(
-			204,
-			warehouseResource.deleteWarehousIdHttpResponse(warehouse.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			warehouseResource.getWarehousIdHttpResponse(warehouse.getId()));
-		assertHttpResponseStatusCode(
-			404, warehouseResource.getWarehousIdHttpResponse(0L));
-	}
-
-	protected Warehouse testDeleteWarehousId_addWarehouse() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetWarehousId() throws Exception {
 		Warehouse postWarehouse = testGetWarehousId_addWarehouse();
 
@@ -406,11 +401,6 @@ public abstract class BaseWarehouseResourceTestCase {
 		throws Exception {
 
 		return testGraphQLWarehouse_addWarehouse();
-	}
-
-	@Test
-	public void testPatchWarehousId() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -781,6 +771,16 @@ public abstract class BaseWarehouseResourceTestCase {
 		throws Exception {
 
 		return testGraphQLWarehouse_addWarehouse();
+	}
+
+	@Test
+	public void testPatchWarehousByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchWarehousId() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	@Test

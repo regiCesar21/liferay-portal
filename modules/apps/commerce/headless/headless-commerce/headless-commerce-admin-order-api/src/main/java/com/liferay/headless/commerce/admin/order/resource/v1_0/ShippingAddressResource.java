@@ -46,11 +46,11 @@ public interface ShippingAddressResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public ShippingAddress getOrderIdShippingAddress(Long id) throws Exception;
+
 	public Response patchOrderByExternalReferenceCodeShippingAddress(
 			String externalReferenceCode, ShippingAddress shippingAddress)
 		throws Exception;
-
-	public ShippingAddress getOrderIdShippingAddress(Long id) throws Exception;
 
 	public Response patchOrderIdShippingAddress(
 			Long id, ShippingAddress shippingAddress)

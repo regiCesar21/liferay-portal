@@ -183,6 +183,63 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteComment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Comment comment = testDeleteComment_addComment();
+
+		assertHttpResponseStatusCode(
+			204, commentResource.deleteCommentHttpResponse(comment.getId()));
+
+		assertHttpResponseStatusCode(
+			404, commentResource.getCommentHttpResponse(comment.getId()));
+		assertHttpResponseStatusCode(
+			404, commentResource.getCommentHttpResponse(0L));
+	}
+
+	protected Comment testDeleteComment_addComment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteComment() throws Exception {
+
+		// No namespace
+
+		Comment comment1 = testGraphQLDeleteComment_addComment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteComment",
+						new HashMap<String, Object>() {
+							{
+								put("commentId", comment1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteComment"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"comment",
+					new HashMap<String, Object>() {
+						{
+							put("commentId", comment1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Comment testGraphQLDeleteComment_addComment() throws Exception {
+		return testGraphQLComment_addComment();
+	}
+
+	@Test
 	public void testGetBlogPostingCommentsPage() throws Exception {
 		Long blogPostingId = testGetBlogPostingCommentsPage_getBlogPostingId();
 		Long irrelevantBlogPostingId =
@@ -587,81 +644,6 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
-	public void testPostBlogPostingComment() throws Exception {
-		Comment randomComment = randomComment();
-
-		Comment postComment = testPostBlogPostingComment_addComment(
-			randomComment);
-
-		assertEquals(randomComment, postComment);
-		assertValid(postComment);
-	}
-
-	protected Comment testPostBlogPostingComment_addComment(Comment comment)
-		throws Exception {
-
-		return commentResource.postBlogPostingComment(
-			testGetBlogPostingCommentsPage_getBlogPostingId(), comment);
-	}
-
-	@Test
-	public void testDeleteComment() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Comment comment = testDeleteComment_addComment();
-
-		assertHttpResponseStatusCode(
-			204, commentResource.deleteCommentHttpResponse(comment.getId()));
-
-		assertHttpResponseStatusCode(
-			404, commentResource.getCommentHttpResponse(comment.getId()));
-		assertHttpResponseStatusCode(
-			404, commentResource.getCommentHttpResponse(0L));
-	}
-
-	protected Comment testDeleteComment_addComment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteComment() throws Exception {
-
-		// No namespace
-
-		Comment comment1 = testGraphQLDeleteComment_addComment();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteComment",
-						new HashMap<String, Object>() {
-							{
-								put("commentId", comment1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteComment"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"comment",
-					new HashMap<String, Object>() {
-						{
-							put("commentId", comment1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Comment testGraphQLDeleteComment_addComment() throws Exception {
-		return testGraphQLComment_addComment();
-	}
-
-	@Test
 	public void testGetComment() throws Exception {
 		Comment postComment = testGetComment_addComment();
 
@@ -723,29 +705,6 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected Comment testGraphQLGetComment_addComment() throws Exception {
 		return testGraphQLComment_addComment();
-	}
-
-	@Test
-	public void testPutComment() throws Exception {
-		Comment postComment = testPutComment_addComment();
-
-		Comment randomComment = randomComment();
-
-		Comment putComment = commentResource.putComment(
-			postComment.getId(), randomComment);
-
-		assertEquals(randomComment, putComment);
-		assertValid(putComment);
-
-		Comment getComment = commentResource.getComment(putComment.getId());
-
-		assertEquals(randomComment, getComment);
-		assertValid(getComment);
-	}
-
-	protected Comment testPutComment_addComment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1129,23 +1088,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostCommentComment() throws Exception {
-		Comment randomComment = randomComment();
-
-		Comment postComment = testPostCommentComment_addComment(randomComment);
-
-		assertEquals(randomComment, postComment);
-		assertValid(postComment);
-	}
-
-	protected Comment testPostCommentComment_addComment(Comment comment)
-		throws Exception {
-
-		return commentResource.postCommentComment(
-			testGetCommentCommentsPage_getParentCommentId(), comment);
 	}
 
 	@Test
@@ -1534,23 +1476,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostDocumentComment() throws Exception {
-		Comment randomComment = randomComment();
-
-		Comment postComment = testPostDocumentComment_addComment(randomComment);
-
-		assertEquals(randomComment, postComment);
-		assertValid(postComment);
-	}
-
-	protected Comment testPostDocumentComment_addComment(Comment comment)
-		throws Exception {
-
-		return commentResource.postDocumentComment(
-			testGetDocumentCommentsPage_getDocumentId(), comment);
 	}
 
 	@Test
@@ -1981,6 +1906,58 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testPostBlogPostingComment() throws Exception {
+		Comment randomComment = randomComment();
+
+		Comment postComment = testPostBlogPostingComment_addComment(
+			randomComment);
+
+		assertEquals(randomComment, postComment);
+		assertValid(postComment);
+	}
+
+	protected Comment testPostBlogPostingComment_addComment(Comment comment)
+		throws Exception {
+
+		return commentResource.postBlogPostingComment(
+			testGetBlogPostingCommentsPage_getBlogPostingId(), comment);
+	}
+
+	@Test
+	public void testPostCommentComment() throws Exception {
+		Comment randomComment = randomComment();
+
+		Comment postComment = testPostCommentComment_addComment(randomComment);
+
+		assertEquals(randomComment, postComment);
+		assertValid(postComment);
+	}
+
+	protected Comment testPostCommentComment_addComment(Comment comment)
+		throws Exception {
+
+		return commentResource.postCommentComment(
+			testGetCommentCommentsPage_getParentCommentId(), comment);
+	}
+
+	@Test
+	public void testPostDocumentComment() throws Exception {
+		Comment randomComment = randomComment();
+
+		Comment postComment = testPostDocumentComment_addComment(randomComment);
+
+		assertEquals(randomComment, postComment);
+		assertValid(postComment);
+	}
+
+	protected Comment testPostDocumentComment_addComment(Comment comment)
+		throws Exception {
+
+		return commentResource.postDocumentComment(
+			testGetDocumentCommentsPage_getDocumentId(), comment);
+	}
+
+	@Test
 	public void testPostStructuredContentComment() throws Exception {
 		Comment randomComment = randomComment();
 
@@ -1998,6 +1975,29 @@ public abstract class BaseCommentResourceTestCase {
 		return commentResource.postStructuredContentComment(
 			testGetStructuredContentCommentsPage_getStructuredContentId(),
 			comment);
+	}
+
+	@Test
+	public void testPutComment() throws Exception {
+		Comment postComment = testPutComment_addComment();
+
+		Comment randomComment = randomComment();
+
+		Comment putComment = commentResource.putComment(
+			postComment.getId(), randomComment);
+
+		assertEquals(randomComment, putComment);
+		assertValid(putComment);
+
+		Comment getComment = commentResource.getComment(putComment.getId());
+
+		assertEquals(randomComment, getComment);
+		assertValid(getComment);
+	}
+
+	protected Comment testPutComment_addComment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

@@ -49,12 +49,12 @@ public interface OptionValueResource {
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public OptionValue postOptionByExternalReferenceCodeOptionValue(
-			String externalReferenceCode, OptionValue optionValue)
-		throws Exception;
-
 	public Page<OptionValue> getOptionIdOptionValuesPage(
 			Long id, Pagination pagination)
+		throws Exception;
+
+	public OptionValue postOptionByExternalReferenceCodeOptionValue(
+			String externalReferenceCode, OptionValue optionValue)
 		throws Exception;
 
 	public OptionValue postOptionIdOptionValue(Long id, OptionValue optionValue)

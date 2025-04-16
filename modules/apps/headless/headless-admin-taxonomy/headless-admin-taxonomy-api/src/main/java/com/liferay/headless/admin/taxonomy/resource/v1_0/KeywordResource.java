@@ -52,11 +52,6 @@ public interface KeywordResource {
 
 	public Keyword getKeyword(Long keywordId) throws Exception;
 
-	public Keyword putKeyword(Long keywordId, Keyword keyword) throws Exception;
-
-	public Response putKeywordBatch(String callbackURL, Object object)
-		throws Exception;
-
 	public Page<Keyword> getSiteKeywordsPage(
 			Long siteId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -69,6 +64,11 @@ public interface KeywordResource {
 
 	public Response postSiteKeywordBatch(
 			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
+	public Keyword putKeyword(Long keywordId, Keyword keyword) throws Exception;
+
+	public Response putKeywordBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

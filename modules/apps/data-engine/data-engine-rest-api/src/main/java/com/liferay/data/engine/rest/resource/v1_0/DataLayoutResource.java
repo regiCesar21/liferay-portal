@@ -46,8 +46,23 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataLayoutResource {
 
+	public void deleteDataLayout(Long dataLayoutId) throws Exception;
+
+	public Response deleteDataLayoutBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DataLayout> getDataDefinitionDataLayoutsPage(
 			Long dataDefinitionId, String keywords, Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public DataLayout getDataLayout(Long dataLayoutId) throws Exception;
+
+	public DataLayout getSiteDataLayout(Long siteId, String dataLayoutKey)
+		throws Exception;
+
+	public Page<DataLayout> getSiteDataLayoutsPage(
+			Long siteId, String keywords, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
@@ -57,19 +72,6 @@ public interface DataLayoutResource {
 
 	public Response postDataDefinitionDataLayoutBatch(
 			Long dataDefinitionId, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteDataLayout(Long dataLayoutId) throws Exception;
-
-	public Response deleteDataLayoutBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public DataLayout getDataLayout(Long dataLayoutId) throws Exception;
-
-	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
-		throws Exception;
-
-	public Response putDataLayoutBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public void postDataLayoutDataLayoutPermission(
@@ -82,12 +84,10 @@ public interface DataLayoutResource {
 			DataLayoutPermission dataLayoutPermission)
 		throws Exception;
 
-	public Page<DataLayout> getSiteDataLayoutsPage(
-			Long siteId, String keywords, Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
+	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
 		throws Exception;
 
-	public DataLayout getSiteDataLayout(Long siteId, String dataLayoutKey)
+	public Response putDataLayoutBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

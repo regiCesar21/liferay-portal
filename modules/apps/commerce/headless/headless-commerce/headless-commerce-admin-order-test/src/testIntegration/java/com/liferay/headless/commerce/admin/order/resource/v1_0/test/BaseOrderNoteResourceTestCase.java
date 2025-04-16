@@ -186,127 +186,6 @@ public abstract class BaseOrderNoteResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteOrderNoteByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OrderNote orderNote =
-			testDeleteOrderNoteByExternalReferenceCode_addOrderNote();
-
-		assertHttpResponseStatusCode(
-			204,
-			orderNoteResource.
-				deleteOrderNoteByExternalReferenceCodeHttpResponse(
-					orderNote.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			orderNoteResource.getOrderNoteByExternalReferenceCodeHttpResponse(
-				orderNote.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			orderNoteResource.getOrderNoteByExternalReferenceCodeHttpResponse(
-				"-"));
-	}
-
-	protected OrderNote
-			testDeleteOrderNoteByExternalReferenceCode_addOrderNote()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetOrderNoteByExternalReferenceCode() throws Exception {
-		OrderNote postOrderNote =
-			testGetOrderNoteByExternalReferenceCode_addOrderNote();
-
-		OrderNote getOrderNote =
-			orderNoteResource.getOrderNoteByExternalReferenceCode(
-				postOrderNote.getExternalReferenceCode());
-
-		assertEquals(postOrderNote, getOrderNote);
-		assertValid(getOrderNote);
-	}
-
-	protected OrderNote testGetOrderNoteByExternalReferenceCode_addOrderNote()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderNoteByExternalReferenceCode()
-		throws Exception {
-
-		OrderNote orderNote =
-			testGraphQLGetOrderNoteByExternalReferenceCode_addOrderNote();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				orderNote,
-				OrderNoteSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderNoteByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												orderNote.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/orderNoteByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetOrderNoteByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"orderNoteByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected OrderNote
-			testGraphQLGetOrderNoteByExternalReferenceCode_addOrderNote()
-		throws Exception {
-
-		return testGraphQLOrderNote_addOrderNote();
-	}
-
-	@Test
-	public void testPatchOrderNoteByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testDeleteOrderNote() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderNote orderNote = testDeleteOrderNote_addOrderNote();
@@ -367,75 +246,33 @@ public abstract class BaseOrderNoteResourceTestCase {
 	}
 
 	@Test
-	public void testGetOrderNote() throws Exception {
-		OrderNote postOrderNote = testGetOrderNote_addOrderNote();
+	public void testDeleteOrderNoteByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderNote orderNote =
+			testDeleteOrderNoteByExternalReferenceCode_addOrderNote();
 
-		OrderNote getOrderNote = orderNoteResource.getOrderNote(
-			postOrderNote.getId());
+		assertHttpResponseStatusCode(
+			204,
+			orderNoteResource.
+				deleteOrderNoteByExternalReferenceCodeHttpResponse(
+					orderNote.getExternalReferenceCode()));
 
-		assertEquals(postOrderNote, getOrderNote);
-		assertValid(getOrderNote);
+		assertHttpResponseStatusCode(
+			404,
+			orderNoteResource.getOrderNoteByExternalReferenceCodeHttpResponse(
+				orderNote.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			orderNoteResource.getOrderNoteByExternalReferenceCodeHttpResponse(
+				"-"));
 	}
 
-	protected OrderNote testGetOrderNote_addOrderNote() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderNote() throws Exception {
-		OrderNote orderNote = testGraphQLGetOrderNote_addOrderNote();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				orderNote,
-				OrderNoteSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderNote",
-								new HashMap<String, Object>() {
-									{
-										put("id", orderNote.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/orderNote"))));
-	}
-
-	@Test
-	public void testGraphQLGetOrderNoteNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"orderNote",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected OrderNote testGraphQLGetOrderNote_addOrderNote()
+	protected OrderNote
+			testDeleteOrderNoteByExternalReferenceCode_addOrderNote()
 		throws Exception {
 
-		return testGraphQLOrderNote_addOrderNote();
-	}
-
-	@Test
-	public void testPatchOrderNote() throws Exception {
-		Assert.assertTrue(false);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -624,29 +461,6 @@ public abstract class BaseOrderNoteResourceTestCase {
 	}
 
 	@Test
-	public void testPostOrderByExternalReferenceCodeOrderNote()
-		throws Exception {
-
-		OrderNote randomOrderNote = randomOrderNote();
-
-		OrderNote postOrderNote =
-			testPostOrderByExternalReferenceCodeOrderNote_addOrderNote(
-				randomOrderNote);
-
-		assertEquals(randomOrderNote, postOrderNote);
-		assertValid(postOrderNote);
-	}
-
-	protected OrderNote
-			testPostOrderByExternalReferenceCodeOrderNote_addOrderNote(
-				OrderNote orderNote)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetOrderIdOrderNotesPage() throws Exception {
 		Long id = testGetOrderIdOrderNotesPage_getId();
 		Long irrelevantId = testGetOrderIdOrderNotesPage_getIrrelevantId();
@@ -795,6 +609,192 @@ public abstract class BaseOrderNoteResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGetOrderNote() throws Exception {
+		OrderNote postOrderNote = testGetOrderNote_addOrderNote();
+
+		OrderNote getOrderNote = orderNoteResource.getOrderNote(
+			postOrderNote.getId());
+
+		assertEquals(postOrderNote, getOrderNote);
+		assertValid(getOrderNote);
+	}
+
+	protected OrderNote testGetOrderNote_addOrderNote() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderNote() throws Exception {
+		OrderNote orderNote = testGraphQLGetOrderNote_addOrderNote();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				orderNote,
+				OrderNoteSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderNote",
+								new HashMap<String, Object>() {
+									{
+										put("id", orderNote.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/orderNote"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderNoteNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderNote",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected OrderNote testGraphQLGetOrderNote_addOrderNote()
+		throws Exception {
+
+		return testGraphQLOrderNote_addOrderNote();
+	}
+
+	@Test
+	public void testGetOrderNoteByExternalReferenceCode() throws Exception {
+		OrderNote postOrderNote =
+			testGetOrderNoteByExternalReferenceCode_addOrderNote();
+
+		OrderNote getOrderNote =
+			orderNoteResource.getOrderNoteByExternalReferenceCode(
+				postOrderNote.getExternalReferenceCode());
+
+		assertEquals(postOrderNote, getOrderNote);
+		assertValid(getOrderNote);
+	}
+
+	protected OrderNote testGetOrderNoteByExternalReferenceCode_addOrderNote()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderNoteByExternalReferenceCode()
+		throws Exception {
+
+		OrderNote orderNote =
+			testGraphQLGetOrderNoteByExternalReferenceCode_addOrderNote();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				orderNote,
+				OrderNoteSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderNoteByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												orderNote.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/orderNoteByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderNoteByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderNoteByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected OrderNote
+			testGraphQLGetOrderNoteByExternalReferenceCode_addOrderNote()
+		throws Exception {
+
+		return testGraphQLOrderNote_addOrderNote();
+	}
+
+	@Test
+	public void testPatchOrderNote() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchOrderNoteByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostOrderByExternalReferenceCodeOrderNote()
+		throws Exception {
+
+		OrderNote randomOrderNote = randomOrderNote();
+
+		OrderNote postOrderNote =
+			testPostOrderByExternalReferenceCodeOrderNote_addOrderNote(
+				randomOrderNote);
+
+		assertEquals(randomOrderNote, postOrderNote);
+		assertValid(postOrderNote);
+	}
+
+	protected OrderNote
+			testPostOrderByExternalReferenceCodeOrderNote_addOrderNote(
+				OrderNote orderNote)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

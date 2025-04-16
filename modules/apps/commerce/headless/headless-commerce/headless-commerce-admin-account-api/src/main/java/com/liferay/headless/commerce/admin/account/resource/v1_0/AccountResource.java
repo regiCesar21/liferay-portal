@@ -47,12 +47,23 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountResource {
 
-	public Response postAccountGroupByExternalReferenceCodeAccount(
-			String externalReferenceCode, Account account)
+	public Response deleteAccount(Long id) throws Exception;
+
+	public Response deleteAccountBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Response deleteAccountByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Response deleteAccountGroupByExternalReferenceCodeAccount(
 			String accountExternalReferenceCode, String externalReferenceCode)
+		throws Exception;
+
+	public Account getAccount(Long id) throws Exception;
+
+	public Account getAccountByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<Account> getAccountsPage(
@@ -62,35 +73,24 @@ public interface AccountResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public Account postAccount(Account account) throws Exception;
-
-	public Response postAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Response deleteAccountByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Account getAccountByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
+	public Response patchAccount(Long id, Account account) throws Exception;
 
 	public Response patchAccountByExternalReferenceCode(
 			String externalReferenceCode, Account account)
+		throws Exception;
+
+	public Account postAccount(Account account) throws Exception;
+
+	public Response postAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Response postAccountByExternalReferenceCodeLogo(
 			String externalReferenceCode, MultipartBody multipartBody)
 		throws Exception;
 
-	public Response deleteAccount(Long id) throws Exception;
-
-	public Response deleteAccountBatch(String callbackURL, Object object)
+	public Response postAccountGroupByExternalReferenceCodeAccount(
+			String externalReferenceCode, Account account)
 		throws Exception;
-
-	public Account getAccount(Long id) throws Exception;
-
-	public Response patchAccount(Long id, Account account) throws Exception;
 
 	public Response postAccountLogo(Long id, MultipartBody multipartBody)
 		throws Exception;

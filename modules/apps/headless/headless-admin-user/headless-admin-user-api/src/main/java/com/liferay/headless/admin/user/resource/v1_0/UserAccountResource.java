@@ -45,6 +45,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface UserAccountResource {
 
+	public void deleteUserAccount(Long userAccountId) throws Exception;
+
+	public Response deleteUserAccountBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public UserAccount getMyUserAccount() throws Exception;
 
 	public Page<UserAccount> getOrganizationUserAccountsPage(
@@ -61,6 +66,8 @@ public interface UserAccountResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public UserAccount getUserAccount(Long userAccountId) throws Exception;
+
 	public Page<UserAccount> getUserAccountsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -68,21 +75,14 @@ public interface UserAccountResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public UserAccount patchUserAccount(
+			Long userAccountId, UserAccount userAccount)
+		throws Exception;
+
 	public UserAccount postUserAccount(UserAccount userAccount)
 		throws Exception;
 
 	public Response postUserAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteUserAccount(Long userAccountId) throws Exception;
-
-	public Response deleteUserAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public UserAccount getUserAccount(Long userAccountId) throws Exception;
-
-	public UserAccount patchUserAccount(
-			Long userAccountId, UserAccount userAccount)
 		throws Exception;
 
 	public UserAccount putUserAccount(

@@ -108,14 +108,6 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#createProcessSLA",
-						new ObjectValuePair<>(
-							SLAResourceImpl.class, "postProcessSLA"));
-					put(
-						"mutation#createProcessSLABatch",
-						new ObjectValuePair<>(
-							SLAResourceImpl.class, "postProcessSLABatch"));
-					put(
 						"mutation#deleteSLA",
 						new ObjectValuePair<>(
 							SLAResourceImpl.class, "deleteSLA"));
@@ -123,6 +115,14 @@ public class ServletDataImpl implements ServletData {
 						"mutation#deleteSLABatch",
 						new ObjectValuePair<>(
 							SLAResourceImpl.class, "deleteSLABatch"));
+					put(
+						"mutation#createProcessSLA",
+						new ObjectValuePair<>(
+							SLAResourceImpl.class, "postProcessSLA"));
+					put(
+						"mutation#createProcessSLABatch",
+						new ObjectValuePair<>(
+							SLAResourceImpl.class, "postProcessSLABatch"));
 					put(
 						"mutation#updateSLA",
 						new ObjectValuePair<>(SLAResourceImpl.class, "putSLA"));
@@ -141,14 +141,14 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CalendarResourceImpl.class, "getCalendarsPage"));
 					put(
+						"query#processInstance",
+						new ObjectValuePair<>(
+							InstanceResourceImpl.class, "getProcessInstance"));
+					put(
 						"query#processInstances",
 						new ObjectValuePair<>(
 							InstanceResourceImpl.class,
 							"getProcessInstancesPage"));
-					put(
-						"query#processInstance",
-						new ObjectValuePair<>(
-							InstanceResourceImpl.class, "getProcessInstance"));
 					put(
 						"query#processMetric",
 						new ObjectValuePair<>(
@@ -158,10 +158,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							NodeResourceImpl.class, "getProcessNodesPage"));
 					put(
-						"query#processes",
-						new ObjectValuePair<>(
-							ProcessResourceImpl.class, "getProcessesPage"));
-					put(
 						"query#process",
 						new ObjectValuePair<>(
 							ProcessResourceImpl.class, "getProcess"));
@@ -169,6 +165,10 @@ public class ServletDataImpl implements ServletData {
 						"query#processTitle",
 						new ObjectValuePair<>(
 							ProcessResourceImpl.class, "getProcessTitle"));
+					put(
+						"query#processes",
+						new ObjectValuePair<>(
+							ProcessResourceImpl.class, "getProcessesPage"));
 					put(
 						"query#processSLAs",
 						new ObjectValuePair<>(

@@ -45,9 +45,20 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface KnowledgeBaseAttachmentResource {
 
+	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
+		throws Exception;
+
+	public Response deleteKnowledgeBaseAttachmentBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 				Long knowledgeBaseArticleId)
+		throws Exception;
+
+	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
+			Long knowledgeBaseAttachmentId)
 		throws Exception;
 
 	public KnowledgeBaseAttachment
@@ -58,17 +69,6 @@ public interface KnowledgeBaseAttachmentResource {
 	public Response postKnowledgeBaseArticleKnowledgeBaseAttachmentBatch(
 			Long knowledgeBaseArticleId, MultipartBody multipartBody,
 			String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
-		throws Exception;
-
-	public Response deleteKnowledgeBaseAttachmentBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
-			Long knowledgeBaseAttachmentId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

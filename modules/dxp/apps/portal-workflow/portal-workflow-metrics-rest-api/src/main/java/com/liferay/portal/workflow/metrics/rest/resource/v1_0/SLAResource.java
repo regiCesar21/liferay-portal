@@ -45,23 +45,23 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SLAResource {
 
-	public Page<SLA> getProcessSLAsPage(
-			Long processId, Integer status, Pagination pagination)
-		throws Exception;
-
-	public SLA postProcessSLA(Long processId, SLA sla) throws Exception;
-
-	public Response postProcessSLABatch(
-			Long processId, SLA sla, String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteSLA(Long slaId) throws Exception;
 
 	public Response deleteSLABatch(
 			Long slaId, String callbackURL, Object object)
 		throws Exception;
 
+	public Page<SLA> getProcessSLAsPage(
+			Long processId, Integer status, Pagination pagination)
+		throws Exception;
+
 	public SLA getSLA(Long slaId) throws Exception;
+
+	public SLA postProcessSLA(Long processId, SLA sla) throws Exception;
+
+	public Response postProcessSLABatch(
+			Long processId, SLA sla, String callbackURL, Object object)
+		throws Exception;
 
 	public SLA putSLA(Long slaId, SLA sla) throws Exception;
 

@@ -160,6 +160,24 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstance(instanceId: ___, processId: ___){assetTitle, assetType, assigneeUsers, creatorUser, dateCompletion, dateCreated, id, processId, slaResults, slaStatus, status, taskNames}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Instance processInstance(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("instanceId") Long instanceId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_instanceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			instanceResource -> instanceResource.getProcessInstance(
+				processId, instanceId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(assigneeUserIds: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, slaStatuses: ___, statuses: ___, taskKeys: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -182,24 +200,6 @@ public class Query {
 				instanceResource.getProcessInstancesPage(
 					processId, assigneeUserIds, dateEnd, dateStart, slaStatuses,
 					statuses, taskKeys, Pagination.of(page, pageSize))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstance(instanceId: ___, processId: ___){assetTitle, assetType, assigneeUsers, creatorUser, dateCompletion, dateCreated, id, processId, slaResults, slaStatus, status, taskNames}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public Instance processInstance(
-			@GraphQLName("processId") Long processId,
-			@GraphQLName("instanceId") Long instanceId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_instanceResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			instanceResource -> instanceResource.getProcessInstance(
-				processId, instanceId));
 	}
 
 	/**
@@ -241,28 +241,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processes(page: ___, pageSize: ___, sorts: ___, title: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public ProcessPage processes(
-			@GraphQLName("title") String title,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_processResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			processResource -> new ProcessPage(
-				processResource.getProcessesPage(
-					title, Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(processResource, sortsString))));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {process(completed: ___, dateEnd: ___, dateStart: ___, processId: ___){id, instanceCount, onTimeInstanceCount, overdueInstanceCount, title, untrackedInstanceCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -293,6 +271,28 @@ public class Query {
 			_processResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			processResource -> processResource.getProcessTitle(processId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processes(page: ___, pageSize: ___, sorts: ___, title: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ProcessPage processes(
+			@GraphQLName("title") String title,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> new ProcessPage(
+				processResource.getProcessesPage(
+					title, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(processResource, sortsString))));
 	}
 
 	/**

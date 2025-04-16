@@ -46,12 +46,30 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface StructuredContentResource {
 
+	public void deleteStructuredContent(Long structuredContentId)
+		throws Exception;
+
+	public Response deleteStructuredContentBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public void deleteStructuredContentMyRating(Long structuredContentId)
+		throws Exception;
+
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
 			Long contentStructureId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public StructuredContent getSiteStructuredContentByKey(
+			Long siteId, String key)
+		throws Exception;
+
+	public StructuredContent getSiteStructuredContentByUuid(
+			Long siteId, String uuid)
 		throws Exception;
 
 	public Page<StructuredContent> getSiteStructuredContentsPage(
@@ -62,20 +80,7 @@ public interface StructuredContentResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public StructuredContent postSiteStructuredContent(
-			Long siteId, StructuredContent structuredContent)
-		throws Exception;
-
-	public Response postSiteStructuredContentBatch(
-			Long siteId, String callbackURL, Object object)
-		throws Exception;
-
-	public StructuredContent getSiteStructuredContentByKey(
-			Long siteId, String key)
-		throws Exception;
-
-	public StructuredContent getSiteStructuredContentByUuid(
-			Long siteId, String uuid)
+	public StructuredContent getStructuredContent(Long structuredContentId)
 		throws Exception;
 
 	public Page<StructuredContent>
@@ -87,6 +92,25 @@ public interface StructuredContentResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public Rating getStructuredContentMyRating(Long structuredContentId)
+		throws Exception;
+
+	public String getStructuredContentRenderedContentTemplate(
+			Long structuredContentId, Long templateId)
+		throws Exception;
+
+	public StructuredContent patchStructuredContent(
+			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception;
+
+	public StructuredContent postSiteStructuredContent(
+			Long siteId, StructuredContent structuredContent)
+		throws Exception;
+
+	public Response postSiteStructuredContentBatch(
+			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
 	public StructuredContent postStructuredContentFolderStructuredContent(
 			Long structuredContentFolderId, StructuredContent structuredContent)
 		throws Exception;
@@ -95,24 +119,8 @@ public interface StructuredContentResource {
 			Long structuredContentFolderId, String callbackURL, Object object)
 		throws Exception;
 
-	public void putStructuredContentSubscribe(Long structuredContentId)
-		throws Exception;
-
-	public void putStructuredContentUnsubscribe(Long structuredContentId)
-		throws Exception;
-
-	public void deleteStructuredContent(Long structuredContentId)
-		throws Exception;
-
-	public Response deleteStructuredContentBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public StructuredContent getStructuredContent(Long structuredContentId)
-		throws Exception;
-
-	public StructuredContent patchStructuredContent(
-			Long structuredContentId, StructuredContent structuredContent)
+	public Rating postStructuredContentMyRating(
+			Long structuredContentId, Rating rating)
 		throws Exception;
 
 	public StructuredContent putStructuredContent(
@@ -122,22 +130,14 @@ public interface StructuredContentResource {
 	public Response putStructuredContentBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteStructuredContentMyRating(Long structuredContentId)
-		throws Exception;
-
-	public Rating getStructuredContentMyRating(Long structuredContentId)
-		throws Exception;
-
-	public Rating postStructuredContentMyRating(
-			Long structuredContentId, Rating rating)
-		throws Exception;
-
 	public Rating putStructuredContentMyRating(
 			Long structuredContentId, Rating rating)
 		throws Exception;
 
-	public String getStructuredContentRenderedContentTemplate(
-			Long structuredContentId, Long templateId)
+	public void putStructuredContentSubscribe(Long structuredContentId)
+		throws Exception;
+
+	public void putStructuredContentUnsubscribe(Long structuredContentId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

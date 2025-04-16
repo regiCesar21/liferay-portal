@@ -182,6 +182,72 @@ public abstract class BaseDataListViewResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDataListView() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataListView dataListView = testDeleteDataListView_addDataListView();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataListViewResource.deleteDataListViewHttpResponse(
+				dataListView.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataListViewResource.getDataListViewHttpResponse(
+				dataListView.getId()));
+		assertHttpResponseStatusCode(
+			404, dataListViewResource.getDataListViewHttpResponse(0L));
+	}
+
+	protected DataListView testDeleteDataListView_addDataListView()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteDataListView() throws Exception {
+
+		// No namespace
+
+		DataListView dataListView1 =
+			testGraphQLDeleteDataListView_addDataListView();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDataListView",
+						new HashMap<String, Object>() {
+							{
+								put("dataListViewId", dataListView1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDataListView"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataListView",
+					new HashMap<String, Object>() {
+						{
+							put("dataListViewId", dataListView1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected DataListView testGraphQLDeleteDataListView_addDataListView()
+		throws Exception {
+
+		return testGraphQLDataListView_addDataListView();
+	}
+
+	@Test
 	public void testGetDataDefinitionDataListViewsPage() throws Exception {
 		Long dataDefinitionId =
 			testGetDataDefinitionDataListViewsPage_getDataDefinitionId();
@@ -534,93 +600,6 @@ public abstract class BaseDataListViewResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataListView() throws Exception {
-		DataListView randomDataListView = randomDataListView();
-
-		DataListView postDataListView =
-			testPostDataDefinitionDataListView_addDataListView(
-				randomDataListView);
-
-		assertEquals(randomDataListView, postDataListView);
-		assertValid(postDataListView);
-	}
-
-	protected DataListView testPostDataDefinitionDataListView_addDataListView(
-			DataListView dataListView)
-		throws Exception {
-
-		return dataListViewResource.postDataDefinitionDataListView(
-			testGetDataDefinitionDataListViewsPage_getDataDefinitionId(),
-			dataListView);
-	}
-
-	@Test
-	public void testDeleteDataListView() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataListView dataListView = testDeleteDataListView_addDataListView();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataListViewResource.deleteDataListViewHttpResponse(
-				dataListView.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataListViewResource.getDataListViewHttpResponse(
-				dataListView.getId()));
-		assertHttpResponseStatusCode(
-			404, dataListViewResource.getDataListViewHttpResponse(0L));
-	}
-
-	protected DataListView testDeleteDataListView_addDataListView()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteDataListView() throws Exception {
-
-		// No namespace
-
-		DataListView dataListView1 =
-			testGraphQLDeleteDataListView_addDataListView();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDataListView",
-						new HashMap<String, Object>() {
-							{
-								put("dataListViewId", dataListView1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDataListView"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"dataListView",
-					new HashMap<String, Object>() {
-						{
-							put("dataListViewId", dataListView1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected DataListView testGraphQLDeleteDataListView_addDataListView()
-		throws Exception {
-
-		return testGraphQLDataListView_addDataListView();
-	}
-
-	@Test
 	public void testGetDataListView() throws Exception {
 		DataListView postDataListView = testGetDataListView_addDataListView();
 
@@ -690,6 +669,27 @@ public abstract class BaseDataListViewResourceTestCase {
 		throws Exception {
 
 		return testGraphQLDataListView_addDataListView();
+	}
+
+	@Test
+	public void testPostDataDefinitionDataListView() throws Exception {
+		DataListView randomDataListView = randomDataListView();
+
+		DataListView postDataListView =
+			testPostDataDefinitionDataListView_addDataListView(
+				randomDataListView);
+
+		assertEquals(randomDataListView, postDataListView);
+		assertValid(postDataListView);
+	}
+
+	protected DataListView testPostDataDefinitionDataListView_addDataListView(
+			DataListView dataListView)
+		throws Exception {
+
+		return dataListViewResource.postDataDefinitionDataListView(
+			testGetDataDefinitionDataListViewsPage_getDataDefinitionId(),
+			dataListView);
 	}
 
 	@Test

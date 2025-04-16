@@ -183,6 +183,73 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteOptionCategory() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OptionCategory optionCategory =
+			testDeleteOptionCategory_addOptionCategory();
+
+		assertHttpResponseStatusCode(
+			204,
+			optionCategoryResource.deleteOptionCategoryHttpResponse(
+				optionCategory.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory.getId()));
+		assertHttpResponseStatusCode(
+			404, optionCategoryResource.getOptionCategoryHttpResponse(0L));
+	}
+
+	protected OptionCategory testDeleteOptionCategory_addOptionCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOptionCategory() throws Exception {
+
+		// No namespace
+
+		OptionCategory optionCategory1 =
+			testGraphQLDeleteOptionCategory_addOptionCategory();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOptionCategory",
+						new HashMap<String, Object>() {
+							{
+								put("id", optionCategory1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOptionCategory"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"optionCategory",
+					new HashMap<String, Object>() {
+						{
+							put("id", optionCategory1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected OptionCategory testGraphQLDeleteOptionCategory_addOptionCategory()
+		throws Exception {
+
+		return testGraphQLOptionCategory_addOptionCategory();
+	}
+
+	@Test
 	public void testGetOptionCategoriesPage() throws Exception {
 		Page<OptionCategory> page =
 			optionCategoryResource.getOptionCategoriesPage(
@@ -607,92 +674,6 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPostOptionCategory() throws Exception {
-		OptionCategory randomOptionCategory = randomOptionCategory();
-
-		OptionCategory postOptionCategory =
-			testPostOptionCategory_addOptionCategory(randomOptionCategory);
-
-		assertEquals(randomOptionCategory, postOptionCategory);
-		assertValid(postOptionCategory);
-	}
-
-	protected OptionCategory testPostOptionCategory_addOptionCategory(
-			OptionCategory optionCategory)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOptionCategory() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OptionCategory optionCategory =
-			testDeleteOptionCategory_addOptionCategory();
-
-		assertHttpResponseStatusCode(
-			204,
-			optionCategoryResource.deleteOptionCategoryHttpResponse(
-				optionCategory.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			optionCategoryResource.getOptionCategoryHttpResponse(
-				optionCategory.getId()));
-		assertHttpResponseStatusCode(
-			404, optionCategoryResource.getOptionCategoryHttpResponse(0L));
-	}
-
-	protected OptionCategory testDeleteOptionCategory_addOptionCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteOptionCategory() throws Exception {
-
-		// No namespace
-
-		OptionCategory optionCategory1 =
-			testGraphQLDeleteOptionCategory_addOptionCategory();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOptionCategory",
-						new HashMap<String, Object>() {
-							{
-								put("id", optionCategory1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOptionCategory"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"optionCategory",
-					new HashMap<String, Object>() {
-						{
-							put("id", optionCategory1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected OptionCategory testGraphQLDeleteOptionCategory_addOptionCategory()
-		throws Exception {
-
-		return testGraphQLOptionCategory_addOptionCategory();
-	}
-
-	@Test
 	public void testGetOptionCategory() throws Exception {
 		OptionCategory postOptionCategory =
 			testGetOptionCategory_addOptionCategory();
@@ -767,6 +748,25 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	@Test
 	public void testPatchOptionCategory() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostOptionCategory() throws Exception {
+		OptionCategory randomOptionCategory = randomOptionCategory();
+
+		OptionCategory postOptionCategory =
+			testPostOptionCategory_addOptionCategory(randomOptionCategory);
+
+		assertEquals(randomOptionCategory, postOptionCategory);
+		assertValid(postOptionCategory);
+	}
+
+	protected OptionCategory testPostOptionCategory_addOptionCategory(
+			OptionCategory optionCategory)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule

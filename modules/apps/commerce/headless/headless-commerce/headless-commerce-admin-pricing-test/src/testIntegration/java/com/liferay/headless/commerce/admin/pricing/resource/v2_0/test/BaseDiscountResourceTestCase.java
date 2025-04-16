@@ -195,6 +195,244 @@ public abstract class BaseDiscountResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDiscount() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Discount discount = testDeleteDiscount_addDiscount();
+
+		assertHttpResponseStatusCode(
+			204, discountResource.deleteDiscountHttpResponse(discount.getId()));
+
+		assertHttpResponseStatusCode(
+			404, discountResource.getDiscountHttpResponse(discount.getId()));
+		assertHttpResponseStatusCode(
+			404, discountResource.getDiscountHttpResponse(0L));
+	}
+
+	protected Discount testDeleteDiscount_addDiscount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteDiscount() throws Exception {
+
+		// No namespace
+
+		Discount discount1 = testGraphQLDeleteDiscount_addDiscount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDiscount",
+						new HashMap<String, Object>() {
+							{
+								put("id", discount1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDiscount"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"discount",
+					new HashMap<String, Object>() {
+						{
+							put("id", discount1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Discount testGraphQLDeleteDiscount_addDiscount()
+		throws Exception {
+
+		return testGraphQLDiscount_addDiscount();
+	}
+
+	@Test
+	public void testDeleteDiscountByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Discount discount =
+			testDeleteDiscountByExternalReferenceCode_addDiscount();
+
+		assertHttpResponseStatusCode(
+			204,
+			discountResource.deleteDiscountByExternalReferenceCodeHttpResponse(
+				discount.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
+				discount.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
+				"-"));
+	}
+
+	protected Discount testDeleteDiscountByExternalReferenceCode_addDiscount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetDiscount() throws Exception {
+		Discount postDiscount = testGetDiscount_addDiscount();
+
+		Discount getDiscount = discountResource.getDiscount(
+			postDiscount.getId());
+
+		assertEquals(postDiscount, getDiscount);
+		assertValid(getDiscount);
+	}
+
+	protected Discount testGetDiscount_addDiscount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetDiscount() throws Exception {
+		Discount discount = testGraphQLGetDiscount_addDiscount();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				discount,
+				DiscountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"discount",
+								new HashMap<String, Object>() {
+									{
+										put("id", discount.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/discount"))));
+	}
+
+	@Test
+	public void testGraphQLGetDiscountNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"discount",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Discount testGraphQLGetDiscount_addDiscount() throws Exception {
+		return testGraphQLDiscount_addDiscount();
+	}
+
+	@Test
+	public void testGetDiscountByExternalReferenceCode() throws Exception {
+		Discount postDiscount =
+			testGetDiscountByExternalReferenceCode_addDiscount();
+
+		Discount getDiscount =
+			discountResource.getDiscountByExternalReferenceCode(
+				postDiscount.getExternalReferenceCode());
+
+		assertEquals(postDiscount, getDiscount);
+		assertValid(getDiscount);
+	}
+
+	protected Discount testGetDiscountByExternalReferenceCode_addDiscount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetDiscountByExternalReferenceCode()
+		throws Exception {
+
+		Discount discount =
+			testGraphQLGetDiscountByExternalReferenceCode_addDiscount();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				discount,
+				DiscountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"discountByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												discount.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/discountByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetDiscountByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"discountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Discount
+			testGraphQLGetDiscountByExternalReferenceCode_addDiscount()
+		throws Exception {
+
+		return testGraphQLDiscount_addDiscount();
+	}
+
+	@Test
 	public void testGetDiscountsPage() throws Exception {
 		Page<Discount> page = discountResource.getDiscountsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -558,134 +796,29 @@ public abstract class BaseDiscountResourceTestCase {
 	}
 
 	@Test
-	public void testPostDiscount() throws Exception {
-		Discount randomDiscount = randomDiscount();
+	public void testPatchDiscount() throws Exception {
+		Discount postDiscount = testPatchDiscount_addDiscount();
 
-		Discount postDiscount = testPostDiscount_addDiscount(randomDiscount);
+		Discount randomPatchDiscount = randomPatchDiscount();
 
-		assertEquals(randomDiscount, postDiscount);
-		assertValid(postDiscount);
-	}
-
-	protected Discount testPostDiscount_addDiscount(Discount discount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteDiscountByExternalReferenceCode() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Discount discount =
-			testDeleteDiscountByExternalReferenceCode_addDiscount();
+		Discount patchDiscount = discountResource.patchDiscount(
+			postDiscount.getId(), randomPatchDiscount);
 
-		assertHttpResponseStatusCode(
-			204,
-			discountResource.deleteDiscountByExternalReferenceCodeHttpResponse(
-				discount.getExternalReferenceCode()));
+		Discount expectedPatchDiscount = postDiscount.clone();
 
-		assertHttpResponseStatusCode(
-			404,
-			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
-				discount.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
-				"-"));
-	}
+		BeanTestUtil.copyProperties(randomPatchDiscount, expectedPatchDiscount);
 
-	protected Discount testDeleteDiscountByExternalReferenceCode_addDiscount()
-		throws Exception {
+		Discount getDiscount = discountResource.getDiscount(
+			patchDiscount.getId());
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetDiscountByExternalReferenceCode() throws Exception {
-		Discount postDiscount =
-			testGetDiscountByExternalReferenceCode_addDiscount();
-
-		Discount getDiscount =
-			discountResource.getDiscountByExternalReferenceCode(
-				postDiscount.getExternalReferenceCode());
-
-		assertEquals(postDiscount, getDiscount);
+		assertEquals(expectedPatchDiscount, getDiscount);
 		assertValid(getDiscount);
 	}
 
-	protected Discount testGetDiscountByExternalReferenceCode_addDiscount()
-		throws Exception {
-
+	protected Discount testPatchDiscount_addDiscount() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetDiscountByExternalReferenceCode()
-		throws Exception {
-
-		Discount discount =
-			testGraphQLGetDiscountByExternalReferenceCode_addDiscount();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				discount,
-				DiscountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"discountByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												discount.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/discountByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetDiscountByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"discountByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Discount
-			testGraphQLGetDiscountByExternalReferenceCode_addDiscount()
-		throws Exception {
-
-		return testGraphQLDiscount_addDiscount();
 	}
 
 	@Test
@@ -720,151 +853,18 @@ public abstract class BaseDiscountResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteDiscount() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Discount discount = testDeleteDiscount_addDiscount();
+	public void testPostDiscount() throws Exception {
+		Discount randomDiscount = randomDiscount();
 
-		assertHttpResponseStatusCode(
-			204, discountResource.deleteDiscountHttpResponse(discount.getId()));
+		Discount postDiscount = testPostDiscount_addDiscount(randomDiscount);
 
-		assertHttpResponseStatusCode(
-			404, discountResource.getDiscountHttpResponse(discount.getId()));
-		assertHttpResponseStatusCode(
-			404, discountResource.getDiscountHttpResponse(0L));
+		assertEquals(randomDiscount, postDiscount);
+		assertValid(postDiscount);
 	}
 
-	protected Discount testDeleteDiscount_addDiscount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteDiscount() throws Exception {
-
-		// No namespace
-
-		Discount discount1 = testGraphQLDeleteDiscount_addDiscount();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDiscount",
-						new HashMap<String, Object>() {
-							{
-								put("id", discount1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteDiscount"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"discount",
-					new HashMap<String, Object>() {
-						{
-							put("id", discount1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Discount testGraphQLDeleteDiscount_addDiscount()
+	protected Discount testPostDiscount_addDiscount(Discount discount)
 		throws Exception {
 
-		return testGraphQLDiscount_addDiscount();
-	}
-
-	@Test
-	public void testGetDiscount() throws Exception {
-		Discount postDiscount = testGetDiscount_addDiscount();
-
-		Discount getDiscount = discountResource.getDiscount(
-			postDiscount.getId());
-
-		assertEquals(postDiscount, getDiscount);
-		assertValid(getDiscount);
-	}
-
-	protected Discount testGetDiscount_addDiscount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetDiscount() throws Exception {
-		Discount discount = testGraphQLGetDiscount_addDiscount();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				discount,
-				DiscountSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"discount",
-								new HashMap<String, Object>() {
-									{
-										put("id", discount.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/discount"))));
-	}
-
-	@Test
-	public void testGraphQLGetDiscountNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"discount",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Discount testGraphQLGetDiscount_addDiscount() throws Exception {
-		return testGraphQLDiscount_addDiscount();
-	}
-
-	@Test
-	public void testPatchDiscount() throws Exception {
-		Discount postDiscount = testPatchDiscount_addDiscount();
-
-		Discount randomPatchDiscount = randomPatchDiscount();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Discount patchDiscount = discountResource.patchDiscount(
-			postDiscount.getId(), randomPatchDiscount);
-
-		Discount expectedPatchDiscount = postDiscount.clone();
-
-		BeanTestUtil.copyProperties(randomPatchDiscount, expectedPatchDiscount);
-
-		Discount getDiscount = discountResource.getDiscount(
-			patchDiscount.getId());
-
-		assertEquals(expectedPatchDiscount, getDiscount);
-		assertValid(getDiscount);
-	}
-
-	protected Discount testPatchDiscount_addDiscount() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

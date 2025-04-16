@@ -234,6 +234,233 @@ public abstract class BaseOrderResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteOrder() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Order order = testDeleteOrder_addOrder();
+
+		assertHttpResponseStatusCode(
+			204, orderResource.deleteOrderHttpResponse(order.getId()));
+
+		assertHttpResponseStatusCode(
+			404, orderResource.getOrderHttpResponse(order.getId()));
+		assertHttpResponseStatusCode(
+			404, orderResource.getOrderHttpResponse(0L));
+	}
+
+	protected Order testDeleteOrder_addOrder() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOrder() throws Exception {
+
+		// No namespace
+
+		Order order1 = testGraphQLDeleteOrder_addOrder();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrder",
+						new HashMap<String, Object>() {
+							{
+								put("id", order1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrder"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"order",
+					new HashMap<String, Object>() {
+						{
+							put("id", order1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Order testGraphQLDeleteOrder_addOrder() throws Exception {
+		return testGraphQLOrder_addOrder();
+	}
+
+	@Test
+	public void testDeleteOrderByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Order order = testDeleteOrderByExternalReferenceCode_addOrder();
+
+		assertHttpResponseStatusCode(
+			204,
+			orderResource.deleteOrderByExternalReferenceCodeHttpResponse(
+				order.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			orderResource.getOrderByExternalReferenceCodeHttpResponse(
+				order.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			orderResource.getOrderByExternalReferenceCodeHttpResponse("-"));
+	}
+
+	protected Order testDeleteOrderByExternalReferenceCode_addOrder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetOrder() throws Exception {
+		Order postOrder = testGetOrder_addOrder();
+
+		Order getOrder = orderResource.getOrder(postOrder.getId());
+
+		assertEquals(postOrder, getOrder);
+		assertValid(getOrder);
+	}
+
+	protected Order testGetOrder_addOrder() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrder() throws Exception {
+		Order order = testGraphQLGetOrder_addOrder();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				order,
+				OrderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"order",
+								new HashMap<String, Object>() {
+									{
+										put("id", order.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/order"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"order",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Order testGraphQLGetOrder_addOrder() throws Exception {
+		return testGraphQLOrder_addOrder();
+	}
+
+	@Test
+	public void testGetOrderByExternalReferenceCode() throws Exception {
+		Order postOrder = testGetOrderByExternalReferenceCode_addOrder();
+
+		Order getOrder = orderResource.getOrderByExternalReferenceCode(
+			postOrder.getExternalReferenceCode());
+
+		assertEquals(postOrder, getOrder);
+		assertValid(getOrder);
+	}
+
+	protected Order testGetOrderByExternalReferenceCode_addOrder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderByExternalReferenceCode() throws Exception {
+		Order order = testGraphQLGetOrderByExternalReferenceCode_addOrder();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				order,
+				OrderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												order.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/orderByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Order testGraphQLGetOrderByExternalReferenceCode_addOrder()
+		throws Exception {
+
+		return testGraphQLOrder_addOrder();
+	}
+
+	@Test
 	public void testGetOrdersPage() throws Exception {
 		Page<Order> page = orderResource.getOrdersPage(
 			null, null, Pagination.of(1, 10), null);
@@ -586,6 +813,16 @@ public abstract class BaseOrderResourceTestCase {
 	}
 
 	@Test
+	public void testPatchOrder() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPatchOrderByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostOrder() throws Exception {
 		Order randomOrder = randomOrder();
 
@@ -598,243 +835,6 @@ public abstract class BaseOrderResourceTestCase {
 	protected Order testPostOrder_addOrder(Order order) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteOrderByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Order order = testDeleteOrderByExternalReferenceCode_addOrder();
-
-		assertHttpResponseStatusCode(
-			204,
-			orderResource.deleteOrderByExternalReferenceCodeHttpResponse(
-				order.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			orderResource.getOrderByExternalReferenceCodeHttpResponse(
-				order.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404,
-			orderResource.getOrderByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Order testDeleteOrderByExternalReferenceCode_addOrder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetOrderByExternalReferenceCode() throws Exception {
-		Order postOrder = testGetOrderByExternalReferenceCode_addOrder();
-
-		Order getOrder = orderResource.getOrderByExternalReferenceCode(
-			postOrder.getExternalReferenceCode());
-
-		assertEquals(postOrder, getOrder);
-		assertValid(getOrder);
-	}
-
-	protected Order testGetOrderByExternalReferenceCode_addOrder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrderByExternalReferenceCode() throws Exception {
-		Order order = testGraphQLGetOrderByExternalReferenceCode_addOrder();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				order,
-				OrderSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderByExternalReferenceCode",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												order.
-													getExternalReferenceCode() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/orderByExternalReferenceCode"))));
-	}
-
-	@Test
-	public void testGraphQLGetOrderByExternalReferenceCodeNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"orderByExternalReferenceCode",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Order testGraphQLGetOrderByExternalReferenceCode_addOrder()
-		throws Exception {
-
-		return testGraphQLOrder_addOrder();
-	}
-
-	@Test
-	public void testPatchOrderByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testDeleteOrder() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Order order = testDeleteOrder_addOrder();
-
-		assertHttpResponseStatusCode(
-			204, orderResource.deleteOrderHttpResponse(order.getId()));
-
-		assertHttpResponseStatusCode(
-			404, orderResource.getOrderHttpResponse(order.getId()));
-		assertHttpResponseStatusCode(
-			404, orderResource.getOrderHttpResponse(0L));
-	}
-
-	protected Order testDeleteOrder_addOrder() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteOrder() throws Exception {
-
-		// No namespace
-
-		Order order1 = testGraphQLDeleteOrder_addOrder();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteOrder",
-						new HashMap<String, Object>() {
-							{
-								put("id", order1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteOrder"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"order",
-					new HashMap<String, Object>() {
-						{
-							put("id", order1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Order testGraphQLDeleteOrder_addOrder() throws Exception {
-		return testGraphQLOrder_addOrder();
-	}
-
-	@Test
-	public void testGetOrder() throws Exception {
-		Order postOrder = testGetOrder_addOrder();
-
-		Order getOrder = orderResource.getOrder(postOrder.getId());
-
-		assertEquals(postOrder, getOrder);
-		assertValid(getOrder);
-	}
-
-	protected Order testGetOrder_addOrder() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetOrder() throws Exception {
-		Order order = testGraphQLGetOrder_addOrder();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				order,
-				OrderSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"order",
-								new HashMap<String, Object>() {
-									{
-										put("id", order.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/order"))));
-	}
-
-	@Test
-	public void testGraphQLGetOrderNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"order",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Order testGraphQLGetOrder_addOrder() throws Exception {
-		return testGraphQLOrder_addOrder();
-	}
-
-	@Test
-	public void testPatchOrder() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Rule

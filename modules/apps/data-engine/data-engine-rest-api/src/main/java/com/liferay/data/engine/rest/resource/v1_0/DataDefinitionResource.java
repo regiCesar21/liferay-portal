@@ -46,9 +46,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataDefinitionResource {
 
-	public String getDataDefinitionDataDefinitionFieldFieldTypes()
-		throws Exception;
-
 	public void deleteDataDefinition(Long dataDefinitionId) throws Exception;
 
 	public Response deleteDataDefinitionBatch(String callbackURL, Object object)
@@ -57,26 +54,21 @@ public interface DataDefinitionResource {
 	public DataDefinition getDataDefinition(Long dataDefinitionId)
 		throws Exception;
 
-	public DataDefinition putDataDefinition(
-			Long dataDefinitionId, DataDefinition dataDefinition)
+	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception;
 
-	public Response putDataDefinitionBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void postDataDefinitionDataDefinitionPermission(
-			Long dataDefinitionId, String operation,
-			DataDefinitionPermission dataDefinitionPermission)
-		throws Exception;
-
-	public void postSiteDataDefinitionPermission(
-			Long siteId, String operation,
-			DataDefinitionPermission dataDefinitionPermission)
+	public DataDefinition getSiteDataDefinition(
+			Long siteId, String dataDefinitionKey)
 		throws Exception;
 
 	public Page<DataDefinition> getSiteDataDefinitionsPage(
 			Long siteId, String keywords, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public void postDataDefinitionDataDefinitionPermission(
+			Long dataDefinitionId, String operation,
+			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception;
 
 	public DataDefinition postSiteDataDefinition(
@@ -87,8 +79,16 @@ public interface DataDefinitionResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
-	public DataDefinition getSiteDataDefinition(
-			Long siteId, String dataDefinitionKey)
+	public void postSiteDataDefinitionPermission(
+			Long siteId, String operation,
+			DataDefinitionPermission dataDefinitionPermission)
+		throws Exception;
+
+	public DataDefinition putDataDefinition(
+			Long dataDefinitionId, DataDefinition dataDefinition)
+		throws Exception;
+
+	public Response putDataDefinitionBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

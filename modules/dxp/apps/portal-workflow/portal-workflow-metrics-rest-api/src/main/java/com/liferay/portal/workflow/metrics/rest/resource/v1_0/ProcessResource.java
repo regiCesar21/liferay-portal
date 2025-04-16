@@ -45,16 +45,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProcessResource {
 
-	public Page<Process> getProcessesPage(
-			String title, Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
-		throws Exception;
-
 	public Process getProcess(
 			Long processId, Boolean completed, Date dateEnd, Date dateStart)
 		throws Exception;
 
 	public String getProcessTitle(Long processId) throws Exception;
+
+	public Page<Process> getProcessesPage(
+			String title, Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

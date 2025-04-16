@@ -463,30 +463,6 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testPostPriceListByExternalReferenceCodePriceListAccountGroup()
-		throws Exception {
-
-		PriceListAccountGroup randomPriceListAccountGroup =
-			randomPriceListAccountGroup();
-
-		PriceListAccountGroup postPriceListAccountGroup =
-			testPostPriceListByExternalReferenceCodePriceListAccountGroup_addPriceListAccountGroup(
-				randomPriceListAccountGroup);
-
-		assertEquals(randomPriceListAccountGroup, postPriceListAccountGroup);
-		assertValid(postPriceListAccountGroup);
-	}
-
-	protected PriceListAccountGroup
-			testPostPriceListByExternalReferenceCodePriceListAccountGroup_addPriceListAccountGroup(
-				PriceListAccountGroup priceListAccountGroup)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetPriceListIdPriceListAccountGroupsPage()
 		throws Exception {
 
@@ -698,6 +674,30 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testPostPriceListByExternalReferenceCodePriceListAccountGroup()
+		throws Exception {
+
+		PriceListAccountGroup randomPriceListAccountGroup =
+			randomPriceListAccountGroup();
+
+		PriceListAccountGroup postPriceListAccountGroup =
+			testPostPriceListByExternalReferenceCodePriceListAccountGroup_addPriceListAccountGroup(
+				randomPriceListAccountGroup);
+
+		assertEquals(randomPriceListAccountGroup, postPriceListAccountGroup);
+		assertValid(postPriceListAccountGroup);
+	}
+
+	protected PriceListAccountGroup
+			testPostPriceListByExternalReferenceCodePriceListAccountGroup_addPriceListAccountGroup(
+				PriceListAccountGroup priceListAccountGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

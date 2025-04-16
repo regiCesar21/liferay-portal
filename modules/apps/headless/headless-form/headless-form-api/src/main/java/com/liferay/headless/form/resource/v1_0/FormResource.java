@@ -49,15 +49,15 @@ public interface FormResource {
 
 	public Form getForm(Long formId) throws Exception;
 
+	public Page<Form> getSiteFormsPage(Long siteId, Pagination pagination)
+		throws Exception;
+
 	public FormContext postFormEvaluateContext(
 			Long formId, FormContext formContext)
 		throws Exception;
 
 	public FormDocument postFormFormDocument(
 			Long formId, MultipartBody multipartBody)
-		throws Exception;
-
-	public Page<Form> getSiteFormsPage(Long siteId, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

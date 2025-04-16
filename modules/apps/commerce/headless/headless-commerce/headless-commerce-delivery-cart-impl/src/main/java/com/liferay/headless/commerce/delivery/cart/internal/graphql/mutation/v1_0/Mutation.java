@@ -97,29 +97,6 @@ public class Mutation {
 			cartResource -> cartResource.patchCart(cartId, cart));
 	}
 
-	@GraphQLField
-	public Cart updateCart(
-			@GraphQLName("cartId") Long cartId, @GraphQLName("cart") Cart cart)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cartResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cartResource -> cartResource.putCart(cartId, cart));
-	}
-
-	@GraphQLField
-	public Response updateCartBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cartResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cartResource -> cartResource.putCartBatch(callbackURL, object));
-	}
-
 	@GraphQLField(
 		description = "Add new Items to a Cart, return the whole Cart updated."
 	)
@@ -145,6 +122,29 @@ public class Mutation {
 			_cartResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			cartResource -> cartResource.postChannelCart(channelId, cart));
+	}
+
+	@GraphQLField
+	public Cart updateCart(
+			@GraphQLName("cartId") Long cartId, @GraphQLName("cart") Cart cart)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartResource -> cartResource.putCart(cartId, cart));
+	}
+
+	@GraphQLField
+	public Response updateCartBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartResource -> cartResource.putCartBatch(callbackURL, object));
 	}
 
 	@GraphQLField
@@ -186,6 +186,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public CartComment createCartComment(
+			@GraphQLName("cartId") Long cartId,
+			@GraphQLName("cartComment") CartComment cartComment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartCommentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartCommentResource -> cartCommentResource.postCartComment(
+				cartId, cartComment));
+	}
+
+	@GraphQLField
 	public CartComment updateCartComment(
 			@GraphQLName("cartCommentId") Long cartCommentId,
 			@GraphQLName("cartComment") CartComment cartComment)
@@ -209,19 +222,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			cartCommentResource -> cartCommentResource.putCartCommentBatch(
 				callbackURL, object));
-	}
-
-	@GraphQLField
-	public CartComment createCartComment(
-			@GraphQLName("cartId") Long cartId,
-			@GraphQLName("cartComment") CartComment cartComment)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cartCommentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cartCommentResource -> cartCommentResource.postCartComment(
-				cartId, cartComment));
 	}
 
 	@GraphQLField(description = "Deletes an Cart Item by ID.")
@@ -260,6 +260,21 @@ public class Mutation {
 				cartItemId, cartItem));
 	}
 
+	@GraphQLField(
+		description = "Add new Items to a Cart, return the whole Cart updated."
+	)
+	public CartItem createCartItem(
+			@GraphQLName("cartId") Long cartId,
+			@GraphQLName("cartItem") CartItem cartItem)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartItemResource -> cartItemResource.postCartItem(
+				cartId, cartItem));
+	}
+
 	@GraphQLField(description = "update the given Cart.")
 	public CartItem updateCartItem(
 			@GraphQLName("cartItemId") Long cartItemId,
@@ -284,21 +299,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			cartItemResource -> cartItemResource.putCartItemBatch(
 				callbackURL, object));
-	}
-
-	@GraphQLField(
-		description = "Add new Items to a Cart, return the whole Cart updated."
-	)
-	public CartItem createCartItem(
-			@GraphQLName("cartId") Long cartId,
-			@GraphQLName("cartItem") CartItem cartItem)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_cartItemResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			cartItemResource -> cartItemResource.postCartItem(
-				cartId, cartItem));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

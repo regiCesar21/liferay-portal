@@ -189,6 +189,127 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteChannel() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Channel channel = testDeleteChannel_addChannel();
+
+		assertHttpResponseStatusCode(
+			204, channelResource.deleteChannelHttpResponse(channel.getId()));
+
+		assertHttpResponseStatusCode(
+			404, channelResource.getChannelHttpResponse(channel.getId()));
+		assertHttpResponseStatusCode(
+			404, channelResource.getChannelHttpResponse(0L));
+	}
+
+	protected Channel testDeleteChannel_addChannel() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteChannel() throws Exception {
+
+		// No namespace
+
+		Channel channel1 = testGraphQLDeleteChannel_addChannel();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteChannel",
+						new HashMap<String, Object>() {
+							{
+								put("channelId", channel1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteChannel"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"channel",
+					new HashMap<String, Object>() {
+						{
+							put("channelId", channel1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+	}
+
+	protected Channel testGraphQLDeleteChannel_addChannel() throws Exception {
+		return testGraphQLChannel_addChannel();
+	}
+
+	@Test
+	public void testGetChannel() throws Exception {
+		Channel postChannel = testGetChannel_addChannel();
+
+		Channel getChannel = channelResource.getChannel(postChannel.getId());
+
+		assertEquals(postChannel, getChannel);
+		assertValid(getChannel);
+	}
+
+	protected Channel testGetChannel_addChannel() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetChannel() throws Exception {
+		Channel channel = testGraphQLGetChannel_addChannel();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				channel,
+				ChannelSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"channel",
+								new HashMap<String, Object>() {
+									{
+										put("channelId", channel.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/channel"))));
+	}
+
+	@Test
+	public void testGraphQLGetChannelNotFound() throws Exception {
+		Long irrelevantChannelId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"channel",
+						new HashMap<String, Object>() {
+							{
+								put("channelId", irrelevantChannelId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Channel testGraphQLGetChannel_addChannel() throws Exception {
+		return testGraphQLChannel_addChannel();
+	}
+
+	@Test
 	public void testGetChannelsPage() throws Exception {
 		Page<Channel> page = channelResource.getChannelsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -546,144 +667,6 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	@Test
-	public void testPostChannel() throws Exception {
-		Channel randomChannel = randomChannel();
-
-		Channel postChannel = testPostChannel_addChannel(randomChannel);
-
-		assertEquals(randomChannel, postChannel);
-		assertValid(postChannel);
-	}
-
-	protected Channel testPostChannel_addChannel(Channel channel)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testDeleteChannel() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Channel channel = testDeleteChannel_addChannel();
-
-		assertHttpResponseStatusCode(
-			204, channelResource.deleteChannelHttpResponse(channel.getId()));
-
-		assertHttpResponseStatusCode(
-			404, channelResource.getChannelHttpResponse(channel.getId()));
-		assertHttpResponseStatusCode(
-			404, channelResource.getChannelHttpResponse(0L));
-	}
-
-	protected Channel testDeleteChannel_addChannel() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteChannel() throws Exception {
-
-		// No namespace
-
-		Channel channel1 = testGraphQLDeleteChannel_addChannel();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteChannel",
-						new HashMap<String, Object>() {
-							{
-								put("channelId", channel1.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteChannel"));
-
-		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"channel",
-					new HashMap<String, Object>() {
-						{
-							put("channelId", channel1.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray1.length() > 0);
-	}
-
-	protected Channel testGraphQLDeleteChannel_addChannel() throws Exception {
-		return testGraphQLChannel_addChannel();
-	}
-
-	@Test
-	public void testGetChannel() throws Exception {
-		Channel postChannel = testGetChannel_addChannel();
-
-		Channel getChannel = channelResource.getChannel(postChannel.getId());
-
-		assertEquals(postChannel, getChannel);
-		assertValid(getChannel);
-	}
-
-	protected Channel testGetChannel_addChannel() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetChannel() throws Exception {
-		Channel channel = testGraphQLGetChannel_addChannel();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				channel,
-				ChannelSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"channel",
-								new HashMap<String, Object>() {
-									{
-										put("channelId", channel.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/channel"))));
-	}
-
-	@Test
-	public void testGraphQLGetChannelNotFound() throws Exception {
-		Long irrelevantChannelId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"channel",
-						new HashMap<String, Object>() {
-							{
-								put("channelId", irrelevantChannelId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Channel testGraphQLGetChannel_addChannel() throws Exception {
-		return testGraphQLChannel_addChannel();
-	}
-
-	@Test
 	public void testPatchChannel() throws Exception {
 		Channel postChannel = testPatchChannel_addChannel();
 
@@ -704,6 +687,23 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	protected Channel testPatchChannel_addChannel() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostChannel() throws Exception {
+		Channel randomChannel = randomChannel();
+
+		Channel postChannel = testPostChannel_addChannel(randomChannel);
+
+		assertEquals(randomChannel, postChannel);
+		assertValid(postChannel);
+	}
+
+	protected Channel testPostChannel_addChannel(Channel channel)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

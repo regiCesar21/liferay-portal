@@ -62,31 +62,6 @@ public class Mutation {
 			userAccountResourceComponentServiceObjects;
 	}
 
-	@GraphQLField(description = "Creates a new organization")
-	public Organization createOrganization(
-			@GraphQLName("organization") Organization organization)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_organizationResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			organizationResource -> organizationResource.postOrganization(
-				organization));
-	}
-
-	@GraphQLField
-	public Response createOrganizationBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_organizationResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			organizationResource -> organizationResource.postOrganizationBatch(
-				callbackURL, object));
-	}
-
 	@GraphQLField(description = "Deletes an organization.")
 	public boolean deleteOrganization(
 			@GraphQLName("organizationId") Long organizationId)
@@ -128,6 +103,31 @@ public class Mutation {
 			this::_populateResourceContext,
 			organizationResource -> organizationResource.patchOrganization(
 				organizationId, organization));
+	}
+
+	@GraphQLField(description = "Creates a new organization")
+	public Organization createOrganization(
+			@GraphQLName("organization") Organization organization)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource -> organizationResource.postOrganization(
+				organization));
+	}
+
+	@GraphQLField
+	public Response createOrganizationBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource -> organizationResource.postOrganizationBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -173,31 +173,6 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField(description = "Creates a new user account")
-	public UserAccount createUserAccount(
-			@GraphQLName("userAccount") UserAccount userAccount)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_userAccountResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			userAccountResource -> userAccountResource.postUserAccount(
-				userAccount));
-	}
-
-	@GraphQLField
-	public Response createUserAccountBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_userAccountResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			userAccountResource -> userAccountResource.postUserAccountBatch(
-				callbackURL, object));
-	}
-
 	@GraphQLField(description = "Deletes the user account")
 	public boolean deleteUserAccount(
 			@GraphQLName("userAccountId") Long userAccountId)
@@ -238,6 +213,31 @@ public class Mutation {
 			this::_populateResourceContext,
 			userAccountResource -> userAccountResource.patchUserAccount(
 				userAccountId, userAccount));
+	}
+
+	@GraphQLField(description = "Creates a new user account")
+	public UserAccount createUserAccount(
+			@GraphQLName("userAccount") UserAccount userAccount)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> userAccountResource.postUserAccount(
+				userAccount));
+	}
+
+	@GraphQLField
+	public Response createUserAccountBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> userAccountResource.postUserAccountBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(

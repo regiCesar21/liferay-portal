@@ -53,40 +53,11 @@ public interface MessageBoardMessageResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public MessageBoardMessage getMessageBoardMessage(
-			Long messageBoardMessageId)
-		throws Exception;
-
-	public MessageBoardMessage patchMessageBoardMessage(
-			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
-		throws Exception;
-
-	public MessageBoardMessage putMessageBoardMessage(
-			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
-		throws Exception;
-
-	public Response putMessageBoardMessageBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
 	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
 		throws Exception;
 
-	public Rating getMessageBoardMessageMyRating(Long messageBoardMessageId)
-		throws Exception;
-
-	public Rating postMessageBoardMessageMyRating(
-			Long messageBoardMessageId, Rating rating)
-		throws Exception;
-
-	public Rating putMessageBoardMessageMyRating(
-			Long messageBoardMessageId, Rating rating)
-		throws Exception;
-
-	public void putMessageBoardMessageSubscribe(Long messageBoardMessageId)
-		throws Exception;
-
-	public void putMessageBoardMessageUnsubscribe(Long messageBoardMessageId)
+	public MessageBoardMessage getMessageBoardMessage(
+			Long messageBoardMessageId)
 		throws Exception;
 
 	public Page<MessageBoardMessage>
@@ -98,9 +69,7 @@ public interface MessageBoardMessageResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			Long parentMessageBoardMessageId,
-			MessageBoardMessage messageBoardMessage)
+	public Rating getMessageBoardMessageMyRating(Long messageBoardMessageId)
 		throws Exception;
 
 	public Page<MessageBoardMessage>
@@ -112,6 +81,27 @@ public interface MessageBoardMessageResource {
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public Page<MessageBoardMessage> getSiteMessageBoardMessagesPage(
+			Long siteId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public MessageBoardMessage patchMessageBoardMessage(
+			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
+	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+			Long parentMessageBoardMessageId,
+			MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
+	public Rating postMessageBoardMessageMyRating(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception;
+
 	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
 			Long messageBoardThreadId, MessageBoardMessage messageBoardMessage)
 		throws Exception;
@@ -120,12 +110,22 @@ public interface MessageBoardMessageResource {
 			Long messageBoardThreadId, String callbackURL, Object object)
 		throws Exception;
 
-	public Page<MessageBoardMessage> getSiteMessageBoardMessagesPage(
-			Long siteId, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts)
+	public MessageBoardMessage putMessageBoardMessage(
+			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
+	public Response putMessageBoardMessageBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public Rating putMessageBoardMessageMyRating(
+			Long messageBoardMessageId, Rating rating)
+		throws Exception;
+
+	public void putMessageBoardMessageSubscribe(Long messageBoardMessageId)
+		throws Exception;
+
+	public void putMessageBoardMessageUnsubscribe(Long messageBoardMessageId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

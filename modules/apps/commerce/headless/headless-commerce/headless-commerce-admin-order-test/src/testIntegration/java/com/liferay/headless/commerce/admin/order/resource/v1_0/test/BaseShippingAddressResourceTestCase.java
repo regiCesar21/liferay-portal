@@ -303,13 +303,6 @@ public abstract class BaseShippingAddressResourceTestCase {
 	}
 
 	@Test
-	public void testPatchOrderByExternalReferenceCodeShippingAddress()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetOrderIdShippingAddress() throws Exception {
 		ShippingAddress postShippingAddress =
 			testGetOrderIdShippingAddress_addShippingAddress();
@@ -399,6 +392,13 @@ public abstract class BaseShippingAddressResourceTestCase {
 		throws Exception {
 
 		return testGraphQLShippingAddress_addShippingAddress();
+	}
+
+	@Test
+	public void testPatchOrderByExternalReferenceCodeShippingAddress()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

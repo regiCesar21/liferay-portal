@@ -339,125 +339,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
-	public void testPatchMessageBoardSection() throws Exception {
-		MessageBoardSection postMessageBoardSection =
-			testPatchMessageBoardSection_addMessageBoardSection();
-
-		MessageBoardSection randomPatchMessageBoardSection =
-			randomPatchMessageBoardSection();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardSection patchMessageBoardSection =
-			messageBoardSectionResource.patchMessageBoardSection(
-				postMessageBoardSection.getId(),
-				randomPatchMessageBoardSection);
-
-		MessageBoardSection expectedPatchMessageBoardSection =
-			postMessageBoardSection.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchMessageBoardSection, expectedPatchMessageBoardSection);
-
-		MessageBoardSection getMessageBoardSection =
-			messageBoardSectionResource.getMessageBoardSection(
-				patchMessageBoardSection.getId());
-
-		assertEquals(expectedPatchMessageBoardSection, getMessageBoardSection);
-		assertValid(getMessageBoardSection);
-	}
-
-	protected MessageBoardSection
-			testPatchMessageBoardSection_addMessageBoardSection()
-		throws Exception {
-
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
-	}
-
-	@Test
-	public void testPutMessageBoardSection() throws Exception {
-		MessageBoardSection postMessageBoardSection =
-			testPutMessageBoardSection_addMessageBoardSection();
-
-		MessageBoardSection randomMessageBoardSection =
-			randomMessageBoardSection();
-
-		MessageBoardSection putMessageBoardSection =
-			messageBoardSectionResource.putMessageBoardSection(
-				postMessageBoardSection.getId(), randomMessageBoardSection);
-
-		assertEquals(randomMessageBoardSection, putMessageBoardSection);
-		assertValid(putMessageBoardSection);
-
-		MessageBoardSection getMessageBoardSection =
-			messageBoardSectionResource.getMessageBoardSection(
-				putMessageBoardSection.getId());
-
-		assertEquals(randomMessageBoardSection, getMessageBoardSection);
-		assertValid(getMessageBoardSection);
-	}
-
-	protected MessageBoardSection
-			testPutMessageBoardSection_addMessageBoardSection()
-		throws Exception {
-
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
-	}
-
-	@Test
-	public void testPutMessageBoardSectionSubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardSection messageBoardSection =
-			testPutMessageBoardSectionSubscribe_addMessageBoardSection();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardSectionResource.
-				putMessageBoardSectionSubscribeHttpResponse(
-					messageBoardSection.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardSectionResource.
-				putMessageBoardSectionSubscribeHttpResponse(0L));
-	}
-
-	protected MessageBoardSection
-			testPutMessageBoardSectionSubscribe_addMessageBoardSection()
-		throws Exception {
-
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
-	}
-
-	@Test
-	public void testPutMessageBoardSectionUnsubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardSection messageBoardSection =
-			testPutMessageBoardSectionUnsubscribe_addMessageBoardSection();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardSectionResource.
-				putMessageBoardSectionUnsubscribeHttpResponse(
-					messageBoardSection.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardSectionResource.
-				putMessageBoardSectionUnsubscribeHttpResponse(0L));
-	}
-
-	protected MessageBoardSection
-			testPutMessageBoardSectionUnsubscribe_addMessageBoardSection()
-		throws Exception {
-
-		return messageBoardSectionResource.postSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
-	}
-
-	@Test
 	public void testGetMessageBoardSectionMessageBoardSectionsPage()
 		throws Exception {
 
@@ -949,32 +830,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testPostMessageBoardSectionMessageBoardSection()
-		throws Exception {
-
-		MessageBoardSection randomMessageBoardSection =
-			randomMessageBoardSection();
-
-		MessageBoardSection postMessageBoardSection =
-			testPostMessageBoardSectionMessageBoardSection_addMessageBoardSection(
-				randomMessageBoardSection);
-
-		assertEquals(randomMessageBoardSection, postMessageBoardSection);
-		assertValid(postMessageBoardSection);
-	}
-
-	protected MessageBoardSection
-			testPostMessageBoardSectionMessageBoardSection_addMessageBoardSection(
-				MessageBoardSection messageBoardSection)
-		throws Exception {
-
-		return messageBoardSectionResource.
-			postMessageBoardSectionMessageBoardSection(
-				testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
-				messageBoardSection);
 	}
 
 	@Test
@@ -1505,6 +1360,68 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testPatchMessageBoardSection() throws Exception {
+		MessageBoardSection postMessageBoardSection =
+			testPatchMessageBoardSection_addMessageBoardSection();
+
+		MessageBoardSection randomPatchMessageBoardSection =
+			randomPatchMessageBoardSection();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection patchMessageBoardSection =
+			messageBoardSectionResource.patchMessageBoardSection(
+				postMessageBoardSection.getId(),
+				randomPatchMessageBoardSection);
+
+		MessageBoardSection expectedPatchMessageBoardSection =
+			postMessageBoardSection.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchMessageBoardSection, expectedPatchMessageBoardSection);
+
+		MessageBoardSection getMessageBoardSection =
+			messageBoardSectionResource.getMessageBoardSection(
+				patchMessageBoardSection.getId());
+
+		assertEquals(expectedPatchMessageBoardSection, getMessageBoardSection);
+		assertValid(getMessageBoardSection);
+	}
+
+	protected MessageBoardSection
+			testPatchMessageBoardSection_addMessageBoardSection()
+		throws Exception {
+
+		return messageBoardSectionResource.postSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
+	}
+
+	@Test
+	public void testPostMessageBoardSectionMessageBoardSection()
+		throws Exception {
+
+		MessageBoardSection randomMessageBoardSection =
+			randomMessageBoardSection();
+
+		MessageBoardSection postMessageBoardSection =
+			testPostMessageBoardSectionMessageBoardSection_addMessageBoardSection(
+				randomMessageBoardSection);
+
+		assertEquals(randomMessageBoardSection, postMessageBoardSection);
+		assertValid(postMessageBoardSection);
+	}
+
+	protected MessageBoardSection
+			testPostMessageBoardSectionMessageBoardSection_addMessageBoardSection(
+				MessageBoardSection messageBoardSection)
+		throws Exception {
+
+		return messageBoardSectionResource.
+			postMessageBoardSectionMessageBoardSection(
+				testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+				messageBoardSection);
+	}
+
+	@Test
 	public void testPostSiteMessageBoardSection() throws Exception {
 		MessageBoardSection randomMessageBoardSection =
 			randomMessageBoardSection();
@@ -1538,6 +1455,89 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		Assert.assertTrue(
 			equals(randomMessageBoardSection, messageBoardSection));
+	}
+
+	@Test
+	public void testPutMessageBoardSection() throws Exception {
+		MessageBoardSection postMessageBoardSection =
+			testPutMessageBoardSection_addMessageBoardSection();
+
+		MessageBoardSection randomMessageBoardSection =
+			randomMessageBoardSection();
+
+		MessageBoardSection putMessageBoardSection =
+			messageBoardSectionResource.putMessageBoardSection(
+				postMessageBoardSection.getId(), randomMessageBoardSection);
+
+		assertEquals(randomMessageBoardSection, putMessageBoardSection);
+		assertValid(putMessageBoardSection);
+
+		MessageBoardSection getMessageBoardSection =
+			messageBoardSectionResource.getMessageBoardSection(
+				putMessageBoardSection.getId());
+
+		assertEquals(randomMessageBoardSection, getMessageBoardSection);
+		assertValid(getMessageBoardSection);
+	}
+
+	protected MessageBoardSection
+			testPutMessageBoardSection_addMessageBoardSection()
+		throws Exception {
+
+		return messageBoardSectionResource.postSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
+	}
+
+	@Test
+	public void testPutMessageBoardSectionSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection messageBoardSection =
+			testPutMessageBoardSectionSubscribe_addMessageBoardSection();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardSectionResource.
+				putMessageBoardSectionSubscribeHttpResponse(
+					messageBoardSection.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardSectionResource.
+				putMessageBoardSectionSubscribeHttpResponse(0L));
+	}
+
+	protected MessageBoardSection
+			testPutMessageBoardSectionSubscribe_addMessageBoardSection()
+		throws Exception {
+
+		return messageBoardSectionResource.postSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
+	}
+
+	@Test
+	public void testPutMessageBoardSectionUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection messageBoardSection =
+			testPutMessageBoardSectionUnsubscribe_addMessageBoardSection();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardSectionResource.
+				putMessageBoardSectionUnsubscribeHttpResponse(
+					messageBoardSection.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardSectionResource.
+				putMessageBoardSectionUnsubscribeHttpResponse(0L));
+	}
+
+	protected MessageBoardSection
+			testPutMessageBoardSectionUnsubscribe_addMessageBoardSection()
+		throws Exception {
+
+		return messageBoardSectionResource.postSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
 	@Rule

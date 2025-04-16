@@ -181,6 +181,76 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	@Test
+	public void testGetProcess() throws Exception {
+		Process postProcess = testGetProcess_addProcess();
+
+		Process getProcess = processResource.getProcess(
+			postProcess.getId(), null, null, null);
+
+		assertEquals(postProcess, getProcess);
+		assertValid(getProcess);
+	}
+
+	protected Process testGetProcess_addProcess() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProcess() throws Exception {
+		Process process = testGraphQLGetProcess_addProcess();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				process,
+				ProcessSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"process",
+								new HashMap<String, Object>() {
+									{
+										put("processId", process.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/process"))));
+	}
+
+	@Test
+	public void testGraphQLGetProcessNotFound() throws Exception {
+		Long irrelevantProcessId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"process",
+						new HashMap<String, Object>() {
+							{
+								put("processId", irrelevantProcessId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Process testGraphQLGetProcess_addProcess() throws Exception {
+		return testGraphQLProcess_addProcess();
+	}
+
+	@Test
+	public void testGetProcessTitle() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetProcessesPage() throws Exception {
 		Page<Process> page = processResource.getProcessesPage(
 			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
@@ -460,76 +530,6 @@ public abstract class BaseProcessResourceTestCase {
 		throws Exception {
 
 		return testGraphQLProcess_addProcess();
-	}
-
-	@Test
-	public void testGetProcess() throws Exception {
-		Process postProcess = testGetProcess_addProcess();
-
-		Process getProcess = processResource.getProcess(
-			postProcess.getId(), null, null, null);
-
-		assertEquals(postProcess, getProcess);
-		assertValid(getProcess);
-	}
-
-	protected Process testGetProcess_addProcess() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProcess() throws Exception {
-		Process process = testGraphQLGetProcess_addProcess();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				process,
-				ProcessSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"process",
-								new HashMap<String, Object>() {
-									{
-										put("processId", process.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/process"))));
-	}
-
-	@Test
-	public void testGraphQLGetProcessNotFound() throws Exception {
-		Long irrelevantProcessId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"process",
-						new HashMap<String, Object>() {
-							{
-								put("processId", irrelevantProcessId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Process testGraphQLGetProcess_addProcess() throws Exception {
-		return testGraphQLProcess_addProcess();
-	}
-
-	@Test
-	public void testGetProcessTitle() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	protected Process testGraphQLProcess_addProcess() throws Exception {

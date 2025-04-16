@@ -104,14 +104,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CartResourceImpl.class, "patchCart"));
 					put(
-						"mutation#updateCart",
-						new ObjectValuePair<>(
-							CartResourceImpl.class, "putCart"));
-					put(
-						"mutation#updateCartBatch",
-						new ObjectValuePair<>(
-							CartResourceImpl.class, "putCartBatch"));
-					put(
 						"mutation#createCartCouponCode",
 						new ObjectValuePair<>(
 							CartResourceImpl.class, "postCartCouponCode"));
@@ -119,6 +111,14 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createChannelCart",
 						new ObjectValuePair<>(
 							CartResourceImpl.class, "postChannelCart"));
+					put(
+						"mutation#updateCart",
+						new ObjectValuePair<>(
+							CartResourceImpl.class, "putCart"));
+					put(
+						"mutation#updateCartBatch",
+						new ObjectValuePair<>(
+							CartResourceImpl.class, "putCartBatch"));
 					put(
 						"mutation#deleteCartComment",
 						new ObjectValuePair<>(
@@ -134,6 +134,10 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CartCommentResourceImpl.class, "patchCartComment"));
 					put(
+						"mutation#createCartComment",
+						new ObjectValuePair<>(
+							CartCommentResourceImpl.class, "postCartComment"));
+					put(
 						"mutation#updateCartComment",
 						new ObjectValuePair<>(
 							CartCommentResourceImpl.class, "putCartComment"));
@@ -142,10 +146,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CartCommentResourceImpl.class,
 							"putCartCommentBatch"));
-					put(
-						"mutation#createCartComment",
-						new ObjectValuePair<>(
-							CartCommentResourceImpl.class, "postCartComment"));
 					put(
 						"mutation#deleteCartItem",
 						new ObjectValuePair<>(
@@ -159,6 +159,10 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CartItemResourceImpl.class, "patchCartItem"));
 					put(
+						"mutation#createCartItem",
+						new ObjectValuePair<>(
+							CartItemResourceImpl.class, "postCartItem"));
+					put(
 						"mutation#updateCartItem",
 						new ObjectValuePair<>(
 							CartItemResourceImpl.class, "putCartItem"));
@@ -166,10 +170,6 @@ public class ServletDataImpl implements ServletData {
 						"mutation#updateCartItemBatch",
 						new ObjectValuePair<>(
 							CartItemResourceImpl.class, "putCartItemBatch"));
-					put(
-						"mutation#createCartItem",
-						new ObjectValuePair<>(
-							CartItemResourceImpl.class, "postCartItem"));
 
 					put(
 						"query#cartBillingAddres",

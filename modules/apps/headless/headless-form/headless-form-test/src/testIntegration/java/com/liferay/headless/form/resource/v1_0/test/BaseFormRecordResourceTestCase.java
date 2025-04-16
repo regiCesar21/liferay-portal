@@ -176,24 +176,36 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
-	public void testGetFormRecord() throws Exception {
-		FormRecord postFormRecord = testGetFormRecord_addFormRecord();
+	public void testGetFormFormRecordByLatestDraft() throws Exception {
+		FormRecord postFormRecord =
+			testGetFormFormRecordByLatestDraft_addFormRecord();
 
-		FormRecord getFormRecord = formRecordResource.getFormRecord(
-			postFormRecord.getId());
+		FormRecord getFormRecord =
+			formRecordResource.getFormFormRecordByLatestDraft(
+				testGetFormFormRecordByLatestDraft_getFormId(postFormRecord));
 
 		assertEquals(postFormRecord, getFormRecord);
 		assertValid(getFormRecord);
 	}
 
-	protected FormRecord testGetFormRecord_addFormRecord() throws Exception {
+	protected Long testGetFormFormRecordByLatestDraft_getFormId(
+			FormRecord formRecord)
+		throws Exception {
+
+		return formRecord.getFormId();
+	}
+
+	protected FormRecord testGetFormFormRecordByLatestDraft_addFormRecord()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	@Test
-	public void testGraphQLGetFormRecord() throws Exception {
-		FormRecord formRecord = testGraphQLGetFormRecord_addFormRecord();
+	public void testGraphQLGetFormFormRecordByLatestDraft() throws Exception {
+		FormRecord formRecord =
+			testGraphQLGetFormFormRecordByLatestDraft_addFormRecord();
 
 		// No namespace
 
@@ -204,19 +216,32 @@ public abstract class BaseFormRecordResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"formRecord",
+								"formFormRecordByLatestDraft",
 								new HashMap<String, Object>() {
 									{
-										put("formRecordId", formRecord.getId());
+										put(
+											"formId",
+											testGraphQLGetFormFormRecordByLatestDraft_getFormId(
+												formRecord));
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/formRecord"))));
+						"JSONObject/data",
+						"Object/formFormRecordByLatestDraft"))));
+	}
+
+	protected Long testGraphQLGetFormFormRecordByLatestDraft_getFormId(
+			FormRecord formRecord)
+		throws Exception {
+
+		return formRecord.getFormId();
 	}
 
 	@Test
-	public void testGraphQLGetFormRecordNotFound() throws Exception {
-		Long irrelevantFormRecordId = RandomTestUtil.randomLong();
+	public void testGraphQLGetFormFormRecordByLatestDraftNotFound()
+		throws Exception {
+
+		Long irrelevantFormId = RandomTestUtil.randomLong();
 
 		// No namespace
 
@@ -225,10 +250,10 @@ public abstract class BaseFormRecordResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"formRecord",
+						"formFormRecordByLatestDraft",
 						new HashMap<String, Object>() {
 							{
-								put("formRecordId", irrelevantFormRecordId);
+								put("formId", irrelevantFormId);
 							}
 						},
 						getGraphQLFields())),
@@ -236,34 +261,11 @@ public abstract class BaseFormRecordResourceTestCase {
 				"Object/code"));
 	}
 
-	protected FormRecord testGraphQLGetFormRecord_addFormRecord()
+	protected FormRecord
+			testGraphQLGetFormFormRecordByLatestDraft_addFormRecord()
 		throws Exception {
 
 		return testGraphQLFormRecord_addFormRecord();
-	}
-
-	@Test
-	public void testPutFormRecord() throws Exception {
-		FormRecord postFormRecord = testPutFormRecord_addFormRecord();
-
-		FormRecord randomFormRecord = randomFormRecord();
-
-		FormRecord putFormRecord = formRecordResource.putFormRecord(
-			postFormRecord.getId(), randomFormRecord);
-
-		assertEquals(randomFormRecord, putFormRecord);
-		assertValid(putFormRecord);
-
-		FormRecord getFormRecord = formRecordResource.getFormRecord(
-			putFormRecord.getId());
-
-		assertEquals(randomFormRecord, getFormRecord);
-		assertValid(getFormRecord);
-	}
-
-	protected FormRecord testPutFormRecord_addFormRecord() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -426,6 +428,73 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
+	public void testGetFormRecord() throws Exception {
+		FormRecord postFormRecord = testGetFormRecord_addFormRecord();
+
+		FormRecord getFormRecord = formRecordResource.getFormRecord(
+			postFormRecord.getId());
+
+		assertEquals(postFormRecord, getFormRecord);
+		assertValid(getFormRecord);
+	}
+
+	protected FormRecord testGetFormRecord_addFormRecord() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetFormRecord() throws Exception {
+		FormRecord formRecord = testGraphQLGetFormRecord_addFormRecord();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				formRecord,
+				FormRecordSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"formRecord",
+								new HashMap<String, Object>() {
+									{
+										put("formRecordId", formRecord.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/formRecord"))));
+	}
+
+	@Test
+	public void testGraphQLGetFormRecordNotFound() throws Exception {
+		Long irrelevantFormRecordId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"formRecord",
+						new HashMap<String, Object>() {
+							{
+								put("formRecordId", irrelevantFormRecordId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected FormRecord testGraphQLGetFormRecord_addFormRecord()
+		throws Exception {
+
+		return testGraphQLFormRecord_addFormRecord();
+	}
+
+	@Test
 	public void testPostFormFormRecord() throws Exception {
 		FormRecord randomFormRecord = randomFormRecord();
 
@@ -445,96 +514,27 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
-	public void testGetFormFormRecordByLatestDraft() throws Exception {
-		FormRecord postFormRecord =
-			testGetFormFormRecordByLatestDraft_addFormRecord();
+	public void testPutFormRecord() throws Exception {
+		FormRecord postFormRecord = testPutFormRecord_addFormRecord();
 
-		FormRecord getFormRecord =
-			formRecordResource.getFormFormRecordByLatestDraft(
-				testGetFormFormRecordByLatestDraft_getFormId(postFormRecord));
+		FormRecord randomFormRecord = randomFormRecord();
 
-		assertEquals(postFormRecord, getFormRecord);
+		FormRecord putFormRecord = formRecordResource.putFormRecord(
+			postFormRecord.getId(), randomFormRecord);
+
+		assertEquals(randomFormRecord, putFormRecord);
+		assertValid(putFormRecord);
+
+		FormRecord getFormRecord = formRecordResource.getFormRecord(
+			putFormRecord.getId());
+
+		assertEquals(randomFormRecord, getFormRecord);
 		assertValid(getFormRecord);
 	}
 
-	protected Long testGetFormFormRecordByLatestDraft_getFormId(
-			FormRecord formRecord)
-		throws Exception {
-
-		return formRecord.getFormId();
-	}
-
-	protected FormRecord testGetFormFormRecordByLatestDraft_addFormRecord()
-		throws Exception {
-
+	protected FormRecord testPutFormRecord_addFormRecord() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetFormFormRecordByLatestDraft() throws Exception {
-		FormRecord formRecord =
-			testGraphQLGetFormFormRecordByLatestDraft_addFormRecord();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				formRecord,
-				FormRecordSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"formFormRecordByLatestDraft",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"formId",
-											testGraphQLGetFormFormRecordByLatestDraft_getFormId(
-												formRecord));
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/formFormRecordByLatestDraft"))));
-	}
-
-	protected Long testGraphQLGetFormFormRecordByLatestDraft_getFormId(
-			FormRecord formRecord)
-		throws Exception {
-
-		return formRecord.getFormId();
-	}
-
-	@Test
-	public void testGraphQLGetFormFormRecordByLatestDraftNotFound()
-		throws Exception {
-
-		Long irrelevantFormId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"formFormRecordByLatestDraft",
-						new HashMap<String, Object>() {
-							{
-								put("formId", irrelevantFormId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected FormRecord
-			testGraphQLGetFormFormRecordByLatestDraft_addFormRecord()
-		throws Exception {
-
-		return testGraphQLFormRecord_addFormRecord();
 	}
 
 	protected FormRecord testGraphQLFormRecord_addFormRecord()

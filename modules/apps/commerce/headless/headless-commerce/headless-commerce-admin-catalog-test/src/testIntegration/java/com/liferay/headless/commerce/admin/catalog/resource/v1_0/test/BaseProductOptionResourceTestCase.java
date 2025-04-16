@@ -249,82 +249,6 @@ public abstract class BaseProductOptionResourceTestCase {
 	}
 
 	@Test
-	public void testGetProductOption() throws Exception {
-		ProductOption postProductOption =
-			testGetProductOption_addProductOption();
-
-		ProductOption getProductOption = productOptionResource.getProductOption(
-			postProductOption.getId());
-
-		assertEquals(postProductOption, getProductOption);
-		assertValid(getProductOption);
-	}
-
-	protected ProductOption testGetProductOption_addProductOption()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetProductOption() throws Exception {
-		ProductOption productOption =
-			testGraphQLGetProductOption_addProductOption();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				productOption,
-				ProductOptionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"productOption",
-								new HashMap<String, Object>() {
-									{
-										put("id", productOption.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/productOption"))));
-	}
-
-	@Test
-	public void testGraphQLGetProductOptionNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"productOption",
-						new HashMap<String, Object>() {
-							{
-								put("id", irrelevantId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ProductOption testGraphQLGetProductOption_addProductOption()
-		throws Exception {
-
-		return testGraphQLProductOption_addProductOption();
-	}
-
-	@Test
-	public void testPatchProductOption() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetProductByExternalReferenceCodeProductOptionsPage()
 		throws Exception {
 
@@ -534,13 +458,6 @@ public abstract class BaseProductOptionResourceTestCase {
 	}
 
 	@Test
-	public void testPostProductByExternalReferenceCodeProductOptionsPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testGetProductIdProductOptionsPage() throws Exception {
 		Long id = testGetProductIdProductOptionsPage_getId();
 		Long irrelevantId =
@@ -717,6 +634,89 @@ public abstract class BaseProductOptionResourceTestCase {
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGetProductOption() throws Exception {
+		ProductOption postProductOption =
+			testGetProductOption_addProductOption();
+
+		ProductOption getProductOption = productOptionResource.getProductOption(
+			postProductOption.getId());
+
+		assertEquals(postProductOption, getProductOption);
+		assertValid(getProductOption);
+	}
+
+	protected ProductOption testGetProductOption_addProductOption()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductOption() throws Exception {
+		ProductOption productOption =
+			testGraphQLGetProductOption_addProductOption();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productOption,
+				ProductOptionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productOption",
+								new HashMap<String, Object>() {
+									{
+										put("id", productOption.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/productOption"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductOptionNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productOption",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductOption testGraphQLGetProductOption_addProductOption()
+		throws Exception {
+
+		return testGraphQLProductOption_addProductOption();
+	}
+
+	@Test
+	public void testPatchProductOption() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostProductByExternalReferenceCodeProductOptionsPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

@@ -46,9 +46,28 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataRecordCollectionResource {
 
+	public void deleteDataRecordCollection(Long dataRecordCollectionId)
+		throws Exception;
+
+	public Response deleteDataRecordCollectionBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DataRecordCollection>
 			getDataDefinitionDataRecordCollectionsPage(
 				Long dataDefinitionId, String keywords, Pagination pagination)
+		throws Exception;
+
+	public DataRecordCollection getDataRecordCollection(
+			Long dataRecordCollectionId)
+		throws Exception;
+
+	public DataRecordCollection getSiteDataRecordCollection(
+			Long siteId, String dataRecordCollectionKey)
+		throws Exception;
+
+	public Page<DataRecordCollection> getSiteDataRecordCollectionsPage(
+			Long siteId, String keywords, Pagination pagination)
 		throws Exception;
 
 	public DataRecordCollection postDataDefinitionDataRecordCollection(
@@ -57,26 +76,6 @@ public interface DataRecordCollectionResource {
 
 	public Response postDataDefinitionDataRecordCollectionBatch(
 			Long dataDefinitionId, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteDataRecordCollection(Long dataRecordCollectionId)
-		throws Exception;
-
-	public Response deleteDataRecordCollectionBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public DataRecordCollection getDataRecordCollection(
-			Long dataRecordCollectionId)
-		throws Exception;
-
-	public DataRecordCollection putDataRecordCollection(
-			Long dataRecordCollectionId,
-			DataRecordCollection dataRecordCollection)
-		throws Exception;
-
-	public Response putDataRecordCollectionBatch(
-			String callbackURL, Object object)
 		throws Exception;
 
 	public void postDataRecordCollectionDataRecordCollectionPermission(
@@ -89,12 +88,13 @@ public interface DataRecordCollectionResource {
 			DataRecordCollectionPermission dataRecordCollectionPermission)
 		throws Exception;
 
-	public Page<DataRecordCollection> getSiteDataRecordCollectionsPage(
-			Long siteId, String keywords, Pagination pagination)
+	public DataRecordCollection putDataRecordCollection(
+			Long dataRecordCollectionId,
+			DataRecordCollection dataRecordCollection)
 		throws Exception;
 
-	public DataRecordCollection getSiteDataRecordCollection(
-			Long siteId, String dataRecordCollectionKey)
+	public Response putDataRecordCollectionBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -184,6 +184,70 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
+	public void testGetRole() throws Exception {
+		Role postRole = testGetRole_addRole();
+
+		Role getRole = roleResource.getRole(postRole.getId());
+
+		assertEquals(postRole, getRole);
+		assertValid(getRole);
+	}
+
+	protected Role testGetRole_addRole() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetRole() throws Exception {
+		Role role = testGraphQLGetRole_addRole();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				role,
+				RoleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"role",
+								new HashMap<String, Object>() {
+									{
+										put("roleId", role.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/role"))));
+	}
+
+	@Test
+	public void testGraphQLGetRoleNotFound() throws Exception {
+		Long irrelevantRoleId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"role",
+						new HashMap<String, Object>() {
+							{
+								put("roleId", irrelevantRoleId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Role testGraphQLGetRole_addRole() throws Exception {
+		return testGraphQLRole_addRole();
+	}
+
+	@Test
 	public void testGetRolesPage() throws Exception {
 		Page<Role> page = roleResource.getRolesPage(Pagination.of(1, 10));
 
@@ -325,70 +389,6 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	protected Role testGraphQLGetRolesPage_addRole() throws Exception {
-		return testGraphQLRole_addRole();
-	}
-
-	@Test
-	public void testGetRole() throws Exception {
-		Role postRole = testGetRole_addRole();
-
-		Role getRole = roleResource.getRole(postRole.getId());
-
-		assertEquals(postRole, getRole);
-		assertValid(getRole);
-	}
-
-	protected Role testGetRole_addRole() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetRole() throws Exception {
-		Role role = testGraphQLGetRole_addRole();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				role,
-				RoleSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"role",
-								new HashMap<String, Object>() {
-									{
-										put("roleId", role.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/role"))));
-	}
-
-	@Test
-	public void testGraphQLGetRoleNotFound() throws Exception {
-		Long irrelevantRoleId = RandomTestUtil.randomLong();
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"role",
-						new HashMap<String, Object>() {
-							{
-								put("roleId", irrelevantRoleId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Role testGraphQLGetRole_addRole() throws Exception {
 		return testGraphQLRole_addRole();
 	}
 

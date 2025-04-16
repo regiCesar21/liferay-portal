@@ -45,6 +45,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WikiNodeResource {
 
+	public void deleteWikiNode(Long wikiNodeId) throws Exception;
+
+	public Response deleteWikiNodeBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<WikiNode> getSiteWikiNodesPage(
 			Long siteId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
@@ -53,6 +58,8 @@ public interface WikiNodeResource {
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
+	public WikiNode getWikiNode(Long wikiNodeId) throws Exception;
+
 	public WikiNode postSiteWikiNode(Long siteId, WikiNode wikiNode)
 		throws Exception;
 
@@ -60,22 +67,15 @@ public interface WikiNodeResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
-	public void putWikiNodeSubscribe(Long wikiNodeId) throws Exception;
-
-	public void putWikiNodeUnsubscribe(Long wikiNodeId) throws Exception;
-
-	public void deleteWikiNode(Long wikiNodeId) throws Exception;
-
-	public Response deleteWikiNodeBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public WikiNode getWikiNode(Long wikiNodeId) throws Exception;
-
 	public WikiNode putWikiNode(Long wikiNodeId, WikiNode wikiNode)
 		throws Exception;
 
 	public Response putWikiNodeBatch(String callbackURL, Object object)
 		throws Exception;
+
+	public void putWikiNodeSubscribe(Long wikiNodeId) throws Exception;
+
+	public void putWikiNodeUnsubscribe(Long wikiNodeId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

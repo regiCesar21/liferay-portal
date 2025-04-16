@@ -115,6 +115,10 @@ public class ServletDataImpl implements ServletData {
 							WorkflowTaskResourceImpl.class,
 							"getRoleWorkflowTasksPage"));
 					put(
+						"query#workflowTask",
+						new ObjectValuePair<>(
+							WorkflowTaskResourceImpl.class, "getWorkflowTask"));
+					put(
 						"query#workflowTasksAssignedToMe",
 						new ObjectValuePair<>(
 							WorkflowTaskResourceImpl.class,
@@ -124,10 +128,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WorkflowTaskResourceImpl.class,
 							"getWorkflowTasksAssignedToMyRolesPage"));
-					put(
-						"query#workflowTask",
-						new ObjectValuePair<>(
-							WorkflowTaskResourceImpl.class, "getWorkflowTask"));
 
 					put(
 						"query#WorkflowTask.workflowLogs",
