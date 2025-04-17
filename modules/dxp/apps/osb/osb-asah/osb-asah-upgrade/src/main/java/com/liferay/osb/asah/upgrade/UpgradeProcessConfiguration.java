@@ -5,10 +5,10 @@
 
 package com.liferay.osb.asah.upgrade;
 
-import com.liferay.osb.asah.upgrade.v4_12_0.BigQuerySchemaUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_12_0.DataControlTaskUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_12_0.DataReplicationTablePrimaryKeyUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_12_0.PostgreSQLUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_13_0.BigQuerySchemaUpgradeStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
