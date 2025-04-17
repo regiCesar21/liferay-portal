@@ -9,6 +9,7 @@ import com.liferay.osb.asah.upgrade.v4_12_0.DataControlTaskUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_12_0.DataReplicationTablePrimaryKeyUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_12_0.PostgreSQLUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_0.BigQuerySchemaUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_13_0.EventDefinitionUpgradeStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,8 @@ public class UpgradeProcessConfiguration {
 			"4.0.46", "4.0.47", _postgreSQLUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
 			"4.0.47", "4.0.48", _bigQuerySchemaUpgradeStep);
+		upgradeProcess.addUpgradeSteps(
+			"4.0.48", "4.0.49", _eventDefinitionUpgradeStep);
 
 		return upgradeProcess;
 	}
@@ -47,6 +50,9 @@ public class UpgradeProcessConfiguration {
 	@Autowired
 	private DataReplicationTablePrimaryKeyUpgradeStep
 		_dataReplicationTablePrimaryKeyUpgradeStep;
+
+	@Autowired
+	private EventDefinitionUpgradeStep _eventDefinitionUpgradeStep;
 
 	@Autowired
 	private PostgreSQLUpgradeStep _postgreSQLUpgradeStep;

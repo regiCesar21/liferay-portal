@@ -38,13 +38,10 @@ public class BigQuerySchemaUpgradeStep implements UpgradeStep {
 
 		_queryExecutor.queryExecute(
 			ResourceUtil.readResourceToString(
-				"v4_12_0/big_query_upgrade_schema.sql"));
-		_queryExecutor.queryExecute(
-			ResourceUtil.readResourceToString(
-				"v4_12_0/event_definition_upgrade.sql"));
+				"v4_13_0/big_query_upgrade_schema.sql"));
 
 		if (_log.isInfoEnabled()) {
-			_log.info("the schemas were updated successfully");
+			_log.info("BigQuery has successfully upgraded to schema 4.13.0");
 		}
 	}
 
