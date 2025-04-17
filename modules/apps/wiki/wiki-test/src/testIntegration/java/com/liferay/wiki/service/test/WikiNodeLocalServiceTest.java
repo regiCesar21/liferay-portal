@@ -134,9 +134,7 @@ public class WikiNodeLocalServiceTest {
 		String linkTag = StringBundler.concat(
 			"[[", attachmentFileEntryURL, StringPool.PIPE, linkLabel, "]]");
 
-		String expectedContent = StringBundler.concat(
-			"<<TableOfContents>>", StringPool.NEW_LINE, StringPool.NEW_LINE,
-			linkTag);
+		String expectedContent = "<<TableOfContents>>\n\n" + linkTag;
 
 		Assert.assertEquals(expectedContent, importedPage.getContent());
 	}
