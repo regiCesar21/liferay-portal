@@ -39,12 +39,12 @@ public class BQEventRestController {
 
 		jsonArray.forEach(
 			jsonObject -> {
-				BQEvent BQEvent = _objectMapper.convertValue(
+				BQEvent bqEvent = _objectMapper.convertValue(
 					jsonObject, BQEvent.class);
 
-				BQEvent.setId(String.valueOf(UUID.randomUUID()));
+				bqEvent.setId(String.valueOf(UUID.randomUUID()));
 
-				_bqEventRepository.insert(BQEvent);
+				_bqEventRepository.insert(bqEvent);
 			});
 
 		return new ResponseEntity(HttpStatus.NO_CONTENT);

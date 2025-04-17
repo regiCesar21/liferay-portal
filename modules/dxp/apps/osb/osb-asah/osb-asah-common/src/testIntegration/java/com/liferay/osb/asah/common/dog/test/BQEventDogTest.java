@@ -122,16 +122,12 @@ public class BQEventDogTest
 
 		LocalDate endLocalDate = LocalDate.now(ZoneOffset.UTC);
 
-		List<String> eventIds = new ArrayList<>();
-
-		eventIds.add("documentPreviewed");
-		eventIds.add("documentImpressionMade");
-
 		Assertions.assertEquals(
 			2,
 			_bqEventDog.countBQEvents(
-				"Document", null, null, null, eventIds, endLocalDate,
-				endLocalDate.minusDays(1)));
+				"Document", null, null, null,
+				Set.of("documentImpressionMade", "documentPreviewed"),
+				endLocalDate, endLocalDate.minusDays(1)));
 	}
 
 	@BQSQLResource(resourcePath = "test_get_recent_assets_bq.sql")

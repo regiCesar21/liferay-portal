@@ -10,8 +10,7 @@ import com.liferay.osb.asah.common.dog.BQEventDog;
 
 import java.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -58,16 +57,12 @@ public class DocumentLibrariesRestController extends BaseRestController {
 		@RequestParam(name = "startDate", required = false)
 		LocalDate startLocalDate) {
 
-		List<String> eventIds = new ArrayList<>();
-
-		eventIds.add("documentPreviewed");
-		eventIds.add("documentImpressionMade");
-
 		return String.valueOf(
 			_bqEventDog.countBQEvents(
 				"Document", assetId, Long.valueOf(channelId),
-				Long.valueOf(dataSourceId), eventIds, endLocalDate,
-				startLocalDate));
+				Long.valueOf(dataSourceId),
+				Set.of("documentImpressionMade", "documentPreviewed"),
+				endLocalDate, startLocalDate));
 	}
 
 	@Autowired
