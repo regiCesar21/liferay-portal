@@ -90,7 +90,7 @@ public class BQEventRepositoryTest
 		Assertions.assertEquals(
 			1,
 			_bqEventRepository.countBQEvents(
-				"Form", "3", 1L, 1L, "fieldBlurred",
+				"Form", "3", 1L, 1L, Set.of("fieldBlurred"),
 				timeRange.getEndLocalDateTime(),
 				timeRange.getStartLocalDateTime()));
 	}
