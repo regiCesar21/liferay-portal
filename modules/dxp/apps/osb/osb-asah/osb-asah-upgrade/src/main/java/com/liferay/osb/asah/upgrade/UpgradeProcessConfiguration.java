@@ -32,11 +32,9 @@ public class UpgradeProcessConfiguration {
 		upgradeProcess.addUpgradeSteps(
 			"4.0.45", "4.0.46", _dataReplicationTablePrimaryKeyUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-			"4.0.46", "4.0.47", _postgreSQLUpgradeStep);
+			"4.0.46", "4.0.47", _bigQuerySchemaUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-			"4.0.47", "4.0.48", _bigQuerySchemaUpgradeStep);
-		upgradeProcess.addUpgradeSteps(
-			"4.0.48", "4.0.49", _eventDefinitionUpgradeStep);
+			"4.0.47", "4.0.48", _eventDefinitionUpgradeStep);
 
 		return upgradeProcess;
 	}
