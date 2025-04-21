@@ -31,10 +31,6 @@ public class BigQuerySchemaUpgradeStep implements UpgradeStep {
 			"pageHourly", ProjectIdThreadLocal.getProjectId());
 		_bigQuerySchemaManager.createOrReplaceView(
 			ProjectIdThreadLocal.getProjectId(), "asset");
-		_bigQuerySchemaManager.createOrReplaceView(
-			ProjectIdThreadLocal.getProjectId(), "documentlibraryhourly");
-		_bigQuerySchemaManager.createOrReplaceView(
-			ProjectIdThreadLocal.getProjectId(), "pagehourly");
 
 		_queryExecutor.queryExecute(
 			ResourceUtil.readResourceToString(
