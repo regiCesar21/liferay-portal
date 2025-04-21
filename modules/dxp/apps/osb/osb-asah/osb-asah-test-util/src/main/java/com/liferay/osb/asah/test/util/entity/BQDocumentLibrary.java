@@ -59,11 +59,11 @@ public class BQDocumentLibrary implements Persistable<Long> {
 			Objects.equals(_deviceType, documentLibrary._deviceType) &&
 			Objects.equals(_downloads, documentLibrary._downloads) &&
 			Objects.equals(_eventDate, documentLibrary._eventDate) &&
+			Objects.equals(_impressions, documentLibrary._impressions) &&
 			Objects.equals(_individualId, documentLibrary._individualId) &&
 			Objects.equals(
 				_knownIndividual, documentLibrary._knownIndividual) &&
 			Objects.equals(_platformName, documentLibrary._platformName) &&
-			Objects.equals(_impressions, documentLibrary._impressions) &&
 			Objects.equals(_ratings, documentLibrary._ratings) &&
 			Objects.equals(_ratingsScore, documentLibrary._ratingsScore) &&
 			Objects.equals(_region, documentLibrary._region) &&
@@ -211,8 +211,8 @@ public class BQDocumentLibrary implements Persistable<Long> {
 		return Objects.hash(
 			_id, _assetId, _assetPrimaryKey, _browserName, _canonicalUrl,
 			_channelId, _city, _comments, _country, _dataSourceId, _deviceType,
-			_downloads, _eventDate, _individualId, _knownIndividual,
-			_platformName, _impressions, _ratings, _ratingsScore, _region,
+			_downloads, _eventDate, _impressions, _individualId,
+			_knownIndividual, _platformName, _ratings, _ratingsScore, _region,
 			_segmentNames, _sessionId, _title, _userId, _variantId);
 	}
 

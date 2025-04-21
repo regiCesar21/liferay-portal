@@ -584,6 +584,11 @@
 				"type": "TIMESTAMP"
 			},
 			{
+				"mode": "NULLABLE",
+				"name": "impressions",
+				"type": "INT64"
+			},
+			{
 				"mode": "REQUIRED",
 				"name": "pageTitle",
 				"type": "STRING"
@@ -592,11 +597,6 @@
 				"mode": "NULLABLE",
 				"name": "platformName",
 				"type": "STRING"
-			},
-			{
-				"mode": "NULLABLE",
-				"name": "impressions",
-				"type": "INT64"
 			},
 			{
 				"mode": "NULLABLE",
