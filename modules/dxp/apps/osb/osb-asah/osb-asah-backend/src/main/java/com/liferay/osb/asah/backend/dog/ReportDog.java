@@ -101,19 +101,19 @@ public class ReportDog {
 			rows = _getAssetBlogRows(
 				channelId, query,
 				SetUtil.of(
-					BlogMetricType.VIEWS.getName(),
-					BlogMetricType.READING_TIME.getName(),
 					BlogMetricType.COMMENTS.getName(),
-					BlogMetricType.RATINGS.getName()),
+					BlogMetricType.RATINGS.getName(),
+					BlogMetricType.READING_TIME.getName(),
+					BlogMetricType.VIEWS.getName()),
 				sorts, timeRange, type);
 		}
 		else if (StringUtils.equals(type, "document")) {
 			rows = _getAssetDocumentsLibraryRows(
 				channelId, query,
 				SetUtil.of(
+					DocumentLibraryMetricType.COMMENTS.getName(),
 					DocumentLibraryMetricType.DOWNLOADS.getName(),
 					DocumentLibraryMetricType.IMPRESSIONS.getName(),
-					DocumentLibraryMetricType.COMMENTS.getName(),
 					DocumentLibraryMetricType.RATINGS.getName()),
 				sorts, timeRange, type);
 		}
@@ -125,10 +125,10 @@ public class ReportDog {
 			rows = _getAssetFormRows(
 				channelId, query,
 				SetUtil.of(
-					FormMetricType.SUBMISSIONS.getName(),
-					FormMetricType.VIEWS.getName(),
 					FormMetricType.ABANDONMENTS.getName(),
-					FormMetricType.COMPLETION_TIME.getName()),
+					FormMetricType.COMPLETION_TIME.getName(),
+					FormMetricType.SUBMISSIONS.getName(),
+					FormMetricType.VIEWS.getName()),
 				sorts, timeRange, type);
 		}
 		else if (StringUtils.equals(type, "individual") &&
@@ -155,12 +155,12 @@ public class ReportDog {
 			rows = _getAssetPageRows(
 				channelId, query,
 				SetUtil.of(
-					PageMetricType.VISITORS.getName(),
-					PageMetricType.VIEWS.getName(),
-					PageMetricType.TIME_ON_PAGE.getName(),
 					PageMetricType.BOUNCE_RATE.getName(),
 					PageMetricType.ENTRANCES.getName(),
-					PageMetricType.EXIT_RATE.getName()),
+					PageMetricType.EXIT_RATE.getName(),
+					PageMetricType.TIME_ON_PAGE.getName(),
+					PageMetricType.VIEWS.getName(),
+					PageMetricType.VISITORS.getName()),
 				sorts, timeRange, type);
 		}
 
