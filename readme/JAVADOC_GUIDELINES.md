@@ -52,20 +52,19 @@ comment:
 		 additional information is not necessary if the initial paragraph provides
 		 an adequate description.
     - Usage examples or `@link` tags to where the class can be seen in use.
-- [@author tags](ADVANCED_JAVADOC_GUIDELINES.md#author-tags) for each
-  author of the class, from first to most recent. (**required**)
-- [@see tags](ADVANCED_JAVADOC_GUIDELINES.md#see-tags) to other closely
-  related classes whose Javadocs gives the reader a clearer picture of the
-  purpose of this class.
-- [@since tags](ADVANCED_JAVADOC_GUIDELINES.md#since-tags). (as
-  applicable)
+- [@author tags](ADVANCED_JAVADOC_GUIDELINES.md#author-tags) for each author of
+  the class, from first to most recent. (**required**)
+- [@see tags](ADVANCED_JAVADOC_GUIDELINES.md#see-tags) to other closely related
+  classes whose Javadocs gives the reader a clearer picture of the purpose of
+  this class.
+- [@since tags](ADVANCED_JAVADOC_GUIDELINES.md#since-tags). (as applicable)
 - [@deprecated tags](ADVANCED_JAVADOC_GUIDELINES.md#deprecated-tags).
   (as applicable)
 
 For more detailed information and examples for writing class descriptions, see
 the
-[Class Descriptions](ADVANCED_JAVADOC_GUIDELINES.md#class-descriptions)
-section. A simple example class comment is provided below:
+[Class Descriptions](ADVANCED_JAVADOC_GUIDELINES.md#class-descriptions) section.
+A simple example class comment is provided below:
 
 Example (class comment):
 
@@ -106,17 +105,16 @@ method:
 - No need to mention matching a company ID parameter. It should be understood
   and is not worth cluttering the description.
 
-The following information should always be present in the following order in the Javadoc tags for the method:
+The following information should always be present in the following order in the
+Javadoc tags for the method:
 
-- [@param](ADVANCED_JAVADOC_GUIDELINES.md#param-tags) - The method
-  parameters, in order, with descriptions.
-- [@return](ADVANCED_JAVADOC_GUIDELINES.md#return-tags) - All possible
-  return values, including `null`. If the method is void, do not include this.
-- [@throws](ADVANCED_JAVADOC_GUIDELINES.md#throws-tags) - The
-  exceptions the method can throw, in order, with explanations of what would
-  trigger them.
-- [@see](ADVANCED_JAVADOC_GUIDELINES.md#see-tags-for-methods) - (as
-  applicable)
+- [@param](ADVANCED_JAVADOC_GUIDELINES.md#param-tags) - The method parameters,
+  in order, with descriptions.
+- [@return](ADVANCED_JAVADOC_GUIDELINES.md#return-tags) - All possible return
+  values, including `null`. If the method is void, do not include this.
+- [@throws](ADVANCED_JAVADOC_GUIDELINES.md#throws-tags) - The exceptions the
+  method can throw, in order, with explanations of what would trigger them.
+- [@see](ADVANCED_JAVADOC_GUIDELINES.md#see-tags-for-methods) - (as applicable)
 - [@since](ADVANCED_JAVADOC_GUIDELINES.md#since-tags-for-methods) - (as
 	applicable)
 - [@deprecated](ADVANCED_JAVADOC_GUIDELINES.md#deprecated-tags-for-methods) -
@@ -180,8 +178,8 @@ public String[] getPreferencesValues(
 
 1.  Include all relevant tags
     ([@param](ADVANCED_JAVADOC_GUIDELINES.md#param-tags),
-    [@return](ADVANCED_JAVADOC_GUIDELINES.md#return-tags), etc.) for
-    each method; without them, the method Javadoc is incomplete.
+    [@return](ADVANCED_JAVADOC_GUIDELINES.md#return-tags), etc.) for each
+    method; without them, the method Javadoc is incomplete.
 
 1.  Start a method description with *Returns*, if the method returns a value.
 
@@ -212,18 +210,16 @@ public String[] getPreferencesValues(
 1. Only punctuate an initial description (sentence or phrase) for a method tag
     [@param](ADVANCED_JAVADOC_GUIDELINES.md#param-tags),
     [@return](ADVANCED_JAVADOC_GUIDELINES.md#return-tags), or
-    [@throws](ADVANCED_JAVADOC_GUIDELINES.md#throws-tags) if it's
-    followed by a sentence(s). Write followup text in complete sentences.
+    [@throws](ADVANCED_JAVADOC_GUIDELINES.md#throws-tags) if it's followed by a
+    sentence(s). Write followup text in complete sentences.
 
 1. Describe exceptions (e.g.,
-	  [@throws](ADVANCED_JAVADOC_GUIDELINES.md#throws-tags)) in past
-    tense.
+	  [@throws](ADVANCED_JAVADOC_GUIDELINES.md#throws-tags)) in past tense.
 
 1. Only include a class's package in an *@see* and *@link* tag if the class is
     in another package. Refer to the
-    [Javadoc Linking](ADVANCED_JAVADOC_GUIDELINES.md#javadoc-linking)
-    subsection for comprehensive rules and examples on linking to other
-    methods/classes.
+    [Javadoc Linking](ADVANCED_JAVADOC_GUIDELINES.md#javadoc-linking) subsection
+    for comprehensive rules and examples on linking to other methods/classes.
 
 1. Don't wrap the first paragraph of a Javadoc comment with paragraph tags. Do
     wrap subsequent paragraphs with paragraph tags (e.g.,
