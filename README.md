@@ -145,8 +145,8 @@ Join the conversation on Liferay's Community Chat.
 ## Contributing
 
 Liferay welcomes any and all contributions! Please read the
-[CONTRIBUTING guide](CONTRIBUTING.markdown) for details on developing and
-submitting your contributions.
+[CONTRIBUTING guide](CONTRIBUTING.md) for details on developing and submitting
+your contributions.
 
 ## Versioning
 
