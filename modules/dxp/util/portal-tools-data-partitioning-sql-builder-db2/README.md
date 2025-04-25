@@ -9,7 +9,7 @@ move a subset of the existing companies to another database to create a
 completely new and isolated Liferay Portal instance.
 
 For more information, read the
-[Data Partitioning tool's README](https://github.com/liferay/liferay-portal/blob/master/modules/util/portal-tools-data-partitioning-sql-builder/README.markdown).
+[Data Partitioning tool's README](https://github.com/liferay/liferay-portal/blob/master/modules/util/portal-tools-data-partitioning-sql-builder/README.md).
 
 ## DB2 Special Considerations
 

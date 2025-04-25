@@ -8,7 +8,7 @@ when several companies are defined in its database (i.e., the database's
 move a subset of the existing companies to another database to create a
 completely new and isolated Liferay Portal instance.
 
-For more information, read the [Data Partitioning tool's README](https://github.com/liferay/liferay-portal/blob/master/modules/util/portal-tools-data-partitioning-sql-builder/README.markdown).
+For more information, read the [Data Partitioning tool's README](https://github.com/liferay/liferay-portal/blob/master/modules/util/portal-tools-data-partitioning-sql-builder/README.md).
 
 ## Oracle Special Considerations
 
