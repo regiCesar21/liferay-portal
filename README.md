@@ -71,7 +71,7 @@ For more detailed installation instructions, refer to the
 Liferay Developer Network.
 
 If you wish to *build* core Liferay Portal or its plugins, read the
-[CONTRIBUTING guide](CONTRIBUTING.markdown). It includes details on using the
+[CONTRIBUTING guide](CONTRIBUTING.md). It includes details on using the
 repositories and building the software.
 
 ## Liferay Developer Network
