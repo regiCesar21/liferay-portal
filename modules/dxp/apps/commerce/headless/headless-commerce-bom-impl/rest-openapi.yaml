@@ -323,8 +323,8 @@ info:
     description:
         Liferay Commerce BOM API
     license:
-        name: "Apache 2.0"
-        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
     title: Liferay Commerce BOM API
     version: "1.0"
 openapi: 3.0.0
