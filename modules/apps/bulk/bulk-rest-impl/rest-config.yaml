@@ -1,10 +1,10 @@
-apiDir: "../bulk-rest-api/src/main/java"
-apiPackagePath: "com.liferay.bulk.rest"
+apiDir: ../bulk-rest-api/src/main/java
+apiPackagePath: com.liferay.bulk.rest
 application:
-    baseURI: "/bulk"
-    className: "BulkRESTApplication"
-    name: "Liferay.Bulk.REST"
-author: "Alejandro Tardín"
-clientDir: "../bulk-rest-client/src/main/java"
+    baseURI: /bulk
+    className: BulkRESTApplication
+    name: Liferay.Bulk.REST
+author: Alejandro Tardín
+clientDir: ../bulk-rest-client/src/main/java
 generateBatch: false
-testDir: "../bulk-rest-test/src/testIntegration/java"
+testDir: ../bulk-rest-test/src/testIntegration/java

@@ -396,13 +396,13 @@ components:
                     format: int64
                     type: integer
                 description:
-                    type: object
                     additionalProperties:
                         type: string
                     example:
-                        hu_HU: Description HU
-                        hr_HR: Description HR
                         en_US: Description
+                        hr_HR: Description HR
+                        hu_HU: Description HU
+                    type: object
                 externalReferenceCode:
                     example: AB-34098-789-N
                     type: string
@@ -458,13 +458,13 @@ components:
         OptionCategory:
             properties:
                 description:
-                    type: object
                     additionalProperties:
                         type: string
                     example:
-                        hu_HU: Horvatorszag
-                        hr_HR: Hrvatska
                         en_US: Croatia
+                        hr_HR: Hrvatska
+                        hu_HU: Horvatorszag
+                    type: object
                 id:
                     example: 31130
                     format: int64
@@ -562,14 +562,14 @@ components:
                     example: Blue handle, 00001l, 70cm, lifetime warranty
                     type: string
                 description:
-                    type: object
                     additionalProperties:
                         type: string
                     example:
-                        hu_HU: Product Description HU
-                        hr_HR: Product Description HR
                         en_US: Professional hand stainless steel saw for wood. Made to last and
                             saw forever. Made of best steel
+                        hr_HR: Product Description HR
+                        hu_HU: Product Description HU
+                    type: object
                 displayDate:
                     example: 2017-07-21
                     format: date
@@ -761,13 +761,13 @@ components:
                     readOnly: true
                     type: object
                 description:
-                    type: object
                     additionalProperties:
                         type: string
                     example:
-                        hu_HU: Description HU
-                        hr_HR: Description HR
                         en_US: Description
+                        hr_HR: Description HR
+                        hu_HU: Description HU
+                    type: object
                 externalReferenceCode:
                     example: AB-34098-789-N
                     type: string
@@ -830,13 +830,13 @@ components:
                     format: int64
                     type: integer
                 description:
-                    type: object
                     additionalProperties:
                         type: string
                     example:
-                        hu_HU: Description HU
-                        hr_HR: Description HR
                         en_US: Description
+                        hr_HR: Description HR
+                        hu_HU: Description HU
+                    type: object
                 facetable:
                     example: true
                     type: boolean
@@ -1169,13 +1169,13 @@ components:
         Specification:
             properties:
                 description:
-                    type: object
                     additionalProperties:
                         type: string
                     example:
-                        hu_HU: Horvatorszag
-                        hr_HR: Hrvatska
                         en_US: Croatia
+                        hr_HR: Hrvatska
+                        hu_HU: Horvatorszag
+                    type: object
                 facetable:
                     example: true
                     type: boolean
