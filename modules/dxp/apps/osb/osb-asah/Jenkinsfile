@@ -1,3 +1,15 @@
+@Library('WorkflowCiSharedLib') _
+
+def osbAsahBackendImage
+def osbAsahBatchCuratorImage
+def osbAsahComposerImage
+def osbAsahDataflowJavaImage
+def osbAsahPerformanceTestImage
+def osbAsahPublisherImage
+def osbAsahSparkPythonImage
+def osbAsahStreamCuratorImage
+def osbAsahUpgradeImage
+
 pipeline {
 	agent {
 		kubernetes {
@@ -48,109 +60,107 @@ pipeline {
 			steps {
 				dir('osb-asah-backend') {
 					script {
-						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahBackendImage = docker.build(
-								"${IMAGE_NAME}:osb-asah-backend-${IMAGE_TAG_SUFFIX}",
-								"${DOCKER_BUILD_ARGS}")
-
-							osbAsahBackendImage.push()
-						}
+						osbAsahBackendImage = docker.build(
+							"${IMAGE_NAME}:osb-asah-backend-${IMAGE_TAG_SUFFIX}",
+							"${DOCKER_BUILD_ARGS}")
 					}
 				}
 
 				dir('osb-asah-batch-curator') {
 					script {
-						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahBatchCuratorImage = docker.build(
-								"${IMAGE_NAME}:osb-asah-batch-curator-${IMAGE_TAG_SUFFIX}",
-								 "${DOCKER_BUILD_ARGS}")
-
-							osbAsahBatchCuratorImage.push()
-						}
+						osbAsahBatchCuratorImage = docker.build(
+							"${IMAGE_NAME}:osb-asah-batch-curator-${IMAGE_TAG_SUFFIX}",
+							 "${DOCKER_BUILD_ARGS}")
 					}
 				}
 
 				dir('osb-asah-composer') {
 					script {
-						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahComposerImage = docker.build(
-								"${IMAGE_NAME}:osb-asah-composer-${IMAGE_TAG_SUFFIX}",
-								 "${DOCKER_BUILD_ARGS}")
-
-							osbAsahComposerImage.push()
-						}
+						osbAsahComposerImage = docker.build(
+							"${IMAGE_NAME}:osb-asah-composer-${IMAGE_TAG_SUFFIX}",
+							 "${DOCKER_BUILD_ARGS}")
 					}
 				}
 
 				dir('osb-asah-dataflow-java') {
 					script {
-						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahDataflowJavaImage = docker.build(
-								"${IMAGE_NAME}:osb-asah-dataflow-java-${IMAGE_TAG_SUFFIX}",
-								 "${DOCKER_BUILD_ARGS}")
-
-							osbAsahDataflowJavaImage.push()
-						}
+						osbAsahDataflowJavaImage = docker.build(
+							"${IMAGE_NAME}:osb-asah-dataflow-java-${IMAGE_TAG_SUFFIX}",
+							 "${DOCKER_BUILD_ARGS}")
 					}
 				}
 
 				dir('osb-asah-performance-test') {
 					script {
-						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahPerformanceTestImage = docker.build(
-								"${IMAGE_NAME}:osb-asah-performance-test-${IMAGE_TAG_SUFFIX}",
-								"--file ./Dockerfile --no-cache ../")
-
-							osbAsahPerformanceTestImage.push()
-						}
+						osbAsahPerformanceTestImage = docker.build(
+							"${IMAGE_NAME}:osb-asah-performance-test-${IMAGE_TAG_SUFFIX}",
+							"--file ./Dockerfile --no-cache ../")
 					}
 				}
 
 				dir('osb-asah-publisher') {
 					script {
-						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahPublisherImage = docker.build(
-								"${IMAGE_NAME}:osb-asah-publisher-${IMAGE_TAG_SUFFIX}",
-								"${DOCKER_BUILD_ARGS}")
-
-							osbAsahPublisherImage.push()
-						}
+						osbAsahPublisherImage = docker.build(
+							"${IMAGE_NAME}:osb-asah-publisher-${IMAGE_TAG_SUFFIX}",
+							"${DOCKER_BUILD_ARGS}")
 					}
 				}
 
 				dir('osb-asah-spark-python') {
 					script {
-						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahSparkPythonImage = docker.build(
-								"${IMAGE_NAME}:osb-asah-spark-python-${IMAGE_TAG_SUFFIX}",
-								"${DOCKER_BUILD_ARGS}")
-
-							osbAsahSparkPythonImage.push()
-						}
+						osbAsahSparkPythonImage = docker.build(
+							"${IMAGE_NAME}:osb-asah-spark-python-${IMAGE_TAG_SUFFIX}",
+							"${DOCKER_BUILD_ARGS}")
 					}
 				}
 
 				dir('osb-asah-stream-curator') {
 					script {
-						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahStreamCuratorImage = docker.build(
-								"${IMAGE_NAME}:osb-asah-stream-curator-${IMAGE_TAG_SUFFIX}", 
-								"${DOCKER_BUILD_ARGS}")
-
-							osbAsahStreamCuratorImage.push()
-						}
+						osbAsahStreamCuratorImage = docker.build(
+							"${IMAGE_NAME}:osb-asah-stream-curator-${IMAGE_TAG_SUFFIX}",
+							"${DOCKER_BUILD_ARGS}")
 					}
 				}
 
 				dir('osb-asah-upgrade') {
 					script {
-						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahUpgradeImage = docker.build(
-								"${IMAGE_NAME}:osb-asah-upgrade-${IMAGE_TAG_SUFFIX}",
-								"${DOCKER_BUILD_ARGS}")
+						osbAsahUpgradeImage = docker.build(
+							"${IMAGE_NAME}:osb-asah-upgrade-${IMAGE_TAG_SUFFIX}",
+							"${DOCKER_BUILD_ARGS}")
+					}
+				}
+			}
+		}
 
-							osbAsahUpgradeImage.push()
-						}
+		stage('Prisma Cloud Scan') {
+			steps {
+				prismaScanImage([
+					osbAsahBackendImage.imageName(),
+					osbAsahBatchCuratorImage.imageName(),
+					osbAsahComposerImage.imageName(),
+					osbAsahDataflowJavaImage.imageName(),
+					osbAsahPerformanceTestImage.imageName(),
+					osbAsahPublisherImage.imageName(),
+					osbAsahSparkPythonImage.imageName(),
+					osbAsahStreamCuratorImage.imageName(),
+					osbAsahUpgradeImage.imageName()
+				])
+			}
+		}
+
+		stage('Push Docker Images') {
+			steps {
+				script {
+					withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+						osbAsahBackendImage.push()
+						osbAsahBatchCuratorImage.push()
+						osbAsahComposerImage.push()
+						osbAsahDataflowJavaImage.push()
+						osbAsahPerformanceTestImage.push()
+						osbAsahPublisherImage.push()
+						osbAsahSparkPythonImage.push()
+						osbAsahStreamCuratorImage.push()
+						osbAsahUpgradeImage.push()
 					}
 				}
 			}
