@@ -29,6 +29,8 @@ import com.google.cloud.bigquery.TimePartitioning;
 import com.google.cloud.bigquery.ViewDefinition;
 import com.google.cloud.bigquery.datatransfer.v1.CreateTransferConfigRequest;
 import com.google.cloud.bigquery.datatransfer.v1.DataTransferServiceClient;
+import com.google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest;
+import com.google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest;
 import com.google.cloud.bigquery.datatransfer.v1.LocationName;
 import com.google.cloud.bigquery.datatransfer.v1.TransferConfig;
 import com.google.protobuf.Struct;
@@ -247,32 +249,25 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		}
 	}
 
+	public void deleteBackup(String projectId) {
+		if (!_environment.acceptsProfiles(Profiles.of("prod"))) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Skipping backup dataset deletion");
+			}
+
+			return;
+		}
+
+		_deleteDataTransferConfiguration(projectId);
+
+		_deleteDataset(projectId + "_bkp");
+	}
+
 	@Override
 	public void deleteSchema(String projectId) {
-		try {
-			boolean success = _bigQuery.delete(
-				DatasetId.of(_bigQueryOptions.getProjectId(), projectId),
-				BigQuery.DatasetDeleteOption.deleteContents());
+		_deleteDataset(projectId);
 
-			if (_log.isInfoEnabled()) {
-				if (success) {
-					_log.info(
-						String.format(
-							"Schema for project %s deleted successfully",
-							projectId));
-				}
-			}
-			else {
-				_log.info(
-					String.format(
-						"Schema for project %s was not found" + projectId));
-			}
-		}
-		catch (BigQueryException bigQueryException) {
-			_log.error(
-				"Unable to delete schema for project " + projectId,
-				bigQueryException);
-		}
+		deleteBackup(projectId);
 	}
 
 	@Override
@@ -563,6 +558,68 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		return table;
 	}
 
+	private void _deleteDataset(String projectId) {
+		try {
+			boolean success = _bigQuery.delete(
+				DatasetId.of(_bigQueryOptions.getProjectId(), projectId),
+				BigQuery.DatasetDeleteOption.deleteContents());
+
+			if (_log.isInfoEnabled()) {
+				if (success) {
+					_log.info(
+						String.format(
+							"Schema for project %s deleted successfully",
+							projectId));
+				}
+			}
+			else {
+				_log.info(
+					String.format(
+						"Schema for project %s was not found" + projectId));
+			}
+		}
+		catch (BigQueryException bigQueryException) {
+			_log.error(
+				"Unable to delete schema for project " + projectId,
+				bigQueryException);
+		}
+	}
+
+	private void _deleteDataTransferConfiguration(String displayName) {
+		try (DataTransferServiceClient dataTransferServiceClient =
+				DataTransferServiceClient.create()) {
+
+			TransferConfig transferConfig = _findTransferConfigByDisplayName(
+				dataTransferServiceClient, displayName);
+
+			if (transferConfig == null) {
+				_log.error(
+					String.format(
+						"Unable to find transfer config %s", displayName));
+
+				return;
+			}
+
+			dataTransferServiceClient.deleteTransferConfig(
+				DeleteTransferConfigRequest.newBuilder(
+				).setName(
+					transferConfig.getName()
+				).build());
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					String.format(
+						"Data Transfer Config %s deleted", displayName));
+			}
+		}
+		catch (Exception exception) {
+			_log.error(
+				String.format(
+					"Unable to delete Data Transfer Config %s", displayName),
+				exception);
+		}
+	}
+
 	private void _executeQuery(String query) {
 		QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(
 			query
@@ -577,6 +634,38 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		catch (InterruptedException interruptedException) {
 			throw new RuntimeException(interruptedException);
 		}
+	}
+
+	private TransferConfig _findTransferConfigByDisplayName(
+		DataTransferServiceClient dataTransferServiceClient,
+		String displayName) {
+
+		LocationName locationName = LocationName.of(
+			_bigQueryOptions.getProjectId(),
+			_backupLocations.get(_bigQueryOptions.getLocation()));
+
+		DataTransferServiceClient.ListTransferConfigsPagedResponse
+			pagedResponse = dataTransferServiceClient.listTransferConfigs(
+				ListTransferConfigsRequest.newBuilder(
+				).addDataSourceIds(
+					"cross_region_copy"
+				).setParent(
+					locationName.toString()
+				).build());
+
+		for (DataTransferServiceClient.ListTransferConfigsPage
+				listTransferConfigsPage : pagedResponse.iteratePages()) {
+
+			for (TransferConfig transferConfig :
+					listTransferConfigsPage.iterateAll()) {
+
+				if (displayName.equals(transferConfig.getDisplayName())) {
+					return transferConfig;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private Set<String> _getExpirableTableNames() {
@@ -678,6 +767,17 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 	private static final Log _log = LogFactory.getLog(
 		BigQuerySchemaManagerImpl.class);
 
+	private static final Map<String, String> _backupLocations =
+		new HashMap<>() {
+			{
+				put("asia-south1", "asia-south2");
+				put("europe-west2", "europe-west9");
+				put("europe-west3", "europe-west1");
+				put("southamerica-east1", "southamerica-east1");
+				put("us-west1", "us-central1");
+			}
+		};
+
 	private final BigQuery _bigQuery;
 	private final BigQueryOptions _bigQueryOptions;
 
@@ -687,16 +787,6 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 	private JSONObject _functionsJSONObject;
 	private JSONObject _tablesJSONObject;
 	private JSONObject _viewsJSONObject;
-
-	private static final Map<String, String> _backupLocations = new HashMap<>() {
-		{
-			put("asia-south1", "asia-south2");
-			put("europe-west2", "europe-west9");
-			put("europe-west3", "europe-west1");
-			put("southamerica-east1", "southamerica-east1");
-			put("us-west1", "us-central1");
-		}
-	};
 
 	private static class JSONObjectPriorityComparator
 		implements Comparator<JSONObject>, Serializable {
