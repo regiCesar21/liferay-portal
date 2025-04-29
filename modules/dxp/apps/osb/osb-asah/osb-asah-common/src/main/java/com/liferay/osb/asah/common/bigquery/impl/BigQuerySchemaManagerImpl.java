@@ -78,6 +78,24 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		_bigQueryOptions = bigQuery.getOptions();
 	}
 
+	public void createBackup(String projectId) {
+		if (!_environment.acceptsProfiles(Profiles.of("prod"))) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skipping data transfer configuration on non-production " +
+						"environment");
+			}
+
+			return;
+		}
+
+		String backupDatasetId = projectId + "_bkp";
+
+		_createDataset(
+			backupDatasetId,
+			_backupLocations.get(_bigQueryOptions.getLocation()));
+	}
+
 	public void createFunction(String functionName, String projectId) {
 		JSONObject jsonObject = _functionsJSONObject.getJSONObject(
 			functionName);
@@ -179,6 +197,8 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 					createFunction(functionName, projectId);
 				}
 			}
+
+			createBackup(projectId);
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -374,9 +394,13 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 	}
 
 	private Dataset _createDataset(String projectId) {
+		return _createDataset(projectId, _bigQueryOptions.getLocation());
+	}
+
+	private Dataset _createDataset(String projectId, String location) {
 		DatasetInfo.Builder builder = DatasetInfo.newBuilder(projectId);
 
-		builder = builder.setLocation(_bigQueryOptions.getLocation());
+		builder = builder.setLocation(location);
 
 		Dataset dataset = _bigQuery.create(builder.build());
 
@@ -590,6 +614,16 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 	private JSONObject _functionsJSONObject;
 	private JSONObject _tablesJSONObject;
 	private JSONObject _viewsJSONObject;
+
+	private static final Map<String, String> _backupLocations = new HashMap<>() {
+		{
+			put("asia-south1", "asia-south2");
+			put("europe-west2", "europe-west9");
+			put("europe-west3", "europe-west1");
+			put("southamerica-east1", "southamerica-east1");
+			put("us-west1", "us-central1");
+		}
+	};
 
 	private static class JSONObjectPriorityComparator
 		implements Comparator<JSONObject>, Serializable {
