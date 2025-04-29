@@ -367,13 +367,13 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		String externalReferenceCode =
 			testGetWarehousByExternalReferenceCodeWarehouseItemsPage_getExternalReferenceCode();
 
-		Page<WarehouseItem> warehouseItemPage =
+		Page<WarehouseItem> warehouseItemsPage =
 			warehouseItemResource.
 				getWarehousByExternalReferenceCodeWarehouseItemsPage(
 					externalReferenceCode, null);
 
 		int totalCount = GetterUtil.getInteger(
-			warehouseItemPage.getTotalCount());
+			warehouseItemsPage.getTotalCount());
 
 		WarehouseItem warehouseItem1 =
 			testGetWarehousByExternalReferenceCodeWarehouseItemsPage_addWarehouseItem(
@@ -562,11 +562,11 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		Long id = testGetWarehousIdWarehouseItemsPage_getId();
 
-		Page<WarehouseItem> warehouseItemPage =
+		Page<WarehouseItem> warehouseItemsPage =
 			warehouseItemResource.getWarehousIdWarehouseItemsPage(id, null);
 
 		int totalCount = GetterUtil.getInteger(
-			warehouseItemPage.getTotalCount());
+			warehouseItemsPage.getTotalCount());
 
 		WarehouseItem warehouseItem1 =
 			testGetWarehousIdWarehouseItemsPage_addWarehouseItem(
@@ -879,12 +879,12 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	public void testGetWarehouseItemsUpdatedPageWithPagination()
 		throws Exception {
 
-		Page<WarehouseItem> warehouseItemPage =
+		Page<WarehouseItem> warehouseItemsPage =
 			warehouseItemResource.getWarehouseItemsUpdatedPage(
 				null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			warehouseItemPage.getTotalCount());
+			warehouseItemsPage.getTotalCount());
 
 		WarehouseItem warehouseItem1 =
 			testGetWarehouseItemsUpdatedPage_addWarehouseItem(

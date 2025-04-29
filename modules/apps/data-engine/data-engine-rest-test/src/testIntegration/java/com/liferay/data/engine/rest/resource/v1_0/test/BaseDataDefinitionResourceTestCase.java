@@ -524,12 +524,12 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		Long siteId = testGetSiteDataDefinitionsPage_getSiteId();
 
-		Page<DataDefinition> dataDefinitionPage =
+		Page<DataDefinition> dataDefinitionsPage =
 			dataDefinitionResource.getSiteDataDefinitionsPage(
 				siteId, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			dataDefinitionPage.getTotalCount());
+			dataDefinitionsPage.getTotalCount());
 
 		DataDefinition dataDefinition1 =
 			testGetSiteDataDefinitionsPage_addDataDefinition(

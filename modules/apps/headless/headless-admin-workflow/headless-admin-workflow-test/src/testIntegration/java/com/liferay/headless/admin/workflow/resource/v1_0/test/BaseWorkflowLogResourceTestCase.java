@@ -324,11 +324,12 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		Long workflowTaskId =
 			testGetWorkflowTaskWorkflowLogsPage_getWorkflowTaskId();
 
-		Page<WorkflowLog> workflowLogPage =
+		Page<WorkflowLog> workflowLogsPage =
 			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
 				workflowTaskId, null);
 
-		int totalCount = GetterUtil.getInteger(workflowLogPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			workflowLogsPage.getTotalCount());
 
 		WorkflowLog workflowLog1 =
 			testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(

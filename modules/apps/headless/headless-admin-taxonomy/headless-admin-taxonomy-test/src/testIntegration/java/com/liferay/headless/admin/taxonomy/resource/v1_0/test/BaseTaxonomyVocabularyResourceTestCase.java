@@ -443,12 +443,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
 
-		Page<TaxonomyVocabulary> taxonomyVocabularyPage =
+		Page<TaxonomyVocabulary> taxonomyVocabulariesPage =
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
 				siteId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			taxonomyVocabularyPage.getTotalCount());
+			taxonomyVocabulariesPage.getTotalCount());
 
 		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(

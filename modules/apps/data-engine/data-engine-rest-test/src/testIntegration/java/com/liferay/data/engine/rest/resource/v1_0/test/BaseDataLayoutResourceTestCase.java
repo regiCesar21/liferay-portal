@@ -331,11 +331,11 @@ public abstract class BaseDataLayoutResourceTestCase {
 		Long dataDefinitionId =
 			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId();
 
-		Page<DataLayout> dataLayoutPage =
+		Page<DataLayout> dataLayoutsPage =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(
 				dataDefinitionId, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(dataLayoutPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(dataLayoutsPage.getTotalCount());
 
 		DataLayout dataLayout1 =
 			testGetDataDefinitionDataLayoutsPage_addDataLayout(
@@ -814,10 +814,10 @@ public abstract class BaseDataLayoutResourceTestCase {
 	public void testGetSiteDataLayoutsPageWithPagination() throws Exception {
 		Long siteId = testGetSiteDataLayoutsPage_getSiteId();
 
-		Page<DataLayout> dataLayoutPage =
+		Page<DataLayout> dataLayoutsPage =
 			dataLayoutResource.getSiteDataLayoutsPage(siteId, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(dataLayoutPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(dataLayoutsPage.getTotalCount());
 
 		DataLayout dataLayout1 = testGetSiteDataLayoutsPage_addDataLayout(
 			siteId, randomDataLayout());

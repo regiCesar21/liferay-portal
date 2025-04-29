@@ -240,10 +240,10 @@ public abstract class BaseTaskResourceTestCase {
 	public void testGetProcessTasksPageWithPagination() throws Exception {
 		Long processId = testGetProcessTasksPage_getProcessId();
 
-		Page<Task> taskPage = taskResource.getProcessTasksPage(
+		Page<Task> tasksPage = taskResource.getProcessTasksPage(
 			processId, null, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(taskPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(tasksPage.getTotalCount());
 
 		Task task1 = testGetProcessTasksPage_addTask(processId, randomTask());
 

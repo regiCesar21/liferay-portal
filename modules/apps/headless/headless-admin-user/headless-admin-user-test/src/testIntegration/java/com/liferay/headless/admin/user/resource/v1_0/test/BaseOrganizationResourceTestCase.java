@@ -499,12 +499,12 @@ public abstract class BaseOrganizationResourceTestCase {
 		Long parentOrganizationId =
 			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
-		Page<Organization> organizationPage =
+		Page<Organization> organizationsPage =
 			organizationResource.getOrganizationOrganizationsPage(
 				parentOrganizationId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			organizationPage.getTotalCount());
+			organizationsPage.getTotalCount());
 
 		Organization organization1 =
 			testGetOrganizationOrganizationsPage_addOrganization(
@@ -890,12 +890,12 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGetOrganizationsPageWithPagination() throws Exception {
-		Page<Organization> organizationPage =
+		Page<Organization> organizationsPage =
 			organizationResource.getOrganizationsPage(
 				null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			organizationPage.getTotalCount());
+			organizationsPage.getTotalCount());
 
 		Organization organization1 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());

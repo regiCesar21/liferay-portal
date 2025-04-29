@@ -282,10 +282,10 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGetProcessesPageWithPagination() throws Exception {
-		Page<Process> processPage = processResource.getProcessesPage(
+		Page<Process> processesPage = processResource.getProcessesPage(
 			null, null, null);
 
-		int totalCount = GetterUtil.getInteger(processPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(processesPage.getTotalCount());
 
 		Process process1 = testGetProcessesPage_addProcess(randomProcess());
 

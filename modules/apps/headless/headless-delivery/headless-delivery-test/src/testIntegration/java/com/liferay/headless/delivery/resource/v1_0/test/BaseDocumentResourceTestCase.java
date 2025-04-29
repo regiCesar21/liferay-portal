@@ -523,11 +523,11 @@ public abstract class BaseDocumentResourceTestCase {
 		Long documentFolderId =
 			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
 
-		Page<Document> documentPage =
+		Page<Document> documentsPage =
 			documentResource.getDocumentFolderDocumentsPage(
 				documentFolderId, null, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(documentPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(documentsPage.getTotalCount());
 
 		Document document1 = testGetDocumentFolderDocumentsPage_addDocument(
 			documentFolderId, randomDocument());
@@ -929,10 +929,10 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testGetSiteDocumentsPageWithPagination() throws Exception {
 		Long siteId = testGetSiteDocumentsPage_getSiteId();
 
-		Page<Document> documentPage = documentResource.getSiteDocumentsPage(
+		Page<Document> documentsPage = documentResource.getSiteDocumentsPage(
 			siteId, null, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(documentPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(documentsPage.getTotalCount());
 
 		Document document1 = testGetSiteDocumentsPage_addDocument(
 			siteId, randomDocument());

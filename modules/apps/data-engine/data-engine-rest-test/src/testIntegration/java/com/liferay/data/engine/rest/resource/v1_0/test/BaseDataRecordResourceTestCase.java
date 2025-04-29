@@ -321,11 +321,11 @@ public abstract class BaseDataRecordResourceTestCase {
 		Long dataDefinitionId =
 			testGetDataDefinitionDataRecordsPage_getDataDefinitionId();
 
-		Page<DataRecord> dataRecordPage =
+		Page<DataRecord> dataRecordsPage =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
 				dataDefinitionId, null);
 
-		int totalCount = GetterUtil.getInteger(dataRecordPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(dataRecordsPage.getTotalCount());
 
 		DataRecord dataRecord1 =
 			testGetDataDefinitionDataRecordsPage_addDataRecord(
@@ -584,11 +584,11 @@ public abstract class BaseDataRecordResourceTestCase {
 		Long dataRecordCollectionId =
 			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
 
-		Page<DataRecord> dataRecordPage =
+		Page<DataRecord> dataRecordsPage =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
 				dataRecordCollectionId, null);
 
-		int totalCount = GetterUtil.getInteger(dataRecordPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(dataRecordsPage.getTotalCount());
 
 		DataRecord dataRecord1 =
 			testGetDataRecordCollectionDataRecordsPage_addDataRecord(

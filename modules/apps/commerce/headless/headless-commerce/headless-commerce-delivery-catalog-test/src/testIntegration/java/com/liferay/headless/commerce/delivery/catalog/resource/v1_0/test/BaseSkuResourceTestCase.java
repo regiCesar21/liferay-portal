@@ -249,10 +249,10 @@ public abstract class BaseSkuResourceTestCase {
 		Long channelId = testGetChannelProductSkusPage_getChannelId();
 		Long productId = testGetChannelProductSkusPage_getProductId();
 
-		Page<Sku> skuPage = skuResource.getChannelProductSkusPage(
+		Page<Sku> skusPage = skuResource.getChannelProductSkusPage(
 			channelId, productId, null, null);
 
-		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(skusPage.getTotalCount());
 
 		Sku sku1 = testGetChannelProductSkusPage_addSku(
 			channelId, productId, randomSku());

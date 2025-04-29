@@ -257,12 +257,12 @@ public abstract class BaseProductOptionResourceTestCase {
 		Long channelId = testGetChannelProductOptionsPage_getChannelId();
 		Long productId = testGetChannelProductOptionsPage_getProductId();
 
-		Page<ProductOption> productOptionPage =
+		Page<ProductOption> productOptionsPage =
 			productOptionResource.getChannelProductOptionsPage(
 				channelId, productId, null);
 
 		int totalCount = GetterUtil.getInteger(
-			productOptionPage.getTotalCount());
+			productOptionsPage.getTotalCount());
 
 		ProductOption productOption1 =
 			testGetChannelProductOptionsPage_addProductOption(

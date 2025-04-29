@@ -254,12 +254,12 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		Long id = testGetProductIdProductSpecificationsPage_getId();
 
-		Page<ProductSpecification> productSpecificationPage =
+		Page<ProductSpecification> productSpecificationsPage =
 			productSpecificationResource.getProductIdProductSpecificationsPage(
 				id, null);
 
 		int totalCount = GetterUtil.getInteger(
-			productSpecificationPage.getTotalCount());
+			productSpecificationsPage.getTotalCount());
 
 		ProductSpecification productSpecification1 =
 			testGetProductIdProductSpecificationsPage_addProductSpecification(
