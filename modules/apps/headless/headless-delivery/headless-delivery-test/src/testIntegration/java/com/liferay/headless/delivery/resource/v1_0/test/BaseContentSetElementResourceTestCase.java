@@ -256,12 +256,12 @@ public abstract class BaseContentSetElementResourceTestCase {
 		Long contentSetId =
 			testGetContentSetContentSetElementsPage_getContentSetId();
 
-		Page<ContentSetElement> contentSetElementPage =
+		Page<ContentSetElement> contentSetElementsPage =
 			contentSetElementResource.getContentSetContentSetElementsPage(
 				contentSetId, null);
 
 		int totalCount = GetterUtil.getInteger(
-			contentSetElementPage.getTotalCount());
+			contentSetElementsPage.getTotalCount());
 
 		ContentSetElement contentSetElement1 =
 			testGetContentSetContentSetElementsPage_addContentSetElement(
@@ -457,12 +457,12 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetSiteContentSetByKeyContentSetElementsPage_getSiteId();
 		String key = testGetSiteContentSetByKeyContentSetElementsPage_getKey();
 
-		Page<ContentSetElement> contentSetElementPage =
+		Page<ContentSetElement> contentSetElementsPage =
 			contentSetElementResource.
 				getSiteContentSetByKeyContentSetElementsPage(siteId, key, null);
 
 		int totalCount = GetterUtil.getInteger(
-			contentSetElementPage.getTotalCount());
+			contentSetElementsPage.getTotalCount());
 
 		ContentSetElement contentSetElement1 =
 			testGetSiteContentSetByKeyContentSetElementsPage_addContentSetElement(
@@ -679,13 +679,13 @@ public abstract class BaseContentSetElementResourceTestCase {
 		String uuid =
 			testGetSiteContentSetByUuidContentSetElementsPage_getUuid();
 
-		Page<ContentSetElement> contentSetElementPage =
+		Page<ContentSetElement> contentSetElementsPage =
 			contentSetElementResource.
 				getSiteContentSetByUuidContentSetElementsPage(
 					siteId, uuid, null);
 
 		int totalCount = GetterUtil.getInteger(
-			contentSetElementPage.getTotalCount());
+			contentSetElementsPage.getTotalCount());
 
 		ContentSetElement contentSetElement1 =
 			testGetSiteContentSetByUuidContentSetElementsPage_addContentSetElement(

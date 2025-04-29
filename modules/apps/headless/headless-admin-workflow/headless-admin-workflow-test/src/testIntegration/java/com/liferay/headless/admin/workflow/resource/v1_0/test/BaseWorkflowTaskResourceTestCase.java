@@ -244,11 +244,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	public void testGetRoleWorkflowTasksPageWithPagination() throws Exception {
 		Long roleId = testGetRoleWorkflowTasksPage_getRoleId();
 
-		Page<WorkflowTask> workflowTaskPage =
+		Page<WorkflowTask> workflowTasksPage =
 			workflowTaskResource.getRoleWorkflowTasksPage(roleId, null);
 
 		int totalCount = GetterUtil.getInteger(
-			workflowTaskPage.getTotalCount());
+			workflowTasksPage.getTotalCount());
 
 		WorkflowTask workflowTask1 =
 			testGetRoleWorkflowTasksPage_addWorkflowTask(
@@ -461,11 +461,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	public void testGetWorkflowTasksAssignedToMePageWithPagination()
 		throws Exception {
 
-		Page<WorkflowTask> workflowTaskPage =
+		Page<WorkflowTask> workflowTasksPage =
 			workflowTaskResource.getWorkflowTasksAssignedToMePage(null);
 
 		int totalCount = GetterUtil.getInteger(
-			workflowTaskPage.getTotalCount());
+			workflowTasksPage.getTotalCount());
 
 		WorkflowTask workflowTask1 =
 			testGetWorkflowTasksAssignedToMePage_addWorkflowTask(
@@ -593,11 +593,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	public void testGetWorkflowTasksAssignedToMyRolesPageWithPagination()
 		throws Exception {
 
-		Page<WorkflowTask> workflowTaskPage =
+		Page<WorkflowTask> workflowTasksPage =
 			workflowTaskResource.getWorkflowTasksAssignedToMyRolesPage(null);
 
 		int totalCount = GetterUtil.getInteger(
-			workflowTaskPage.getTotalCount());
+			workflowTasksPage.getTotalCount());
 
 		WorkflowTask workflowTask1 =
 			testGetWorkflowTasksAssignedToMyRolesPage_addWorkflowTask(

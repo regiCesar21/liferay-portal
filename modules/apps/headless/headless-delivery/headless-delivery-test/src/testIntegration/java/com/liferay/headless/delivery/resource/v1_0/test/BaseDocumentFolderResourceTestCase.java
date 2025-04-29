@@ -508,12 +508,12 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Long parentDocumentFolderId =
 			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId();
 
-		Page<DocumentFolder> documentFolderPage =
+		Page<DocumentFolder> documentFoldersPage =
 			documentFolderResource.getDocumentFolderDocumentFoldersPage(
 				parentDocumentFolderId, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			documentFolderPage.getTotalCount());
+			documentFoldersPage.getTotalCount());
 
 		DocumentFolder documentFolder1 =
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
@@ -960,12 +960,12 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		Long siteId = testGetSiteDocumentFoldersPage_getSiteId();
 
-		Page<DocumentFolder> documentFolderPage =
+		Page<DocumentFolder> documentFoldersPage =
 			documentFolderResource.getSiteDocumentFoldersPage(
 				siteId, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			documentFolderPage.getTotalCount());
+			documentFoldersPage.getTotalCount());
 
 		DocumentFolder documentFolder1 =
 			testGetSiteDocumentFoldersPage_addDocumentFolder(

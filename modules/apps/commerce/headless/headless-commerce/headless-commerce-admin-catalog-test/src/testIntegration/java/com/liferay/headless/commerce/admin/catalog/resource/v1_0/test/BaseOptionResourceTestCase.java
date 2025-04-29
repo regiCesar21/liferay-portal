@@ -519,10 +519,10 @@ public abstract class BaseOptionResourceTestCase {
 
 	@Test
 	public void testGetOptionsPageWithPagination() throws Exception {
-		Page<Option> optionPage = optionResource.getOptionsPage(
+		Page<Option> optionsPage = optionResource.getOptionsPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(optionPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(optionsPage.getTotalCount());
 
 		Option option1 = testGetOptionsPage_addOption(randomOption());
 

@@ -459,10 +459,10 @@ public abstract class BaseKeywordResourceTestCase {
 	public void testGetSiteKeywordsPageWithPagination() throws Exception {
 		Long siteId = testGetSiteKeywordsPage_getSiteId();
 
-		Page<Keyword> keywordPage = keywordResource.getSiteKeywordsPage(
+		Page<Keyword> keywordsPage = keywordResource.getSiteKeywordsPage(
 			siteId, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(keywordPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(keywordsPage.getTotalCount());
 
 		Keyword keyword1 = testGetSiteKeywordsPage_addKeyword(
 			siteId, randomKeyword());

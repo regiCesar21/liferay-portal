@@ -406,10 +406,10 @@ public abstract class BaseCommentResourceTestCase {
 
 		Long blogPostingId = testGetBlogPostingCommentsPage_getBlogPostingId();
 
-		Page<Comment> commentPage = commentResource.getBlogPostingCommentsPage(
+		Page<Comment> commentsPage = commentResource.getBlogPostingCommentsPage(
 			blogPostingId, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(commentPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(commentsPage.getTotalCount());
 
 		Comment comment1 = testGetBlogPostingCommentsPage_addComment(
 			blogPostingId, randomComment());
@@ -861,10 +861,10 @@ public abstract class BaseCommentResourceTestCase {
 	public void testGetCommentCommentsPageWithPagination() throws Exception {
 		Long parentCommentId = testGetCommentCommentsPage_getParentCommentId();
 
-		Page<Comment> commentPage = commentResource.getCommentCommentsPage(
+		Page<Comment> commentsPage = commentResource.getCommentCommentsPage(
 			parentCommentId, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(commentPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(commentsPage.getTotalCount());
 
 		Comment comment1 = testGetCommentCommentsPage_addComment(
 			parentCommentId, randomComment());
@@ -1251,10 +1251,10 @@ public abstract class BaseCommentResourceTestCase {
 	public void testGetDocumentCommentsPageWithPagination() throws Exception {
 		Long documentId = testGetDocumentCommentsPage_getDocumentId();
 
-		Page<Comment> commentPage = commentResource.getDocumentCommentsPage(
+		Page<Comment> commentsPage = commentResource.getDocumentCommentsPage(
 			documentId, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(commentPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(commentsPage.getTotalCount());
 
 		Comment comment1 = testGetDocumentCommentsPage_addComment(
 			documentId, randomComment());
@@ -1656,11 +1656,11 @@ public abstract class BaseCommentResourceTestCase {
 		Long structuredContentId =
 			testGetStructuredContentCommentsPage_getStructuredContentId();
 
-		Page<Comment> commentPage =
+		Page<Comment> commentsPage =
 			commentResource.getStructuredContentCommentsPage(
 				structuredContentId, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(commentPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(commentsPage.getTotalCount());
 
 		Comment comment1 = testGetStructuredContentCommentsPage_addComment(
 			structuredContentId, randomComment());

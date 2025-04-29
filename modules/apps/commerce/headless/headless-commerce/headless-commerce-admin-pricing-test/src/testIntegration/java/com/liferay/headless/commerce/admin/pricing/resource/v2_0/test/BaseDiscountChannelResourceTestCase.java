@@ -317,13 +317,13 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		String externalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountChannelsPage_getExternalReferenceCode();
 
-		Page<DiscountChannel> discountChannelPage =
+		Page<DiscountChannel> discountChannelsPage =
 			discountChannelResource.
 				getDiscountByExternalReferenceCodeDiscountChannelsPage(
 					externalReferenceCode, null);
 
 		int totalCount = GetterUtil.getInteger(
-			discountChannelPage.getTotalCount());
+			discountChannelsPage.getTotalCount());
 
 		DiscountChannel discountChannel1 =
 			testGetDiscountByExternalReferenceCodeDiscountChannelsPage_addDiscountChannel(
@@ -614,12 +614,12 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 		Long id = testGetDiscountIdDiscountChannelsPage_getId();
 
-		Page<DiscountChannel> discountChannelPage =
+		Page<DiscountChannel> discountChannelsPage =
 			discountChannelResource.getDiscountIdDiscountChannelsPage(
 				id, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			discountChannelPage.getTotalCount());
+			discountChannelsPage.getTotalCount());
 
 		DiscountChannel discountChannel1 =
 			testGetDiscountIdDiscountChannelsPage_addDiscountChannel(

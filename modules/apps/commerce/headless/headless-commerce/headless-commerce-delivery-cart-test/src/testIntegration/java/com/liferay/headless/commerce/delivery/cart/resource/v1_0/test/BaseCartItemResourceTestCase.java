@@ -366,10 +366,10 @@ public abstract class BaseCartItemResourceTestCase {
 	public void testGetCartItemsPageWithPagination() throws Exception {
 		Long cartId = testGetCartItemsPage_getCartId();
 
-		Page<CartItem> cartItemPage = cartItemResource.getCartItemsPage(
+		Page<CartItem> cartItemsPage = cartItemResource.getCartItemsPage(
 			cartId, null);
 
-		int totalCount = GetterUtil.getInteger(cartItemPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(cartItemsPage.getTotalCount());
 
 		CartItem cartItem1 = testGetCartItemsPage_addCartItem(
 			cartId, randomCartItem());

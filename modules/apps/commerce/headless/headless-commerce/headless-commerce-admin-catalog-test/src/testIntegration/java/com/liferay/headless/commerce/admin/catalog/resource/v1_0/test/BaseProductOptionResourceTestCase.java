@@ -330,13 +330,13 @@ public abstract class BaseProductOptionResourceTestCase {
 		String externalReferenceCode =
 			testGetProductByExternalReferenceCodeProductOptionsPage_getExternalReferenceCode();
 
-		Page<ProductOption> productOptionPage =
+		Page<ProductOption> productOptionsPage =
 			productOptionResource.
 				getProductByExternalReferenceCodeProductOptionsPage(
 					externalReferenceCode, null);
 
 		int totalCount = GetterUtil.getInteger(
-			productOptionPage.getTotalCount());
+			productOptionsPage.getTotalCount());
 
 		ProductOption productOption1 =
 			testGetProductByExternalReferenceCodeProductOptionsPage_addProductOption(
@@ -525,11 +525,11 @@ public abstract class BaseProductOptionResourceTestCase {
 
 		Long id = testGetProductIdProductOptionsPage_getId();
 
-		Page<ProductOption> productOptionPage =
+		Page<ProductOption> productOptionsPage =
 			productOptionResource.getProductIdProductOptionsPage(id, null);
 
 		int totalCount = GetterUtil.getInteger(
-			productOptionPage.getTotalCount());
+			productOptionsPage.getTotalCount());
 
 		ProductOption productOption1 =
 			testGetProductIdProductOptionsPage_addProductOption(

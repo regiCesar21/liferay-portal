@@ -422,11 +422,12 @@ public abstract class BaseUserAccountResourceTestCase {
 		Long organizationId =
 			testGetOrganizationUserAccountsPage_getOrganizationId();
 
-		Page<UserAccount> userAccountPage =
+		Page<UserAccount> userAccountsPage =
 			userAccountResource.getOrganizationUserAccountsPage(
 				organizationId, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(userAccountPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			userAccountsPage.getTotalCount());
 
 		UserAccount userAccount1 =
 			testGetOrganizationUserAccountsPage_addUserAccount(
@@ -837,11 +838,12 @@ public abstract class BaseUserAccountResourceTestCase {
 	public void testGetSiteUserAccountsPageWithPagination() throws Exception {
 		Long siteId = testGetSiteUserAccountsPage_getSiteId();
 
-		Page<UserAccount> userAccountPage =
+		Page<UserAccount> userAccountsPage =
 			userAccountResource.getSiteUserAccountsPage(
 				siteId, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(userAccountPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			userAccountsPage.getTotalCount());
 
 		UserAccount userAccount1 = testGetSiteUserAccountsPage_addUserAccount(
 			siteId, randomUserAccount());
@@ -1266,10 +1268,11 @@ public abstract class BaseUserAccountResourceTestCase {
 
 	@Test
 	public void testGetUserAccountsPageWithPagination() throws Exception {
-		Page<UserAccount> userAccountPage =
+		Page<UserAccount> userAccountsPage =
 			userAccountResource.getUserAccountsPage(null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(userAccountPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			userAccountsPage.getTotalCount());
 
 		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
 			randomUserAccount());

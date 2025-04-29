@@ -426,12 +426,12 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Long siteId = testGetSiteContentStructuresPage_getSiteId();
 
-		Page<ContentStructure> contentStructurePage =
+		Page<ContentStructure> contentStructuresPage =
 			contentStructureResource.getSiteContentStructuresPage(
 				siteId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			contentStructurePage.getTotalCount());
+			contentStructuresPage.getTotalCount());
 
 		ContentStructure contentStructure1 =
 			testGetSiteContentStructuresPage_addContentStructure(

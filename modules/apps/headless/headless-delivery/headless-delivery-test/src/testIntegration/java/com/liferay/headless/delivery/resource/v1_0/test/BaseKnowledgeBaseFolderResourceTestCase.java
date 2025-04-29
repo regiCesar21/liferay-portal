@@ -423,13 +423,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Long parentKnowledgeBaseFolderId =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId();
 
-		Page<KnowledgeBaseFolder> knowledgeBaseFolderPage =
+		Page<KnowledgeBaseFolder> knowledgeBaseFoldersPage =
 			knowledgeBaseFolderResource.
 				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
 					parentKnowledgeBaseFolderId, null);
 
 		int totalCount = GetterUtil.getInteger(
-			knowledgeBaseFolderPage.getTotalCount());
+			knowledgeBaseFoldersPage.getTotalCount());
 
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
@@ -642,12 +642,12 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		Long siteId = testGetSiteKnowledgeBaseFoldersPage_getSiteId();
 
-		Page<KnowledgeBaseFolder> knowledgeBaseFolderPage =
+		Page<KnowledgeBaseFolder> knowledgeBaseFoldersPage =
 			knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
 				siteId, null);
 
 		int totalCount = GetterUtil.getInteger(
-			knowledgeBaseFolderPage.getTotalCount());
+			knowledgeBaseFoldersPage.getTotalCount());
 
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGetSiteKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(

@@ -331,13 +331,13 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		Long groupId =
 			testGetCommerceAdminSiteSettingGroupMeasurementUnitPage_getGroupId();
 
-		Page<MeasurementUnit> measurementUnitPage =
+		Page<MeasurementUnit> measurementUnitsPage =
 			measurementUnitResource.
 				getCommerceAdminSiteSettingGroupMeasurementUnitPage(
 					groupId, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			measurementUnitPage.getTotalCount());
+			measurementUnitsPage.getTotalCount());
 
 		MeasurementUnit measurementUnit1 =
 			testGetCommerceAdminSiteSettingGroupMeasurementUnitPage_addMeasurementUnit(
