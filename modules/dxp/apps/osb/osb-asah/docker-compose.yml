@@ -191,7 +191,7 @@ services:
             context: ./osb-asah-upgrade
         container_name: osbasahupgrade
         depends_on:
-             -   osbasahredis
+            -   osbasahredis
         env_file:
             -   common.env
             -   local.env

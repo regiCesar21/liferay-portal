@@ -19,8 +19,7 @@ jobs:
         -   name: "Analysis"
             script:
                 -   ./gradlew checkSourceFormatting pmdMain pmdTest pmdTestIntegration spotbugsMain spotbugsTest spotbugsTestIntegration --configure-on-demand --continue --parallel
-        -   name: "Tests"
-            after_script:
+        -   after_script:
                 -   docker-compose -f docker-compose.integration-test.yml down
             after_success:
                 -   test ${TRAVIS_BRANCH} = "7.0.x" &&
@@ -32,9 +31,10 @@ jobs:
                 -   docker-compose -f docker-compose.integration-test.yml up -d
                 -   git diff --name-only ${TRAVIS_COMMIT_RANGE} | grep docker-compose.integration-test.yml || [ ! -f docker_images/images.tar ]; DOCKER_CHANGED=$?
                 -   |
-                     if (( ${DOCKER_CHANGED} == 0 )); then
-                       docker save $(docker images --format '{{.Repository}}:{{.Tag}}') -o docker_images/images.tar
-                     fi
+                        if (( ${DOCKER_CHANGED} == 0 )); then
+                          docker save $(docker images --format '{{.Repository}}:{{.Tag}}') -o docker_images/images.tar
+                        fi
+            name: "Tests"
             script:
                 -   ./gradlew test --configure-on-demand --continue --parallel
                 -   ./gradlew testIntegration --configure-on-demand --continue
