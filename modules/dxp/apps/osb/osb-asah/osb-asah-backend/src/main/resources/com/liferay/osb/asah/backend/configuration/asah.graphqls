@@ -377,6 +377,8 @@ type DXPEntityBag {
 }
 
 type Event {
+	applicationId: String,
+	assetTitle: String,
 	canonicalUrl: String,
 	createDate: String,
 	name: String,

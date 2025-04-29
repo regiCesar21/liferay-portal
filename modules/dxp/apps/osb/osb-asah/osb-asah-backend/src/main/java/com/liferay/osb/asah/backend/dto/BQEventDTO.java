@@ -25,6 +25,8 @@ import java.util.Date;
 public class BQEventDTO {
 
 	public BQEventDTO(BQEvent bqEvent) {
+		_applicationId = bqEvent.getApplicationId();
+		_assetTitle = bqEvent.getAssetTitle();
 		_createDate = bqEvent.getCreateDate();
 		_canonicalUrl = bqEvent.getCanonicalUrl();
 		_name = bqEvent.getEventId();
@@ -33,6 +35,14 @@ public class BQEventDTO {
 		_pageTitle = bqEvent.getTitle();
 		_referrer = bqEvent.getReferrer();
 		_url = bqEvent.getURL();
+	}
+
+	public String getApplicationId() {
+		return _applicationId;
+	}
+
+	public String getAssetTitle() {
+		return _assetTitle;
 	}
 
 	public String getCanonicalUrl() {
@@ -77,6 +87,8 @@ public class BQEventDTO {
 		return _url;
 	}
 
+	private final String _applicationId;
+	private final String _assetTitle;
 	private final String _canonicalUrl;
 	private final Date _createDate;
 	private final String _name;
