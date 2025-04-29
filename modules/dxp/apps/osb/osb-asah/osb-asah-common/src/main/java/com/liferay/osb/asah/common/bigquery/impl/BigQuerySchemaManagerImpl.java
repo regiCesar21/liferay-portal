@@ -97,7 +97,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 			return;
 		}
 
-		String backupDatasetId = projectId + "_bkp";
+		String backupDatasetId = _getBackupDatasetId(projectId);
 
 		_createDataset(
 			backupDatasetId,
@@ -260,7 +260,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 
 		_deleteDataTransferConfiguration(projectId);
 
-		_deleteDataset(projectId + "_bkp");
+		_deleteDataset(_getBackupDatasetId(projectId));
 	}
 
 	@Override
@@ -452,7 +452,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 				).setDataSourceId(
 					"cross_region_copy"
 				).setDisplayName(
-					"DS_BKP_" + sourceDatasetId
+					_getTransferConfigDisplayName(sourceDatasetId)
 				).setDestinationDatasetId(
 					destinationDatasetId
 				).setParams(
@@ -668,6 +668,10 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		return null;
 	}
 
+	private String _getBackupDatasetId(String projectId) {
+		return projectId + "_bkp";
+	}
+
 	private Set<String> _getExpirableTableNames() {
 		Set<String> tableNames = new HashSet<>();
 
@@ -693,6 +697,10 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 			_readFile("/bigquery/identity_activity.sql"),
 			new String[] {"$[AC_PROJECT_ID]", "$[TIME_ZONE_ID]"},
 			new String[] {projectId, "timeZoneId"});
+	}
+
+	private String _getTransferConfigDisplayName(String projectId) {
+		return "DS_BKP_" + projectId;
 	}
 
 	@PostConstruct
