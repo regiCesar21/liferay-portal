@@ -259,11 +259,11 @@ public abstract class BaseAttachmentResourceTestCase {
 		String externalReferenceCode =
 			testGetProductByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
 
-		Page<Attachment> attachmentPage =
+		Page<Attachment> attachmentsPage =
 			attachmentResource.getProductByExternalReferenceCodeAttachmentsPage(
 				externalReferenceCode, null);
 
-		int totalCount = GetterUtil.getInteger(attachmentPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(attachmentsPage.getTotalCount());
 
 		Attachment attachment1 =
 			testGetProductByExternalReferenceCodeAttachmentsPage_addAttachment(
@@ -449,11 +449,11 @@ public abstract class BaseAttachmentResourceTestCase {
 		String externalReferenceCode =
 			testGetProductByExternalReferenceCodeImagesPage_getExternalReferenceCode();
 
-		Page<Attachment> attachmentPage =
+		Page<Attachment> attachmentsPage =
 			attachmentResource.getProductByExternalReferenceCodeImagesPage(
 				externalReferenceCode, null);
 
-		int totalCount = GetterUtil.getInteger(attachmentPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(attachmentsPage.getTotalCount());
 
 		Attachment attachment1 =
 			testGetProductByExternalReferenceCodeImagesPage_addAttachment(
@@ -617,10 +617,10 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		Long id = testGetProductIdAttachmentsPage_getId();
 
-		Page<Attachment> attachmentPage =
+		Page<Attachment> attachmentsPage =
 			attachmentResource.getProductIdAttachmentsPage(id, null);
 
-		int totalCount = GetterUtil.getInteger(attachmentPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(attachmentsPage.getTotalCount());
 
 		Attachment attachment1 = testGetProductIdAttachmentsPage_addAttachment(
 			id, randomAttachment());
@@ -771,10 +771,10 @@ public abstract class BaseAttachmentResourceTestCase {
 	public void testGetProductIdImagesPageWithPagination() throws Exception {
 		Long id = testGetProductIdImagesPage_getId();
 
-		Page<Attachment> attachmentPage =
+		Page<Attachment> attachmentsPage =
 			attachmentResource.getProductIdImagesPage(id, null);
 
-		int totalCount = GetterUtil.getInteger(attachmentPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(attachmentsPage.getTotalCount());
 
 		Attachment attachment1 = testGetProductIdImagesPage_addAttachment(
 			id, randomAttachment());

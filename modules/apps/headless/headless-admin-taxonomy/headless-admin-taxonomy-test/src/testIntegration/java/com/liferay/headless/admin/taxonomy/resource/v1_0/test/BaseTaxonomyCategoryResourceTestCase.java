@@ -387,11 +387,11 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	public void testGetTaxonomyCategoryRankedPageWithPagination()
 		throws Exception {
 
-		Page<TaxonomyCategory> taxonomyCategoryPage =
+		Page<TaxonomyCategory> taxonomyCategoriesPage =
 			taxonomyCategoryResource.getTaxonomyCategoryRankedPage(null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			taxonomyCategoryPage.getTotalCount());
+			taxonomyCategoriesPage.getTotalCount());
 
 		TaxonomyCategory taxonomyCategory1 =
 			testGetTaxonomyCategoryRankedPage_addTaxonomyCategory(
@@ -679,12 +679,12 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String parentTaxonomyCategoryId =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
 
-		Page<TaxonomyCategory> taxonomyCategoryPage =
+		Page<TaxonomyCategory> taxonomyCategoriesPage =
 			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
 				parentTaxonomyCategoryId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			taxonomyCategoryPage.getTotalCount());
+			taxonomyCategoriesPage.getTotalCount());
 
 		TaxonomyCategory taxonomyCategory1 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
@@ -1170,13 +1170,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Long taxonomyVocabularyId =
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId();
 
-		Page<TaxonomyCategory> taxonomyCategoryPage =
+		Page<TaxonomyCategory> taxonomyCategoriesPage =
 			taxonomyCategoryResource.
 				getTaxonomyVocabularyTaxonomyCategoriesPage(
 					taxonomyVocabularyId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			taxonomyCategoryPage.getTotalCount());
+			taxonomyCategoriesPage.getTotalCount());
 
 		TaxonomyCategory taxonomyCategory1 =
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(

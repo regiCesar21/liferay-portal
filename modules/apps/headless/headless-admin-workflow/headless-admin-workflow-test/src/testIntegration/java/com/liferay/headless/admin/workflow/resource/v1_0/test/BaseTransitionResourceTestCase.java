@@ -250,11 +250,11 @@ public abstract class BaseTransitionResourceTestCase {
 		Long workflowInstanceId =
 			testGetWorkflowInstanceNextTransitionsPage_getWorkflowInstanceId();
 
-		Page<Transition> transitionPage =
+		Page<Transition> transitionsPage =
 			transitionResource.getWorkflowInstanceNextTransitionsPage(
 				workflowInstanceId, null);
 
-		int totalCount = GetterUtil.getInteger(transitionPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(transitionsPage.getTotalCount());
 
 		Transition transition1 =
 			testGetWorkflowInstanceNextTransitionsPage_addTransition(
@@ -427,11 +427,11 @@ public abstract class BaseTransitionResourceTestCase {
 		Long workflowTaskId =
 			testGetWorkflowTaskNextTransitionsPage_getWorkflowTaskId();
 
-		Page<Transition> transitionPage =
+		Page<Transition> transitionsPage =
 			transitionResource.getWorkflowTaskNextTransitionsPage(
 				workflowTaskId, null);
 
-		int totalCount = GetterUtil.getInteger(transitionPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(transitionsPage.getTotalCount());
 
 		Transition transition1 =
 			testGetWorkflowTaskNextTransitionsPage_addTransition(

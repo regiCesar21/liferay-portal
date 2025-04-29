@@ -576,14 +576,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Long parentKnowledgeBaseArticleId =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
 
-		Page<KnowledgeBaseArticle> knowledgeBaseArticlePage =
+		Page<KnowledgeBaseArticle> knowledgeBaseArticlesPage =
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 					parentKnowledgeBaseArticleId, null, null, null, null, null,
 					null);
 
 		int totalCount = GetterUtil.getInteger(
-			knowledgeBaseArticlePage.getTotalCount());
+			knowledgeBaseArticlesPage.getTotalCount());
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -1087,13 +1087,13 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Long knowledgeBaseFolderId =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getKnowledgeBaseFolderId();
 
-		Page<KnowledgeBaseArticle> knowledgeBaseArticlePage =
+		Page<KnowledgeBaseArticle> knowledgeBaseArticlesPage =
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 					knowledgeBaseFolderId, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			knowledgeBaseArticlePage.getTotalCount());
+			knowledgeBaseArticlesPage.getTotalCount());
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -1576,12 +1576,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		Long siteId = testGetSiteKnowledgeBaseArticlesPage_getSiteId();
 
-		Page<KnowledgeBaseArticle> knowledgeBaseArticlePage =
+		Page<KnowledgeBaseArticle> knowledgeBaseArticlesPage =
 			knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
 				siteId, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			knowledgeBaseArticlePage.getTotalCount());
+			knowledgeBaseArticlesPage.getTotalCount());
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(

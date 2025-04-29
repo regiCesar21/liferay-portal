@@ -369,11 +369,12 @@ public abstract class BaseAccountUserResourceTestCase {
 		String externalReferenceCode =
 			testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode();
 
-		Page<AccountUser> accountUserPage =
+		Page<AccountUser> accountUsersPage =
 			accountUserResource.getAccountUsersByExternalReferenceCodePage(
 				externalReferenceCode, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(accountUserPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			accountUsersPage.getTotalCount());
 
 		AccountUser accountUser1 =
 			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
@@ -785,11 +786,12 @@ public abstract class BaseAccountUserResourceTestCase {
 	public void testGetAccountUsersPageWithPagination() throws Exception {
 		Long accountId = testGetAccountUsersPage_getAccountId();
 
-		Page<AccountUser> accountUserPage =
+		Page<AccountUser> accountUsersPage =
 			accountUserResource.getAccountUsersPage(
 				accountId, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(accountUserPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			accountUsersPage.getTotalCount());
 
 		AccountUser accountUser1 = testGetAccountUsersPage_addAccountUser(
 			accountId, randomAccountUser());

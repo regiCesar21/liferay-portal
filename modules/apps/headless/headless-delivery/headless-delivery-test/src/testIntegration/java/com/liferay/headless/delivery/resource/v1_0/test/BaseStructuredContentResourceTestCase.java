@@ -508,12 +508,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long assetLibraryId =
 			testGetAssetLibraryStructuredContentsPage_getAssetLibraryId();
 
-		Page<StructuredContent> structuredContentPage =
+		Page<StructuredContent> structuredContentsPage =
 			structuredContentResource.getAssetLibraryStructuredContentsPage(
 				assetLibraryId, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			structuredContentPage.getTotalCount());
+			structuredContentsPage.getTotalCount());
 
 		StructuredContent structuredContent1 =
 			testGetAssetLibraryStructuredContentsPage_addStructuredContent(
@@ -979,12 +979,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long contentStructureId =
 			testGetContentStructureStructuredContentsPage_getContentStructureId();
 
-		Page<StructuredContent> structuredContentPage =
+		Page<StructuredContent> structuredContentsPage =
 			structuredContentResource.getContentStructureStructuredContentsPage(
 				contentStructureId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			structuredContentPage.getTotalCount());
+			structuredContentsPage.getTotalCount());
 
 		StructuredContent structuredContent1 =
 			testGetContentStructureStructuredContentsPage_addStructuredContent(
@@ -1675,12 +1675,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		Long siteId = testGetSiteStructuredContentsPage_getSiteId();
 
-		Page<StructuredContent> structuredContentPage =
+		Page<StructuredContent> structuredContentsPage =
 			structuredContentResource.getSiteStructuredContentsPage(
 				siteId, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			structuredContentPage.getTotalCount());
+			structuredContentsPage.getTotalCount());
 
 		StructuredContent structuredContent1 =
 			testGetSiteStructuredContentsPage_addStructuredContent(
@@ -2291,14 +2291,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long structuredContentFolderId =
 			testGetStructuredContentFolderStructuredContentsPage_getStructuredContentFolderId();
 
-		Page<StructuredContent> structuredContentPage =
+		Page<StructuredContent> structuredContentsPage =
 			structuredContentResource.
 				getStructuredContentFolderStructuredContentsPage(
 					structuredContentFolderId, null, null, null, null, null,
 					null);
 
 		int totalCount = GetterUtil.getInteger(
-			structuredContentPage.getTotalCount());
+			structuredContentsPage.getTotalCount());
 
 		StructuredContent structuredContent1 =
 			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(

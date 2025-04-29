@@ -285,13 +285,13 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 		String externalReferenceCode =
 			testGetPriceModifierByExternalReferenceCodePriceModifierCategoriesPage_getExternalReferenceCode();
 
-		Page<PriceModifierCategory> priceModifierCategoryPage =
+		Page<PriceModifierCategory> priceModifierCategoriesPage =
 			priceModifierCategoryResource.
 				getPriceModifierByExternalReferenceCodePriceModifierCategoriesPage(
 					externalReferenceCode, null);
 
 		int totalCount = GetterUtil.getInteger(
-			priceModifierCategoryPage.getTotalCount());
+			priceModifierCategoriesPage.getTotalCount());
 
 		PriceModifierCategory priceModifierCategory1 =
 			testGetPriceModifierByExternalReferenceCodePriceModifierCategoriesPage_addPriceModifierCategory(
@@ -603,13 +603,13 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 
 		Long id = testGetPriceModifierIdPriceModifierCategoriesPage_getId();
 
-		Page<PriceModifierCategory> priceModifierCategoryPage =
+		Page<PriceModifierCategory> priceModifierCategoriesPage =
 			priceModifierCategoryResource.
 				getPriceModifierIdPriceModifierCategoriesPage(
 					id, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			priceModifierCategoryPage.getTotalCount());
+			priceModifierCategoriesPage.getTotalCount());
 
 		PriceModifierCategory priceModifierCategory1 =
 			testGetPriceModifierIdPriceModifierCategoriesPage_addPriceModifierCategory(

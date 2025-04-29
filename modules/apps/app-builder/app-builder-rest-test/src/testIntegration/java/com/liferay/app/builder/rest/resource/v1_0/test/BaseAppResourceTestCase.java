@@ -342,10 +342,10 @@ public abstract class BaseAppResourceTestCase {
 
 	@Test
 	public void testGetAppsPageWithPagination() throws Exception {
-		Page<App> appPage = appResource.getAppsPage(
+		Page<App> appsPage = appResource.getAppsPage(
 			null, null, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(appPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(appsPage.getTotalCount());
 
 		App app1 = testGetAppsPage_addApp(randomApp());
 
@@ -658,10 +658,10 @@ public abstract class BaseAppResourceTestCase {
 		Long dataDefinitionId =
 			testGetDataDefinitionAppsPage_getDataDefinitionId();
 
-		Page<App> appPage = appResource.getDataDefinitionAppsPage(
+		Page<App> appsPage = appResource.getDataDefinitionAppsPage(
 			dataDefinitionId, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(appPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(appsPage.getTotalCount());
 
 		App app1 = testGetDataDefinitionAppsPage_addApp(
 			dataDefinitionId, randomApp());
@@ -946,10 +946,10 @@ public abstract class BaseAppResourceTestCase {
 	public void testGetSiteAppsPageWithPagination() throws Exception {
 		Long siteId = testGetSiteAppsPage_getSiteId();
 
-		Page<App> appPage = appResource.getSiteAppsPage(
+		Page<App> appsPage = appResource.getSiteAppsPage(
 			siteId, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(appPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(appsPage.getTotalCount());
 
 		App app1 = testGetSiteAppsPage_addApp(siteId, randomApp());
 

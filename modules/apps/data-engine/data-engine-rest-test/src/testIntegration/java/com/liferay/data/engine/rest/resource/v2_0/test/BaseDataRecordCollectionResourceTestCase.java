@@ -460,13 +460,13 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		Long dataDefinitionId =
 			testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId();
 
-		Page<DataRecordCollection> dataRecordCollectionPage =
+		Page<DataRecordCollection> dataRecordCollectionsPage =
 			dataRecordCollectionResource.
 				getDataDefinitionDataRecordCollectionsPage(
 					dataDefinitionId, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			dataRecordCollectionPage.getTotalCount());
+			dataRecordCollectionsPage.getTotalCount());
 
 		DataRecordCollection dataRecordCollection1 =
 			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(

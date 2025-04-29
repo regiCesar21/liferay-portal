@@ -276,13 +276,13 @@ public abstract class BaseDiscountProductResourceTestCase {
 		String externalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountProductsPage_getExternalReferenceCode();
 
-		Page<DiscountProduct> discountProductPage =
+		Page<DiscountProduct> discountProductsPage =
 			discountProductResource.
 				getDiscountByExternalReferenceCodeDiscountProductsPage(
 					externalReferenceCode, null);
 
 		int totalCount = GetterUtil.getInteger(
-			discountProductPage.getTotalCount());
+			discountProductsPage.getTotalCount());
 
 		DiscountProduct discountProduct1 =
 			testGetDiscountByExternalReferenceCodeDiscountProductsPage_addDiscountProduct(
@@ -569,12 +569,12 @@ public abstract class BaseDiscountProductResourceTestCase {
 
 		Long id = testGetDiscountIdDiscountProductsPage_getId();
 
-		Page<DiscountProduct> discountProductPage =
+		Page<DiscountProduct> discountProductsPage =
 			discountProductResource.getDiscountIdDiscountProductsPage(
 				id, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			discountProductPage.getTotalCount());
+			discountProductsPage.getTotalCount());
 
 		DiscountProduct discountProduct1 =
 			testGetDiscountIdDiscountProductsPage_addDiscountProduct(

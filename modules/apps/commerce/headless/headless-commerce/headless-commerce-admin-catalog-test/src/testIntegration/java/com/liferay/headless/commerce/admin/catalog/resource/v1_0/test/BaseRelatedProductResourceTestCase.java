@@ -333,13 +333,13 @@ public abstract class BaseRelatedProductResourceTestCase {
 		String externalReferenceCode =
 			testGetProductByExternalReferenceCodeRelatedProductsPage_getExternalReferenceCode();
 
-		Page<RelatedProduct> relatedProductPage =
+		Page<RelatedProduct> relatedProductsPage =
 			relatedProductResource.
 				getProductByExternalReferenceCodeRelatedProductsPage(
 					externalReferenceCode, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			relatedProductPage.getTotalCount());
+			relatedProductsPage.getTotalCount());
 
 		RelatedProduct relatedProduct1 =
 			testGetProductByExternalReferenceCodeRelatedProductsPage_addRelatedProduct(
@@ -529,12 +529,12 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 		Long id = testGetProductIdRelatedProductsPage_getId();
 
-		Page<RelatedProduct> relatedProductPage =
+		Page<RelatedProduct> relatedProductsPage =
 			relatedProductResource.getProductIdRelatedProductsPage(
 				id, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			relatedProductPage.getTotalCount());
+			relatedProductsPage.getTotalCount());
 
 		RelatedProduct relatedProduct1 =
 			testGetProductIdRelatedProductsPage_addRelatedProduct(

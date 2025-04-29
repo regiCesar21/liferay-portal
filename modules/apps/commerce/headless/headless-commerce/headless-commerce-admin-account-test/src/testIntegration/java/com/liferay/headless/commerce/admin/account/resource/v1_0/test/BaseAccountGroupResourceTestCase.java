@@ -562,11 +562,11 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 	@Test
 	public void testGetAccountGroupsPageWithPagination() throws Exception {
-		Page<AccountGroup> accountGroupPage =
+		Page<AccountGroup> accountGroupsPage =
 			accountGroupResource.getAccountGroupsPage(null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			accountGroupPage.getTotalCount());
+			accountGroupsPage.getTotalCount());
 
 		AccountGroup accountGroup1 = testGetAccountGroupsPage_addAccountGroup(
 			randomAccountGroup());

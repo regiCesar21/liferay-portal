@@ -414,13 +414,13 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 		String externalReferenceCode =
 			testGetProductByExternalReferenceCodeProductAccountGroupsPage_getExternalReferenceCode();
 
-		Page<ProductAccountGroup> productAccountGroupPage =
+		Page<ProductAccountGroup> productAccountGroupsPage =
 			productAccountGroupResource.
 				getProductByExternalReferenceCodeProductAccountGroupsPage(
 					externalReferenceCode, null);
 
 		int totalCount = GetterUtil.getInteger(
-			productAccountGroupPage.getTotalCount());
+			productAccountGroupsPage.getTotalCount());
 
 		ProductAccountGroup productAccountGroup1 =
 			testGetProductByExternalReferenceCodeProductAccountGroupsPage_addProductAccountGroup(
@@ -625,12 +625,12 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 
 		Long id = testGetProductIdProductAccountGroupsPage_getId();
 
-		Page<ProductAccountGroup> productAccountGroupPage =
+		Page<ProductAccountGroup> productAccountGroupsPage =
 			productAccountGroupResource.getProductIdProductAccountGroupsPage(
 				id, null);
 
 		int totalCount = GetterUtil.getInteger(
-			productAccountGroupPage.getTotalCount());
+			productAccountGroupsPage.getTotalCount());
 
 		ProductAccountGroup productAccountGroup1 =
 			testGetProductIdProductAccountGroupsPage_addProductAccountGroup(

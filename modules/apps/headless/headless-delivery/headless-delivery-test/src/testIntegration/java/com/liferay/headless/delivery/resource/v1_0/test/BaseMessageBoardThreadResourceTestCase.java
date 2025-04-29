@@ -502,13 +502,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Long messageBoardSectionId =
 			testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId();
 
-		Page<MessageBoardThread> messageBoardThreadPage =
+		Page<MessageBoardThread> messageBoardThreadsPage =
 			messageBoardThreadResource.
 				getMessageBoardSectionMessageBoardThreadsPage(
 					messageBoardSectionId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			messageBoardThreadPage.getTotalCount());
+			messageBoardThreadsPage.getTotalCount());
 
 		MessageBoardThread messageBoardThread1 =
 			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
@@ -930,12 +930,12 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	public void testGetMessageBoardThreadsRankedPageWithPagination()
 		throws Exception {
 
-		Page<MessageBoardThread> messageBoardThreadPage =
+		Page<MessageBoardThread> messageBoardThreadsPage =
 			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
 				null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			messageBoardThreadPage.getTotalCount());
+			messageBoardThreadsPage.getTotalCount());
 
 		MessageBoardThread messageBoardThread1 =
 			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
@@ -1498,12 +1498,12 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		Long siteId = testGetSiteMessageBoardThreadsPage_getSiteId();
 
-		Page<MessageBoardThread> messageBoardThreadPage =
+		Page<MessageBoardThread> messageBoardThreadsPage =
 			messageBoardThreadResource.getSiteMessageBoardThreadsPage(
 				siteId, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			messageBoardThreadPage.getTotalCount());
+			messageBoardThreadsPage.getTotalCount());
 
 		MessageBoardThread messageBoardThread1 =
 			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(

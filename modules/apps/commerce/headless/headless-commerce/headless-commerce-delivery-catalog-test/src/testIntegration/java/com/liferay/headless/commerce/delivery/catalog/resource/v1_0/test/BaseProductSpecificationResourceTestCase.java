@@ -271,13 +271,13 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		Long productId =
 			testGetChannelProductProductSpecificationsPage_getProductId();
 
-		Page<ProductSpecification> productSpecificationPage =
+		Page<ProductSpecification> productSpecificationsPage =
 			productSpecificationResource.
 				getChannelProductProductSpecificationsPage(
 					channelId, productId, null);
 
 		int totalCount = GetterUtil.getInteger(
-			productSpecificationPage.getTotalCount());
+			productSpecificationsPage.getTotalCount());
 
 		ProductSpecification productSpecification1 =
 			testGetChannelProductProductSpecificationsPage_addProductSpecification(

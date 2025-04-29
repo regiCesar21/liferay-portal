@@ -383,9 +383,10 @@ public abstract class BaseCartResourceTestCase {
 	public void testGetChannelCartsPageWithPagination() throws Exception {
 		Long channelId = testGetChannelCartsPage_getChannelId();
 
-		Page<Cart> cartPage = cartResource.getChannelCartsPage(channelId, null);
+		Page<Cart> cartsPage = cartResource.getChannelCartsPage(
+			channelId, null);
 
-		int totalCount = GetterUtil.getInteger(cartPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(cartsPage.getTotalCount());
 
 		Cart cart1 = testGetChannelCartsPage_addCart(channelId, randomCart());
 

@@ -256,12 +256,12 @@ public abstract class BaseProductOptionValueResourceTestCase {
 
 		Long id = testGetProductOptionIdProductOptionValuesPage_getId();
 
-		Page<ProductOptionValue> productOptionValuePage =
+		Page<ProductOptionValue> productOptionValuesPage =
 			productOptionValueResource.
 				getProductOptionIdProductOptionValuesPage(id, null);
 
 		int totalCount = GetterUtil.getInteger(
-			productOptionValuePage.getTotalCount());
+			productOptionValuesPage.getTotalCount());
 
 		ProductOptionValue productOptionValue1 =
 			testGetProductOptionIdProductOptionValuesPage_addProductOptionValue(
