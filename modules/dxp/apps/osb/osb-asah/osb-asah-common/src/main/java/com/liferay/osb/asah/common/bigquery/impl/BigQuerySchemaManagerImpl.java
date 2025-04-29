@@ -27,6 +27,12 @@ import com.google.cloud.bigquery.TableId;
 import com.google.cloud.bigquery.TableInfo;
 import com.google.cloud.bigquery.TimePartitioning;
 import com.google.cloud.bigquery.ViewDefinition;
+import com.google.cloud.bigquery.datatransfer.v1.CreateTransferConfigRequest;
+import com.google.cloud.bigquery.datatransfer.v1.DataTransferServiceClient;
+import com.google.cloud.bigquery.datatransfer.v1.LocationName;
+import com.google.cloud.bigquery.datatransfer.v1.TransferConfig;
+import com.google.protobuf.Struct;
+import com.google.protobuf.Value;
 
 import com.liferay.osb.asah.common.bigquery.BigQuerySchemaManager;
 import com.liferay.osb.asah.common.constants.PreferenceConstants;
@@ -94,6 +100,8 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		_createDataset(
 			backupDatasetId,
 			_backupLocations.get(_bigQueryOptions.getLocation()));
+
+		_createTransferConfiguration(backupDatasetId, projectId);
 	}
 
 	public void createFunction(String functionName, String projectId) {
@@ -429,6 +437,71 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		}
 
 		return table;
+	}
+
+	private void _createTransferConfiguration(
+		String destinationDatasetId, String sourceDatasetId) {
+
+		try (DataTransferServiceClient dataTransferServiceClient =
+				DataTransferServiceClient.create()) {
+
+			CreateTransferConfigRequest.Builder builder =
+				CreateTransferConfigRequest.newBuilder();
+
+			builder.setParent(
+				LocationName.of(
+					sourceDatasetId, _bigQueryOptions.getLocation()
+				).toString());
+			builder.setTransferConfig(
+				TransferConfig.newBuilder(
+				).setDataSourceId(
+					"cross_region_copy"
+				).setDisplayName(
+					"DS_BKP_" + sourceDatasetId
+				).setDestinationDatasetId(
+					destinationDatasetId
+				).setParams(
+					Struct.newBuilder(
+					).putFields(
+						"source_dataset_id",
+						Value.newBuilder(
+						).setStringValue(
+							sourceDatasetId
+						).build()
+					).putFields(
+						"source_project_id",
+						Value.newBuilder(
+						).setStringValue(
+							_bigQueryOptions.getProjectId()
+						).build()
+					).putFields(
+						"overwrite_destination_table",
+						Value.newBuilder(
+						).setBoolValue(
+							Boolean.TRUE
+						).build()
+					)
+				).setSchedule(
+					"every 24 hours"
+				).build());
+
+			CreateTransferConfigRequest createTransferConfigRequest =
+				builder.build();
+
+			TransferConfig transferConfig =
+				dataTransferServiceClient.createTransferConfig(
+					createTransferConfigRequest);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					String.format(
+						"Transfer config %s created successfully",
+						transferConfig.getName()));
+			}
+		}
+		catch (Exception exception) {
+			_log.error("Unable to create transfer config", exception);
+		}
 	}
 
 	private Table _createView(
