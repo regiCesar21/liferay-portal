@@ -5,10 +5,14 @@
 
 package com.liferay.osb.asah.common.bigquery;
 
+import java.util.Set;
+
 /**
  * @author Marcellus Tavares
  */
 public interface BigQuerySchemaManager {
+
+	public void createBackup(String projectId);
 
 	public void createFunction(String functionName, String projectId);
 
@@ -20,9 +24,13 @@ public interface BigQuerySchemaManager {
 
 	public void createTables(String projectId);
 
+	public void deleteBackup(String projectId);
+
 	public void deleteSchema(String projectId);
 
 	public void dropTable(String projectId, String tableName);
+
+	public Set<String> getDatasetIds();
 
 	public void updateTablesExpiration(Long expirationTime, String projectId);
 

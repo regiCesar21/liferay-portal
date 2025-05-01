@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.common.bigquery.impl;
 
+import com.google.api.gax.paging.Page;
 import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.bigquery.BigQueryException;
 import com.google.cloud.bigquery.BigQueryOptions;
@@ -60,6 +61,7 @@ import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -291,6 +293,24 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 				String.format(
 					"Table %s.%s deleted successfully", projectId, tableName));
 		}
+	}
+
+	public Set<String> getDatasetIds() {
+		Set<String> datasetIds = new HashSet<>();
+
+		Page<Dataset> datasetPage = _bigQuery.listDatasets(
+			BigQuery.DatasetListOption.pageSize(500));
+
+		while (datasetPage.hasNextPage()) {
+			IterableUtils.forEach(
+				datasetPage.getValues(),
+				dataset -> datasetIds.add(
+					String.valueOf(dataset.getDatasetId())));
+
+			datasetPage = datasetPage.getNextPage();
+		}
+
+		return datasetIds;
 	}
 
 	@Override
@@ -585,12 +605,14 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		}
 	}
 
-	private void _deleteDataTransferConfiguration(String displayName) {
+	private void _deleteDataTransferConfiguration(String projectId) {
 		try (DataTransferServiceClient dataTransferServiceClient =
 				DataTransferServiceClient.create()) {
 
+			String displayName = _getTransferConfigDisplayName(projectId);
+
 			TransferConfig transferConfig = _findTransferConfigByDisplayName(
-				dataTransferServiceClient, displayName);
+				displayName);
 
 			if (transferConfig == null) {
 				_log.error(
@@ -615,7 +637,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		catch (Exception exception) {
 			_log.error(
 				String.format(
-					"Unable to delete Data Transfer Config %s", displayName),
+					"Unable to delete Data Transfer Config for %s", projectId),
 				exception);
 		}
 	}
@@ -637,31 +659,11 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 	}
 
 	private TransferConfig _findTransferConfigByDisplayName(
-		DataTransferServiceClient dataTransferServiceClient,
 		String displayName) {
 
-		LocationName locationName = LocationName.of(
-			_bigQueryOptions.getProjectId(),
-			_backupLocations.get(_bigQueryOptions.getLocation()));
-
-		DataTransferServiceClient.ListTransferConfigsPagedResponse
-			pagedResponse = dataTransferServiceClient.listTransferConfigs(
-				ListTransferConfigsRequest.newBuilder(
-				).addDataSourceIds(
-					"cross_region_copy"
-				).setParent(
-					locationName.toString()
-				).build());
-
-		for (DataTransferServiceClient.ListTransferConfigsPage
-				listTransferConfigsPage : pagedResponse.iteratePages()) {
-
-			for (TransferConfig transferConfig :
-					listTransferConfigsPage.iterateAll()) {
-
-				if (displayName.equals(transferConfig.getDisplayName())) {
-					return transferConfig;
-				}
+		for (TransferConfig transferConfig : _getTransferConfigs()) {
+			if (displayName.equals(transferConfig.getDisplayName())) {
+				return transferConfig;
 			}
 		}
 
@@ -701,6 +703,40 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 
 	private String _getTransferConfigDisplayName(String projectId) {
 		return "DS_BKP_" + projectId;
+	}
+
+	private Set<TransferConfig> _getTransferConfigs() {
+		Set<TransferConfig> transferConfigs = new HashSet<>();
+
+		LocationName locationName = LocationName.of(
+			_bigQueryOptions.getProjectId(),
+			_backupLocations.get(_bigQueryOptions.getLocation()));
+
+		try (DataTransferServiceClient dataTransferServiceClient =
+				DataTransferServiceClient.create()) {
+
+			DataTransferServiceClient.ListTransferConfigsPagedResponse
+				pagedResponse = dataTransferServiceClient.listTransferConfigs(
+					ListTransferConfigsRequest.newBuilder(
+					).addDataSourceIds(
+						"cross_region_copy"
+					).setParent(
+						locationName.toString()
+					).build());
+
+			for (DataTransferServiceClient.ListTransferConfigsPage
+					listTransferConfigsPage : pagedResponse.iteratePages()) {
+
+				IterableUtils.forEach(
+					listTransferConfigsPage.getValues(), transferConfigs::add);
+			}
+
+			return transferConfigs;
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to get transfer configs", exception);
+		}
 	}
 
 	@PostConstruct
