@@ -528,6 +528,10 @@ public class EventIngestionPipeline {
 	}
 
 	private static String _formatFieldValue(String fieldValue) {
+		if (fieldValue == null) {
+			return null;
+		}
+
 		return StringUtils.replaceAll(
 			StringUtils.replaceAll(
 				StringUtils.replaceAll(
@@ -618,16 +622,24 @@ public class EventIngestionPipeline {
 			tableRow.set("experimentId", Long.parseLong(experimentId));
 		}
 
+		Map<String, String> eventProperties = analyticsEvent.eventProperties;
+
+		String externalReferenceCode = eventProperties.getOrDefault(
+			"externalReferenceCode", eventProperties.get("erc"));
+
+		tableRow.set(
+			"externalReferenceCode", _formatFieldValue(externalReferenceCode));
+
 		tableRow.set("id", analyticsEvent.id);
 		tableRow.set("keywords", _formatFieldValue(context.get("keywords")));
 		tableRow.set("languageId", context.get("languageId"));
+		tableRow.set(
+			"objectType", _formatFieldValue(eventProperties.get("objectType")));
 		tableRow.set("platformName", context.get("platformName"));
 		tableRow.set("projectId", analyticsEvent.projectId);
 		tableRow.set("projectTimeZoneId", analyticsEvent.projectTimeZoneId);
 
 		List<TableRow> propertyTableRows = new ArrayList<>();
-
-		Map<String, String> eventProperties = analyticsEvent.eventProperties;
 
 		for (Map.Entry<String, String> entry : eventProperties.entrySet()) {
 			TableRow propertyTableRow = new TableRow();
