@@ -814,6 +814,11 @@
 				"type": "INT64"
 			},
 			{
+				"mode": "NULLABLE",
+				"name": "externalReferenceCode",
+				"type": "STRING"
+			},
+			{
 				"mode": "REQUIRED",
 				"name": "id",
 				"type": "STRING"
@@ -826,6 +831,11 @@
 			{
 				"mode": "NULLABLE",
 				"name": "languageId",
+				"type": "STRING"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "objectType",
 				"type": "STRING"
 			},
 			{

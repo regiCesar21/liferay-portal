@@ -103,9 +103,12 @@ public class BQEvent {
 			Objects.equals(_eventDate, bqEvent._eventDate) &&
 			Objects.equals(_eventId, bqEvent._eventId) &&
 			Objects.equals(_experienceId, bqEvent._experienceId) &&
+			Objects.equals(
+				_externalReferenceCode, bqEvent._externalReferenceCode) &&
 			Objects.equals(_id, bqEvent._id) &&
 			Objects.equals(_keywords, bqEvent._keywords) &&
 			Objects.equals(_languageId, bqEvent._languageId) &&
+			Objects.equals(_objectType, bqEvent._objectType) &&
 			Objects.equals(_platformName, bqEvent._platformName) &&
 			Objects.equals(_projectTimeZoneId, bqEvent._projectTimeZoneId) &&
 			Objects.equals(_properties, bqEvent._properties) &&
@@ -228,6 +231,11 @@ public class BQEvent {
 	}
 
 	@BigQueryColumn
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	@BigQueryColumn
 	public String getId() {
 		return _id;
 	}
@@ -240,6 +248,11 @@ public class BQEvent {
 	@BigQueryColumn
 	public String getLanguageId() {
 		return _languageId;
+	}
+
+	@BigQueryColumn
+	public String getObjectType() {
+		return _objectType;
 	}
 
 	@BigQueryColumn
@@ -304,9 +317,10 @@ public class BQEvent {
 			_channelId, _city, _contentLanguageId, _context, _country,
 			_createDate, _dataSourceId, _description, _deviceType,
 			_emailAddressHashed, _eventDate, _eventId, _experienceId,
-			_experimentId, _id, _keywords, _languageId, _platformName,
-			_projectTimeZoneId, _properties, _referrer, _region, _sessionId,
-			_timezoneOffset, _title, _url, _userId, _variantId);
+			_experimentId, _externalReferenceCode, _id, _keywords, _languageId,
+			_objectType, _platformName, _projectTimeZoneId, _properties,
+			_referrer, _region, _sessionId, _timezoneOffset, _title, _url,
+			_userId, _variantId);
 	}
 
 	public void setApplicationId(String applicationId) {
@@ -395,6 +409,10 @@ public class BQEvent {
 		_experimentId = experimentId;
 	}
 
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -405,6 +423,10 @@ public class BQEvent {
 
 	public void setLanguageId(String languageId) {
 		_languageId = languageId;
+	}
+
+	public void setObjectType(String objectType) {
+		_objectType = objectType;
 	}
 
 	public void setPlatformName(String platformName) {
@@ -503,9 +525,11 @@ public class BQEvent {
 	private String _eventId;
 	private String _experienceId;
 	private Long _experimentId;
+	private String _externalReferenceCode;
 	private String _id;
 	private String _keywords;
 	private String _languageId;
+	private String _objectType;
 	private String _platformName;
 	private String _projectTimeZoneId;
 	private List<Property> _properties = new ArrayList<>();
