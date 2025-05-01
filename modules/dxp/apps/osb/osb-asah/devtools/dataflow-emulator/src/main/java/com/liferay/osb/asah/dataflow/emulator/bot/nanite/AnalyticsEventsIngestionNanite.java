@@ -172,6 +172,10 @@ public class AnalyticsEventsIngestionNanite {
 	}
 
 	private String _formatFieldValue(String fieldValue) {
+		if (fieldValue == null) {
+			return null;
+		}
+
 		return StringUtils.replaceAll(
 			StringUtils.trim(fieldValue), "\\\\", "\\\\\\\\");
 	}
@@ -503,13 +507,23 @@ public class AnalyticsEventsIngestionNanite {
 			bqEvent.setExperimentId(Long.valueOf(experimentId));
 		}
 
+		Map<String, String> eventProperties =
+			analyticsEvent.getEventProperties();
+
+		String externalReferenceCode = eventProperties.getOrDefault(
+			"externalReferenceCode", eventProperties.get("erc"));
+
+		bqEvent.setExternalReferenceCode(
+			_formatFieldValue(externalReferenceCode));
+
 		bqEvent.setId(analyticsEvent.getId());
 		bqEvent.setKeywords(_formatFieldValue(context.get("keywords")));
 		bqEvent.setLanguageId(context.get("languageId"));
+		bqEvent.setObjectType(
+			_formatFieldValue(eventProperties.get("objectType")));
 		bqEvent.setPlatformName(context.get("platformName"));
 		bqEvent.setProjectTimeZoneId(analyticsEvent.getProjectTimeZoneId());
-		bqEvent.setProperties(
-			_parseBQEventProperties(analyticsEvent.getEventProperties()));
+		bqEvent.setProperties(_parseBQEventProperties(eventProperties));
 		bqEvent.setReferrer(context.get("referrer"));
 		bqEvent.setRegion("Local Network");
 		bqEvent.setSessionId(sessionContext.id);
