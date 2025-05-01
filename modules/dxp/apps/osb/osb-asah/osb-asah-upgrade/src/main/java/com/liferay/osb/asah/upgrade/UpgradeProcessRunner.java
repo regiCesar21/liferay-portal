@@ -8,6 +8,7 @@ package com.liferay.osb.asah.upgrade;
 import com.liferay.osb.asah.common.dog.ProjectDog;
 import com.liferay.osb.asah.common.entity.Project;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
+import com.liferay.osb.asah.upgrade.v4_13_0.BigQueryBackupUpgradeStep;
 
 import java.util.List;
 
@@ -19,9 +20,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -50,16 +48,10 @@ public class UpgradeProcessRunner {
 		try {
 			ProjectIdThreadLocal.setGlobalContext(true);
 
-			DatabasePopulatorUtils.execute(
-				new ResourceDatabasePopulator(
-					new ClassPathResource("v4_12_0/upgrade_global.sql")),
-				_dataSource);
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"ProjectFeature table has been been successfully created " +
-						"in the global namespace");
-			}
+			_bigQueryBackupUpgradeStep.upgrade("");
+		}
+		catch (Exception exception) {
+			throw new RuntimeException("Failed global upgrades", exception);
 		}
 		finally {
 			ProjectIdThreadLocal.setGlobalContext(false);
@@ -141,6 +133,9 @@ public class UpgradeProcessRunner {
 
 	private static final Log _log = LogFactory.getLog(
 		UpgradeProcessRunner.class);
+
+	@Autowired
+	private BigQueryBackupUpgradeStep _bigQueryBackupUpgradeStep;
 
 	@Autowired
 	private DataSource _dataSource;
