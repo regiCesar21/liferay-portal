@@ -631,13 +631,13 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					String.format(
-						"Data Transfer Config %s deleted", displayName));
+						"Data transfer config %s deleted", displayName));
 			}
 		}
 		catch (Exception exception) {
 			_log.error(
 				String.format(
-					"Unable to delete Data Transfer Config for %s", projectId),
+					"Unable to delete data transfer config for %s", projectId),
 				exception);
 		}
 	}
