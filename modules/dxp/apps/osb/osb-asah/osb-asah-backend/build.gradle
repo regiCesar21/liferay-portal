@@ -20,8 +20,8 @@ configurations.all {
 }
 
 dependencies {
-	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.13.5"
-	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-json-org", version: "2.13.5"
+	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.18.2"
+	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-json-org", version: "2.18.2"
 	api group: "com.graphql-java", name: "graphql-java", version: "22.3"
 	api group: "io.improbable", name: "keanu", version: "0.0.26"
 	api group: "org.everit.json", name: "org.everit.json.schema", version: "1.5.1"

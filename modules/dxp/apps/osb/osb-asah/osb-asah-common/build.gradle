@@ -25,9 +25,9 @@ configurations.all {
 
 dependencies {
 	api group: "com.esotericsoftware", name: "kryo", version: "5.2.0"
-	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.13.5"
-	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-json-org", version: "2.13.5"
-	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jsr310", version: "2.13.5"
+	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.18.2"
+	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-json-org", version: "2.18.2"
+	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jsr310", version: "2.18.2"
 	api group: "com.github.ben-manes.caffeine", name: "caffeine", version: "3.2.0"
 	api group: "com.google.cloud", name: "google-cloud-bigquery", version: "2.22.0"
 	api group: "com.google.cloud", name: "google-cloud-bigquerydatatransfer", version: "2.60.0"
