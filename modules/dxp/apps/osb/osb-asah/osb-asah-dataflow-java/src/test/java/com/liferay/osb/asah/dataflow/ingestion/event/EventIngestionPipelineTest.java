@@ -303,9 +303,11 @@ public class EventIngestionPipelineTest {
 		tableRow.set("eventDate", "2017-11-10T09:34:45.345Z");
 		tableRow.set("eventId", "pageViewed");
 		tableRow.set("experienceId", null);
+		tableRow.set("externalReferenceCode", null);
 		tableRow.set("id", "1");
 		tableRow.set("keywords", null);
 		tableRow.set("languageId", null);
+		tableRow.set("objectType", null);
 		tableRow.set("platformName", null);
 		tableRow.set("projectId", "test");
 		tableRow.set("projectTimeZoneId", "UTC");
@@ -399,9 +401,11 @@ public class EventIngestionPipelineTest {
 		tableRow.set("eventDate", "2017-11-10T09:34:45.345Z");
 		tableRow.set("eventId", "pageViewed");
 		tableRow.set("experienceId", null);
+		tableRow.set("externalReferenceCode", null);
 		tableRow.set("id", "1");
 		tableRow.set("keywords", null);
 		tableRow.set("languageId", null);
+		tableRow.set("objectType", null);
 		tableRow.set("platformName", null);
 		tableRow.set("projectId", "test");
 		tableRow.set("projectTimeZoneId", "UTC");
@@ -496,9 +500,11 @@ public class EventIngestionPipelineTest {
 		tableRow.set("eventDate", "2017-11-10T09:34:45.345Z");
 		tableRow.set("eventId", "pageViewed");
 		tableRow.set("experienceId", null);
+		tableRow.set("externalReferenceCode", null);
 		tableRow.set("id", "1");
 		tableRow.set("keywords", null);
 		tableRow.set("languageId", null);
+		tableRow.set("objectType", null);
 		tableRow.set("platformName", null);
 		tableRow.set("projectId", "test");
 		tableRow.set("projectTimeZoneId", "UTC");
