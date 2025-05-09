@@ -15,6 +15,7 @@ import com.liferay.osb.asah.common.model.JobRunFrequency;
 import com.liferay.osb.asah.common.model.JobRunStatus;
 import com.liferay.osb.asah.common.model.JobRunsMonthlyStatistics;
 import com.liferay.osb.asah.common.model.Sort;
+import com.liferay.osb.asah.common.model.TriggerContext;
 import com.liferay.osb.asah.common.repository.JobRepository;
 import com.liferay.osb.asah.common.repository.JobRunRepository;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
@@ -40,7 +41,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.support.CronSequenceGenerator;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
 /**
@@ -169,11 +170,12 @@ public class JobRunDog {
 
 		LocalDateTime nowLocalDateTime = LocalDateTime.now(ZoneOffset.UTC);
 
-		CronSequenceGenerator cronSequenceGenerator = new CronSequenceGenerator(
+		CronTrigger cronTrigger = new CronTrigger(
 			jobRunFrequency.getCronExpression(), TimeZone.getTimeZone("UTC"));
 
 		while (true) {
-			startDate = cronSequenceGenerator.next(startDate);
+			startDate = cronTrigger.nextExecutionTime(
+				new TriggerContext(null, startDate, startDate));
 
 			LocalDateTime nextJobRunLocalDateTime = DateUtil.toLocalDateTime(
 				startDate, ZoneOffset.UTC);

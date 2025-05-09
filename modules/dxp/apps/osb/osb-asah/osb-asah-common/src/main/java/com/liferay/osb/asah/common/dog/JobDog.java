@@ -20,6 +20,7 @@ import com.liferay.osb.asah.common.model.JobRunsMonthlyStatistics;
 import com.liferay.osb.asah.common.model.JobStatus;
 import com.liferay.osb.asah.common.model.JobType;
 import com.liferay.osb.asah.common.model.Sort;
+import com.liferay.osb.asah.common.model.TriggerContext;
 import com.liferay.osb.asah.common.repository.JobRepository;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
@@ -42,7 +43,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.support.CronSequenceGenerator;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
 /**
@@ -118,10 +119,13 @@ public class JobDog {
 			startDate = DateUtil.toUTCDate(jobRun.getCreateLocalDateTime());
 		}
 
-		CronSequenceGenerator cronSequenceGenerator = new CronSequenceGenerator(
+		CronTrigger cronTrigger = new CronTrigger(
 			jobRunFrequency.getCronExpression(), TimeZone.getTimeZone("UTC"));
 
-		return DateUtil.toUTCString(cronSequenceGenerator.next(startDate));
+		Date nextExecutionTime = cronTrigger.nextExecutionTime(
+			new TriggerContext(null, null, startDate));
+
+		return DateUtil.toUTCString(nextExecutionTime);
 	}
 
 	public Page<Job> getJobPage(
