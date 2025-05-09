@@ -27,6 +27,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.util.WebUtils;
 
 /**
  * @author Leslie Wong
@@ -96,7 +97,7 @@ public class OSBAsahErrorAttributes extends DefaultErrorAttributes {
 	private String _getPath(HttpServletRequest httpServletRequest) {
 		String forwardRequestURI = String.valueOf(
 			httpServletRequest.getAttribute(
-				RequestDispatcher.FORWARD_REQUEST_URI));
+				WebUtils.FORWARD_REQUEST_URI_ATTRIBUTE));
 
 		if (StringUtils.isNotBlank(forwardRequestURI)) {
 			return forwardRequestURI;
@@ -104,7 +105,7 @@ public class OSBAsahErrorAttributes extends DefaultErrorAttributes {
 
 		String forwardServletPath = String.valueOf(
 			httpServletRequest.getAttribute(
-				RequestDispatcher.FORWARD_SERVLET_PATH));
+				WebUtils.FORWARD_SERVLET_PATH_ATTRIBUTE));
 
 		if (StringUtils.isNotBlank(forwardServletPath)) {
 			return forwardServletPath;
@@ -112,7 +113,7 @@ public class OSBAsahErrorAttributes extends DefaultErrorAttributes {
 
 		return String.valueOf(
 			httpServletRequest.getAttribute(
-				RequestDispatcher.ERROR_REQUEST_URI));
+				WebUtils.ERROR_REQUEST_URI_ATTRIBUTE));
 	}
 
 	private static final Log _log = LogFactory.getLog(
