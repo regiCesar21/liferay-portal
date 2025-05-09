@@ -32,6 +32,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ForwardedHeaderUtils;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UrlPathHelper;
@@ -199,8 +200,9 @@ public class ForwardedHeaderFilter extends OncePerRequestFilter {
 
 			_port = (port == -1) ? (_secure ? 443 : 80) : port;
 
-			_remoteAddress = UriComponentsBuilder.parseForwardedFor(
-				servletServerHttpRequest,
+			_remoteAddress = ForwardedHeaderUtils.parseForwardedFor(
+				servletServerHttpRequest.getURI(),
+				servletServerHttpRequest.getHeaders(),
 				servletServerHttpRequest.getRemoteAddress());
 
 			String baseUrl =
@@ -241,7 +243,8 @@ public class ForwardedHeaderFilter extends OncePerRequestFilter {
 			ServerHttpRequest serverHttpRequest) {
 
 			UriComponentsBuilder uriComponentsBuilder =
-				UriComponentsBuilder.fromHttpRequest(serverHttpRequest);
+				ForwardedHeaderUtils.adaptFromForwardedHeaders(
+					serverHttpRequest.getURI(), serverHttpRequest.getHeaders());
 
 			HttpHeaders httpHeaders = serverHttpRequest.getHeaders();
 
@@ -316,8 +319,13 @@ public class ForwardedHeaderFilter extends OncePerRequestFilter {
 					_httpServletRequest.getRequestURI(), path);
 			}
 
-			uriComponentsBuilder = UriComponentsBuilder.fromHttpRequest(
-				new ServletServerHttpRequest(_httpServletRequest));
+			ServletServerHttpRequest servletServerHttpRequest =
+				new ServletServerHttpRequest(_httpServletRequest);
+
+			uriComponentsBuilder =
+				ForwardedHeaderUtils.adaptFromForwardedHeaders(
+					servletServerHttpRequest.getURI(),
+					servletServerHttpRequest.getHeaders());
 
 			uriComponents = uriComponentsBuilder.replacePath(
 				path
