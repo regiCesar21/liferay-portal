@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jdbc.repository.query.Modifying;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -20,7 +21,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @author Inácio Nery
  */
 @NoRepositoryBean
-public interface Repository<T, ID> extends PagingAndSortingRepository<T, ID> {
+public interface Repository<T, ID>
+	extends CrudRepository<T, ID>, PagingAndSortingRepository<T, ID> {
 
 	@Cacheable
 	@Override

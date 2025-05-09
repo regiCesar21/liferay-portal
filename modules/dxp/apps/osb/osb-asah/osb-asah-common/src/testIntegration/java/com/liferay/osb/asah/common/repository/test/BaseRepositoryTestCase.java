@@ -6,6 +6,7 @@
 package com.liferay.osb.asah.common.repository.test;
 
 import com.liferay.osb.asah.common.OSBAsahCommonSpringTestContext;
+import com.liferay.osb.asah.common.repository.Repository;
 import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
@@ -23,7 +24,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author Inácio Nery
@@ -34,50 +34,43 @@ public abstract class BaseRepositoryTestCase<T extends Persistable<ID>, ID>
 
 	@AfterEach
 	public void tearDown() {
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
-		pagingAndSortingRepository.deleteAll();
+		repository.deleteAll();
 	}
 
 	@Test
 	public void testCount() {
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
-		Assertions.assertEquals(
-			entityModels.size(), pagingAndSortingRepository.count());
+		Assertions.assertEquals(entityModels.size(), repository.count());
 	}
 
 	@Test
 	public void testDelete() {
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
-		pagingAndSortingRepository.delete(entityModels.get(0));
+		repository.delete(entityModels.get(0));
 
-		Assertions.assertEquals(
-			entityModels.size() - 1, pagingAndSortingRepository.count());
+		Assertions.assertEquals(entityModels.size() - 1, repository.count());
 	}
 
 	@Test
 	public void testDeleteAll1() {
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
-		pagingAndSortingRepository.deleteAll();
+		repository.deleteAll();
 
-		Assertions.assertEquals(0, pagingAndSortingRepository.count());
+		Assertions.assertEquals(0, repository.count());
 	}
 
 	@Test
 	public void testDeleteAll2() {
-		PagingAndSortingRepository<T, ?> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ?> repository = getRepository();
 
-		pagingAndSortingRepository.deleteAll(entityModels);
+		repository.deleteAll(entityModels);
 
-		Assertions.assertEquals(0, pagingAndSortingRepository.count());
+		Assertions.assertEquals(0, repository.count());
 	}
 
 	@Test
@@ -88,13 +81,11 @@ public abstract class BaseRepositoryTestCase<T extends Persistable<ID>, ID>
 
 		Assertions.assertNotNull(id);
 
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
-		pagingAndSortingRepository.deleteById(id);
+		repository.deleteById(id);
 
-		Assertions.assertEquals(
-			entityModels.size() - 1, pagingAndSortingRepository.count());
+		Assertions.assertEquals(entityModels.size() - 1, repository.count());
 	}
 
 	@Test
@@ -105,27 +96,23 @@ public abstract class BaseRepositoryTestCase<T extends Persistable<ID>, ID>
 
 		Assertions.assertNotNull(id);
 
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
-		Assertions.assertTrue(pagingAndSortingRepository.existsById(id));
+		Assertions.assertTrue(repository.existsById(id));
 	}
 
 	@Test
 	public void testFindAll1() {
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
-		Assertions.assertEquals(
-			entityModels, pagingAndSortingRepository.findAll());
+		Assertions.assertEquals(entityModels, repository.findAll());
 	}
 
 	@Test
 	public void testFindAll2() {
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
-		Page<T> page = pagingAndSortingRepository.findAll(
+		Page<T> page = repository.findAll(
 			PageRequest.of(0, entityModels.size(), Sort.by("id")));
 
 		Assertions.assertEquals(entityModels, page.getContent());
@@ -133,22 +120,19 @@ public abstract class BaseRepositoryTestCase<T extends Persistable<ID>, ID>
 
 	@Test
 	public void testFindAll3() {
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
 		Assertions.assertEquals(
-			entityModels, pagingAndSortingRepository.findAll(Sort.by("id")));
+			entityModels, repository.findAll(Sort.by("id")));
 	}
 
 	@Test
 	public void testFindAllById() {
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
 		Assertions.assertEquals(
 			entityModels,
-			pagingAndSortingRepository.findAllById(
-				ListUtil.map(entityModels, T::getId)));
+			repository.findAllById(ListUtil.map(entityModels, T::getId)));
 	}
 
 	@Test
@@ -159,39 +143,32 @@ public abstract class BaseRepositoryTestCase<T extends Persistable<ID>, ID>
 
 		Assertions.assertNotNull(id);
 
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
-		Optional<T> modelOptional = pagingAndSortingRepository.findById(id);
+		Optional<T> modelOptional = repository.findById(id);
 
 		Assertions.assertTrue(modelOptional.isPresent());
 	}
 
 	@Test
 	public void testSave() {
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
 		Assertions.assertEquals(
-			entityModels.get(0),
-			pagingAndSortingRepository.save(entityModels.get(0)));
+			entityModels.get(0), repository.save(entityModels.get(0)));
 	}
 
 	@Test
 	public void testSaveAll() {
-		PagingAndSortingRepository<T, ID> pagingAndSortingRepository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
-		Assertions.assertEquals(
-			entityModels, pagingAndSortingRepository.saveAll(entityModels));
+		Assertions.assertEquals(entityModels, repository.saveAll(entityModels));
 	}
 
-	protected abstract PagingAndSortingRepository<T, ID>
-		getPagingAndSortingRepository();
+	protected abstract Repository<T, ID> getRepository();
 
 	protected void setUpRepository(T... entityModels) {
-		PagingAndSortingRepository<T, ID> repository =
-			getPagingAndSortingRepository();
+		Repository<T, ID> repository = getRepository();
 
 		this.entityModels = IterableUtils.toList(
 			repository.saveAll(Arrays.asList(entityModels)));

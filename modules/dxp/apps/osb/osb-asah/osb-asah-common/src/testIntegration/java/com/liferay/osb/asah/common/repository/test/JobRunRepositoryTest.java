@@ -18,6 +18,7 @@ import com.liferay.osb.asah.common.model.JobType;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.repository.JobRepository;
 import com.liferay.osb.asah.common.repository.JobRunRepository;
+import com.liferay.osb.asah.common.repository.Repository;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 
@@ -37,7 +38,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author Marcellus Tavares
@@ -200,9 +200,7 @@ public class JobRunRepositoryTest extends BaseRepositoryTestCase<JobRun, Long> {
 	}
 
 	@Override
-	protected PagingAndSortingRepository<JobRun, Long>
-		getPagingAndSortingRepository() {
-
+	protected Repository<JobRun, Long> getRepository() {
 		return _jobRunRepository;
 	}
 

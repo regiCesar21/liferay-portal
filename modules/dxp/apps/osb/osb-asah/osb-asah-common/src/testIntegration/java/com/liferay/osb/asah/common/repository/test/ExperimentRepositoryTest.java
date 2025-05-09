@@ -16,6 +16,7 @@ import com.liferay.osb.asah.common.model.Goal;
 import com.liferay.osb.asah.common.model.GoalMetric;
 import com.liferay.osb.asah.common.repository.ChannelRepository;
 import com.liferay.osb.asah.common.repository.ExperimentRepository;
+import com.liferay.osb.asah.common.repository.Repository;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 
 import java.math.BigDecimal;
@@ -33,7 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author Marcos Martins
@@ -164,9 +164,7 @@ public class ExperimentRepositoryTest
 	}
 
 	@Override
-	protected PagingAndSortingRepository<Experiment, Long>
-		getPagingAndSortingRepository() {
-
+	protected Repository<Experiment, Long> getRepository() {
 		return _experimentRepository;
 	}
 

@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
 import org.springframework.test.context.TestContext;
 
@@ -126,11 +126,10 @@ public class OSBAsahRepositoryTestExecutionListener
 		Repository repository = (Repository)applicationContext.getBean(
 			repositoryClass);
 
-		if (repository instanceof PagingAndSortingRepository) {
-			PagingAndSortingRepository pagingAndSortingRepository =
-				(PagingAndSortingRepository)repository;
+		if (repository instanceof CrudRepository) {
+			CrudRepository crudRepository = (CrudRepository)repository;
 
-			pagingAndSortingRepository.deleteAll();
+			crudRepository.deleteAll();
 		}
 	}
 
@@ -190,11 +189,10 @@ public class OSBAsahRepositoryTestExecutionListener
 			Collectors.toList()
 		);
 
-		if (repository instanceof PagingAndSortingRepository) {
-			PagingAndSortingRepository pagingAndSortingRepository =
-				(PagingAndSortingRepository)repository;
+		if (repository instanceof CrudRepository) {
+			CrudRepository crudRepository = (CrudRepository)repository;
 
-			pagingAndSortingRepository.saveAll(entities);
+			crudRepository.saveAll(entities);
 		}
 		else if (repository instanceof BigQueryRepository) {
 			Class<? extends Repository> repositoryClass = repository.getClass();

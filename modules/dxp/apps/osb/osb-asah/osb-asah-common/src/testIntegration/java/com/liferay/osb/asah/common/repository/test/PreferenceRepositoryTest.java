@@ -7,13 +7,13 @@ package com.liferay.osb.asah.common.repository.test;
 
 import com.liferay.osb.asah.common.entity.Preference;
 import com.liferay.osb.asah.common.repository.PreferenceRepository;
+import com.liferay.osb.asah.common.repository.Repository;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 
 import org.junit.jupiter.api.BeforeEach;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author Inácio Nery
@@ -34,9 +34,7 @@ public class PreferenceRepositoryTest
 	}
 
 	@Override
-	protected PagingAndSortingRepository<Preference, String>
-		getPagingAndSortingRepository() {
-
+	protected Repository<Preference, String> getRepository() {
 		return _preferenceRepository;
 	}
 

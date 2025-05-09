@@ -9,6 +9,7 @@ import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.CustomAssetDashboard;
 import com.liferay.osb.asah.common.repository.ChannelRepository;
 import com.liferay.osb.asah.common.repository.CustomAssetDashboardRepository;
+import com.liferay.osb.asah.common.repository.Repository;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 
 import java.util.Date;
@@ -23,7 +24,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author André Miranda
@@ -250,9 +250,7 @@ public class CustomAssetDashboardRepositoryTest
 	}
 
 	@Override
-	protected PagingAndSortingRepository<CustomAssetDashboard, String>
-		getPagingAndSortingRepository() {
-
+	protected Repository<CustomAssetDashboard, String> getRepository() {
 		return _customAssetDashboardRepository;
 	}
 

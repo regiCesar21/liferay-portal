@@ -8,6 +8,7 @@ package com.liferay.osb.asah.common.repository.test;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.BlockedKeyword;
 import com.liferay.osb.asah.common.repository.BlockedKeywordRepository;
+import com.liferay.osb.asah.common.repository.Repository;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 
 import java.util.Arrays;
@@ -22,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author Robson Pastor
@@ -101,9 +101,7 @@ public class BlockedKeywordRepositoryTest
 	}
 
 	@Override
-	protected PagingAndSortingRepository<BlockedKeyword, Long>
-		getPagingAndSortingRepository() {
-
+	protected Repository<BlockedKeyword, Long> getRepository() {
 		return _blockedKeywordRepository;
 	}
 

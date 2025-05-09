@@ -8,6 +8,7 @@ package com.liferay.osb.asah.common.repository.test;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.repository.DataExportTaskRepository;
+import com.liferay.osb.asah.common.repository.Repository;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 
 import java.util.Date;
@@ -22,7 +23,6 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author Inácio Nery
@@ -124,9 +124,7 @@ public class DataExportTaskRepositoryTest
 	}
 
 	@Override
-	protected PagingAndSortingRepository<DataExportTask, Long>
-		getPagingAndSortingRepository() {
-
+	protected Repository<DataExportTask, Long> getRepository() {
 		return _dataExportTaskRepository;
 	}
 

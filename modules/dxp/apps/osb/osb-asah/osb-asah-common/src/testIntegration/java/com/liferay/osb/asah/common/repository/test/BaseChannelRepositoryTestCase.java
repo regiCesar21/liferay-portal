@@ -8,6 +8,7 @@ package com.liferay.osb.asah.common.repository.test;
 import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.ChannelDataSource;
 import com.liferay.osb.asah.common.repository.ChannelRepository;
+import com.liferay.osb.asah.common.repository.Repository;
 import com.liferay.osb.asah.common.util.SetUtil;
 
 import java.util.Collections;
@@ -21,7 +22,6 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author Inácio Nery
@@ -150,9 +150,7 @@ public abstract class BaseChannelRepositoryTestCase
 	}
 
 	@Override
-	protected PagingAndSortingRepository<Channel, Long>
-		getPagingAndSortingRepository() {
-
+	protected Repository<Channel, Long> getRepository() {
 		return _channelRepository;
 	}
 
