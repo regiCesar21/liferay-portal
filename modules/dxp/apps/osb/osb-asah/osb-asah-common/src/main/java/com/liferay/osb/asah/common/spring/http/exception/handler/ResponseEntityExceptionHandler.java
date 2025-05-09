@@ -90,7 +90,7 @@ public class ResponseEntityExceptionHandler {
 
 			return _getResponseEntity(
 				restClientException, handlerMethod, httpServletRequest,
-				httpClientErrorException.getStatusCode());
+				(HttpStatus)httpClientErrorException.getStatusCode());
 		}
 
 		return _getResponseEntity(

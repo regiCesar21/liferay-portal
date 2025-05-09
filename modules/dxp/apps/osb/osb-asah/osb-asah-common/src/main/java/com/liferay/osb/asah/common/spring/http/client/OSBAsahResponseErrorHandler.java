@@ -25,7 +25,7 @@ public class OSBAsahResponseErrorHandler implements ResponseErrorHandler {
 			URI url, HttpMethod method, ClientHttpResponse clientHttpResponse)
 		throws IOException {
 
-		HttpStatus httpStatus = clientHttpResponse.getStatusCode();
+		HttpStatus httpStatus = (HttpStatus)clientHttpResponse.getStatusCode();
 
 		if (hasError(clientHttpResponse)) {
 			throw new HttpClientErrorException(httpStatus);
@@ -36,7 +36,7 @@ public class OSBAsahResponseErrorHandler implements ResponseErrorHandler {
 	public boolean hasError(ClientHttpResponse clientHttpResponse)
 		throws IOException {
 
-		HttpStatus httpStatus = clientHttpResponse.getStatusCode();
+		HttpStatus httpStatus = (HttpStatus)clientHttpResponse.getStatusCode();
 
 		if ((httpStatus.series() == HttpStatus.Series.CLIENT_ERROR) ||
 			(httpStatus.series() == HttpStatus.Series.SERVER_ERROR)) {
