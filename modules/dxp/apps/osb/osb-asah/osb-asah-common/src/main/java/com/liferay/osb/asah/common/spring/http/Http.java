@@ -24,7 +24,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
@@ -84,23 +83,6 @@ public class Http {
 		RestTemplate restTemplate = new RestTemplate();
 
 		_configureRestTemplate(restTemplate);
-
-		return _exchangeResponseEntity(
-			restTemplate, url, path, httpMethod, _getHttpEntity(body, null));
-	}
-
-	public ResponseEntity<String> exchangeResponseEntity(
-		String url, String path, HttpMethod httpMethod, Object body,
-		BasicAuthorizationInterceptor basicAuthorizationInterceptor) {
-
-		RestTemplate restTemplate = new RestTemplate();
-
-		_configureRestTemplate(restTemplate);
-
-		List<ClientHttpRequestInterceptor> clientHttpRequestInterceptors =
-			restTemplate.getInterceptors();
-
-		clientHttpRequestInterceptors.add(basicAuthorizationInterceptor);
 
 		return _exchangeResponseEntity(
 			restTemplate, url, path, httpMethod, _getHttpEntity(body, null));
