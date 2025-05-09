@@ -49,7 +49,7 @@ public class BulkRestController {
 					_http.exchange(
 						ServiceConstants.URL_BACKEND_INTERNAL,
 						operationJSONObject.getString("url"),
-						HttpMethod.resolve(
+						HttpMethod.valueOf(
 							operationJSONObject.getString("method")),
 						operationJSONObject.optJSONObject("body")));
 
