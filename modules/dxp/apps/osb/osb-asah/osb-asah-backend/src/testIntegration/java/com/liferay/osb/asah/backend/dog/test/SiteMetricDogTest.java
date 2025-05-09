@@ -47,8 +47,8 @@ import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTestContextBootstrapper;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.BootstrapWith;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * @author Marcos Martins
@@ -1192,7 +1192,8 @@ public class SiteMetricDogTest
 	@Autowired
 	private SiteMetricDog _siteMetricDog;
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private TimeZoneDog _timeZoneDog;
 
 }

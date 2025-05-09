@@ -43,8 +43,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
-import org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
@@ -55,10 +53,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 	mergeMode = TestExecutionListeners.MergeMode.REPLACE_DEFAULTS,
 	value = {
 		DependencyInjectionTestExecutionListener.class,
-		MockitoTestExecutionListener.class,
 		OSBAsahRepositoryTestExecutionListener.class,
-		OSBAsahSQLTestExecutionListener.class,
-		ResetMocksTestExecutionListener.class
+		OSBAsahSQLTestExecutionListener.class
 	}
 )
 public class DataSourceHttpTest extends BaseFaroInfoDogTestCase {

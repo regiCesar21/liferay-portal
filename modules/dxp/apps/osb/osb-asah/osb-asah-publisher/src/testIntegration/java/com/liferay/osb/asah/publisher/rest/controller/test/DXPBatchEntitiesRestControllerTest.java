@@ -36,10 +36,8 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
@@ -50,6 +48,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -374,11 +374,13 @@ public class DXPBatchEntitiesRestControllerTest
 	@Autowired
 	private DataSourceRepository _dataSourceRepository;
 
-	@SpyBean
+	@Autowired
+	@MockitoSpyBean
 	private DXPBatchEntitiesFileUploadEventHandler
 		_dxpBatchEntitiesFileUploadHandler;
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private GoogleStorage _googleStorage;
 
 	@LocalServerPort

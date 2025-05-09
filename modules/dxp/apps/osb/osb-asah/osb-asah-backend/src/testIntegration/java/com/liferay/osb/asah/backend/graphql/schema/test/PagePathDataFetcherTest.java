@@ -27,17 +27,20 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * @author Marcellus Tavares
  */
+@ExtendWith(MockitoExtension.class)
 public class PagePathDataFetcherTest
 	implements OSBAsahBackendSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
@@ -212,7 +215,8 @@ public class PagePathDataFetcherTest
 	@Autowired
 	private PagePathDataFetcher _pagePathDataFetcher;
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private PagePathDog _pagePathDog;
 
 }

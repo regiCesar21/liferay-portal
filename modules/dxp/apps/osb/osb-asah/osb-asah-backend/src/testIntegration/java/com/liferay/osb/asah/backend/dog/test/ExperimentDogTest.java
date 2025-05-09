@@ -40,10 +40,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 /**
@@ -53,7 +52,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 	mergeMode = TestExecutionListeners.MergeMode.REPLACE_DEFAULTS,
 	value = {
 		DependencyInjectionTestExecutionListener.class,
-		MockitoTestExecutionListener.class,
 		OSBAsahBQSQLTestExecutionListener.class,
 		OSBAsahRepositoryTestExecutionListener.class,
 		OSBAsahSQLTestExecutionListener.class
@@ -504,7 +502,8 @@ public class ExperimentDogTest implements OSBAsahBackendSpringTestContext {
 	@Autowired
 	private ExperimentDog _experimentDog;
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private ExperimentMetricDog _experimentMetricDog;
 
 }

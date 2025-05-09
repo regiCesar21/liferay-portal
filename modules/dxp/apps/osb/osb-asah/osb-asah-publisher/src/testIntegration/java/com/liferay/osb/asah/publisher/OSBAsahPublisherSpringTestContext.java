@@ -14,8 +14,6 @@ import com.liferay.osb.asah.test.util.spring.OSBAsahSpringExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
-import org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.web.ServletTestExecutionListener;
@@ -32,11 +30,9 @@ import org.springframework.test.context.web.ServletTestExecutionListener;
 	mergeMode = TestExecutionListeners.MergeMode.REPLACE_DEFAULTS,
 	value = {
 		DependencyInjectionTestExecutionListener.class,
-		MockitoTestExecutionListener.class,
 		OSBAsahBQSQLTestExecutionListener.class,
 		OSBAsahRepositoryTestExecutionListener.class,
 		OSBAsahSQLTestExecutionListener.class,
-		ResetMocksTestExecutionListener.class,
 		ServletTestExecutionListener.class
 	}
 )

@@ -26,17 +26,20 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * @author Ivica Cardic
  */
+@ExtendWith(MockitoExtension.class)
 public class SegmentPageViewsDataFetcherTest
 	implements OSBAsahBackendSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
@@ -132,7 +135,8 @@ public class SegmentPageViewsDataFetcherTest
 	@Mock
 	private DataFetchingEnvironment _dataFetchingEnvironment;
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private PagePathDog _pagePathDog;
 
 	@Autowired

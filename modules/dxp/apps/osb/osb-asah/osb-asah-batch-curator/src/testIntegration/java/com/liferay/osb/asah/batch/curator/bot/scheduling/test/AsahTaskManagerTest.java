@@ -20,22 +20,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * @author André Miranda
  */
+@ExtendWith(MockitoExtension.class)
 public class AsahTaskManagerTest
 	implements OSBAsahBatchCuratorSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
@@ -47,6 +51,11 @@ public class AsahTaskManagerTest
 		ReflectionTestUtils.setField(
 			_asahTaskManager, "_updateMembershipsNaniteBoundedExecutor",
 			_updateMembershipsNaniteBoundedExecutor);
+	}
+
+	@AfterEach
+	public void tearDown() {
+		Mockito.reset(_asahTaskScheduler);
 	}
 
 	@RepositoryResource(
@@ -233,7 +242,8 @@ public class AsahTaskManagerTest
 	@Autowired
 	private AsahTaskManager _asahTaskManager;
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private AsahTaskScheduler _asahTaskScheduler;
 
 	@Mock

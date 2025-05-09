@@ -35,8 +35,8 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * @author André Miranda
@@ -74,6 +74,8 @@ public class ExperimentNaniteTest extends BaseNaniteTestCase {
 			Collections.singleton(1234567890L));
 
 		_channelRepository.deleteById(1234567890L);
+
+		Mockito.reset(_experimentHttp);
 	}
 
 	@Test
@@ -207,7 +209,8 @@ public class ExperimentNaniteTest extends BaseNaniteTestCase {
 	@Autowired
 	private ChannelRepository _channelRepository;
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private ExperimentHttp _experimentHttp;
 
 	@Autowired

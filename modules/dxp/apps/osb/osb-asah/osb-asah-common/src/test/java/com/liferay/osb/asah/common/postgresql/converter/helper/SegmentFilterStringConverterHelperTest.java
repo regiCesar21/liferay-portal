@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import org.mockito.Mockito;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * @author Robson Pastor
@@ -85,7 +85,7 @@ public class SegmentFilterStringConverterHelperTest {
 		Assertions.assertEquals(condition3, filterHelper3.getCondition());
 	}
 
-	@MockBean
+	@MockitoBean
 	private BQMembershipChangeDog _bqMembershipChangeDog = Mockito.mock(
 		BQMembershipChangeDog.class);
 

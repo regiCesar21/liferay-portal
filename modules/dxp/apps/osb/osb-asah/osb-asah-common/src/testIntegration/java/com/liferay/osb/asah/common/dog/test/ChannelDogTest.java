@@ -51,8 +51,8 @@ import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.Page;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 /**
  * @author André Miranda
@@ -413,7 +413,8 @@ public class ChannelDogTest
 	@Autowired
 	private AssetRepository _assetRepository;
 
-	@SpyBean
+	@Autowired
+	@MockitoSpyBean
 	private BigQueryQueryExecutor _bigQueryQueryExecutor;
 
 	@Autowired

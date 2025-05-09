@@ -22,14 +22,12 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * @author André Miranda
@@ -37,13 +35,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 public class ProjectDogTest
 	implements OSBAsahCommonSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
-
-	@BeforeEach
-	public void setUp() {
-		ReflectionTestUtils.setField(_projectDog, "_nanitesHttp", _nanitesHttp);
-		ReflectionTestUtils.setField(
-			_projectDog, "_postgreSQLSchemaManager", _postgreSQLSchemaManager);
-	}
 
 	@AfterEach
 	public void tearDown() {
@@ -133,10 +124,12 @@ public class ProjectDogTest
 		Assertions.assertEquals("4.0.0", project2.getVersion());
 	}
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private NanitesHttp _nanitesHttp;
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private PostgreSQLSchemaManager _postgreSQLSchemaManager;
 
 	@Autowired

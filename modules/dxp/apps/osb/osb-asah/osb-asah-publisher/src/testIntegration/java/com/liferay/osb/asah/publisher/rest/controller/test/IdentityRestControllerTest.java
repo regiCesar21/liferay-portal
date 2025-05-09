@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONObject;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -32,13 +33,13 @@ import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * @author Inácio Nery
@@ -49,6 +50,11 @@ public class IdentityRestControllerTest
 	@BeforeEach
 	public void setUp() {
 		JacksonTester.initFields(this, new ObjectMapper());
+	}
+
+	@AfterEach
+	public void tearDown() {
+		Mockito.reset(_messageBus);
 	}
 
 	@RepositoryResource(
@@ -214,7 +220,8 @@ public class IdentityRestControllerTest
 			messageJSONObject.getString("individualId"));
 	}
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private MessageBus _messageBus;
 
 	@Autowired

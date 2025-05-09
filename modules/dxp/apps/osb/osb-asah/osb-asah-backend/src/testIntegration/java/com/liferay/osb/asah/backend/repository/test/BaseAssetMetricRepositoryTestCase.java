@@ -42,9 +42,10 @@ import org.junit.jupiter.api.BeforeEach;
 
 import org.mockito.Mockito;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * @author Marcellus Tavares
@@ -261,7 +262,8 @@ public abstract class BaseAssetMetricRepositoryTestCase<T extends AssetMetric>
 		);
 	}
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private TimeZoneDog _timeZoneDog;
 
 }

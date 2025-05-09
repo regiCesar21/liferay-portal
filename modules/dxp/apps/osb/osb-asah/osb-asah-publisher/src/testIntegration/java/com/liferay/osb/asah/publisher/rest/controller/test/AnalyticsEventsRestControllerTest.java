@@ -25,6 +25,7 @@ import org.assertj.core.api.Assertions;
 
 import org.json.JSONArray;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,6 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -45,6 +45,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * @author Inácio Nery
@@ -55,6 +56,11 @@ public class AnalyticsEventsRestControllerTest
 	@BeforeEach
 	public void setUp() {
 		JacksonTester.initFields(this, new ObjectMapper());
+	}
+
+	@AfterEach
+	public void tearDown() {
+		Mockito.reset(_messageBus);
 	}
 
 	@Test
@@ -404,7 +410,8 @@ public class AnalyticsEventsRestControllerTest
 		}
 	}
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private MessageBus _messageBus;
 
 	@Autowired

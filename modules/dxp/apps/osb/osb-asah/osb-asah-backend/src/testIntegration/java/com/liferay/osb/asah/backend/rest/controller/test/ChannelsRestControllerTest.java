@@ -33,6 +33,7 @@ import java.util.stream.IntStream;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -40,11 +41,9 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
-import org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -55,15 +54,18 @@ import org.springframework.web.client.HttpClientErrorException;
 	mergeMode = TestExecutionListeners.MergeMode.REPLACE_DEFAULTS,
 	value = {
 		DependencyInjectionTestExecutionListener.class,
-		MockitoTestExecutionListener.class,
 		OSBAsahRepositoryTestExecutionListener.class,
-		OSBAsahSQLTestExecutionListener.class,
-		ResetMocksTestExecutionListener.class
+		OSBAsahSQLTestExecutionListener.class
 	}
 )
 public class ChannelsRestControllerTest
 	implements OSBAsahBackendSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
+
+	@AfterEach
+	public void tearDown() {
+		Mockito.reset(_channelHttp);
+	}
 
 	@Test
 	public void testDuplicateChannelName() {
@@ -363,7 +365,8 @@ public class ChannelsRestControllerTest
 		Assertions.assertTrue(removedGroupIds.contains("654321"));
 	}
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private ChannelHttp _channelHttp;
 
 	@Autowired

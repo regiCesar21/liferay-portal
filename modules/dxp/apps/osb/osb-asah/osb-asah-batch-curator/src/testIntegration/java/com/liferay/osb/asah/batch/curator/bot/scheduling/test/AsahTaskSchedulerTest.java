@@ -20,10 +20,10 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * @author André Miranda
@@ -114,7 +114,8 @@ public class AsahTaskSchedulerTest
 	@Autowired
 	private AsahTaskScheduler _asahTaskScheduler;
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private ThreadPoolTaskScheduler _threadPoolTaskScheduler;
 
 }

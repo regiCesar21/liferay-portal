@@ -23,10 +23,9 @@ import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 /**
@@ -36,7 +35,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 	mergeMode = TestExecutionListeners.MergeMode.REPLACE_DEFAULTS,
 	value = {
 		DependencyInjectionTestExecutionListener.class,
-		MockitoTestExecutionListener.class,
 		OSBAsahRepositoryTestExecutionListener.class,
 		OSBAsahSQLTestExecutionListener.class
 	}
@@ -115,7 +113,8 @@ public class BulkRestControllerTest implements OSBAsahBackendSpringTestContext {
 	@Autowired
 	private BulkRestController _bulkRestController;
 
-	@MockBean
+	@Autowired
+	@MockitoBean
 	private Http _http;
 
 }
