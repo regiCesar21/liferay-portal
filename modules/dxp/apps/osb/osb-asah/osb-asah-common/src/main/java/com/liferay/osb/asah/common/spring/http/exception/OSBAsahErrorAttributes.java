@@ -9,12 +9,11 @@ import com.liferay.osb.asah.common.prometheus.PrometheusUtil;
 
 import io.prometheus.client.Counter;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.Map;
 import java.util.Objects;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;

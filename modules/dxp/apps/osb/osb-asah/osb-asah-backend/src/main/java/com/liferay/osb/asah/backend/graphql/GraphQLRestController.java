@@ -15,12 +15,12 @@ import graphql.GraphQL;
 import io.prometheus.client.Histogram;
 import io.prometheus.client.SimpleTimer;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.nio.charset.Charset;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;

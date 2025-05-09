@@ -9,10 +9,10 @@ import com.liferay.osb.asah.common.constants.HeaderConstants;
 import com.liferay.osb.asah.common.dog.DataSourceDog;
 import com.liferay.osb.asah.common.servlet.filter.BaseSecurityOncePerRequestFilter;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 

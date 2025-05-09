@@ -5,14 +5,14 @@
 
 package com.liferay.osb.asah.common.validation;
 
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 import java.util.Date;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 
 /**
  * @author Marcellus Tavares

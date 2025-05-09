@@ -23,6 +23,8 @@ import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
 import com.liferay.osb.asah.common.repository.helper.DSLHelper;
 import com.liferay.osb.asah.common.util.SetUtil;
 
+import jakarta.validation.constraints.Null;
+
 import java.math.BigDecimal;
 
 import java.time.ZoneOffset;
@@ -42,8 +44,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.validation.constraints.Null;
 
 import org.apache.commons.lang3.StringUtils;
 

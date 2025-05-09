@@ -8,9 +8,9 @@ package com.liferay.osb.asah.backend.rest.controller;
 import com.liferay.osb.asah.common.servlet.util.ServletRequestUtil;
 import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
 
-import java.util.regex.Pattern;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.regex.Pattern;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

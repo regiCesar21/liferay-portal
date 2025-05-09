@@ -7,9 +7,9 @@ package com.liferay.osb.asah.common.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Objects;
+import jakarta.validation.constraints.NotNull;
 
-import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 import org.springframework.data.annotation.AccessType;
 import org.springframework.data.annotation.Transient;

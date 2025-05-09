@@ -5,11 +5,11 @@
 
 package com.liferay.osb.asah.common.servlet.util;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.UnsupportedEncodingException;
 
 import java.net.URLEncoder;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Shinn Lok

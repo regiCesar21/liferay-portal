@@ -10,7 +10,7 @@ import com.liferay.osb.asah.common.spring.annotation.SuppressErrorLogging;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahError;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

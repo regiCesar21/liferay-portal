@@ -11,10 +11,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.osb.asah.common.entity.ExperimentVariant;
 import com.liferay.osb.asah.common.util.SetUtil;
 
+import jakarta.validation.Valid;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.validation.Valid;
 
 /**
  * @author Marcos Martins

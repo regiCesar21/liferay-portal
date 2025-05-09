@@ -23,11 +23,11 @@ import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.common.util.SetUtil;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

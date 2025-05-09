@@ -7,10 +7,10 @@ package com.liferay.osb.asah.common.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Objects;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import java.util.Objects;
 
 import org.hibernate.validator.constraints.NotBlank;
 

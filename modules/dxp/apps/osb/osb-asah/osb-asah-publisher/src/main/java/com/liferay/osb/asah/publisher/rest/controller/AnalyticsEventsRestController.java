@@ -28,6 +28,10 @@ import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.common.util.StringUtil;
 
+import jakarta.servlet.http.HttpServletRequest;
+
+import jakarta.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,10 +45,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
-import javax.servlet.http.HttpServletRequest;
-
-import javax.validation.Valid;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.BooleanUtils;

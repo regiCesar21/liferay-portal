@@ -9,14 +9,14 @@ import com.liferay.osb.asah.common.constants.HeaderConstants;
 import com.liferay.osb.asah.common.constants.ServiceConstants;
 import com.liferay.osb.asah.common.servlet.util.ServletRequestUtil;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 import java.util.Objects;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
