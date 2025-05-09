@@ -7,8 +7,8 @@ package com.liferay.osb.asah.common.spring.http.client;
 
 import java.net.URI;
 
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.core5.http.ClassicHttpRequest;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -20,21 +20,11 @@ public class OSBAsahHttpComponentsClientHttpRequestFactory
 	extends HttpComponentsClientHttpRequestFactory {
 
 	@Override
-	protected HttpUriRequest createHttpUriRequest(
+	protected ClassicHttpRequest createHttpUriRequest(
 		HttpMethod httpMethod, URI uri) {
 
 		if (httpMethod == HttpMethod.GET) {
-			return new HttpEntityEnclosingRequestBase() {
-				{
-					setURI(uri);
-				}
-
-				@Override
-				public String getMethod() {
-					return HttpMethod.GET.name();
-				}
-
-			};
+			return new HttpGet(uri);
 		}
 
 		return super.createHttpUriRequest(httpMethod, uri);
