@@ -21,10 +21,12 @@ import org.jooq.SelectSelectStep;
 import org.jooq.impl.DSL;
 
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Marcellus Tavares
  */
+@Repository
 public class RunLogRepositoryImpl
 	extends BaseRepository implements CustomRunLogRepository {
 
