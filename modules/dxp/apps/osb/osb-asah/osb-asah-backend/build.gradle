@@ -2,7 +2,6 @@ apply plugin: "io.spring.dependency-management"
 apply plugin: "org.springframework.boot"
 
 ext {
-	set("junit-jupiter.version", "5.8.2")
 	set("log4j2.version", "2.17.0")
 }
 
@@ -31,8 +30,8 @@ dependencies {
 	testImplementation group: "net.bytebuddy", name: "byte-buddy", version: "1.16.1"
 	testImplementation group: "nl.jqno.equalsverifier", name: "equalsverifier", version: "3.18.1"
 	testImplementation project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-test-util")
-	testIntegrationImplementation group: "io.rest-assured", name: "json-schema-validator", version: "3.2.0"
-	testIntegrationImplementation group: "io.rest-assured", name: "rest-assured", version: "3.2.0"
+	testIntegrationImplementation group: "io.rest-assured", name: "json-schema-validator", version: "5.5.1"
+	testIntegrationImplementation group: "io.rest-assured", name: "rest-assured", version: "5.5.1"
 	testIntegrationImplementation project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-batch-curator")
 }
 

@@ -1,7 +1,6 @@
 apply plugin: "io.spring.dependency-management"
 apply plugin: "org.springframework.boot"
 
-ext["junit-jupiter.version"] = "5.8.2"
 ext["log4j2.version"] = "2.17.0"
 
 bootJar {
