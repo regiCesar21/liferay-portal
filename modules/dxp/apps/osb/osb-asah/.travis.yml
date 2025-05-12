@@ -20,7 +20,7 @@ jobs:
             script:
                 -   ./gradlew checkSourceFormatting pmdMain pmdTest pmdTestIntegration spotbugsMain spotbugsTest spotbugsTestIntegration --configure-on-demand --continue --parallel
         -   after_script:
-                -   docker-compose -f docker-compose.integration-test.yml down
+                -   docker compose -f docker-compose.integration-test.yml down
             after_success:
                 -   test ${TRAVIS_BRANCH} = "7.0.x" &&
                     test ${TRAVIS_EVENT_TYPE} = "push" &&
@@ -28,7 +28,8 @@ jobs:
                     ./gradlew coveralls
             before_script:
                 -   docker load -i docker_images/images.tar || true
-                -   docker-compose -f docker-compose.integration-test.yml up -d
+                -   docker ps -a
+                -   docker compose -f docker-compose.integration-test.yml up -d
                 -   git diff --name-only ${TRAVIS_COMMIT_RANGE} | grep docker-compose.integration-test.yml || [ ! -f docker_images/images.tar ]; DOCKER_CHANGED=$?
                 -   |
                         if (( ${DOCKER_CHANGED} == 0 )); then
