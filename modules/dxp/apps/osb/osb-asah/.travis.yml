@@ -27,6 +27,7 @@ jobs:
                     test ${TRAVIS_REPO_SLUG} = "liferay/com-liferay-osb-asah-private" &&
                     ./gradlew coveralls
             before_script:
+                -   sudo /etc/init.d/postgresql stop
                 -   docker load -i docker_images/images.tar || true
                 -   docker ps -a
                 -   docker compose -f docker-compose.integration-test.yml up -d
