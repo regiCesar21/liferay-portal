@@ -11,7 +11,7 @@ FROM azul/zulu-openjdk-alpine:21.0.4-jre
 ARG LABEL_BUILD_DATE
 ARG LABEL_VCS_REF
 
-CMD ["sh", "-c", "java ${JAVA_OPTS} ${JAVA_OPTS_EXT} -XshowSettings:vm -XX:+PrintCommandLineFlags org.springframework.boot.loader.JarLauncher"]
+CMD ["sh", "-c", "java ${JAVA_OPTS} ${JAVA_OPTS_EXT} -XshowSettings:vm -XX:+PrintCommandLineFlags org.springframework.boot.loader.launch.JarLauncher"]
 
 EXPOSE 8080
 
