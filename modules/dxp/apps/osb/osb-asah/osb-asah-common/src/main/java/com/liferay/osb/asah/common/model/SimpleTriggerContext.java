@@ -9,13 +9,14 @@ import java.time.Instant;
 
 import java.util.Date;
 
+import org.springframework.scheduling.TriggerContext;
+
 /**
  * @author Marcos Martins
  */
-public class TriggerContext
-	implements org.springframework.scheduling.TriggerContext {
+public class SimpleTriggerContext implements TriggerContext {
 
-	public TriggerContext(
+	public SimpleTriggerContext(
 		Date lastActualExecutionTime, Date lastCompletionTime,
 		Date lastScheduledExecutionTime) {
 

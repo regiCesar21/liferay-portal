@@ -14,8 +14,8 @@ import com.liferay.osb.asah.common.entity.JobRun;
 import com.liferay.osb.asah.common.model.JobRunFrequency;
 import com.liferay.osb.asah.common.model.JobRunStatus;
 import com.liferay.osb.asah.common.model.JobRunsMonthlyStatistics;
+import com.liferay.osb.asah.common.model.SimpleTriggerContext;
 import com.liferay.osb.asah.common.model.Sort;
-import com.liferay.osb.asah.common.model.TriggerContext;
 import com.liferay.osb.asah.common.repository.JobRepository;
 import com.liferay.osb.asah.common.repository.JobRunRepository;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
@@ -175,7 +175,11 @@ public class JobRunDog {
 
 		while (true) {
 			startDate = cronTrigger.nextExecutionTime(
-				new TriggerContext(null, startDate, startDate));
+				new SimpleTriggerContext(null, startDate, startDate));
+
+			if (startDate == null) {
+				break;
+			}
 
 			LocalDateTime nextJobRunLocalDateTime = DateUtil.toLocalDateTime(
 				startDate, ZoneOffset.UTC);

@@ -19,8 +19,8 @@ import com.liferay.osb.asah.common.model.JobRunStatus;
 import com.liferay.osb.asah.common.model.JobRunsMonthlyStatistics;
 import com.liferay.osb.asah.common.model.JobStatus;
 import com.liferay.osb.asah.common.model.JobType;
+import com.liferay.osb.asah.common.model.SimpleTriggerContext;
 import com.liferay.osb.asah.common.model.Sort;
-import com.liferay.osb.asah.common.model.TriggerContext;
 import com.liferay.osb.asah.common.repository.JobRepository;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
@@ -123,7 +123,7 @@ public class JobDog {
 			jobRunFrequency.getCronExpression(), TimeZone.getTimeZone("UTC"));
 
 		Date nextExecutionTime = cronTrigger.nextExecutionTime(
-			new TriggerContext(null, null, startDate));
+			new SimpleTriggerContext(null, null, startDate));
 
 		return DateUtil.toUTCString(nextExecutionTime);
 	}
