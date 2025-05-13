@@ -37,7 +37,7 @@ public abstract class BaseSecurityOncePerRequestFilter
 	}
 
 	@Override
-	public void doFilterInternal(
+	protected void doFilterInternal(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws IOException, ServletException {
