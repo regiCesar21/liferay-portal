@@ -174,12 +174,9 @@ public class JobRunDog {
 			jobRunFrequency.getCronExpression(), TimeZone.getTimeZone("UTC"));
 
 		while (true) {
-			startDate = cronTrigger.nextExecutionTime(
-				new SimpleTriggerContext(null, startDate, startDate));
-
-			if (startDate == null) {
-				break;
-			}
+			startDate = Date.from(
+				cronTrigger.nextExecution(
+					new SimpleTriggerContext(null, startDate, startDate)));
 
 			LocalDateTime nextJobRunLocalDateTime = DateUtil.toLocalDateTime(
 				startDate, ZoneOffset.UTC);

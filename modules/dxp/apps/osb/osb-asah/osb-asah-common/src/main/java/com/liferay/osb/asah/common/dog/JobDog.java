@@ -122,10 +122,10 @@ public class JobDog {
 		CronTrigger cronTrigger = new CronTrigger(
 			jobRunFrequency.getCronExpression(), TimeZone.getTimeZone("UTC"));
 
-		Date nextExecutionTime = cronTrigger.nextExecutionTime(
-			new SimpleTriggerContext(null, null, startDate));
-
-		return DateUtil.toUTCString(nextExecutionTime);
+		return DateUtil.toUTCString(
+			Date.from(
+				cronTrigger.nextExecution(
+					new SimpleTriggerContext(null, null, startDate))));
 	}
 
 	public Page<Job> getJobPage(
