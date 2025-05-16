@@ -166,6 +166,44 @@ gradle.beforeProject {
 				}
 			}
 
+			pluginManager.withPlugin("com.liferay.base.plugin") {
+				configurations {
+					portal.defaultDependencies {
+						add project.dependencies.create(project.files("${liferay.appServerLibGlobalDir}/mail.jar"))
+						add project.dependencies.create(project.files("${liferay.appServerPortalDir}/WEB-INF/classes"))
+						add project.dependencies.create(project.fileTree(dir: "${liferay.appServerPortalDir}/WEB-INF/lib", include: "*.jar"))
+						add project.dependencies.create(project.fileTree(dir: "${liferay.appServerPortalDir}/WEB-INF/shielded-container-lib", include: "*.jar"))
+
+						add project.dependencies.create(group: "com.liferay", name: "net.sf.jargs", version: "1.0")
+						add project.dependencies.create(group: "com.thoughtworks.qdox", name: "qdox", version: "1.12.1")
+						add project.dependencies.create(group: "javax.activation", name: "activation", version: "1.1")
+						add project.dependencies.create(group: "javax.portlet", name: "portlet-api", version: "3.0.1")
+						add project.dependencies.create(group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2")
+						add project.dependencies.create(group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1")
+
+						liferay.appServer.addAdditionalDependencies("portal")
+					}
+				}
+			}
+
+			pluginManager.withPlugin("com.liferay.osgi.defaults.plugin") {
+				if ((project.path.endsWith("-test") &&
+					!project.path.contains("third-party")) ||
+					!project.sourceSets.test.allSource.isEmpty() ||
+					!project.sourceSets.testIntegration.allSource.isEmpty()) {
+
+					dependencies {
+						testImplementation group: "org.mockito", name: "mockito-core", version: "1.10.8"
+						testImplementation(group: "org.powermock", name: "powermock-api-mockito", version: "1.6.1") {
+							exclude group: "org.mockito", module: "mockito-all"
+						}
+						testImplementation group: "org.powermock", name: "powermock-module-junit4", version: "1.6.1"
+						testImplementation group: "org.springframework", name: "spring-test", version: "5.3.39"
+					}
+				}
+
+			}
+
 			pluginManager.withPlugin("com.liferay.osgi.plugin") {
 				if (configurations.findByName("compileIncludePlatform") != null ) {
 					dependencies {
