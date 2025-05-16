@@ -1,5 +1,4 @@
 apply plugin: "io.gatling.gradle"
-apply plugin: "org.springframework.boot"
 
 ext {
 	set("junit-jupiter.version", "5.8.2")
@@ -8,10 +7,6 @@ ext {
 
 sourceCompatibility = JavaVersion.VERSION_21
 targetCompatibility = JavaVersion.VERSION_21
-
-bootJar {
-	enabled = false
-}
 
 configurations.all {
 	exclude group: "org.apache.geronimo.bundles", module: "json"
