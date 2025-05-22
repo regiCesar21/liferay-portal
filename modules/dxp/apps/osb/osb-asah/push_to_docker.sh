@@ -39,46 +39,6 @@ function build_docker_image {
 	echo "Building ${docker_image_tag}."
 	echo ""
 
-	if [ ${file_name} == osb-asah-backend ] ||
-	   [ ${file_name} == osb-asah-batch-curator ] ||
-	   [ ${file_name} == osb-asah-publisher ] ||
-	   [ ${file_name} == osb-asah-stream-curator ] ||
-	   [ ${file_name} == osb-asah-upgrade ]
-	then
-		cp ~/.asah/client.zip ${file_name}/build/client.zip
-
-		echo "" >> ${file_name}/Dockerfile
-		echo "COPY ./build/client.zip client.zip" >> ${file_name}/Dockerfile
-		echo "RUN unzip client.zip" >> ${file_name}/Dockerfile
-
-		cp ~/.asah/asia-south1/gcp_credentials.json ${file_name}/build/asia_south1_gcp_credentials.json
-		cp ~/.asah/europe-west2/gcp_credentials.json ${file_name}/build/europe_west2_gcp_credentials.json
-		cp ~/.asah/europe-west3/gcp_credentials.json ${file_name}/build/europe_west3_gcp_credentials.json
-		cp ~/.asah/southamerica-east1/gcp_credentials.json ${file_name}/build/southamerica_east1_gcp_credentials.json
-		cp ~/.asah/uat/gcp_credentials.json ${file_name}/build/uat_gcp_credentials.json
-		cp ~/.asah/us-west1/gcp_credentials.json ${file_name}/build/us_west1_gcp_credentials.json
-
-		echo "" >> ${file_name}/Dockerfile
-		echo "COPY ./build/asia_south1_gcp_credentials.json asia_south1_gcp_credentials.json" >> ${file_name}/Dockerfile
-		echo "COPY ./build/europe_west2_gcp_credentials.json europe_west2_gcp_credentials.json" >> ${file_name}/Dockerfile
-		echo "COPY ./build/europe_west3_gcp_credentials.json europe_west3_gcp_credentials.json" >> ${file_name}/Dockerfile
-		echo "COPY ./build/southamerica_east1_gcp_credentials.json southamerica_east1_gcp_credentials.json" >> ${file_name}/Dockerfile
-		echo "COPY ./build/uat_gcp_credentials.json uat_gcp_credentials.json" >> ${file_name}/Dockerfile
-		echo "COPY ./build/us_west1_gcp_credentials.json us_west1_gcp_credentials.json" >> ${file_name}/Dockerfile
-		echo "" >> ${file_name}/Dockerfile
-		echo "ENV SPRING_PROFILES_ACTIVE=prod" >> ${file_name}/Dockerfile
-	elif [ ${file_name} == osb-asah-elasticsearch-data-node ] ||
-		   [ ${file_name} == osb-asah-elasticsearch-master-node ]
-	then
-		mkdir -p ${file_name}/build
-
-		cp ~/.asah/server.zip ${file_name}/build/server.zip
-
-		echo "" >> ${file_name}/Dockerfile
-		echo "COPY --chown=elasticsearch:root ./build/server.zip /certs/" >> ${file_name}/Dockerfile
-		echo "RUN mkdir /usr/share/elasticsearch/config/certificates && unzip /certs/server.zip -d /usr/share/elasticsearch/config/certificates" >> ${file_name}/Dockerfile
-	fi
-
 	docker build \
 		--build-arg LABEL_BUILD_DATE=$(date "${CURRENT_DATE}" +'%Y-%m-%dT%H:%M:%SZ') \
 		--build-arg LABEL_VCS_REF=$(git rev-parse HEAD) \
@@ -90,32 +50,6 @@ function build_docker_image {
 }
 
 function check_repository {
-	if [ ! -f ~/.asah/client.zip ]
-	then
-		echo "${HOME}/.asah/client.zip does not exist.";
-
-		exit
-	fi
-
-	if [ ! -f ~/.asah/asia-south1/gcp_credentials.json ] ||
-	   [ ! -f ~/.asah/europe-west2/gcp_credentials.json ] ||
-	   [ ! -f ~/.asah/europe-west3/gcp_credentials.json ] ||
-	   [ ! -f ~/.asah/southamerica-east1/gcp_credentials.json ] ||
-	   [ ! -f ~/.asah/uat/gcp_credentials.json ] ||
-	   [ ! -f ~/.asah/us-west1/gcp_credentials.json ]
-	then
-		echo "Verify gcp_credentials.json files.";
-
-		exit
-	fi
-
-	if [ ! -f ~/.asah/server.zip ]
-	then
-		echo "${HOME}/.asah/server.zip does not exist.";
-
-		exit
-	fi
-
 	gradlew formatSource
 
 	if [ -n "$(git status --porcelain -uno)" ]
@@ -175,7 +109,7 @@ function generate_wedeploy_profile {
 	then
 		sed "s@\"id\"@\"image\": \"$(get_docker_image_tag ${service_name})\", \"id\"@" ${destination_file_path}/LCP.json
 
-		python -m json.tool --sort-keys ${destination_file_path}/LCP.json > ${destination_file_path}/LCP.json.formatted
+		python3 -m json.tool --sort-keys ${destination_file_path}/LCP.json > ${destination_file_path}/LCP.json.formatted
 
 		mv ${destination_file_path}/LCP.json.formatted ${destination_file_path}/LCP.json
 
@@ -196,18 +130,6 @@ function generate_wedeploy_profiles {
 		local profile_name="$(basename ${file_path#$service_name/LCP.} .json)"
 
 		generate_wedeploy_profile ${profile_name} ${service_name} ${file_path}
-
-		if [ ${profile_name} != "dev" ] &&
-		   [ ${profile_name} != "prd" ] &&
-		   [ ${profile_name} != "uat" ]
-		then
-			continue;
-		fi
-
-		if [ ! -f ${service_name}/build.gradle ]
-		then
-			continue;
-		fi
 	done
 
 	git add .wedeploy_profiles
