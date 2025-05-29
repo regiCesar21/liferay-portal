@@ -16,7 +16,7 @@ import org.gradle.plugins.ide.eclipse.model.EclipseModel
 import org.gradle.util.GUtil
 
 buildscript {
-	apply from: rootProject.file("build-buildscript-constraints.gradle"), to: buildscript
+	apply from: rootProject.file("build-buildscript-compatibility.gradle"), to: buildscript
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
 }
 
