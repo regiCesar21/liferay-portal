@@ -1,13 +1,13 @@
 apply plugin: "com.liferay.alloy.taglib"
 
-buildTaglibs {
+configurations {
+	alloyTaglib
+}
+
+configure(buildTaglibs) {
 	classpath = configurations.alloyTaglib
 	componentsXmlFiles "liferay-ddm.xml"
 	javaPackage = "com.liferay.dynamic.data.mapping.taglib.servlet"
-}
-
-configurations {
-	alloyTaglib
 }
 
 dependencies {
