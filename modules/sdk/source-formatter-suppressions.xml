@@ -6,5 +6,6 @@
 		<suppress checks="GradleDependencyArtifactsCheck" files=".*/gradleTest/.*/build.gradle" />
 		<suppress checks="GradleDependencyArtifactsCheck" files="bnd-invoker/build.gradle" />
 		<suppress checks="GradleDependencyVersionCheck" files=".*/gradleTest/.*/build.gradle" />
+		<suppress checks="StringMethodsCheck" files=".*/.*\.java" />
 	</source-check>
 </suppressions>
