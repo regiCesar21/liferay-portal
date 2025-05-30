@@ -332,6 +332,17 @@ private void _createSetUpPortalToolTasks() {
 				dependencyNotation
 			}
 
+			filePermissions {
+				other {
+					read = true
+					write = true
+				}
+				user {
+					read = true
+					write = true
+				}
+			}
+
 			if (ivyXmlFile.parentFile.name != "sdk") {
 				doFirst {
 					delete destinationDir
