@@ -15,7 +15,9 @@ apply plugin: "com.liferay.settings.plugin"
 
 File buildProfileDXPPropertiesFile = new File(rootDir, "../build.profile-dxp.properties")
 
-if ((System.getProperty("build.profile") == null) && (System.getProperty("build.exclude.dirs") != "dxp/apps/osb") && buildProfileDXPPropertiesFile.exists()) {
+String buildExcludeDirs = System.getProperty("build.exclude.dirs", "")
+
+if ((System.getProperty("build.profile") == null) && !buildExcludeDirs.contains("dxp/apps/osb") && buildProfileDXPPropertiesFile.exists()) {
 	File osbAsahDir = new File(rootDir, "dxp/apps/osb/osb-asah")
 
 	osbAsahDir.eachDir {
