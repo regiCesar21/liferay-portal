@@ -47,6 +47,7 @@ import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTestContextBootstrapper;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.BootstrapWith;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
@@ -951,9 +952,11 @@ public class SiteMetricDogTest
 	@BQSQLResource(resourcePath = "test_bq_events_search_terms.sql")
 	@Test
 	public void testSearchTerms7Days() {
+		PageRequest pageRequest = PageRequest.of(0, 5);
+
 		CompositionResultBag compositionResultBag =
 			_siteMetricDog.getSearchTermsCompositionResultBag(
-				1L, 5, 0, TimeRange.LAST_7_DAYS);
+				1L, pageRequest, TimeRange.LAST_7_DAYS);
 
 		LinkedHashMap<String, Long> expectedResults =
 			new LinkedHashMap<String, Long>() {
@@ -982,9 +985,11 @@ public class SiteMetricDogTest
 	@BQSQLResource(resourcePath = "test_bq_events_search_terms.sql")
 	@Test
 	public void testSearchTerms24Hours() {
+		PageRequest pageRequest = PageRequest.of(0, 5);
+
 		CompositionResultBag compositionResultBag =
 			_siteMetricDog.getSearchTermsCompositionResultBag(
-				1L, 5, 0, TimeRange.LAST_24_HOURS);
+				1L, pageRequest, TimeRange.LAST_24_HOURS);
 
 		LinkedHashMap<String, Long> expectedResults =
 			new LinkedHashMap<String, Long>() {
@@ -1012,9 +1017,11 @@ public class SiteMetricDogTest
 	@BQSQLResource(resourcePath = "test_bq_events_search_terms.sql")
 	@Test
 	public void testSearchTerms30Days() {
+		PageRequest pageRequest = PageRequest.of(0, 5);
+
 		CompositionResultBag compositionResultBag =
 			_siteMetricDog.getSearchTermsCompositionResultBag(
-				1L, 5, 0, TimeRange.LAST_30_DAYS);
+				1L, pageRequest, TimeRange.LAST_30_DAYS);
 
 		LinkedHashMap<String, Long> expectedResults =
 			new LinkedHashMap<String, Long>() {
@@ -1045,9 +1052,11 @@ public class SiteMetricDogTest
 	@BQSQLResource(resourcePath = "test_bq_events_search_terms.sql")
 	@Test
 	public void testSearchTerms30DaysPaginated() {
+		PageRequest pageRequest = PageRequest.of(0, 3);
+
 		CompositionResultBag compositionResultBag =
 			_siteMetricDog.getSearchTermsCompositionResultBag(
-				1L, 3, 0, TimeRange.LAST_30_DAYS);
+				1L, pageRequest, TimeRange.LAST_30_DAYS);
 
 		Map<String, Long> expectedResults = new LinkedHashMap<String, Long>() {
 			{

@@ -78,6 +78,7 @@ import org.jooq.SelectConditionStep;
 import org.jooq.SelectFinalStep;
 import org.jooq.SelectHavingStep;
 import org.jooq.SelectJoinStep;
+import org.jooq.SelectSeekStep1;
 import org.jooq.SelectSelectStep;
 import org.jooq.Table;
 import org.jooq.WithStep;
@@ -1371,7 +1372,7 @@ public class BQEventRepositoryImpl
 
 	@Override
 	public Map<String, BigDecimal> getSearchTerms(
-		Long channelId, String[] searchQueryParams, int size, int start,
+		Long channelId, String[] searchQueryParams, Pageable pageable,
 		TimeRange timeRange, String timeZoneId) {
 
 		Field<String> searchTermField = DSL.function(
@@ -1386,25 +1387,32 @@ public class BQEventRepositoryImpl
 
 		searchTermField = DSL.lower(searchTermField);
 
+		SelectSeekStep1 selectSeekStep1 = _dslContext.select(
+			searchTermField.as("searchTermField"), countField
+		).from(
+			"BQEvent"
+		).where(
+			_createSearchTermsCondition(
+				channelId, timeRange.getEndLocalDateTime(),
+				timeRange.getStartLocalDateTime(), searchTermField, timeZoneId)
+		).groupBy(
+			DSL.field("searchTermField")
+		).orderBy(
+			countField.desc()
+		);
+
+		if (pageable == null) {
+			return _queryExecutor.queryForMap(
+				GetterUtil::getString, selectSeekStep1,
+				GetterUtil::getBigDecimal);
+		}
+
 		return _queryExecutor.queryForMap(
 			GetterUtil::getString,
-			_dslContext.select(
-				searchTermField.as("searchTermField"), countField
-			).from(
-				"BQEvent"
-			).where(
-				_createSearchTermsCondition(
-					channelId, timeRange.getEndLocalDateTime(),
-					timeRange.getStartLocalDateTime(), searchTermField,
-					timeZoneId)
-			).groupBy(
-				DSL.field("searchTermField")
-			).orderBy(
-				countField.desc()
-			).limit(
-				size
+			selectSeekStep1.limit(
+				pageable.getPageSize()
 			).offset(
-				start
+				pageable.getOffset()
 			),
 			GetterUtil::getBigDecimal);
 	}

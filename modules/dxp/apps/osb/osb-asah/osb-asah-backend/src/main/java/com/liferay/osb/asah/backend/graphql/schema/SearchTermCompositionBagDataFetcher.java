@@ -13,6 +13,7 @@ import com.liferay.osb.asah.common.model.CompositionResultBag;
 import graphql.schema.DataFetchingEnvironment;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,10 +29,13 @@ public class SearchTermCompositionBagDataFetcher
 		DataFetchingEnvironment dataFetchingEnvironment,
 		SearchQueryContext searchQueryContext) {
 
+		int size = dataFetchingEnvironment.getArgument("size");
+		int start = dataFetchingEnvironment.getArgument("start");
+
+		PageRequest pageRequest = PageRequest.of(start, size);
+
 		return _siteMetricDog.getSearchTermsCompositionResultBag(
-			searchQueryContext.getChannelIdAsLong(),
-			dataFetchingEnvironment.getArgument("size"),
-			dataFetchingEnvironment.getArgument("start"),
+			searchQueryContext.getChannelIdAsLong(), pageRequest,
 			searchQueryContext.getTimeRange());
 	}
 

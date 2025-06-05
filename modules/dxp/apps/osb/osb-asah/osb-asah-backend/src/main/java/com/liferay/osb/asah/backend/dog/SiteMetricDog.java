@@ -56,6 +56,7 @@ import org.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -303,10 +304,10 @@ public class SiteMetricDog {
 	}
 
 	public CompositionResultBag getSearchTermsCompositionResultBag(
-		Long channelId, int size, int start, TimeRange timeRange) {
+		Long channelId, Pageable pageable, TimeRange timeRange) {
 
 		Map<String, BigDecimal> searchTerms = _bqEventRepository.getSearchTerms(
-			channelId, _getSearchQueryParams(), size, start, timeRange,
+			channelId, _getSearchQueryParams(), pageable, timeRange,
 			_timeZoneDog.getTimeZoneId());
 
 		if (searchTerms.isEmpty()) {
