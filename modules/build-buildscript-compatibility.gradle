@@ -2,6 +2,11 @@ dependencies {
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "2.0.6"
 
 	constraints {
+		classpath(group: "com.liferay", name: "com.liferay.ant.bnd") {
+			version {
+				strictly "3.2.14"
+			}
+		}
 		classpath(group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc") {
 			version {
 				strictly "2.1.0"
