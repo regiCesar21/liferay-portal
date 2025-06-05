@@ -21,8 +21,11 @@ import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
 import com.liferay.osb.asah.common.dog.ChannelDog;
+import com.liferay.osb.asah.common.dog.PreferenceDog;
 import com.liferay.osb.asah.common.entity.BQEvent;
 import com.liferay.osb.asah.common.entity.Channel;
+import com.liferay.osb.asah.common.entity.Preference;
+import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.model.Field;
 import com.liferay.osb.asah.common.model.Individual;
 import com.liferay.osb.asah.common.model.MetricType;
@@ -33,6 +36,7 @@ import com.liferay.osb.asah.common.repository.BQEventRepository;
 import com.liferay.osb.asah.common.repository.BQIndividualRepository;
 import com.liferay.osb.asah.common.repository.BQMembershipRepository;
 import com.liferay.osb.asah.common.util.SetUtil;
+import com.liferay.osb.asah.common.util.StringUtil;
 
 import com.opencsv.CSVWriter;
 
@@ -41,6 +45,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import java.nio.charset.StandardCharsets;
 
 import java.time.LocalDateTime;
@@ -48,6 +55,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -55,6 +63,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import org.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -74,7 +84,7 @@ public class ReportDog {
 		BQEventRepository bqEventRepository,
 		BQIndividualRepository bqIndividualRepository,
 		BQMembershipRepository bqMembershipRepository, ChannelDog channelDog,
-		TimeZoneDog timeZoneDog) {
+		TimeZoneDog timeZoneDog, PreferenceDog preferenceDog) {
 
 		assetMetricRepositories.forEach(
 			assetMetricAssetMetricRepository -> _assetMetricRepositoryMap.put(
@@ -86,6 +96,7 @@ public class ReportDog {
 		_bqMembershipRepository = bqMembershipRepository;
 		_channelDog = channelDog;
 		_timeZoneDog = timeZoneDog;
+		_preferenceDog = preferenceDog;
 	}
 
 	public File getCSVReport(
@@ -163,6 +174,10 @@ public class ReportDog {
 					PageMetricType.VISITORS.getName()),
 				sorts, timeRange, type);
 		}
+		else if (StringUtils.equals(type, "search-terms")) {
+			rows = _getSearchTermsRows(
+				channelId, timeRange, _timeZoneDog.getTimeZoneId());
+		}
 
 		File file = File.createTempFile("report", ".csv");
 
@@ -222,6 +237,16 @@ public class ReportDog {
 
 			return _getAssetIndividualRowsCount(
 				assetId, assetType, channelId, query, timeRange);
+		}
+		else if (StringUtils.equals(type, "search-terms")) {
+			Map<String, Integer> searchTermsCounts =
+				_bqEventRepository.getSearchTermsCounts(
+					channelId, _getSearchQueryParams(), timeRange,
+					_timeZoneDog.getTimeZoneId());
+
+			Integer count = searchTermsCounts.get("totalDistinct");
+
+			return count.longValue();
 		}
 
 		return null;
@@ -663,6 +688,60 @@ public class ReportDog {
 		return String.valueOf(metric.getValue());
 	}
 
+	private String[] _getSearchQueryParams() {
+		Set<String> searchQueryParams = new HashSet<>();
+
+		Preference preference = _preferenceDog.getPreference(
+			"search-query-strings");
+
+		String preferenceValue = preference.getValue();
+
+		if (!StringUtil.isNull(preferenceValue)) {
+			searchQueryParams = JSONUtil.toStringSet(
+				new JSONArray(preferenceValue));
+		}
+
+		searchQueryParams.add(
+			"_com_liferay_portal_search_web_portlet_SearchPortlet_keywords");
+		searchQueryParams.add("q");
+
+		return searchQueryParams.toArray(new String[0]);
+	}
+
+	private List<String[]> _getSearchTermsRows(
+		long channelId, TimeRange timeRange, String timeZoneId) {
+
+		List<String[]> rows = new ArrayList<>();
+
+		rows.add(new String[] {"Search Query", "Searches", "% of Searches"});
+
+		Map<String, Integer> searchTermsCounts =
+			_bqEventRepository.getSearchTermsCounts(
+				channelId, _getSearchQueryParams(), timeRange,
+				_timeZoneDog.getTimeZoneId());
+
+		Integer total = searchTermsCounts.get("total");
+
+		Map<String, BigDecimal> searchTerms = _bqEventRepository.getSearchTerms(
+			channelId, _getSearchQueryParams(), null, timeRange, timeZoneId);
+
+		for (Map.Entry<String, BigDecimal> entry : searchTerms.entrySet()) {
+			String searchTerm = entry.getKey();
+
+			BigDecimal value = entry.getValue();
+
+			BigDecimal percentage = value.divide(
+				new BigDecimal(total), 2, RoundingMode.HALF_UP);
+
+			rows.add(
+				new String[] {
+					searchTerm, value.toString(), percentage.toString()
+				});
+		}
+
+		return rows;
+	}
+
 	private org.springframework.data.domain.Sort _getSort(
 		String[] sorts, Order defaultOrder) {
 
@@ -714,6 +793,7 @@ public class ReportDog {
 	private final BQIndividualRepository _bqIndividualRepository;
 	private final BQMembershipRepository _bqMembershipRepository;
 	private final ChannelDog _channelDog;
+	private final PreferenceDog _preferenceDog;
 	private final TimeZoneDog _timeZoneDog;
 
 }
