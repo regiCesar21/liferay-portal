@@ -47,6 +47,10 @@ import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTestContextBootstrapper;
+<<<<<<< HEAD
+=======
+import org.springframework.boot.test.mock.mockito.MockBean;
+>>>>>>> ab22aaf (LPD-56320 Make pageable a nullable object on getSearchTerms)
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.BootstrapWith;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
