@@ -1139,6 +1139,30 @@ public class ReportDogTest
 				null, null, 1L, null, null, null, "individual"));
 	}
 
+	@BQSQLResource(resourcePath = "test_csv_report_search_term.sql")
+	@Test
+	public void testGetCSVReportGetSearchTerms() throws Exception {
+		ClassPathResource classPathResource = new ClassPathResource(
+			"dependencies/test_get_csv_report_search_terms_expected.csv",
+			getClass());
+
+		try (InputStream inputStream = new FileInputStream(
+				_reportDog.getCSVReport(
+					null, null, 1L, null, null, null, null,
+					TimeRange.of(
+						LocalDate.now(),
+						LocalDate.now(
+						).minusDays(
+							7
+						)),
+					"search-terms"))) {
+
+			Assertions.assertTrue(
+				IOUtils.contentEquals(
+					classPathResource.getInputStream(), inputStream));
+		}
+	}
+
 	@BQSQLResource(resourcePath = "test_report_dog.sql")
 	@SQLResource(resourcePath = "test_segment.sql")
 	@Test
