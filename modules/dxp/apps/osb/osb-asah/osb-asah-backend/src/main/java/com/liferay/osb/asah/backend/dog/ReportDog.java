@@ -84,7 +84,7 @@ public class ReportDog {
 		BQEventRepository bqEventRepository,
 		BQIndividualRepository bqIndividualRepository,
 		BQMembershipRepository bqMembershipRepository, ChannelDog channelDog,
-		TimeZoneDog timeZoneDog, PreferenceDog preferenceDog) {
+		PreferenceDog preferenceDog, TimeZoneDog timeZoneDog) {
 
 		assetMetricRepositories.forEach(
 			assetMetricAssetMetricRepository -> _assetMetricRepositoryMap.put(
@@ -95,8 +95,8 @@ public class ReportDog {
 		_bqIndividualRepository = bqIndividualRepository;
 		_bqMembershipRepository = bqMembershipRepository;
 		_channelDog = channelDog;
-		_timeZoneDog = timeZoneDog;
 		_preferenceDog = preferenceDog;
+		_timeZoneDog = timeZoneDog;
 	}
 
 	public File getCSVReport(
