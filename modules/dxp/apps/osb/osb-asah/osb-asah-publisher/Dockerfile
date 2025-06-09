@@ -20,6 +20,7 @@ USER root
 
 WORKDIR /root
 
+RUN apk add gcompat
 RUN mkdir /glowroot; \
 	\
 	if [ "$GLOWROOT_ENABLED" = "true" ]; \
@@ -39,5 +40,6 @@ COPY docker-resources/glowroot-config.json /glowroot/config.json
 
 ENV LABEL_BUILD_DATE=${LABEL_BUILD_DATE}
 ENV LABEL_VCS_REF=${LABEL_VCS_REF}
+ENV LD_PRELOAD=/lib/libgcompat.so.0
 
 COPY --from=builder /builder/application .

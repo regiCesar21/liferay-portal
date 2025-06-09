@@ -19,10 +19,13 @@ USER root
 
 WORKDIR /root
 
+RUN apk add gcompat
+
 COPY --from=builder /builder/dependencies .
 COPY --from=builder /builder/spring-boot-loader .
 
 ENV LABEL_BUILD_DATE=${LABEL_BUILD_DATE}
 ENV LABEL_VCS_REF=${LABEL_VCS_REF}
+ENV LD_PRELOAD=/lib/libgcompat.so.0
 
 COPY --from=builder /builder/application .
