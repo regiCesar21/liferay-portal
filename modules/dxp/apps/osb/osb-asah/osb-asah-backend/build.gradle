@@ -23,6 +23,7 @@ dependencies {
 	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-json-org", version: "2.18.2"
 	api group: "com.github.erosb", name: "everit-json-schema", version: "1.14.4"
 	api group: "com.graphql-java", name: "graphql-java", version: "22.3"
+	api group: "commons-beanutils", name: "commons-beanutils", version: "1.11.0"
 	api group: "io.improbable", name: "keanu", version: "0.0.26"
 	api group: "org.jooq", name: "jooq", version: "3.19.18"
 	api group: "org.springframework.boot", name: "spring-boot-starter-hateoas"
