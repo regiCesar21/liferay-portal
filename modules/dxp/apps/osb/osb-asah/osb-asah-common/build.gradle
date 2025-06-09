@@ -34,6 +34,8 @@ dependencies {
 	api group: "com.google.cloud", name: "google-cloud-bigquerystorage", version: "2.31.0"
 	api group: "com.google.cloud", name: "google-cloud-pubsub", version: "1.123.2"
 	api group: "com.google.cloud", name: "google-cloud-storage", version: "2.38.0"
+	api group: "com.google.protobuf", name: "protobuf-java", version: "3.25.8"
+	api group: "com.google.protobuf", name: "protobuf-java-util", version: "3.25.8"
 	api group: "com.univocity", name: "univocity-parsers", version: "2.4.1"
 	api group: "commons-io", name: "commons-io", version: "2.19.0"
 	api group: "commons-logging", name: "commons-logging", version: "1.2"
