@@ -170,7 +170,7 @@ public class AppPortlet extends MVCPortlet {
 		MVCResourceCommand mvcResourceCommand = mvcResourceCommandMap.get(
 			GetterUtil.getString(resourceRequest.getResourceID()));
 
-		if (!Objects.isNull(mvcResourceCommand)) {
+		if (Objects.nonNull(mvcResourceCommand)) {
 			mvcResourceCommand.serveResource(resourceRequest, resourceResponse);
 
 			return true;
