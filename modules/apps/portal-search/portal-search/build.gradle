@@ -24,12 +24,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
-	testImplementation project(":core:petra:petra-function")
-	testImplementation project(":core:petra:petra-memory")
-	testImplementation project(":core:petra:petra-process")
-	testImplementation project(":core:petra:petra-reflect")
-	testImplementation project(":core:petra:petra-sql-dsl-api")
 	testImplementation project(":core:registry-api")
 }
