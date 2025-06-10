@@ -22,7 +22,8 @@ public class OSBAsahResponseErrorHandler implements ResponseErrorHandler {
 
 	@Override
 	public void handleError(
-			URI url, HttpMethod method, ClientHttpResponse clientHttpResponse)
+			URI url, HttpMethod httpMethod,
+			ClientHttpResponse clientHttpResponse)
 		throws IOException {
 
 		HttpStatus httpStatus = (HttpStatus)clientHttpResponse.getStatusCode();
