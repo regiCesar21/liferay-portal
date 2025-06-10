@@ -17,46 +17,46 @@ import org.springframework.scheduling.TriggerContext;
 public class SimpleTriggerContext implements TriggerContext {
 
 	public SimpleTriggerContext(
-		Date lastActualExecutionTime, Date lastCompletionTime,
-		Date lastScheduledExecutionTime) {
+		Date lastActualExecutionTimeDate, Date lastCompletionTimeDate,
+		Date lastScheduledExecutionTimeDate) {
 
-		_lastActualExecutionTime = lastActualExecutionTime;
-		_lastCompletionTime = lastCompletionTime;
-		_lastScheduledExecutionTime = lastScheduledExecutionTime;
+		_lastActualExecutionTimeDate = lastActualExecutionTimeDate;
+		_lastCompletionTimeDate = lastCompletionTimeDate;
+		_lastScheduledExecutionTimeDaet = lastScheduledExecutionTimeDate;
 	}
 
 	@Override
 	public Instant lastActualExecution() {
-		return _lastActualExecutionTime.toInstant();
+		return _lastActualExecutionTimeDate.toInstant();
 	}
 
 	@Override
 	public Date lastActualExecutionTime() {
-		return _lastActualExecutionTime;
+		return _lastActualExecutionTimeDate;
 	}
 
 	@Override
 	public Instant lastCompletion() {
-		return _lastCompletionTime.toInstant();
+		return _lastCompletionTimeDate.toInstant();
 	}
 
 	@Override
 	public Date lastCompletionTime() {
-		return _lastCompletionTime;
+		return _lastCompletionTimeDate;
 	}
 
 	@Override
 	public Instant lastScheduledExecution() {
-		return _lastScheduledExecutionTime.toInstant();
+		return _lastScheduledExecutionTimeDaet.toInstant();
 	}
 
 	@Override
 	public Date lastScheduledExecutionTime() {
-		return _lastScheduledExecutionTime;
+		return _lastScheduledExecutionTimeDaet;
 	}
 
-	private final Date _lastActualExecutionTime;
-	private final Date _lastCompletionTime;
-	private final Date _lastScheduledExecutionTime;
+	private final Date _lastActualExecutionTimeDate;
+	private final Date _lastCompletionTimeDate;
+	private final Date _lastScheduledExecutionTimeDaet;
 
 }
