@@ -22,6 +22,7 @@ public class SimpleTriggerContext implements TriggerContext {
 
 		_lastActualExecutionTimeDate = lastActualExecutionTimeDate;
 		_lastCompletionTimeDate = lastCompletionTimeDate;
+
 		_lastScheduledExecutionTimeDaet = lastScheduledExecutionTimeDate;
 	}
 
