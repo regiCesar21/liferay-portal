@@ -1,0 +1,3 @@
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, eventDate, userId, views) VALUES ('1', 'Journal 1', 1, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), '1', 1);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, eventDate, userId, views) VALUES ('2', 'Journal 2', 1, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), '2', 2);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, eventDate, userId, views) VALUES ('3', 'Journal 3', 1, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), '3', 3);

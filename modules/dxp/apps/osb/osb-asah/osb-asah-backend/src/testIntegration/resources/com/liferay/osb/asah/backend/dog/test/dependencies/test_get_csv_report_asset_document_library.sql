@@ -1,0 +1,3 @@
+INSERT INTO DocumentLibraryDaily (assetId, assetTitle, channelId, comments, downloads, eventDate, impressions, ratings, userId) VALUES ('1', 'Document 1', 1, 1, 1, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), 1, 1, '1');
+INSERT INTO DocumentLibraryDaily (assetId, assetTitle, channelId, comments, downloads, eventDate, impressions, ratings, userId) VALUES ('2', 'Document 2', 1, 2, 2, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), 2, 2, '2');
+INSERT INTO DocumentLibraryDaily (assetId, assetTitle, channelId, comments, downloads, eventDate, impressions, ratings, userId) VALUES ('3', 'Document 3', 1, 3, 3, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), 3, 3, '3');

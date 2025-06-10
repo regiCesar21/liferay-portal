@@ -1,0 +1,3 @@
+INSERT INTO FormDaily (abandonments, assetId, assetTitle, channelId, eventDate, submissions, submissionsTime, userId, views) VALUES (1, '1', 'Form 1', 1, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), 1, 1, '1', 1);
+INSERT INTO FormDaily (abandonments, assetId, assetTitle, channelId, eventDate, submissions, submissionsTime, userId, views) VALUES (2, '2', 'Form 2', 1, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), 2, 2, '2', 2);
+INSERT INTO FormDaily (abandonments, assetId, assetTitle, channelId, eventDate, submissions, submissionsTime, userId, views) VALUES (3, '3', 'Form 3', 1, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), 3, 3, '3', 3);

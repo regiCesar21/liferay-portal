@@ -1,0 +1,3 @@
+INSERT INTO BlogDaily (assetId, assetTitle, channelId, clicks, comments, eventDate, ratings, readTime, userId, views) VALUES ('1', 'Blog 1', 1, 1, 1, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), 1, 1, '1', 1);
+INSERT INTO BlogDaily (assetId, assetTitle, channelId, clicks, comments, eventDate, ratings, readTime, userId, views) VALUES ('2', 'Blog 2', 1, 2, 2, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), 2, 2, '2', 2);
+INSERT INTO BlogDaily (assetId, assetTitle, channelId, clicks, comments, eventDate, ratings, readTime, userId, views) VALUES ('3', 'Blog 3', 1, 3, 3, TIMESTAMP(DATETIME_TRUNC(TIMESTAMP '2023-11-04T17:10:00.666Z', HOUR)), 3, 3, '3', 3);
