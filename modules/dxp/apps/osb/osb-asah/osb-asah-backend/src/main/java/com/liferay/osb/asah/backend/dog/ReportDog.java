@@ -730,8 +730,11 @@ public class ReportDog {
 
 			BigDecimal value = entry.getValue();
 
-			BigDecimal percentage = value.divide(
-				new BigDecimal(total), 2, RoundingMode.HALF_UP);
+			BigDecimal percentage = value.multiply(
+				BigDecimal.valueOf(100)
+			).divide(
+				new BigDecimal(total), 2, RoundingMode.HALF_UP
+			);
 
 			rows.add(
 				new String[] {
