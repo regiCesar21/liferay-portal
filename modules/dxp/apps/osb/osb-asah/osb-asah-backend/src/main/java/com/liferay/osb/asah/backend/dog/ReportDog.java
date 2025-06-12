@@ -581,7 +581,7 @@ public class ReportDog {
 
 			Date lastActivityDate = individual.getLastActivityDate();
 
-			if (!Objects.isNull(lastActivityDate)) {
+			if (Objects.nonNull(lastActivityDate)) {
 				lastActivityDateString = DateUtil.toUTCString(lastActivityDate);
 			}
 
@@ -643,7 +643,7 @@ public class ReportDog {
 
 			Date firstActivityDate = individual.getFirstActivityDate();
 
-			if (!Objects.isNull(firstActivityDate)) {
+			if (Objects.nonNull(firstActivityDate)) {
 				firstActivityDateString = DateUtil.toUTCString(
 					firstActivityDate);
 			}
