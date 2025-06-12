@@ -78,7 +78,7 @@ public class FaroInfoIndividualUtil {
 		Field emailField = stream.filter(
 			field ->
 				Objects.equals(field.getName(), "email") &&
-				!Objects.isNull(field.getValue())
+				Objects.nonNull(field.getValue())
 		).findFirst(
 		).orElse(
 			null
@@ -113,7 +113,7 @@ public class FaroInfoIndividualUtil {
 		Field nameField = stream.filter(
 			field ->
 				Objects.equals(field.getName(), "name") &&
-				!Objects.isNull(field.getValue())
+				Objects.nonNull(field.getValue())
 		).findFirst(
 		).orElse(
 			null
@@ -128,7 +128,7 @@ public class FaroInfoIndividualUtil {
 		Field familyNameField = stream.filter(
 			field ->
 				Objects.equals(field.getName(), "familyName") &&
-				!Objects.isNull(field.getValue())
+				Objects.nonNull(field.getValue())
 		).findFirst(
 		).orElse(
 			null
@@ -139,7 +139,7 @@ public class FaroInfoIndividualUtil {
 		Field givenNameField = stream.filter(
 			field ->
 				Objects.equals(field.getName(), "givenName") &&
-				!Objects.isNull(field.getValue())
+				Objects.nonNull(field.getValue())
 		).findFirst(
 		).orElse(
 			null
@@ -235,7 +235,7 @@ public class FaroInfoIndividualUtil {
 		Field emailField = stream.filter(
 			field ->
 				Objects.equals(field.getName(), "email") &&
-				!Objects.isNull(field.getValue())
+				Objects.nonNull(field.getValue())
 		).findFirst(
 		).orElse(
 			null

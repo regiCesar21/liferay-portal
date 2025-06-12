@@ -857,7 +857,7 @@ public class BQIndividualRepositoryImpl
 					new BQIndividual.Field(
 						0L, "screenName", (String)record.get("screenName")));
 
-				if (!Objects.isNull(record.get("birthday"))) {
+				if (Objects.nonNull(record.get("birthday"))) {
 					bqIndividualFields.add(
 						new BQIndividual.Field(
 							0L, "birthday",

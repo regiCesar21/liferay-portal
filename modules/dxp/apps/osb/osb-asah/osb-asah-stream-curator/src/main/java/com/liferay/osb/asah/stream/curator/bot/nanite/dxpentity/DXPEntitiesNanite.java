@@ -140,7 +140,7 @@ public class DXPEntitiesNanite implements Nanite {
 				_dataControlTaskDog.fetchLatestActiveSuppressionDataControlTask(
 					objectJSONObject.optString("emailAddress"));
 
-			if (!Objects.isNull(dataControlTask)) {
+			if (Objects.nonNull(dataControlTask)) {
 				return;
 			}
 		}

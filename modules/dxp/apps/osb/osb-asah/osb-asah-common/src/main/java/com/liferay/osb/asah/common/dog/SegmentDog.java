@@ -599,7 +599,7 @@ public class SegmentDog {
 		if (StringUtils.isNotEmpty(partialSegment.getFilter()) &&
 			Objects.equals(
 				existingSegment.getFilter(), partialSegment.getFilter()) &&
-			!Objects.isNull(partialSegment.getIncludeAnonymousUsers()) &&
+			Objects.nonNull(partialSegment.getIncludeAnonymousUsers()) &&
 			Objects.equals(
 				existingSegment.getIncludeAnonymousUsers(),
 				partialSegment.getIncludeAnonymousUsers())) {
