@@ -52,7 +52,7 @@ dependencies {
 	api group: "org.aspectj", name: "aspectjweaver", version: "1.9.6"
 	api group: "org.jooq", name: "jooq", version: "3.19.18"
 	api group: "org.json", name: "json"
-	api group: "org.postgresql", name: "postgresql", version: "42.7.5"
+	api group: "org.postgresql", name: "postgresql", version: "42.7.7"
 	api group: "org.springframework.boot", name: "spring-boot-starter-actuator"
 	api group: "org.springframework.boot", name: "spring-boot-starter-data-jdbc"
 	api group: "org.springframework.boot", name: "spring-boot-starter-data-redis"
