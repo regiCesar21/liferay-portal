@@ -19,6 +19,7 @@ configurations.all {
 	exclude group: "org.slf4j", module: "slf4j-log4j12"
 
 	resolutionStrategy {
+		force group: "com.google.guava", name: "guava", version: "33.4.8-jre"
 		force group: "org.apache.httpcomponents.core5", name: "httpcore5", version: "5.3.4"
 	}
 }
