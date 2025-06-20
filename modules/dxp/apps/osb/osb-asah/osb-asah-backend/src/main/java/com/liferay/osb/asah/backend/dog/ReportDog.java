@@ -50,6 +50,7 @@ import java.math.RoundingMode;
 
 import java.nio.charset.StandardCharsets;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 import java.util.ArrayList;
@@ -483,12 +484,16 @@ public class ReportDog {
 			timeRange, type);
 
 		for (PageMetric pageMetric : pageMetrics) {
+			long millis = (long) Double.parseDouble(_getMetricValueAsString(pageMetric.getTimeOnPageMetric()));
+			Duration duration = Duration.ofMillis(millis);
+
 			rows.add(
 				new String[] {
 					pageMetric.getAssetTitle(), pageMetric.getAssetId(),
 					_getMetricValueAsString(pageMetric.getVisitorsMetric()),
 					_getMetricValueAsString(pageMetric.getViewsMetric()),
-					_getMetricValueAsString(pageMetric.getTimeOnPageMetric()),
+					String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutes() % _MINUTES,
+							duration.getSeconds() % _SECONDS),
 					_getMetricValueAsString(pageMetric.getBounceRateMetric()),
 					_getMetricValueAsString(pageMetric.getEntrancesMetric()),
 					_getMetricValueAsString(pageMetric.getExitRateMetric()),
@@ -789,6 +794,8 @@ public class ReportDog {
 	}
 
 	private static final int _MAX_SIZE = 10000;
+	private static final int _SECONDS = 60;
+	private static final int _MINUTES = 60;
 
 	private final Map<AssetType, AssetMetricRepository>
 		_assetMetricRepositoryMap = new HashMap<>();
