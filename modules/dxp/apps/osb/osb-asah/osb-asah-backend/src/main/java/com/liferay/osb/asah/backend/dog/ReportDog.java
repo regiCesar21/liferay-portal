@@ -484,7 +484,9 @@ public class ReportDog {
 			timeRange, type);
 
 		for (PageMetric pageMetric : pageMetrics) {
-			long millis = (long) Double.parseDouble(_getMetricValueAsString(pageMetric.getTimeOnPageMetric()));
+			long millis = (long)Double.parseDouble(
+				_getMetricValueAsString(pageMetric.getTimeOnPageMetric()));
+				
 			Duration duration = Duration.ofMillis(millis);
 
 			rows.add(
@@ -492,8 +494,10 @@ public class ReportDog {
 					pageMetric.getAssetTitle(), pageMetric.getAssetId(),
 					_getMetricValueAsString(pageMetric.getVisitorsMetric()),
 					_getMetricValueAsString(pageMetric.getViewsMetric()),
-					String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutes() % _MINUTES,
-							duration.getSeconds() % _SECONDS),
+					String.format(
+						"%02d:%02d:%02d", duration.toHours(),
+						duration.toMinutes() % _MINUTES,
+						duration.getSeconds() % _SECONDS),
 					_getMetricValueAsString(pageMetric.getBounceRateMetric()),
 					_getMetricValueAsString(pageMetric.getEntrancesMetric()),
 					_getMetricValueAsString(pageMetric.getExitRateMetric()),
@@ -794,8 +798,10 @@ public class ReportDog {
 	}
 
 	private static final int _MAX_SIZE = 10000;
-	private static final int _SECONDS = 60;
+
 	private static final int _MINUTES = 60;
+
+	private static final int _SECONDS = 60;
 
 	private final Map<AssetType, AssetMetricRepository>
 		_assetMetricRepositoryMap = new HashMap<>();
