@@ -50,7 +50,6 @@ import java.math.RoundingMode;
 
 import java.nio.charset.StandardCharsets;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 import java.util.ArrayList;
@@ -64,6 +63,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import org.json.JSONArray;
 
@@ -484,20 +484,17 @@ public class ReportDog {
 			timeRange, type);
 
 		for (PageMetric pageMetric : pageMetrics) {
-			long millis = (long)Double.parseDouble(
-				_getMetricValueAsString(pageMetric.getTimeOnPageMetric()));
-				
-			Duration duration = Duration.ofMillis(millis);
+			Metric timeOnPageMetric = pageMetric.getTimeOnPageMetric();
+
+			Double timeOnPage = timeOnPageMetric.getValue();
 
 			rows.add(
 				new String[] {
 					pageMetric.getAssetTitle(), pageMetric.getAssetId(),
 					_getMetricValueAsString(pageMetric.getVisitorsMetric()),
 					_getMetricValueAsString(pageMetric.getViewsMetric()),
-					String.format(
-						"%02d:%02d:%02d", duration.toHours(),
-						duration.toMinutes() % _MINUTES,
-						duration.getSeconds() % _SECONDS),
+					DurationFormatUtils.formatDuration(
+						timeOnPage.longValue(), "HH:mm:ss.SSS"),
 					_getMetricValueAsString(pageMetric.getBounceRateMetric()),
 					_getMetricValueAsString(pageMetric.getEntrancesMetric()),
 					_getMetricValueAsString(pageMetric.getExitRateMetric()),
@@ -798,10 +795,6 @@ public class ReportDog {
 	}
 
 	private static final int _MAX_SIZE = 10000;
-
-	private static final int _MINUTES = 60;
-
-	private static final int _SECONDS = 60;
 
 	private final Map<AssetType, AssetMetricRepository>
 		_assetMetricRepositoryMap = new HashMap<>();
