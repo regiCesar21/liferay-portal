@@ -519,8 +519,8 @@ public class AnalyticsEventsIngestionNanite {
 		bqEvent.setId(analyticsEvent.getId());
 		bqEvent.setKeywords(_formatFieldValue(context.get("keywords")));
 		bqEvent.setLanguageId(context.get("languageId"));
-		bqEvent.setObjectType(
-			_formatFieldValue(eventProperties.get("objectType")));
+		bqEvent.setObjectDefinitionName(
+			_formatFieldValue(eventProperties.get("objectDefinitionName")));
 		bqEvent.setPlatformName(context.get("platformName"));
 		bqEvent.setProjectTimeZoneId(analyticsEvent.getProjectTimeZoneId());
 		bqEvent.setProperties(_parseBQEventProperties(eventProperties));

@@ -835,7 +835,7 @@
 			},
 			{
 				"mode": "NULLABLE",
-				"name": "objectType",
+				"name": "objectDefinitionName",
 				"type": "STRING"
 			},
 			{

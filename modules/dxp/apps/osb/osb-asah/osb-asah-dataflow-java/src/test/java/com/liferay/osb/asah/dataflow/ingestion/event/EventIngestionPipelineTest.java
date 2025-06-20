@@ -307,7 +307,7 @@ public class EventIngestionPipelineTest {
 		tableRow.set("id", "1");
 		tableRow.set("keywords", null);
 		tableRow.set("languageId", null);
-		tableRow.set("objectType", null);
+		tableRow.set("objectDefinitionName", null);
 		tableRow.set("platformName", null);
 		tableRow.set("projectId", "test");
 		tableRow.set("projectTimeZoneId", "UTC");
@@ -405,7 +405,7 @@ public class EventIngestionPipelineTest {
 		tableRow.set("id", "1");
 		tableRow.set("keywords", null);
 		tableRow.set("languageId", null);
-		tableRow.set("objectType", null);
+		tableRow.set("objectDefinitionName", null);
 		tableRow.set("platformName", null);
 		tableRow.set("projectId", "test");
 		tableRow.set("projectTimeZoneId", "UTC");
@@ -504,7 +504,7 @@ public class EventIngestionPipelineTest {
 		tableRow.set("id", "1");
 		tableRow.set("keywords", null);
 		tableRow.set("languageId", null);
-		tableRow.set("objectType", null);
+		tableRow.set("objectDefinitionName", null);
 		tableRow.set("platformName", null);
 		tableRow.set("projectId", "test");
 		tableRow.set("projectTimeZoneId", "UTC");

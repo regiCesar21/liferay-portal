@@ -634,7 +634,8 @@ public class EventIngestionPipeline {
 		tableRow.set("keywords", _formatFieldValue(context.get("keywords")));
 		tableRow.set("languageId", context.get("languageId"));
 		tableRow.set(
-			"objectType", _formatFieldValue(eventProperties.get("objectType")));
+			"objectDefinitionName",
+			_formatFieldValue(eventProperties.get("objectDefinitionName")));
 		tableRow.set("platformName", context.get("platformName"));
 		tableRow.set("projectId", analyticsEvent.projectId);
 		tableRow.set("projectTimeZoneId", analyticsEvent.projectTimeZoneId);
