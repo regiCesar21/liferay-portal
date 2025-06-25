@@ -7862,7 +7862,7 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 					</not>
 					<then>
 						<ant dir="portal-impl" target="build-services">
-							<property name="com.liferay.portal.tools.service.builder.ignore.local" value="false" />
+							<property name="com.liferay.portal.tools.service.builder.ignore.local" value="true" />
 						</ant>
 					</then>
 					<else>
@@ -7895,7 +7895,7 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 
 										<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.build.service.task}">
 											<arg value="-DbuildService.skipReadOnly=${build.services.skip.read.only}" />
-											<arg value="-Pcom.liferay.portal.tools.service.builder.ignore.local=false" />
+											<arg value="-Pcom.liferay.portal.tools.service.builder.ignore.local=true" />
 										</gradle-execute>
 									</sequential>
 								</for>
