@@ -3695,6 +3695,41 @@ log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="subrepository-source-format">
+		<attribute default="x64" name="java.jdk.architecture" />
+		<attribute default="jdk" name="java.jdk.type" />
+		<attribute default="8" name="java.jdk.version" />
+
+		<sequential>
+			<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
+
+			<local name="path" />
+
+			<local name="java.jdk.home" />
+			<local name="java.jdk.opts" />
+
+			<get-java-jdk-home architecture="@{java.jdk.architecture}" type="@{java.jdk.type}" version="@{java.jdk.version}" />
+			<get-java-jdk-opts architecture="@{java.jdk.architecture}" type="@{java.jdk.type}" version="@{java.jdk.version}" />
+
+			<propertyregex
+				input="${env.PATH}"
+				override="true"
+				property="path"
+				regexp="/opt/java/(jdk|openjdk|zulu(-x64)?)[^/]*/bin"
+				replace="${java.jdk.home}/bin"
+			/>
+
+			<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
+
+			<gradle-execute dir="${module.base.dir}" refreshdependencies="true" task="checkSourceFormatting">
+				<arg value="-PdependencyCheckerIgnoreFailures=false" />
+				<env key="JAVA_HOME" value="${java.jdk.home}" />
+				<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+				<env key="PATH" value="${path}" />
+			</gradle-execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="subrepository-unit">
 		<attribute default="x64" name="java.jdk.architecture" />
 		<attribute default="jdk" name="java.jdk.type" />
@@ -6712,13 +6747,27 @@ information. Make sure to commit in all build services results.
 	</target>
 
 	<target name="subrepository-source-format-jdk8">
-		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
+		<subrepository-source-format
+			java.jdk.architecture="x64"
+			java.jdk.type="jdk"
+			java.jdk.version="8"
+		/>
+	</target>
 
-		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
+	<target name="subrepository-source-format-jdk17_zulu">
+		<subrepository-source-format
+			java.jdk.architecture="x64"
+			java.jdk.type="zulu"
+			java.jdk.version="17"
+		/>
+	</target>
 
-		<gradle-execute dir="${module.base.dir}" refreshdependencies="true" task="checkSourceFormatting">
-			<arg value="-PdependencyCheckerIgnoreFailures=false" />
-		</gradle-execute>
+	<target name="subrepository-source-format-jdk21_zulu">
+		<subrepository-source-format
+			java.jdk.architecture="x64"
+			java.jdk.type="zulu"
+			java.jdk.version="21"
+		/>
 	</target>
 
 	<target name="subrepository-unit-jdk8">
