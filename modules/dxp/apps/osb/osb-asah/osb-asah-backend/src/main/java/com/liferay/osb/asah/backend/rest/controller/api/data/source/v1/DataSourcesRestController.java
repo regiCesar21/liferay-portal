@@ -9,10 +9,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.osb.asah.common.dog.DataSourceDog;
 import com.liferay.osb.asah.common.entity.DataSource;
+import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
+
+import java.util.Objects;
+
+import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +37,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class DataSourcesRestController {
 
 	@PostMapping("/{id}/disconnect")
-	public String disconnectDataSource(@PathVariable Long id) throws Exception {
-		DataSource dataSource = _dataSourceDog.disconnectDataSource(id);
+	public String disconnectDataSource(
+			@PathVariable Long id, @RequestBody String json)
+		throws Exception {
+
+		DataSource dataSource = null;
+
+		if (StringUtils.isNotEmpty(json)) {
+			JSONObject jsonObject = new JSONObject(json);
+
+			dataSource = _dataSourceDog.getDataSource(id);
+
+			String url = jsonObject.optString("url", dataSource.getURL());
+
+			if (!Objects.equals(dataSource.getURL(), url)) {
+				throw new OSBAsahException(
+					HttpStatus.BAD_REQUEST,
+					"Unable to disconnect data source " + id + " from " + url);
+			}
+		}
+
+		dataSource = _dataSourceDog.disconnectDataSource(id);
 
 		_sanitize(dataSource);
 
