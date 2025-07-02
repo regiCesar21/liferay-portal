@@ -194,13 +194,13 @@ public abstract class BaseNodeResourceTestCase {
 				testDeleteProcessNode_getProcessId(node), node.getId()));
 	}
 
+	protected Node testDeleteProcessNode_addNode() throws Exception {
+		return testPostProcessNode_addNode(randomNode());
+	}
+
 	protected Long testDeleteProcessNode_getProcessId(Node node)
 		throws Exception {
 
-		return node.getProcessId();
-	}
-
-	protected Node testDeleteProcessNode_addNode() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -292,11 +292,6 @@ public abstract class BaseNodeResourceTestCase {
 	protected Node testPostProcessNode_addNode(Node node) throws Exception {
 		return nodeResource.postProcessNode(
 			testGetProcessNodesPage_getProcessId(), node);
-	}
-
-	protected Node testGraphQLNode_addNode() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected void assertContains(Node node, List<Node> nodes) {

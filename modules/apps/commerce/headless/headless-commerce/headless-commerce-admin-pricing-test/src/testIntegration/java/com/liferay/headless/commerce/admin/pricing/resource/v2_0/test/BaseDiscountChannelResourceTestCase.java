@@ -187,12 +187,51 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 	@Test
 	public void testDeleteDiscountChannel() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountChannel discountChannel =
+			testDeleteDiscountChannel_addDiscountChannel();
+
+		assertHttpResponseStatusCode(
+			204,
+			discountChannelResource.deleteDiscountChannelHttpResponse(
+				discountChannel.getDiscountChannelId()));
+	}
+
+	protected DiscountChannel testDeleteDiscountChannel_addDiscountChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteDiscountChannel() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		DiscountChannel discountChannel1 =
+			testGraphQLDeleteDiscountChannel_addDiscountChannel();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDiscountChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"discountChannelId",
+									discountChannel1.getDiscountChannelId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDiscountChannel"));
+	}
+
+	protected DiscountChannel
+			testGraphQLDeleteDiscountChannel_addDiscountChannel()
+		throws Exception {
+
+		return testGraphQLDiscountChannel_addDiscountChannel();
 	}
 
 	@Test
@@ -257,6 +296,12 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			page,
 			testGetDiscountByExternalReferenceCodeDiscountChannelsPage_getExpectedActions(
 				externalReferenceCode));
+
+		discountChannelResource.deleteDiscountChannel(
+			discountChannel1.getDiscountChannelId());
+
+		discountChannelResource.deleteDiscountChannel(
+			discountChannel2.getDiscountChannelId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -454,6 +499,12 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			discountChannel2, (List<DiscountChannel>)page.getItems());
 		assertValid(
 			page, testGetDiscountIdDiscountChannelsPage_getExpectedActions(id));
+
+		discountChannelResource.deleteDiscountChannel(
+			discountChannel1.getDiscountChannelId());
+
+		discountChannelResource.deleteDiscountChannel(
+			discountChannel2.getDiscountChannelId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -889,6 +940,13 @@ public abstract class BaseDiscountChannelResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected DiscountChannel testGraphQLDiscountChannel_addDiscountChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		DiscountChannel discountChannel,
 		List<DiscountChannel> discountChannels) {
@@ -965,6 +1023,10 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (discountChannel.getDiscountChannelId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

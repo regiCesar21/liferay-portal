@@ -793,15 +793,16 @@ public abstract class BaseCatalogResourceTestCase {
 		assertValid(getCatalog);
 	}
 
+	protected Catalog testGetProductByExternalReferenceCodeCatalog_addCatalog()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected String
 			testGetProductByExternalReferenceCodeCatalog_getExternalReferenceCode(
 				Catalog catalog)
-		throws Exception {
-
-		return catalog.getExternalReferenceCode();
-	}
-
-	protected Catalog testGetProductByExternalReferenceCodeCatalog_addCatalog()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -844,7 +845,8 @@ public abstract class BaseCatalogResourceTestCase {
 				Catalog catalog)
 		throws Exception {
 
-		return catalog.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -892,13 +894,14 @@ public abstract class BaseCatalogResourceTestCase {
 		assertValid(getCatalog);
 	}
 
+	protected Catalog testGetProductIdCatalog_addCatalog() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Long testGetProductIdCatalog_getId(Catalog catalog)
 		throws Exception {
 
-		return catalog.getId();
-	}
-
-	protected Catalog testGetProductIdCatalog_addCatalog() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -932,7 +935,8 @@ public abstract class BaseCatalogResourceTestCase {
 	protected Long testGraphQLGetProductIdCatalog_getId(Catalog catalog)
 		throws Exception {
 
-		return catalog.getId();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

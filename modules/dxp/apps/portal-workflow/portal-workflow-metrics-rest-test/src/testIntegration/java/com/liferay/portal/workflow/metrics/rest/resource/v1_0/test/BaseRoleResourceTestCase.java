@@ -242,11 +242,6 @@ public abstract class BaseRoleResourceTestCase {
 		return null;
 	}
 
-	protected Role testGraphQLRole_addRole() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(Role role, List<Role> roles) {
 		boolean contains = false;
 

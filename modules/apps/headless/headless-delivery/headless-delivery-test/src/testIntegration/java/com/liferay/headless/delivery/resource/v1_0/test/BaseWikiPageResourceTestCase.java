@@ -203,8 +203,7 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	protected WikiPage testDeleteWikiPage_addWikiPage() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostWikiPageWikiPage_addWikiPage(randomWikiPage());
 	}
 
 	@Test
@@ -654,8 +653,7 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	protected WikiPage testGetWikiPage_addWikiPage() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostWikiPageWikiPage_addWikiPage(randomWikiPage());
 	}
 
 	@Test
@@ -844,8 +842,7 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	protected WikiPage testPutWikiPage_addWikiPage() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostWikiPageWikiPage_addWikiPage(randomWikiPage());
 	}
 
 	@Test
@@ -863,8 +860,7 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	protected WikiPage testPutWikiPageSubscribe_addWikiPage() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostWikiPageWikiPage_addWikiPage(randomWikiPage());
 	}
 
 	@Test
@@ -884,8 +880,7 @@ public abstract class BaseWikiPageResourceTestCase {
 	protected WikiPage testPutWikiPageUnsubscribe_addWikiPage()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostWikiPageWikiPage_addWikiPage(randomWikiPage());
 	}
 
 	@Rule

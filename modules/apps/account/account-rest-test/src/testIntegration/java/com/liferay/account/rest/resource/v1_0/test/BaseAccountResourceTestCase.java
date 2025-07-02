@@ -907,17 +907,17 @@ public abstract class BaseAccountResourceTestCase {
 			putAccount.getExternalReferenceCode());
 	}
 
-	protected Account testPutAccountByExternalReferenceCode_createAccount()
-		throws Exception {
-
-		return randomAccount();
-	}
-
 	protected Account testPutAccountByExternalReferenceCode_addAccount()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected Account testPutAccountByExternalReferenceCode_createAccount()
+		throws Exception {
+
+		return randomAccount();
 	}
 
 	@Rule

@@ -188,14 +188,14 @@ public abstract class BaseFormRecordResourceTestCase {
 		assertValid(getFormRecord);
 	}
 
-	protected Long testGetFormFormRecordByLatestDraft_getFormId(
-			FormRecord formRecord)
+	protected FormRecord testGetFormFormRecordByLatestDraft_addFormRecord()
 		throws Exception {
 
-		return formRecord.getFormId();
+		return testPostFormFormRecord_addFormRecord(randomFormRecord());
 	}
 
-	protected FormRecord testGetFormFormRecordByLatestDraft_addFormRecord()
+	protected Long testGetFormFormRecordByLatestDraft_getFormId(
+			FormRecord formRecord)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -234,7 +234,8 @@ public abstract class BaseFormRecordResourceTestCase {
 			FormRecord formRecord)
 		throws Exception {
 
-		return formRecord.getFormId();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

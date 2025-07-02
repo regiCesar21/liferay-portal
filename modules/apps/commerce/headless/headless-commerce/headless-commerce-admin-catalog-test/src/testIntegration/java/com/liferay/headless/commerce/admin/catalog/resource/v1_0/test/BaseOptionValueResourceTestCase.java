@@ -587,13 +587,6 @@ public abstract class BaseOptionValueResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected OptionValue testGraphQLOptionValue_addOptionValue()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		OptionValue optionValue, List<OptionValue> optionValues) {
 

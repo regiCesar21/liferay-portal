@@ -385,13 +385,6 @@ public abstract class BaseProductOptionResourceTestCase {
 		return null;
 	}
 
-	protected ProductOption testGraphQLProductOption_addProductOption()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		ProductOption productOption, List<ProductOption> productOptions) {
 

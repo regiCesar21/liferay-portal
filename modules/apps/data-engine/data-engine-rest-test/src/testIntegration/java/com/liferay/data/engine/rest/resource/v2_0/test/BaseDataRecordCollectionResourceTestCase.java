@@ -276,16 +276,17 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		assertValid(getDataRecordCollection);
 	}
 
+	protected DataRecordCollection
+			testGetDataDefinitionDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		return testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
+			randomDataRecordCollection());
+	}
+
 	protected Long
 			testGetDataDefinitionDataRecordCollection_getDataDefinitionId(
 				DataRecordCollection dataRecordCollection)
-		throws Exception {
-
-		return dataRecordCollection.getDataDefinitionId();
-	}
-
-	protected DataRecordCollection
-			testGetDataDefinitionDataRecordCollection_addDataRecordCollection()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -327,7 +328,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				DataRecordCollection dataRecordCollection)
 		throws Exception {
 
-		return dataRecordCollection.getDataDefinitionId();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -683,6 +685,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 	@Test
 	public void testGetDataRecordCollectionPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecordCollection postDataRecordCollection =
 			testGetDataRecordCollectionPermissionsPage_addDataRecordCollection();
 
@@ -711,20 +714,11 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		DataRecordCollection getDataRecordCollection =
 			dataRecordCollectionResource.
 				getSiteDataRecordCollectionByDataRecordCollectionKey(
-					testGetSiteDataRecordCollectionByDataRecordCollectionKey_getSiteId(
-						postDataRecordCollection),
+					postDataRecordCollection.getSiteId(),
 					postDataRecordCollection.getDataRecordCollectionKey());
 
 		assertEquals(postDataRecordCollection, getDataRecordCollection);
 		assertValid(getDataRecordCollection);
-	}
-
-	protected Long
-			testGetSiteDataRecordCollectionByDataRecordCollectionKey_getSiteId(
-				DataRecordCollection dataRecordCollection)
-		throws Exception {
-
-		return dataRecordCollection.getSiteId();
 	}
 
 	protected DataRecordCollection
@@ -757,10 +751,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 										put(
 											"siteKey",
 											"\"" +
-												testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKey_getSiteId(
-													dataRecordCollection) +
-														"\"");
-
+												dataRecordCollection.
+													getSiteId() + "\"");
 										put(
 											"dataRecordCollectionKey",
 											"\"" +
@@ -772,14 +764,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/dataRecordCollectionByDataRecordCollectionKey"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKey_getSiteId(
-				DataRecordCollection dataRecordCollection)
-		throws Exception {
-
-		return dataRecordCollection.getSiteId();
 	}
 
 	@Test

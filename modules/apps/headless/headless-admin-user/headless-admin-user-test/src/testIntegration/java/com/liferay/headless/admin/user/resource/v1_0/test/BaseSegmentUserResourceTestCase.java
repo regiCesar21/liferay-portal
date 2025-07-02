@@ -349,13 +349,6 @@ public abstract class BaseSegmentUserResourceTestCase {
 		return null;
 	}
 
-	protected SegmentUser testGraphQLSegmentUser_addSegmentUser()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		SegmentUser segmentUser, List<SegmentUser> segmentUsers) {
 

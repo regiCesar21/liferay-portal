@@ -199,6 +199,13 @@ public abstract class BaseRoleResourceTestCase {
 					testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId()));
 	}
 
+	protected Role testDeleteOrganizationRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Long
 			testDeleteOrganizationRoleUserAccountAssociation_getUserAccountId()
 		throws Exception {
@@ -209,13 +216,6 @@ public abstract class BaseRoleResourceTestCase {
 
 	protected Long
 			testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Role testDeleteOrganizationRoleUserAccountAssociation_addRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -234,14 +234,14 @@ public abstract class BaseRoleResourceTestCase {
 				testDeleteRoleUserAccountAssociation_getUserAccountId()));
 	}
 
-	protected Long testDeleteRoleUserAccountAssociation_getUserAccountId()
+	protected Role testDeleteRoleUserAccountAssociation_addRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Role testDeleteRoleUserAccountAssociation_addRole()
+	protected Long testDeleteRoleUserAccountAssociation_getUserAccountId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -261,6 +261,13 @@ public abstract class BaseRoleResourceTestCase {
 				testDeleteSiteRoleUserAccountAssociation_getSiteId()));
 	}
 
+	protected Role testDeleteSiteRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Long testDeleteSiteRoleUserAccountAssociation_getUserAccountId()
 		throws Exception {
 
@@ -269,13 +276,6 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	protected Long testDeleteSiteRoleUserAccountAssociation_getSiteId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Role testDeleteSiteRoleUserAccountAssociation_addRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -501,12 +501,32 @@ public abstract class BaseRoleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			roleResource.postOrganizationRoleUserAccountAssociationHttpResponse(
-				role.getId(), null, null));
+				role.getId(),
+				testPostOrganizationRoleUserAccountAssociation_getUserAccountId(),
+				testPostOrganizationRoleUserAccountAssociation_getOrganizationId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			roleResource.postOrganizationRoleUserAccountAssociationHttpResponse(
-				0L, null, null));
+				0L,
+				testPostOrganizationRoleUserAccountAssociation_getUserAccountId(),
+				testPostOrganizationRoleUserAccountAssociation_getOrganizationId()));
+	}
+
+	protected Long
+			testPostOrganizationRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testPostOrganizationRoleUserAccountAssociation_getOrganizationId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Role testPostOrganizationRoleUserAccountAssociation_addRole()
@@ -524,11 +544,20 @@ public abstract class BaseRoleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			roleResource.postRoleUserAccountAssociationHttpResponse(
-				role.getId(), null));
+				role.getId(),
+				testPostRoleUserAccountAssociation_getUserAccountId()));
 
 		assertHttpResponseStatusCode(
 			404,
-			roleResource.postRoleUserAccountAssociationHttpResponse(0L, null));
+			roleResource.postRoleUserAccountAssociationHttpResponse(
+				0L, testPostRoleUserAccountAssociation_getUserAccountId()));
+	}
+
+	protected Long testPostRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Role testPostRoleUserAccountAssociation_addRole()
@@ -546,12 +575,29 @@ public abstract class BaseRoleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			roleResource.postSiteRoleUserAccountAssociationHttpResponse(
-				role.getId(), null, testGroup.getGroupId()));
+				role.getId(),
+				testPostSiteRoleUserAccountAssociation_getUserAccountId(),
+				testPostSiteRoleUserAccountAssociation_getSiteId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			roleResource.postSiteRoleUserAccountAssociationHttpResponse(
-				0L, null, testGroup.getGroupId()));
+				0L, testPostSiteRoleUserAccountAssociation_getUserAccountId(),
+				testPostSiteRoleUserAccountAssociation_getSiteId()));
+	}
+
+	protected Long testPostSiteRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testPostSiteRoleUserAccountAssociation_getSiteId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Role testPostSiteRoleUserAccountAssociation_addRole()

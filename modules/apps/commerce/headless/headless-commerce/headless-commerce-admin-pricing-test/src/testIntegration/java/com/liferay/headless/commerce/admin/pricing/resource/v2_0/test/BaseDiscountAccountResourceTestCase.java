@@ -187,12 +187,51 @@ public abstract class BaseDiscountAccountResourceTestCase {
 
 	@Test
 	public void testDeleteDiscountAccount() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountAccount discountAccount =
+			testDeleteDiscountAccount_addDiscountAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			discountAccountResource.deleteDiscountAccountHttpResponse(
+				discountAccount.getDiscountAccountId()));
+	}
+
+	protected DiscountAccount testDeleteDiscountAccount_addDiscountAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteDiscountAccount() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		DiscountAccount discountAccount1 =
+			testGraphQLDeleteDiscountAccount_addDiscountAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDiscountAccount",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"discountAccountId",
+									discountAccount1.getDiscountAccountId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDiscountAccount"));
+	}
+
+	protected DiscountAccount
+			testGraphQLDeleteDiscountAccount_addDiscountAccount()
+		throws Exception {
+
+		return testGraphQLDiscountAccount_addDiscountAccount();
 	}
 
 	@Test
@@ -257,6 +296,12 @@ public abstract class BaseDiscountAccountResourceTestCase {
 			page,
 			testGetDiscountByExternalReferenceCodeDiscountAccountsPage_getExpectedActions(
 				externalReferenceCode));
+
+		discountAccountResource.deleteDiscountAccount(
+			discountAccount1.getDiscountAccountId());
+
+		discountAccountResource.deleteDiscountAccount(
+			discountAccount2.getDiscountAccountId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -454,6 +499,12 @@ public abstract class BaseDiscountAccountResourceTestCase {
 			discountAccount2, (List<DiscountAccount>)page.getItems());
 		assertValid(
 			page, testGetDiscountIdDiscountAccountsPage_getExpectedActions(id));
+
+		discountAccountResource.deleteDiscountAccount(
+			discountAccount1.getDiscountAccountId());
+
+		discountAccountResource.deleteDiscountAccount(
+			discountAccount2.getDiscountAccountId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -889,6 +940,13 @@ public abstract class BaseDiscountAccountResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected DiscountAccount testGraphQLDiscountAccount_addDiscountAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		DiscountAccount discountAccount,
 		List<DiscountAccount> discountAccounts) {
@@ -965,6 +1023,10 @@ public abstract class BaseDiscountAccountResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (discountAccount.getDiscountAccountId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

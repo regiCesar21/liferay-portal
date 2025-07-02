@@ -208,12 +208,12 @@ public abstract class BaseProductResourceTestCase {
 		assertValid(getProduct);
 	}
 
-	protected Long testGetChannelProduct_getChannelId() throws Exception {
+	protected Product testGetChannelProduct_addProduct() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Product testGetChannelProduct_addProduct() throws Exception {
+	protected Long testGetChannelProduct_getChannelId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -237,7 +237,6 @@ public abstract class BaseProductResourceTestCase {
 										put(
 											"channelId",
 											testGraphQLGetChannelProduct_getChannelId());
-
 										put("productId", product.getId());
 									}
 								},

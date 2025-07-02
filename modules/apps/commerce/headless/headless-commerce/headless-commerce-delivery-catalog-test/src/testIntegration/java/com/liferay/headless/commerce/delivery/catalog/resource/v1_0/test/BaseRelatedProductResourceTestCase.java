@@ -390,13 +390,6 @@ public abstract class BaseRelatedProductResourceTestCase {
 		return null;
 	}
 
-	protected RelatedProduct testGraphQLRelatedProduct_addRelatedProduct()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		RelatedProduct relatedProduct, List<RelatedProduct> relatedProducts) {
 

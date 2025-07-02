@@ -355,11 +355,6 @@ public abstract class BaseSkuResourceTestCase {
 		return null;
 	}
 
-	protected Sku testGraphQLSku_addSku() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(Sku sku, List<Sku> skus) {
 		boolean contains = false;
 

@@ -194,15 +194,16 @@ public abstract class BaseDataListViewResourceTestCase {
 					dataListView)));
 	}
 
-	protected Long testDeleteDataDefinitionDataListView_getDataDefinitionId(
-			DataListView dataListView)
-		throws Exception {
-
-		return dataListView.getDataDefinitionId();
-	}
-
 	protected DataListView
 			testDeleteDataDefinitionDataListView_addDataListView()
+		throws Exception {
+
+		return testPostDataDefinitionDataListView_addDataListView(
+			randomDataListView());
+	}
+
+	protected Long testDeleteDataDefinitionDataListView_getDataDefinitionId(
+			DataListView dataListView)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

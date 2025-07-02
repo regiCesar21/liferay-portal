@@ -197,8 +197,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Comment testDeleteComment_addComment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostCommentComment_addComment(randomComment());
 	}
 
 	@Test
@@ -654,8 +653,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Comment testGetComment_addComment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostCommentComment_addComment(randomComment());
 	}
 
 	@Test
@@ -1996,8 +1994,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Comment testPutComment_addComment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostCommentComment_addComment(randomComment());
 	}
 
 	@Rule

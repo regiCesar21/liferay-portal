@@ -191,12 +191,53 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 
 	@Test
 	public void testDeleteDiscountProductGroup() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountProductGroup discountProductGroup =
+			testDeleteDiscountProductGroup_addDiscountProductGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			discountProductGroupResource.deleteDiscountProductGroupHttpResponse(
+				discountProductGroup.getDiscountProductGroupId()));
+	}
+
+	protected DiscountProductGroup
+			testDeleteDiscountProductGroup_addDiscountProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteDiscountProductGroup() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		DiscountProductGroup discountProductGroup1 =
+			testGraphQLDeleteDiscountProductGroup_addDiscountProductGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDiscountProductGroup",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"discountProductGroupId",
+									discountProductGroup1.
+										getDiscountProductGroupId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDiscountProductGroup"));
+	}
+
+	protected DiscountProductGroup
+			testGraphQLDeleteDiscountProductGroup_addDiscountProductGroup()
+		throws Exception {
+
+		return testGraphQLDiscountProductGroup_addDiscountProductGroup();
 	}
 
 	@Test
@@ -261,6 +302,12 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 			page,
 			testGetDiscountByExternalReferenceCodeDiscountProductGroupsPage_getExpectedActions(
 				externalReferenceCode));
+
+		discountProductGroupResource.deleteDiscountProductGroup(
+			discountProductGroup1.getDiscountProductGroupId());
+
+		discountProductGroupResource.deleteDiscountProductGroup(
+			discountProductGroup2.getDiscountProductGroupId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -470,6 +517,12 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		assertValid(
 			page,
 			testGetDiscountIdDiscountProductGroupsPage_getExpectedActions(id));
+
+		discountProductGroupResource.deleteDiscountProductGroup(
+			discountProductGroup1.getDiscountProductGroupId());
+
+		discountProductGroupResource.deleteDiscountProductGroup(
+			discountProductGroup2.getDiscountProductGroupId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -934,6 +987,14 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected DiscountProductGroup
+			testGraphQLDiscountProductGroup_addDiscountProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		DiscountProductGroup discountProductGroup,
 		List<DiscountProductGroup> discountProductGroups) {
@@ -1020,6 +1081,10 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (discountProductGroup.getDiscountProductGroupId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

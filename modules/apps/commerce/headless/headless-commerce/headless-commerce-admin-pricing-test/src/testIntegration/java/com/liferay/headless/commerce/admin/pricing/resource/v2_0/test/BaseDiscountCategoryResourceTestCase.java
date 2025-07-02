@@ -187,12 +187,51 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 
 	@Test
 	public void testDeleteDiscountCategory() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountCategory discountCategory =
+			testDeleteDiscountCategory_addDiscountCategory();
+
+		assertHttpResponseStatusCode(
+			204,
+			discountCategoryResource.deleteDiscountCategoryHttpResponse(
+				discountCategory.getDiscountCategoryId()));
+	}
+
+	protected DiscountCategory testDeleteDiscountCategory_addDiscountCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteDiscountCategory() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		DiscountCategory discountCategory1 =
+			testGraphQLDeleteDiscountCategory_addDiscountCategory();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDiscountCategory",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"discountCategoryId",
+									discountCategory1.getDiscountCategoryId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDiscountCategory"));
+	}
+
+	protected DiscountCategory
+			testGraphQLDeleteDiscountCategory_addDiscountCategory()
+		throws Exception {
+
+		return testGraphQLDiscountCategory_addDiscountCategory();
 	}
 
 	@Test
@@ -257,6 +296,12 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 			page,
 			testGetDiscountByExternalReferenceCodeDiscountCategoriesPage_getExpectedActions(
 				externalReferenceCode));
+
+		discountCategoryResource.deleteDiscountCategory(
+			discountCategory1.getDiscountCategoryId());
+
+		discountCategoryResource.deleteDiscountCategory(
+			discountCategory2.getDiscountCategoryId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -455,6 +500,12 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		assertValid(
 			page,
 			testGetDiscountIdDiscountCategoriesPage_getExpectedActions(id));
+
+		discountCategoryResource.deleteDiscountCategory(
+			discountCategory1.getDiscountCategoryId());
+
+		discountCategoryResource.deleteDiscountCategory(
+			discountCategory2.getDiscountCategoryId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -890,6 +941,13 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected DiscountCategory testGraphQLDiscountCategory_addDiscountCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		DiscountCategory discountCategory,
 		List<DiscountCategory> discountCategories) {
@@ -969,6 +1027,10 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (discountCategory.getDiscountCategoryId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

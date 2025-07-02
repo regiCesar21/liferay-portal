@@ -189,16 +189,16 @@ public abstract class BaseAccountGroupResourceTestCase {
 		assertValid(getAccountGroup);
 	}
 
-	protected Long
-			testGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId()
+	protected AccountGroup
+			testGetDiscountAccountGroupAccountGroup_addAccountGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected AccountGroup
-			testGetDiscountAccountGroupAccountGroup_addAccountGroup()
+	protected Long
+			testGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -288,16 +288,16 @@ public abstract class BaseAccountGroupResourceTestCase {
 		assertValid(getAccountGroup);
 	}
 
-	protected Long
-			testGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId()
+	protected AccountGroup
+			testGetPriceListAccountGroupAccountGroup_addAccountGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected AccountGroup
-			testGetPriceListAccountGroupAccountGroup_addAccountGroup()
+	protected Long
+			testGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

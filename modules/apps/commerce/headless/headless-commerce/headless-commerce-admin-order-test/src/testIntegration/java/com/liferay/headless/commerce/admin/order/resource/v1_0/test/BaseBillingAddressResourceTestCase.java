@@ -215,16 +215,17 @@ public abstract class BaseBillingAddressResourceTestCase {
 		assertValid(getBillingAddress);
 	}
 
+	protected BillingAddress
+			testGetOrderByExternalReferenceCodeBillingAddress_addBillingAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected String
 			testGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
 				BillingAddress billingAddress)
-		throws Exception {
-
-		return billingAddress.getExternalReferenceCode();
-	}
-
-	protected BillingAddress
-			testGetOrderByExternalReferenceCodeBillingAddress_addBillingAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -267,7 +268,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 				BillingAddress billingAddress)
 		throws Exception {
 
-		return billingAddress.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -317,14 +319,15 @@ public abstract class BaseBillingAddressResourceTestCase {
 		assertValid(getBillingAddress);
 	}
 
-	protected Long testGetOrderIdBillingAddress_getId(
-			BillingAddress billingAddress)
+	protected BillingAddress testGetOrderIdBillingAddress_addBillingAddress()
 		throws Exception {
 
-		return billingAddress.getId();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected BillingAddress testGetOrderIdBillingAddress_addBillingAddress()
+	protected Long testGetOrderIdBillingAddress_getId(
+			BillingAddress billingAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -362,7 +365,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 			BillingAddress billingAddress)
 		throws Exception {
 
-		return billingAddress.getId();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

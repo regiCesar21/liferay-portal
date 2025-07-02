@@ -346,11 +346,6 @@ public abstract class BaseAssigneeResourceTestCase {
 		return null;
 	}
 
-	protected Assignee testGraphQLAssignee_addAssignee() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(Assignee assignee, List<Assignee> assignees) {
 		boolean contains = false;
 

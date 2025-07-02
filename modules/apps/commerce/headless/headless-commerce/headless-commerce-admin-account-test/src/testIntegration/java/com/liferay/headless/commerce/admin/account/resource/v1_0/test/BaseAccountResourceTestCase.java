@@ -284,20 +284,22 @@ public abstract class BaseAccountResourceTestCase {
 			204,
 			accountResource.
 				deleteAccountGroupByExternalReferenceCodeAccountHttpResponse(
-					testDeleteAccountGroupByExternalReferenceCodeAccount_getAccountExternalReferenceCode(),
-					account.getExternalReferenceCode()));
+					account.getExternalReferenceCode(),
+					testDeleteAccountGroupByExternalReferenceCodeAccount_getExternalReferenceCode(
+						account)));
 	}
 
-	protected String
-			testDeleteAccountGroupByExternalReferenceCodeAccount_getAccountExternalReferenceCode()
+	protected Account
+			testDeleteAccountGroupByExternalReferenceCodeAccount_addAccount()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Account
-			testDeleteAccountGroupByExternalReferenceCodeAccount_addAccount()
+	protected String
+			testDeleteAccountGroupByExternalReferenceCodeAccount_getExternalReferenceCode(
+				Account account)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -931,6 +933,10 @@ public abstract class BaseAccountResourceTestCase {
 		}
 
 		if (account.getDateModified() == null) {
+			valid = false;
+		}
+
+		if (account.getExternalReferenceCode() == null) {
 			valid = false;
 		}
 

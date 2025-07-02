@@ -192,12 +192,53 @@ public abstract class BasePriceModifierProductResourceTestCase {
 
 	@Test
 	public void testDeletePriceModifierProduct() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceModifierProduct priceModifierProduct =
+			testDeletePriceModifierProduct_addPriceModifierProduct();
+
+		assertHttpResponseStatusCode(
+			204,
+			priceModifierProductResource.deletePriceModifierProductHttpResponse(
+				priceModifierProduct.getPriceModifierProductId()));
+	}
+
+	protected PriceModifierProduct
+			testDeletePriceModifierProduct_addPriceModifierProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeletePriceModifierProduct() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		PriceModifierProduct priceModifierProduct1 =
+			testGraphQLDeletePriceModifierProduct_addPriceModifierProduct();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePriceModifierProduct",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"priceModifierProductId",
+									priceModifierProduct1.
+										getPriceModifierProductId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePriceModifierProduct"));
+	}
+
+	protected PriceModifierProduct
+			testGraphQLDeletePriceModifierProduct_addPriceModifierProduct()
+		throws Exception {
+
+		return testGraphQLPriceModifierProduct_addPriceModifierProduct();
 	}
 
 	@Test
@@ -262,6 +303,12 @@ public abstract class BasePriceModifierProductResourceTestCase {
 			page,
 			testGetPriceModifierByExternalReferenceCodePriceModifierProductsPage_getExpectedActions(
 				externalReferenceCode));
+
+		priceModifierProductResource.deletePriceModifierProduct(
+			priceModifierProduct1.getPriceModifierProductId());
+
+		priceModifierProductResource.deletePriceModifierProduct(
+			priceModifierProduct2.getPriceModifierProductId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -476,6 +523,12 @@ public abstract class BasePriceModifierProductResourceTestCase {
 			page,
 			testGetPriceModifierIdPriceModifierProductsPage_getExpectedActions(
 				id));
+
+		priceModifierProductResource.deletePriceModifierProduct(
+			priceModifierProduct1.getPriceModifierProductId());
+
+		priceModifierProductResource.deletePriceModifierProduct(
+			priceModifierProduct2.getPriceModifierProductId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -943,6 +996,14 @@ public abstract class BasePriceModifierProductResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected PriceModifierProduct
+			testGraphQLPriceModifierProduct_addPriceModifierProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		PriceModifierProduct priceModifierProduct,
 		List<PriceModifierProduct> priceModifierProducts) {
@@ -1029,6 +1090,10 @@ public abstract class BasePriceModifierProductResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (priceModifierProduct.getPriceModifierProductId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

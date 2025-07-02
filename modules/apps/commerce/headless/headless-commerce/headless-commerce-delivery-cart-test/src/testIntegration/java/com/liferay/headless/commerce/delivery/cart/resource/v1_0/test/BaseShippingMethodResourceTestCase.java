@@ -254,13 +254,6 @@ public abstract class BaseShippingMethodResourceTestCase {
 		return null;
 	}
 
-	protected ShippingMethod testGraphQLShippingMethod_addShippingMethod()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		ShippingMethod shippingMethod, List<ShippingMethod> shippingMethods) {
 
