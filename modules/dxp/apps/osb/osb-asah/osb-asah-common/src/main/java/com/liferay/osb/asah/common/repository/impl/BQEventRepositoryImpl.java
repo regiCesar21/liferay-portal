@@ -3446,6 +3446,7 @@ public class BQEventRepositoryImpl
 		new HashMap<String, String>() {
 			{
 				put("canonicalUrl", "canonicalUrl");
+				put("contentLanguageId", "contentLanguageId");
 				put("pageDescription", "description");
 				put("pageKeywords", "keywords");
 				put("pageTitle", "title");
