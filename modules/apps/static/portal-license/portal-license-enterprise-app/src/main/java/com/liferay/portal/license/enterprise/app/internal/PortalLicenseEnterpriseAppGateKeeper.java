@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -29,7 +29,6 @@ import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tina Tian
@@ -103,7 +102,8 @@ public class PortalLicenseEnterpriseAppGateKeeper {
 		}
 
 		if (GetterUtil.getBoolean(
-				_props.get("enterprise.product." + productName + ".enabled"))) {
+				PropsUtil.get(
+					"enterprise.product." + productName + ".enabled"))) {
 
 			return null;
 		}
@@ -164,9 +164,6 @@ public class PortalLicenseEnterpriseAppGateKeeper {
 
 	private BundleContext _bundleContext;
 	private BundleListener _bundleListener;
-
-	@Reference
-	private Props _props;
 
 	private class PortalLicenseEnterpriseAppBundleListener
 		implements SynchronousBundleListener {
