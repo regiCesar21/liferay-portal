@@ -1,0 +1,77 @@
+{
+	"breakdownItems": [
+		{
+			"breakdownItems": [
+				{
+					"breakdownItems": [
+						{
+							"breakdownItems": null,
+							"leafNode": false,
+							"name": "All Individuals",
+							"previousValue": 0,
+							"value": 3
+						}
+					],
+					"leafNode": true,
+					"name": "pageViewed",
+					"previousValue": 0,
+					"value": 3
+				}
+			],
+			"leafNode": false,
+			"name": "en-us",
+			"previousValue": 0,
+			"value": 3
+		},
+		{
+			"breakdownItems": [
+				{
+					"breakdownItems": [
+						{
+							"breakdownItems": null,
+							"leafNode": false,
+							"name": "All Individuals",
+							"previousValue": 0,
+							"value": 2
+						}
+					],
+					"leafNode": true,
+					"name": "pageViewed",
+					"previousValue": 0,
+					"value": 2
+				}
+			],
+			"leafNode": false,
+			"name": "de-de",
+			"previousValue": 0,
+			"value": 2
+		},
+		{
+			"breakdownItems": [
+				{
+					"breakdownItems": [
+						{
+							"breakdownItems": null,
+							"leafNode": false,
+							"name": "All Individuals",
+							"previousValue": 0,
+							"value": 1
+						}
+					],
+					"leafNode": true,
+					"name": "pageViewed",
+					"previousValue": 0,
+					"value": 1
+				}
+			],
+			"leafNode": false,
+			"name": "es-es",
+			"previousValue": 0,
+			"value": 1
+		}
+	],
+	"count": 3,
+	"page": 0,
+	"previousValue": 0,
+	"value": 6
+}

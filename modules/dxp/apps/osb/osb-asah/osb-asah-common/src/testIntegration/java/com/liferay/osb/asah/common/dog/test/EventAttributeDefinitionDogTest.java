@@ -431,6 +431,7 @@ public class EventAttributeDefinitionDogTest
 			new HashSet<String>() {
 				{
 					add("canonicalUrl");
+					add("contentLanguageId");
 					add("formId");
 					add("page");
 					add("pageDescription");
@@ -451,8 +452,8 @@ public class EventAttributeDefinitionDogTest
 	@Test
 	public void testGetEventAttributeDefinitionsByType() {
 		String[] globalEventAttributeDefinitionNames = {
-			"canonicalUrl", "pageDescription", "pageKeywords", "pageTitle",
-			"referrer", "url"
+			"canonicalUrl", "contentLanguageId", "pageDescription",
+			"pageKeywords", "pageTitle", "referrer", "url"
 		};
 
 		List<EventAttributeDefinition> eventAttributeDefinitions =
@@ -525,6 +526,9 @@ public class EventAttributeDefinitionDogTest
 				{
 					put(
 						"canonicalUrl",
+						EventAttributeDefinition.DataType.STRING);
+					put(
+						"contentLanguageId",
 						EventAttributeDefinition.DataType.STRING);
 					put(
 						"pageDescription",

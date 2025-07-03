@@ -11,6 +11,7 @@ import com.liferay.osb.asah.common.OSBAsahCommonSpringTestContext;
 import com.liferay.osb.asah.common.dog.EventAnalysisDog;
 import com.liferay.osb.asah.common.entity.EventAnalysis;
 import com.liferay.osb.asah.common.entity.EventAttributeDefinition;
+import com.liferay.osb.asah.common.entity.EventDefinition;
 import com.liferay.osb.asah.common.model.AnalysisType;
 import com.liferay.osb.asah.common.model.AttributeType;
 import com.liferay.osb.asah.common.model.BreakdownItem;
@@ -21,6 +22,8 @@ import com.liferay.osb.asah.common.model.EventAnalysisResult;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.repository.EventAnalysisRepository;
+import com.liferay.osb.asah.common.repository.EventAttributeDefinitionRepository;
+import com.liferay.osb.asah.common.repository.EventDefinitionRepository;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahDuplicateNameException;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahNameException;
 import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
@@ -318,6 +321,49 @@ public class EventAnalysisDogTest
 					TimeRange.of(
 						LocalDate.parse("2021-06-01"),
 						LocalDate.parse("2021-05-15"))),
+				JSONObject.class),
+			true);
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_get_event_analysis_with_content_language_id.sql"
+	)
+	@Test
+	public void testGetEventAnalysisBreakdownByContentLanguageId()
+		throws Exception {
+
+		Optional<EventAttributeDefinition> eventAttributeDefinitionOptional =
+			_eventAttributeDefinitionRepository.findByName("contentLanguageId");
+
+		Assertions.assertTrue(eventAttributeDefinitionOptional.isPresent());
+
+		EventAttributeDefinition eventAttributeDefinition =
+			eventAttributeDefinitionOptional.get();
+
+		Optional<EventDefinition> eventDefinitionOptional =
+			_eventDefinitionRepository.findByName("pageViewed");
+
+		Assertions.assertTrue(eventDefinitionOptional.isPresent());
+
+		EventDefinition eventDefinition = eventDefinitionOptional.get();
+
+		JSONAssert.assertEquals(
+			ResourceUtil.readResourceToJSONObject(
+				"dependencies/expected_event_analysis_breakdown_by_content_" +
+					"language_id.json",
+				this),
+			_objectMapper.convertValue(
+				_eventAnalysisDog.getEventAnalysisResult(
+					AnalysisType.TOTAL, 1L, true,
+					Collections.singletonList(
+						new EventAnalysisBreakdown(
+							String.valueOf(eventAttributeDefinition.getId()),
+							AttributeType.EVENT, 0,
+							EventAttributeDefinition.DataType.STRING, null,
+							null, eventAttributeDefinition.getDisplayName(),
+							"DESC")),
+					Collections.emptyList(), eventDefinition.getId(), 0, 10,
+					TimeRange.LAST_24_HOURS),
 				JSONObject.class),
 			true);
 	}
@@ -841,6 +887,49 @@ public class EventAnalysisDogTest
 			true);
 	}
 
+	@BQSQLResource(
+		resourcePath = "test_get_event_analysis_with_content_language_id.sql"
+	)
+	@Test
+	public void testGetEventAnalysisFilterByContentLanguageId()
+		throws Exception {
+
+		Optional<EventAttributeDefinition> eventAttributeDefinitionOptional =
+			_eventAttributeDefinitionRepository.findByName("contentLanguageId");
+
+		Assertions.assertTrue(eventAttributeDefinitionOptional.isPresent());
+
+		EventAttributeDefinition eventAttributeDefinition =
+			eventAttributeDefinitionOptional.get();
+
+		Optional<EventDefinition> eventDefinitionOptional =
+			_eventDefinitionRepository.findByName("pageViewed");
+
+		Assertions.assertTrue(eventDefinitionOptional.isPresent());
+
+		EventDefinition eventDefinition = eventDefinitionOptional.get();
+
+		JSONAssert.assertEquals(
+			ResourceUtil.readResourceToJSONObject(
+				"dependencies/expected_event_analysis_filter_by_content_" +
+					"language_id.json",
+				this),
+			_objectMapper.convertValue(
+				_eventAnalysisDog.getEventAnalysisResult(
+					AnalysisType.TOTAL, 1L, true, Collections.emptyList(),
+					Collections.singletonList(
+						new EventAnalysisFilter(
+							String.valueOf(eventAttributeDefinition.getId()),
+							AttributeType.EVENT,
+							eventAttributeDefinition.getDataType(),
+							eventAttributeDefinition.getDescription(),
+							eventAttributeDefinition.getDisplayName(), "eq",
+							Collections.singletonList("de-DE"))),
+					eventDefinition.getId(), 0, 10, TimeRange.LAST_24_HOURS),
+				JSONObject.class),
+			true);
+	}
+
 	@BQSQLResource(resourcePath = "test_get_event_analysis_with_filter_bq.sql")
 	@SQLResource(resourcePath = "test_get_event_analysis_with_filter.sql")
 	@Test
@@ -972,6 +1061,13 @@ public class EventAnalysisDogTest
 
 	@Autowired
 	private EventAnalysisRepository _eventAnalysisRepository;
+
+	@Autowired
+	private EventAttributeDefinitionRepository
+		_eventAttributeDefinitionRepository;
+
+	@Autowired
+	private EventDefinitionRepository _eventDefinitionRepository;
 
 	@Autowired
 	private ObjectMapper _objectMapper;
