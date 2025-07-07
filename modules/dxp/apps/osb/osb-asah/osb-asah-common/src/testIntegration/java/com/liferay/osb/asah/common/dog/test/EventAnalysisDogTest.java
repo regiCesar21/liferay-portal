@@ -326,7 +326,7 @@ public class EventAnalysisDogTest
 	}
 
 	@BQSQLResource(
-		resourcePath = "test_get_event_analysis_with_content_language_id.sql"
+		resourcePath = "test_get_event_analysis_breakdown_by_content_language_id.sql"
 	)
 	@Test
 	public void testGetEventAnalysisBreakdownByContentLanguageId()
@@ -888,7 +888,7 @@ public class EventAnalysisDogTest
 	}
 
 	@BQSQLResource(
-		resourcePath = "test_get_event_analysis_with_content_language_id.sql"
+		resourcePath = "test_get_event_analysis_filter_by_content_language_id.sql"
 	)
 	@Test
 	public void testGetEventAnalysisFilterByContentLanguageId()
