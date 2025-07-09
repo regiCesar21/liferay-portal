@@ -38,7 +38,7 @@ public class DataSourcesRestController {
 
 	@PostMapping("/{id}/disconnect")
 	public String disconnectDataSource(
-			@PathVariable Long id, @RequestBody String json)
+			@PathVariable Long id, @RequestBody(required = false) String json)
 		throws Exception {
 
 		DataSource dataSource = null;
