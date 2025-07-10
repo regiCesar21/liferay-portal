@@ -819,6 +819,11 @@
 				"type": "STRING"
 			},
 			{
+				"mode": "NULLABLE",
+				"name": "groupId",
+				"type": "INT64"
+			},
+			{
 				"mode": "REQUIRED",
 				"name": "id",
 				"type": "STRING"
