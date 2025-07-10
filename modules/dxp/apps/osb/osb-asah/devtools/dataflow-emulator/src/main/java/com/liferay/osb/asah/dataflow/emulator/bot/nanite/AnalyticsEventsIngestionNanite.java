@@ -516,6 +516,12 @@ public class AnalyticsEventsIngestionNanite {
 		bqEvent.setExternalReferenceCode(
 			_formatFieldValue(externalReferenceCode));
 
+		String groupId = context.get("groupId");
+
+		if (StringUtils.isNotBlank(groupId)) {
+			bqEvent.setGroupId(Long.valueOf(groupId));
+		}
+
 		bqEvent.setId(analyticsEvent.getId());
 		bqEvent.setKeywords(_formatFieldValue(context.get("keywords")));
 		bqEvent.setLanguageId(context.get("languageId"));

@@ -105,6 +105,7 @@ public class BQEvent {
 			Objects.equals(_experienceId, bqEvent._experienceId) &&
 			Objects.equals(
 				_externalReferenceCode, bqEvent._externalReferenceCode) &&
+			Objects.equals(_groupId, bqEvent._groupId) &&
 			Objects.equals(_id, bqEvent._id) &&
 			Objects.equals(_keywords, bqEvent._keywords) &&
 			Objects.equals(_languageId, bqEvent._languageId) &&
@@ -234,6 +235,11 @@ public class BQEvent {
 	@BigQueryColumn
 	public String getExternalReferenceCode() {
 		return _externalReferenceCode;
+	}
+
+	@BigQueryColumn
+	public Long getGroupId() {
+		return _groupId;
 	}
 
 	@BigQueryColumn
@@ -414,6 +420,10 @@ public class BQEvent {
 		_externalReferenceCode = externalReferenceCode;
 	}
 
+	public void setGroupId(Long groupId) {
+		_groupId = groupId;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -527,6 +537,7 @@ public class BQEvent {
 	private String _experienceId;
 	private Long _experimentId;
 	private String _externalReferenceCode;
+	private Long _groupId;
 	private String _id;
 	private String _keywords;
 	private String _languageId;

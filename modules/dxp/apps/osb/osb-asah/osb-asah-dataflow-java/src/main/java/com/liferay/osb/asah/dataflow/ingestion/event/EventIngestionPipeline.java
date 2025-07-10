@@ -630,6 +630,12 @@ public class EventIngestionPipeline {
 		tableRow.set(
 			"externalReferenceCode", _formatFieldValue(externalReferenceCode));
 
+		String groupId = context.get("groupId");
+
+		if (StringUtils.isNotBlank(groupId)) {
+			tableRow.set("groupId", Long.parseLong(groupId));
+		}
+
 		tableRow.set("id", analyticsEvent.id);
 		tableRow.set("keywords", _formatFieldValue(context.get("keywords")));
 		tableRow.set("languageId", context.get("languageId"));
