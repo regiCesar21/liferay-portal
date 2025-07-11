@@ -1,0 +1,1 @@
+UPDATE EVENT set groupId = SAFE_CAST(json_value(context, '$.groupId') AS INT64) WHERE groupId IS NULL and eventDate < TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 1 DAY);
