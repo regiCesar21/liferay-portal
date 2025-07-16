@@ -32,6 +32,11 @@
 		"production": true,
 		"type": "table"
 	},
+	"objectEntryHourly": {
+		"path": "function_object_entry_hourly.sql",
+		"production": true,
+		"type": "table"
+	},
 	"pageHourly": {
 		"path": "function_page_hourly.sql",
 		"production": true,
