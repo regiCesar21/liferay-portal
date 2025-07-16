@@ -1,41 +1,22 @@
 WITH
-	EventProperty AS (
-		SELECT
-			Event.eventDate,
-			Event.id,
-			EventProperty.name,
-			EventProperty.value
-		FROM
-			`$[AC_PROJECT_ID].event` AS Event,
-			UNNEST(Event.properties) AS EventProperty
-		WHERE
-			Event.applicationId IN ('ObjectEntry') AND
-			Event.canonicalUrl IS NOT NULL AND
-			Event.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
-			Event.eventId IN ('objectEntryDownloaded', 'objectEntryImpressionMade', 'objectEntryViewed')
-	),
 	ObjectEntryEvent AS (
 		SELECT
 			Event.canonicalUrl,
 			Event.dataSourceId,
 			Event.eventId,
+			Event.externalReferenceCode,
 			Event.groupId,
 			Event.id,
 			TIMESTAMP_TRUNC(Event.eventDate, HOUR) AS normalizedEventDate,
-			Event.userId,
-			externalReferenceCode.value AS externalReferenceCode
+			Event.userId
 		FROM
 			`$[AC_PROJECT_ID].event` AS Event
-		LEFT JOIN EventProperty AS externalReferenceCode ON (
-			externalReferenceCode.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
-			externalReferenceCode.id = Event.id AND
-			externalReferenceCode.name = 'externalReferenceCode'
-		)
 		WHERE
 			Event.applicationId = 'ObjectEntry' AND
 			Event.canonicalUrl IS NOT NULL AND
 			Event.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
-			externalReferenceCode.value IS NOT NULL
+			Event.eventId IN ('objectEntryDownloaded', 'objectEntryImpressionMade', 'objectEntryViewed') AND
+			Event.externalReferenceCode IS NOT NULL
 	)
 SELECT
 	ObjectEntryEvent.canonicalUrl,
