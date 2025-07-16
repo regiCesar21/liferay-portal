@@ -1667,6 +1667,64 @@
 			}
 		]
 	},
+	"objectentrydaily": {
+		"clusteringFields": [
+			"externalReferenceCode",
+			"groupId"
+		],
+		"fields": [
+			{
+				"mode": "REQUIRED",
+				"name": "canonicalUrl",
+				"type": "STRING"
+			},
+			{
+				"mode": "REQUIRED",
+				"name": "dataSourceId",
+				"type": "INT64"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "downloads",
+				"type": "INT64"
+			},
+			{
+				"mode": "REQUIRED",
+				"name": "eventDate",
+				"type": "TIMESTAMP"
+			},
+			{
+				"mode": "REQUIRED",
+				"name": "externalReferenceCode",
+				"type": "STRING"
+			},
+			{
+				"mode": "REQUIRED",
+				"name": "groupId",
+				"type": "INT64"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "impressions",
+				"type": "INT64"
+			},
+			{
+				"mode": "REQUIRED",
+				"name": "userId",
+				"type": "STRING"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "views",
+				"type": "INT64"
+			}
+		],
+		"timePartitioning": {
+			"expirable": true,
+			"field": "eventDate",
+			"type": "DAY"
+		}
+	},
 	"order": {
 		"clusteringFields": [
 			"dataSourceId",
