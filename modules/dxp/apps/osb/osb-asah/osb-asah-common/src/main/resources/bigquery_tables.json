@@ -1684,7 +1684,7 @@
 				"type": "INT64"
 			},
 			{
-				"mode": "NULLABLE",
+				"mode": "REQUIRED",
 				"name": "downloads",
 				"type": "INT64"
 			},
@@ -1704,7 +1704,7 @@
 				"type": "INT64"
 			},
 			{
-				"mode": "NULLABLE",
+				"mode": "REQUIRED",
 				"name": "impressions",
 				"type": "INT64"
 			},
@@ -1714,7 +1714,7 @@
 				"type": "STRING"
 			},
 			{
-				"mode": "NULLABLE",
+				"mode": "REQUIRED",
 				"name": "views",
 				"type": "INT64"
 			}
