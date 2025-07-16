@@ -34,6 +34,10 @@
 		"path": "journal_hourly.sql",
 		"production": false
 	},
+	"objectentryhourly": {
+		"path": "object_entry_hourly.sql",
+		"production": false
+	},
 	"pagehourly": {
 		"path": "page_hourly.sql",
 		"production": false
