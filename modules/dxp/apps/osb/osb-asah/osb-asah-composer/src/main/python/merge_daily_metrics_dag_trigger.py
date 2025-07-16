@@ -37,6 +37,7 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			BigQueryInsertJobFromTemplateOperator(task_id='form_daily_merge'),
 			BigQueryInsertJobFromTemplateOperator(task_id='identity_activity_summary_merge'),
 			BigQueryInsertJobFromTemplateOperator(task_id='journal_daily_merge'),
+			BigQueryInsertJobFromTemplateOperator(task_id='object_entry_daily_merge'),
 			BigQueryInsertJobFromTemplateOperator(task_id='page_daily_merge')
 		]
 
