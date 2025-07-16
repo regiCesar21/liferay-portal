@@ -12,6 +12,7 @@ import com.liferay.osb.asah.upgrade.v4_13_0.BigQuerySchemaUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_0.EventDefinitionUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_1.EventUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_2.EventGroupIdUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_13_2.ObjectEntryUpgradeStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -39,7 +40,8 @@ public class UpgradeProcessConfiguration {
 			"4.0.47", "4.0.48", _eventDefinitionUpgradeStep);
 		upgradeProcess.addUpgradeSteps("4.0.48", "4.0.49", _eventUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-			"4.0.49", "4.0.50", _eventGroupIdUpgradeStep);
+			"4.0.49", "4.0.50", _eventGroupIdUpgradeStep,
+			_objectEntryUpgradeStep);
 
 		return upgradeProcess;
 	}
@@ -62,6 +64,9 @@ public class UpgradeProcessConfiguration {
 
 	@Autowired
 	private EventUpgradeStep _eventUpgradeStep;
+
+	@Autowired
+	private ObjectEntryUpgradeStep _objectEntryUpgradeStep;
 
 	@Autowired
 	private PostgreSQLUpgradeStep _postgreSQLUpgradeStep;
