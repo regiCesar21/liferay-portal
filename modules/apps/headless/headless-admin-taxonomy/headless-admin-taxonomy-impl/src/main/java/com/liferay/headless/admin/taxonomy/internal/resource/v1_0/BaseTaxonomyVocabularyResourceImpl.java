@@ -735,13 +735,6 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "TaxonomyVocabulary";
 	}
@@ -811,21 +804,13 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			taxonomyVocabularyUnsafeFunction =
 				taxonomyVocabulary -> patchTaxonomyVocabulary(
-					taxonomyVocabulary.getId() != null ?
-						taxonomyVocabulary.getId() :
-							_parseLong(
-								(String)parameters.get("taxonomyVocabularyId")),
-					taxonomyVocabulary);
+					taxonomyVocabulary.getId(), taxonomyVocabulary);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			taxonomyVocabularyUnsafeFunction =
 				taxonomyVocabulary -> putTaxonomyVocabulary(
-					taxonomyVocabulary.getId() != null ?
-						taxonomyVocabulary.getId() :
-							_parseLong(
-								(String)parameters.get("taxonomyVocabularyId")),
-					taxonomyVocabulary);
+					taxonomyVocabulary.getId(), taxonomyVocabulary);
 		}
 
 		if (taxonomyVocabularyUnsafeFunction == null) {
@@ -849,10 +834,9 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

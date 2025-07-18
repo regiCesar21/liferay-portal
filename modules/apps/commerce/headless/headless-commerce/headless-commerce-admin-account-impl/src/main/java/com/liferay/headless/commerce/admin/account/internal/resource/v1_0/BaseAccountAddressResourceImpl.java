@@ -788,13 +788,6 @@ public abstract class BaseAccountAddressResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "AccountAddress";
 	}
@@ -852,16 +845,12 @@ public abstract class BaseAccountAddressResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			accountAddressUnsafeFunction =
 				accountAddress -> patchAccountAddress(
-					accountAddress.getId() != null ? accountAddress.getId() :
-						_parseLong((String)parameters.get("accountAddressId")),
-					accountAddress);
+					accountAddress.getId(), accountAddress);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			accountAddressUnsafeFunction = accountAddress -> putAccountAddress(
-				accountAddress.getId() != null ? accountAddress.getId() :
-					_parseLong((String)parameters.get("accountAddressId")),
-				accountAddress);
+				accountAddress.getId(), accountAddress);
 		}
 
 		if (accountAddressUnsafeFunction == null) {
@@ -885,10 +874,9 @@ public abstract class BaseAccountAddressResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

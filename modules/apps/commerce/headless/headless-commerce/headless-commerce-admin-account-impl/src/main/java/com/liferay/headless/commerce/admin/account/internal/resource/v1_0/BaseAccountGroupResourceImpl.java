@@ -521,13 +521,6 @@ public abstract class BaseAccountGroupResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "AccountGroup";
 	}
@@ -583,10 +576,7 @@ public abstract class BaseAccountGroupResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			accountGroupUnsafeFunction = accountGroup -> {
-				patchAccountGroup(
-					accountGroup.getId() != null ? accountGroup.getId() :
-						_parseLong((String)parameters.get("accountGroupId")),
-					accountGroup);
+				patchAccountGroup(accountGroup.getId(), accountGroup);
 
 				return null;
 			};
@@ -613,10 +603,9 @@ public abstract class BaseAccountGroupResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

@@ -672,13 +672,6 @@ public abstract class BaseUserAccountResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "UserAccount";
 	}
@@ -746,16 +739,12 @@ public abstract class BaseUserAccountResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			userAccountUnsafeFunction = userAccount -> patchUserAccount(
-				userAccount.getId() != null ? userAccount.getId() :
-					_parseLong((String)parameters.get("userAccountId")),
-				userAccount);
+				userAccount.getId(), userAccount);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			userAccountUnsafeFunction = userAccount -> putUserAccount(
-				userAccount.getId() != null ? userAccount.getId() :
-					_parseLong((String)parameters.get("userAccountId")),
-				userAccount);
+				userAccount.getId(), userAccount);
 		}
 
 		if (userAccountUnsafeFunction == null) {
@@ -779,10 +768,9 @@ public abstract class BaseUserAccountResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

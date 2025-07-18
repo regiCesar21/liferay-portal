@@ -813,13 +813,6 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "DataRecordCollection";
 	}
@@ -884,12 +877,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			dataRecordCollectionUnsafeFunction =
 				dataRecordCollection -> putDataRecordCollection(
-					dataRecordCollection.getId() != null ?
-						dataRecordCollection.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"dataRecordCollectionId")),
-					dataRecordCollection);
+					dataRecordCollection.getId(), dataRecordCollection);
 		}
 
 		if (dataRecordCollectionUnsafeFunction == null) {
@@ -920,6 +908,13 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

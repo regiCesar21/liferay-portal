@@ -569,8 +569,34 @@ public abstract class BaseWarehouseItemResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<WarehouseItem, WarehouseItem, Exception>
+			warehouseItemUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+		}
+
+		if (warehouseItemUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for WarehouseItem");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				warehouseItems, warehouseItemUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				warehouseItems, warehouseItemUnsafeFunction::apply);
+		}
+		else {
+			for (WarehouseItem warehouseItem : warehouseItems) {
+				warehouseItemUnsafeFunction.apply(warehouseItem);
+			}
+		}
 	}
 
 	@Override
@@ -623,7 +649,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -636,13 +662,6 @@ public abstract class BaseWarehouseItemResourceImpl
 
 		return getEntityModel(
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
-	}
-
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
 	}
 
 	public String getResourceName() {
@@ -701,10 +720,7 @@ public abstract class BaseWarehouseItemResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			warehouseItemUnsafeFunction = warehouseItem -> {
-				patchWarehouseItem(
-					warehouseItem.getId() != null ? warehouseItem.getId() :
-						_parseLong((String)parameters.get("warehouseItemId")),
-					warehouseItem);
+				patchWarehouseItem(warehouseItem.getId(), warehouseItem);
 
 				return null;
 			};
@@ -731,10 +747,9 @@ public abstract class BaseWarehouseItemResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

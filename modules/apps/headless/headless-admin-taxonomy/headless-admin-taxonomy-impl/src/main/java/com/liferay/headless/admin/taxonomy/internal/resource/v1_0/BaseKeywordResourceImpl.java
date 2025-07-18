@@ -684,13 +684,6 @@ public abstract class BaseKeywordResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Keyword";
 	}
@@ -758,9 +751,7 @@ public abstract class BaseKeywordResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			keywordUnsafeFunction = keyword -> putKeyword(
-				keyword.getId() != null ? keyword.getId() :
-					_parseLong((String)parameters.get("keywordId")),
-				keyword);
+				keyword.getId(), keyword);
 		}
 
 		if (keywordUnsafeFunction == null) {
@@ -784,10 +775,9 @@ public abstract class BaseKeywordResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

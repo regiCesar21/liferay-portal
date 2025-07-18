@@ -487,13 +487,6 @@ public abstract class BaseNavigationMenuResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "NavigationMenu";
 	}
@@ -556,9 +549,7 @@ public abstract class BaseNavigationMenuResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			navigationMenuUnsafeFunction = navigationMenu -> putNavigationMenu(
-				navigationMenu.getId() != null ? navigationMenu.getId() :
-					_parseLong((String)parameters.get("navigationMenuId")),
-				navigationMenu);
+				navigationMenu.getId(), navigationMenu);
 		}
 
 		if (navigationMenuUnsafeFunction == null) {
@@ -582,10 +573,9 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

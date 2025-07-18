@@ -478,13 +478,6 @@ public abstract class BaseSLAResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "SLA";
 	}
@@ -545,10 +538,7 @@ public abstract class BaseSLAResourceImpl
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			slaUnsafeFunction = sla -> putSLA(
-				sla.getId() != null ? sla.getId() :
-					_parseLong((String)parameters.get("slaId")),
-				sla);
+			slaUnsafeFunction = sla -> putSLA(sla.getId(), sla);
 		}
 
 		if (slaUnsafeFunction == null) {
@@ -582,6 +572,13 @@ public abstract class BaseSLAResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

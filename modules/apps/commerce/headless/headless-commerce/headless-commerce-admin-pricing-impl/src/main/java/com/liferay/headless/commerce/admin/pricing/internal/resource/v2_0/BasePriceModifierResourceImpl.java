@@ -646,13 +646,6 @@ public abstract class BasePriceModifierResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "PriceModifier";
 	}
@@ -709,10 +702,7 @@ public abstract class BasePriceModifierResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			priceModifierUnsafeFunction = priceModifier -> {
-				patchPriceModifier(
-					priceModifier.getId() != null ? priceModifier.getId() :
-						_parseLong((String)parameters.get("priceModifierId")),
-					priceModifier);
+				patchPriceModifier(priceModifier.getId(), priceModifier);
 
 				return null;
 			};
@@ -739,10 +729,9 @@ public abstract class BasePriceModifierResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

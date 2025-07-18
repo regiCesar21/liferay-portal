@@ -497,14 +497,14 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 					postMessageBoardMessageMessageBoardAttachment(
 						_parseLong(
 							(String)parameters.get("messageBoardMessageId")),
-						(MultipartBody)parameters.get("multipartBody"));
+						null);
 			}
 			else if (parameters.containsKey("messageBoardThreadId")) {
 				messageBoardAttachmentUnsafeFunction = messageBoardAttachment ->
 					postMessageBoardThreadMessageBoardAttachment(
 						_parseLong(
 							(String)parameters.get("messageBoardThreadId")),
-						(MultipartBody)parameters.get("multipartBody"));
+						null);
 			}
 			else {
 				throw new NotSupportedException(
@@ -588,13 +588,6 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "MessageBoardAttachment";
 	}
@@ -661,6 +654,13 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

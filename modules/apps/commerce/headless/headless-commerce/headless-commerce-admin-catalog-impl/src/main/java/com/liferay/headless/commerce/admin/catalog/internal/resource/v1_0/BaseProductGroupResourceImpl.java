@@ -519,13 +519,6 @@ public abstract class BaseProductGroupResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "ProductGroup";
 	}
@@ -581,10 +574,7 @@ public abstract class BaseProductGroupResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			productGroupUnsafeFunction = productGroup -> {
-				patchProductGroup(
-					productGroup.getId() != null ? productGroup.getId() :
-						_parseLong((String)parameters.get("productGroupId")),
-					productGroup);
+				patchProductGroup(productGroup.getId(), productGroup);
 
 				return null;
 			};
@@ -611,10 +601,9 @@ public abstract class BaseProductGroupResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

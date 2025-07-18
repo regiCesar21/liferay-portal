@@ -587,13 +587,6 @@ public abstract class BaseDataLayoutResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "DataLayout";
 	}
@@ -657,9 +650,7 @@ public abstract class BaseDataLayoutResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			dataLayoutUnsafeFunction = dataLayout -> putDataLayout(
-				dataLayout.getId() != null ? dataLayout.getId() :
-					_parseLong((String)parameters.get("dataLayoutId")),
-				dataLayout);
+				dataLayout.getId(), dataLayout);
 		}
 
 		if (dataLayoutUnsafeFunction == null) {
@@ -687,6 +678,13 @@ public abstract class BaseDataLayoutResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

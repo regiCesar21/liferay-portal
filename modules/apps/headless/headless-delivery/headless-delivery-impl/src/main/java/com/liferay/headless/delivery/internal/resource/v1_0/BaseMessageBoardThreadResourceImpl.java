@@ -1120,13 +1120,6 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "MessageBoardThread";
 	}
@@ -1197,21 +1190,13 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			messageBoardThreadUnsafeFunction =
 				messageBoardThread -> patchMessageBoardThread(
-					messageBoardThread.getId() != null ?
-						messageBoardThread.getId() :
-							_parseLong(
-								(String)parameters.get("messageBoardThreadId")),
-					messageBoardThread);
+					messageBoardThread.getId(), messageBoardThread);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			messageBoardThreadUnsafeFunction =
 				messageBoardThread -> putMessageBoardThread(
-					messageBoardThread.getId() != null ?
-						messageBoardThread.getId() :
-							_parseLong(
-								(String)parameters.get("messageBoardThreadId")),
-					messageBoardThread);
+					messageBoardThread.getId(), messageBoardThread);
 		}
 
 		if (messageBoardThreadUnsafeFunction == null) {
@@ -1247,6 +1232,13 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

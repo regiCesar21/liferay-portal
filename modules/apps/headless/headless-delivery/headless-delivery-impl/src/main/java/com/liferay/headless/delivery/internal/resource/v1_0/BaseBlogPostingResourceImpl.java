@@ -773,13 +773,6 @@ public abstract class BaseBlogPostingResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "BlogPosting";
 	}
@@ -843,16 +836,12 @@ public abstract class BaseBlogPostingResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			blogPostingUnsafeFunction = blogPosting -> patchBlogPosting(
-				blogPosting.getId() != null ? blogPosting.getId() :
-					_parseLong((String)parameters.get("blogPostingId")),
-				blogPosting);
+				blogPosting.getId(), blogPosting);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			blogPostingUnsafeFunction = blogPosting -> putBlogPosting(
-				blogPosting.getId() != null ? blogPosting.getId() :
-					_parseLong((String)parameters.get("blogPostingId")),
-				blogPosting);
+				blogPosting.getId(), blogPosting);
 		}
 
 		if (blogPostingUnsafeFunction == null) {
@@ -876,10 +865,9 @@ public abstract class BaseBlogPostingResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

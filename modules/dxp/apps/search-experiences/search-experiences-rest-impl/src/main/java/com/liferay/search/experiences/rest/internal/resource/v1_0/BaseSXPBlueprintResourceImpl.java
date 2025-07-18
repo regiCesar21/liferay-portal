@@ -492,13 +492,6 @@ public abstract class BaseSXPBlueprintResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "SXPBlueprint";
 	}
@@ -554,9 +547,7 @@ public abstract class BaseSXPBlueprintResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			sxpBlueprintUnsafeFunction = sxpBlueprint -> patchSXPBlueprint(
-				sxpBlueprint.getId() != null ? sxpBlueprint.getId() :
-					_parseLong((String)parameters.get("sxpBlueprintId")),
-				sxpBlueprint);
+				sxpBlueprint.getId(), sxpBlueprint);
 		}
 
 		if (sxpBlueprintUnsafeFunction == null) {
@@ -580,10 +571,9 @@ public abstract class BaseSXPBlueprintResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

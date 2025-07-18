@@ -637,16 +637,15 @@ public abstract class BaseAccountResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				accountUnsafeFunction = account -> {
+					Account getAccount = null;
 					Account persistedAccount = null;
 
 					try {
-						Account getAccount = getAccountByExternalReferenceCode(
+						getAccount = getAccountByExternalReferenceCode(
 							account.getExternalReferenceCode());
 
 						persistedAccount = patchAccount(
-							getAccount.getId() != null ? getAccount.getId() :
-								_parseLong((String)parameters.get("accountId")),
-							account);
+							getAccount.getId(), account);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedAccount = postAccount(account);
@@ -657,9 +656,14 @@ public abstract class BaseAccountResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				accountUnsafeFunction =
-					account -> putAccountByExternalReferenceCode(
+				accountUnsafeFunction = account -> {
+					Account persistedAccount = null;
+
+					persistedAccount = putAccountByExternalReferenceCode(
 						account.getExternalReferenceCode(), account);
+
+					return persistedAccount;
+				};
 			}
 		}
 
@@ -748,13 +752,6 @@ public abstract class BaseAccountResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Account";
 	}
@@ -810,16 +807,12 @@ public abstract class BaseAccountResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			accountUnsafeFunction = account -> patchAccount(
-				account.getId() != null ? account.getId() :
-					_parseLong((String)parameters.get("accountId")),
-				account);
+				account.getId(), account);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			accountUnsafeFunction = account -> putAccount(
-				account.getId() != null ? account.getId() :
-					_parseLong((String)parameters.get("accountId")),
-				account);
+				account.getId(), account);
 		}
 
 		if (accountUnsafeFunction == null) {
@@ -843,10 +836,9 @@ public abstract class BaseAccountResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

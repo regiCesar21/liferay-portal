@@ -934,13 +934,6 @@ public abstract class BaseDocumentFolderResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "DocumentFolder";
 	}
@@ -1012,16 +1005,12 @@ public abstract class BaseDocumentFolderResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			documentFolderUnsafeFunction =
 				documentFolder -> patchDocumentFolder(
-					documentFolder.getId() != null ? documentFolder.getId() :
-						_parseLong((String)parameters.get("documentFolderId")),
-					documentFolder);
+					documentFolder.getId(), documentFolder);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			documentFolderUnsafeFunction = documentFolder -> putDocumentFolder(
-				documentFolder.getId() != null ? documentFolder.getId() :
-					_parseLong((String)parameters.get("documentFolderId")),
-				documentFolder);
+				documentFolder.getId(), documentFolder);
 		}
 
 		if (documentFolderUnsafeFunction == null) {
@@ -1053,10 +1042,9 @@ public abstract class BaseDocumentFolderResourceImpl
 		return null;
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

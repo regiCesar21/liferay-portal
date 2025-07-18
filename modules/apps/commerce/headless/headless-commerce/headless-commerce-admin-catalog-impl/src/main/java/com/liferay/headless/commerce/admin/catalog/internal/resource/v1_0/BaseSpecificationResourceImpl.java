@@ -418,13 +418,6 @@ public abstract class BaseSpecificationResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Specification";
 	}
@@ -480,10 +473,7 @@ public abstract class BaseSpecificationResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			specificationUnsafeFunction = specification -> {
-				patchSpecification(
-					specification.getId() != null ? specification.getId() :
-						_parseLong((String)parameters.get("specificationId")),
-					specification);
+				patchSpecification(specification.getId(), specification);
 
 				return null;
 			};
@@ -510,10 +500,9 @@ public abstract class BaseSpecificationResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

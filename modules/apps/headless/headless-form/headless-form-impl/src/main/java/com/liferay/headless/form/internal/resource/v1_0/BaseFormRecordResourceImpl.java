@@ -401,13 +401,6 @@ public abstract class BaseFormRecordResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "FormRecord";
 	}
@@ -470,9 +463,7 @@ public abstract class BaseFormRecordResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			formRecordUnsafeFunction = formRecord -> putFormRecord(
-				formRecord.getId() != null ? formRecord.getId() :
-					_parseLong((String)parameters.get("formRecordId")),
-				formRecord);
+				formRecord.getId(), formRecord);
 		}
 
 		if (formRecordUnsafeFunction == null) {
@@ -500,6 +491,13 @@ public abstract class BaseFormRecordResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

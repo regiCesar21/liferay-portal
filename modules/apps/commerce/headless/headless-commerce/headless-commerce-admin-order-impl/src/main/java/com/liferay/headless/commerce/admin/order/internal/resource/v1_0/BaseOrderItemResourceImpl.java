@@ -610,13 +610,6 @@ public abstract class BaseOrderItemResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "OrderItem";
 	}
@@ -673,10 +666,7 @@ public abstract class BaseOrderItemResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			orderItemUnsafeFunction = orderItem -> {
-				patchOrderItem(
-					orderItem.getId() != null ? orderItem.getId() :
-						_parseLong((String)parameters.get("orderItemId")),
-					orderItem);
+				patchOrderItem(orderItem.getId(), orderItem);
 
 				return null;
 			};
@@ -703,10 +693,9 @@ public abstract class BaseOrderItemResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

@@ -519,13 +519,6 @@ public abstract class BaseOptionResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Option";
 	}
@@ -579,10 +572,7 @@ public abstract class BaseOptionResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			optionUnsafeFunction = option -> {
-				patchOption(
-					option.getId() != null ? option.getId() :
-						_parseLong((String)parameters.get("optionId")),
-					option);
+				patchOption(option.getId(), option);
 
 				return null;
 			};
@@ -608,10 +598,9 @@ public abstract class BaseOptionResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

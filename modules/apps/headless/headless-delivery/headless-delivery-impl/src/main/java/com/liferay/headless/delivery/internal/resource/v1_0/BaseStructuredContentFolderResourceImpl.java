@@ -995,13 +995,6 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "StructuredContentFolder";
 	}
@@ -1074,23 +1067,13 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			structuredContentFolderUnsafeFunction =
 				structuredContentFolder -> patchStructuredContentFolder(
-					structuredContentFolder.getId() != null ?
-						structuredContentFolder.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"structuredContentFolderId")),
-					structuredContentFolder);
+					structuredContentFolder.getId(), structuredContentFolder);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			structuredContentFolderUnsafeFunction =
 				structuredContentFolder -> putStructuredContentFolder(
-					structuredContentFolder.getId() != null ?
-						structuredContentFolder.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"structuredContentFolderId")),
-					structuredContentFolder);
+					structuredContentFolder.getId(), structuredContentFolder);
 		}
 
 		if (structuredContentFolderUnsafeFunction == null) {
@@ -1127,10 +1110,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		return null;
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

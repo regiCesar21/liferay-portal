@@ -506,13 +506,6 @@ public abstract class BaseDataListViewResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "DataListView";
 	}
@@ -576,9 +569,7 @@ public abstract class BaseDataListViewResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			dataListViewUnsafeFunction = dataListView -> putDataListView(
-				dataListView.getId() != null ? dataListView.getId() :
-					_parseLong((String)parameters.get("dataListViewId")),
-				dataListView);
+				dataListView.getId(), dataListView);
 		}
 
 		if (dataListViewUnsafeFunction == null) {
@@ -606,6 +597,13 @@ public abstract class BaseDataListViewResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

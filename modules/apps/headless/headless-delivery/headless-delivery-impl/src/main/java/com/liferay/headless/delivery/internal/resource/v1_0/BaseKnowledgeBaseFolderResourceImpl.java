@@ -670,13 +670,6 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "KnowledgeBaseFolder";
 	}
@@ -740,23 +733,13 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			knowledgeBaseFolderUnsafeFunction =
 				knowledgeBaseFolder -> patchKnowledgeBaseFolder(
-					knowledgeBaseFolder.getId() != null ?
-						knowledgeBaseFolder.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"knowledgeBaseFolderId")),
-					knowledgeBaseFolder);
+					knowledgeBaseFolder.getId(), knowledgeBaseFolder);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			knowledgeBaseFolderUnsafeFunction =
 				knowledgeBaseFolder -> putKnowledgeBaseFolder(
-					knowledgeBaseFolder.getId() != null ?
-						knowledgeBaseFolder.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"knowledgeBaseFolderId")),
-					knowledgeBaseFolder);
+					knowledgeBaseFolder.getId(), knowledgeBaseFolder);
 		}
 
 		if (knowledgeBaseFolderUnsafeFunction == null) {
@@ -782,10 +765,9 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

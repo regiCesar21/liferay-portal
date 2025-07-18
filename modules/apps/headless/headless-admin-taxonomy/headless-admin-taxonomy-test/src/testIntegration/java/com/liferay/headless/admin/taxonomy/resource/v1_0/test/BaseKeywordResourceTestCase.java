@@ -2107,8 +2107,8 @@ public abstract class BaseKeywordResourceTestCase {
 	protected Keyword randomKeyword() throws Exception {
 		return new Keyword() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryKey = String.valueOf(
+					testDepotEntry.getDepotEntryId());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
@@ -2121,6 +2121,9 @@ public abstract class BaseKeywordResourceTestCase {
 
 	protected Keyword randomIrrelevantKeyword() throws Exception {
 		Keyword randomIrrelevantKeyword = randomKeyword();
+
+		randomIrrelevantKeyword.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 
 		randomIrrelevantKeyword.setSiteId(irrelevantGroup.getGroupId());
 

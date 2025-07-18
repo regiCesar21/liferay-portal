@@ -3180,8 +3180,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		return new StructuredContentFolder() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryKey = String.valueOf(
+					testDepotEntry.getDepotEntryId());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
@@ -3202,6 +3202,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		StructuredContentFolder randomIrrelevantStructuredContentFolder =
 			randomStructuredContentFolder();
+
+		randomIrrelevantStructuredContentFolder.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 
 		randomIrrelevantStructuredContentFolder.setSiteId(
 			irrelevantGroup.getGroupId());

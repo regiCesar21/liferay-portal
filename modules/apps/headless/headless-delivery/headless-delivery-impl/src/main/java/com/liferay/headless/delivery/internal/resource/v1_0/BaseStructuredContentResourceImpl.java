@@ -1603,15 +1603,7 @@ public abstract class BaseStructuredContentResourceImpl
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			if (parameters.containsKey("structuredContentFolderId")) {
-				structuredContentUnsafeFunction = structuredContent ->
-					postStructuredContentFolderStructuredContent(
-						_parseLong(
-							(String)parameters.get(
-								"structuredContentFolderId")),
-						structuredContent);
-			}
-			else if (parameters.containsKey("assetLibraryId")) {
+			if (parameters.containsKey("assetLibraryId")) {
 				structuredContentUnsafeFunction =
 					structuredContent -> postAssetLibraryStructuredContent(
 						(Long)parameters.get("assetLibraryId"),
@@ -1622,9 +1614,17 @@ public abstract class BaseStructuredContentResourceImpl
 					structuredContent -> postSiteStructuredContent(
 						(Long)parameters.get("siteId"), structuredContent);
 			}
+			else if (parameters.containsKey("structuredContentFolderId")) {
+				structuredContentUnsafeFunction = structuredContent ->
+					postStructuredContentFolderStructuredContent(
+						_parseLong(
+							(String)parameters.get(
+								"structuredContentFolderId")),
+						structuredContent);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [structuredContentFolderId, assetLibraryId, siteId]");
+					"One of the following parameters must be specified: [assetLibraryId, siteId, structuredContentFolderId]");
 			}
 		}
 
@@ -1691,13 +1691,6 @@ public abstract class BaseStructuredContentResourceImpl
 
 		return getEntityModel(
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
-	}
-
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
 	}
 
 	public String getResourceName() {
@@ -1782,21 +1775,13 @@ public abstract class BaseStructuredContentResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			structuredContentUnsafeFunction =
 				structuredContent -> patchStructuredContent(
-					structuredContent.getId() != null ?
-						structuredContent.getId() :
-							_parseLong(
-								(String)parameters.get("structuredContentId")),
-					structuredContent);
+					structuredContent.getId(), structuredContent);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			structuredContentUnsafeFunction =
 				structuredContent -> putStructuredContent(
-					structuredContent.getId() != null ?
-						structuredContent.getId() :
-							_parseLong(
-								(String)parameters.get("structuredContentId")),
-					structuredContent);
+					structuredContent.getId(), structuredContent);
 		}
 
 		if (structuredContentUnsafeFunction == null) {
@@ -1832,6 +1817,13 @@ public abstract class BaseStructuredContentResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

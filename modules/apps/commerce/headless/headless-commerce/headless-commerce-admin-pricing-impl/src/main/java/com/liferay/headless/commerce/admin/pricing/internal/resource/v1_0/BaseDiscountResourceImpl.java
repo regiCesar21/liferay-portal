@@ -505,13 +505,6 @@ public abstract class BaseDiscountResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Discount";
 	}
@@ -567,10 +560,7 @@ public abstract class BaseDiscountResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			discountUnsafeFunction = discount -> {
-				patchDiscount(
-					discount.getId() != null ? discount.getId() :
-						_parseLong((String)parameters.get("discountId")),
-					discount);
+				patchDiscount(discount.getId(), discount);
 
 				return null;
 			};
@@ -597,10 +587,9 @@ public abstract class BaseDiscountResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

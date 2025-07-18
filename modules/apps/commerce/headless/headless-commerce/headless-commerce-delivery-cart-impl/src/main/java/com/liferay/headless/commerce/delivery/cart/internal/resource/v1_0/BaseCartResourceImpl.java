@@ -530,13 +530,6 @@ public abstract class BaseCartResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Cart";
 	}
@@ -590,17 +583,11 @@ public abstract class BaseCartResourceImpl
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			cartUnsafeFunction = cart -> patchCart(
-				cart.getId() != null ? cart.getId() :
-					_parseLong((String)parameters.get("cartId")),
-				cart);
+			cartUnsafeFunction = cart -> patchCart(cart.getId(), cart);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			cartUnsafeFunction = cart -> putCart(
-				cart.getId() != null ? cart.getId() :
-					_parseLong((String)parameters.get("cartId")),
-				cart);
+			cartUnsafeFunction = cart -> putCart(cart.getId(), cart);
 		}
 
 		if (cartUnsafeFunction == null) {
@@ -622,10 +609,9 @@ public abstract class BaseCartResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

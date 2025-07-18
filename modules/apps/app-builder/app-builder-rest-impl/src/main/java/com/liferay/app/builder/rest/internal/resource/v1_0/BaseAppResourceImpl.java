@@ -583,13 +583,6 @@ public abstract class BaseAppResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "App";
 	}
@@ -655,10 +648,7 @@ public abstract class BaseAppResourceImpl
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			appUnsafeFunction = app -> putApp(
-				app.getId() != null ? app.getId() :
-					_parseLong((String)parameters.get("appId")),
-				app);
+			appUnsafeFunction = app -> putApp(app.getId(), app);
 		}
 
 		if (appUnsafeFunction == null) {
@@ -688,10 +678,9 @@ public abstract class BaseAppResourceImpl
 		return null;
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

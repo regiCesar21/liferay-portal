@@ -378,13 +378,6 @@ public abstract class BaseTaxCategoryResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "TaxCategory";
 	}
@@ -441,10 +434,7 @@ public abstract class BaseTaxCategoryResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			taxCategoryUnsafeFunction = taxCategory -> {
-				putTaxCategory(
-					taxCategory.getId() != null ? taxCategory.getId() :
-						_parseLong((String)parameters.get("taxCategoryId")),
-					taxCategory);
+				putTaxCategory(taxCategory.getId(), taxCategory);
 
 				return null;
 			};
@@ -471,10 +461,9 @@ public abstract class BaseTaxCategoryResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

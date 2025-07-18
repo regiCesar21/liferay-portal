@@ -612,13 +612,6 @@ public abstract class BaseTierPriceResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "TierPrice";
 	}
@@ -675,10 +668,7 @@ public abstract class BaseTierPriceResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			tierPriceUnsafeFunction = tierPrice -> {
-				patchTierPrice(
-					tierPrice.getId() != null ? tierPrice.getId() :
-						_parseLong((String)parameters.get("tierPriceId")),
-					tierPrice);
+				patchTierPrice(tierPrice.getId(), tierPrice);
 
 				return null;
 			};
@@ -705,10 +695,9 @@ public abstract class BaseTierPriceResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

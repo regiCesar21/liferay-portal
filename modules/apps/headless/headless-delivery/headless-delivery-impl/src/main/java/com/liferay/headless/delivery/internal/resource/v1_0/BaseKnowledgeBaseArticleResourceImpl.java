@@ -1237,13 +1237,6 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "KnowledgeBaseArticle";
 	}
@@ -1315,23 +1308,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			knowledgeBaseArticleUnsafeFunction =
 				knowledgeBaseArticle -> patchKnowledgeBaseArticle(
-					knowledgeBaseArticle.getId() != null ?
-						knowledgeBaseArticle.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"knowledgeBaseArticleId")),
-					knowledgeBaseArticle);
+					knowledgeBaseArticle.getId(), knowledgeBaseArticle);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			knowledgeBaseArticleUnsafeFunction =
 				knowledgeBaseArticle -> putKnowledgeBaseArticle(
-					knowledgeBaseArticle.getId() != null ?
-						knowledgeBaseArticle.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"knowledgeBaseArticleId")),
-					knowledgeBaseArticle);
+					knowledgeBaseArticle.getId(), knowledgeBaseArticle);
 		}
 
 		if (knowledgeBaseArticleUnsafeFunction == null) {
@@ -1370,6 +1353,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

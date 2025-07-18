@@ -400,13 +400,6 @@ public abstract class BaseMeasurementUnitResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "MeasurementUnit";
 	}
@@ -463,10 +456,7 @@ public abstract class BaseMeasurementUnitResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			measurementUnitUnsafeFunction = measurementUnit -> {
-				putMeasurementUnit(
-					measurementUnit.getId() != null ? measurementUnit.getId() :
-						_parseLong((String)parameters.get("measurementUnitId")),
-					measurementUnit);
+				putMeasurementUnit(measurementUnit.getId(), measurementUnit);
 
 				return null;
 			};
@@ -493,10 +483,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

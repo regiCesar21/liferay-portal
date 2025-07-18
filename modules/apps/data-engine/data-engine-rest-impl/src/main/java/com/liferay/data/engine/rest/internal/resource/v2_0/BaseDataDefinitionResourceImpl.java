@@ -746,13 +746,6 @@ public abstract class BaseDataDefinitionResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "DataDefinition";
 	}
@@ -809,9 +802,7 @@ public abstract class BaseDataDefinitionResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			dataDefinitionUnsafeFunction = dataDefinition -> putDataDefinition(
-				dataDefinition.getId() != null ? dataDefinition.getId() :
-					_parseLong((String)parameters.get("dataDefinitionId")),
-				dataDefinition);
+				dataDefinition.getId(), dataDefinition);
 		}
 
 		if (dataDefinitionUnsafeFunction == null) {
@@ -835,10 +826,9 @@ public abstract class BaseDataDefinitionResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

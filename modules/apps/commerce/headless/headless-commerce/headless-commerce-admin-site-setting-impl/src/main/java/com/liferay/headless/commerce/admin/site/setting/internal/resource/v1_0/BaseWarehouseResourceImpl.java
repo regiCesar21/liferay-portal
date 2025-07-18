@@ -385,13 +385,6 @@ public abstract class BaseWarehouseResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Warehouse";
 	}
@@ -448,10 +441,7 @@ public abstract class BaseWarehouseResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			warehouseUnsafeFunction = warehouse -> {
-				putWarehouse(
-					warehouse.getId() != null ? warehouse.getId() :
-						_parseLong((String)parameters.get("warehouseId")),
-					warehouse);
+				putWarehouse(warehouse.getId(), warehouse);
 
 				return null;
 			};
@@ -478,10 +468,9 @@ public abstract class BaseWarehouseResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

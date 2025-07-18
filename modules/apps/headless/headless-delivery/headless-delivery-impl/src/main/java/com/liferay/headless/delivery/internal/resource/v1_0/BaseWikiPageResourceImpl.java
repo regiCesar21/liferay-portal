@@ -625,13 +625,6 @@ public abstract class BaseWikiPageResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "WikiPage";
 	}
@@ -695,9 +688,7 @@ public abstract class BaseWikiPageResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			wikiPageUnsafeFunction = wikiPage -> putWikiPage(
-				wikiPage.getId() != null ? wikiPage.getId() :
-					_parseLong((String)parameters.get("wikiPageId")),
-				wikiPage);
+				wikiPage.getId(), wikiPage);
 		}
 
 		if (wikiPageUnsafeFunction == null) {
@@ -725,6 +716,13 @@ public abstract class BaseWikiPageResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

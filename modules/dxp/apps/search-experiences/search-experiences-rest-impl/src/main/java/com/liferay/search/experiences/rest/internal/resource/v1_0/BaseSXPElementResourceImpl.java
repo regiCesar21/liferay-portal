@@ -487,13 +487,6 @@ public abstract class BaseSXPElementResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "SXPElement";
 	}
@@ -549,9 +542,7 @@ public abstract class BaseSXPElementResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			sxpElementUnsafeFunction = sxpElement -> patchSXPElement(
-				sxpElement.getId() != null ? sxpElement.getId() :
-					_parseLong((String)parameters.get("sxpElementId")),
-				sxpElement);
+				sxpElement.getId(), sxpElement);
 		}
 
 		if (sxpElementUnsafeFunction == null) {
@@ -575,10 +566,9 @@ public abstract class BaseSXPElementResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

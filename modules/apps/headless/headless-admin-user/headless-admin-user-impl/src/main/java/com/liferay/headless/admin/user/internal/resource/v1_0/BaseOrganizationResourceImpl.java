@@ -584,13 +584,6 @@ public abstract class BaseOrganizationResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Organization";
 	}
@@ -648,16 +641,12 @@ public abstract class BaseOrganizationResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			organizationUnsafeFunction = organization -> patchOrganization(
-				organization.getId() != null ? organization.getId() :
-					(String)parameters.get("organizationId"),
-				organization);
+				organization.getId(), organization);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			organizationUnsafeFunction = organization -> putOrganization(
-				organization.getId() != null ? organization.getId() :
-					(String)parameters.get("organizationId"),
-				organization);
+				organization.getId(), organization);
 		}
 
 		if (organizationUnsafeFunction == null) {
@@ -685,6 +674,13 @@ public abstract class BaseOrganizationResourceImpl
 		if (value != null) {
 			return Boolean.parseBoolean(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

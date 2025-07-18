@@ -931,24 +931,22 @@ public abstract class BaseDocumentResourceImpl
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			if (parameters.containsKey("documentFolderId")) {
+			if (parameters.containsKey("assetLibraryId")) {
+				documentUnsafeFunction = document -> postAssetLibraryDocument(
+					(Long)parameters.get("assetLibraryId"), null);
+			}
+			else if (parameters.containsKey("documentFolderId")) {
 				documentUnsafeFunction = document -> postDocumentFolderDocument(
 					_parseLong((String)parameters.get("documentFolderId")),
-					(MultipartBody)parameters.get("multipartBody"));
-			}
-			else if (parameters.containsKey("assetLibraryId")) {
-				documentUnsafeFunction = document -> postAssetLibraryDocument(
-					(Long)parameters.get("assetLibraryId"),
-					(MultipartBody)parameters.get("multipartBody"));
+					null);
 			}
 			else if (parameters.containsKey("siteId")) {
 				documentUnsafeFunction = document -> postSiteDocument(
-					(Long)parameters.get("siteId"),
-					(MultipartBody)parameters.get("multipartBody"));
+					(Long)parameters.get("siteId"), null);
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [documentFolderId, assetLibraryId, siteId]");
+					"One of the following parameters must be specified: [assetLibraryId, documentFolderId, siteId]");
 			}
 		}
 
@@ -1015,13 +1013,6 @@ public abstract class BaseDocumentResourceImpl
 
 		return getEntityModel(
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
-	}
-
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
 	}
 
 	public String getResourceName() {
@@ -1100,16 +1091,12 @@ public abstract class BaseDocumentResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			documentUnsafeFunction = document -> patchDocument(
-				document.getId() != null ? document.getId() :
-					_parseLong((String)parameters.get("documentId")),
-				null);
+				document.getId(), null);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			documentUnsafeFunction = document -> putDocument(
-				document.getId() != null ? document.getId() :
-					_parseLong((String)parameters.get("documentId")),
-				null);
+				document.getId(), null);
 		}
 
 		if (documentUnsafeFunction == null) {
@@ -1145,6 +1132,13 @@ public abstract class BaseDocumentResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

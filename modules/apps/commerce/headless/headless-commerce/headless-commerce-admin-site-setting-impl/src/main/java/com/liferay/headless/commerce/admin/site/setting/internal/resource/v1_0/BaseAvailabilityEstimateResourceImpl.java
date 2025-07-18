@@ -415,13 +415,6 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "AvailabilityEstimate";
 	}
@@ -479,12 +472,7 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			availabilityEstimateUnsafeFunction = availabilityEstimate -> {
 				putAvailabilityEstimate(
-					availabilityEstimate.getId() != null ?
-						availabilityEstimate.getId() :
-							_parseLong(
-								(String)parameters.get(
-									"availabilityEstimateId")),
-					availabilityEstimate);
+					availabilityEstimate.getId(), availabilityEstimate);
 
 				return null;
 			};
@@ -514,10 +502,9 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

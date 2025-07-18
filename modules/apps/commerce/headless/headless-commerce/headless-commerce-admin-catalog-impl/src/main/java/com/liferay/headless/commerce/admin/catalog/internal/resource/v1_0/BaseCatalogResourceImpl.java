@@ -601,13 +601,6 @@ public abstract class BaseCatalogResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "Catalog";
 	}
@@ -662,10 +655,7 @@ public abstract class BaseCatalogResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			catalogUnsafeFunction = catalog -> {
-				patchCatalog(
-					catalog.getId() != null ? catalog.getId() :
-						_parseLong((String)parameters.get("catalogId")),
-					catalog);
+				patchCatalog(catalog.getId(), catalog);
 
 				return null;
 			};
@@ -692,10 +682,9 @@ public abstract class BaseCatalogResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

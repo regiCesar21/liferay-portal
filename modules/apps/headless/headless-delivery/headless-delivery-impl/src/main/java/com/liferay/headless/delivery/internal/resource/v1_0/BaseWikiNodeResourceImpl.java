@@ -557,13 +557,6 @@ public abstract class BaseWikiNodeResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "WikiNode";
 	}
@@ -627,9 +620,7 @@ public abstract class BaseWikiNodeResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			wikiNodeUnsafeFunction = wikiNode -> putWikiNode(
-				wikiNode.getId() != null ? wikiNode.getId() :
-					_parseLong((String)parameters.get("wikiNodeId")),
-				wikiNode);
+				wikiNode.getId(), wikiNode);
 		}
 
 		if (wikiNodeUnsafeFunction == null) {
@@ -653,10 +644,9 @@ public abstract class BaseWikiNodeResourceImpl
 		}
 	}
 
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}

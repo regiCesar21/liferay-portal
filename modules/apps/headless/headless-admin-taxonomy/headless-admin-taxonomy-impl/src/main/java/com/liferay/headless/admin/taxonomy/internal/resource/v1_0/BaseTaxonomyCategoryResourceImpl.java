@@ -736,13 +736,6 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
 	public String getResourceName() {
 		return "TaxonomyCategory";
 	}
@@ -807,19 +800,13 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			taxonomyCategoryUnsafeFunction =
 				taxonomyCategory -> patchTaxonomyCategory(
-					taxonomyCategory.getId() != null ?
-						taxonomyCategory.getId() :
-							(String)parameters.get("taxonomyCategoryId"),
-					taxonomyCategory);
+					taxonomyCategory.getId(), taxonomyCategory);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 			taxonomyCategoryUnsafeFunction =
 				taxonomyCategory -> putTaxonomyCategory(
-					taxonomyCategory.getId() != null ?
-						taxonomyCategory.getId() :
-							(String)parameters.get("taxonomyCategoryId"),
-					taxonomyCategory);
+					taxonomyCategory.getId(), taxonomyCategory);
 		}
 
 		if (taxonomyCategoryUnsafeFunction == null) {
@@ -847,6 +834,13 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		if (value != null) {
 			return Long.parseLong(value);
 		}
+
+		return null;
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
 
 		return null;
 	}
