@@ -8,12 +8,14 @@ package com.liferay.osb.asah.backend.rest.controller.api.data.source.v1;
 import com.liferay.osb.asah.backend.dog.HistogramDog;
 import com.liferay.osb.asah.backend.dog.MetricDog;
 import com.liferay.osb.asah.backend.dog.MetricTypeDog;
+import com.liferay.osb.asah.backend.dog.ObjectEntryMetricDog;
 import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.dto.AppearsOnHistogramMetricDTO;
 import com.liferay.osb.asah.backend.dto.AssetAppearsOnHistogramMetricDTO;
 import com.liferay.osb.asah.backend.dto.AssetHistogramMetricDTO;
 import com.liferay.osb.asah.backend.dto.AssetMetricDTO;
 import com.liferay.osb.asah.backend.dto.DeviceMetricDTO;
+import com.liferay.osb.asah.backend.dto.ObjectEntryMetricDTO;
 import com.liferay.osb.asah.backend.model.AssetMetric;
 import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.backend.model.BlogMetricType;
@@ -212,6 +214,35 @@ public class AssetMetricRestController {
 		return new DeviceMetricDTO(deviceMetricDTOs);
 	}
 
+	@GetMapping("/overview")
+	public ObjectEntryMetricDTO getObjectEntryMetricDTO(
+		@PathVariable("assetType") String assetTypeString,
+		@RequestParam String dataSourceId,
+		@RequestParam String externalReferenceCode,
+		@RequestParam Set<Long> groupIds,
+		@RequestParam(defaultValue = "30") int rangeKey,
+		@RequestParam Set<String> selectedMetrics) {
+
+		AssetType assetType = AssetType.of(assetTypeString);
+
+		if (assetType != AssetType.OBJECT_ENTRY) {
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST,
+				"Unsupported asset type: " + assetTypeString);
+		}
+
+		SearchQueryContext searchQueryContext = new SearchQueryContext(
+			AssetType.OBJECT_ENTRY, externalReferenceCode);
+
+		searchQueryContext.setDataSourceId(dataSourceId);
+		searchQueryContext.setTimeRange(TimeRange.of(rangeKey));
+
+		return new ObjectEntryMetricDTO(
+			_objectEntryMetricDog.getObjectEntryMetric(
+				groupIds, searchQueryContext, selectedMetrics),
+			_getMetricTypes(assetType, selectedMetrics));
+	}
+
 	@GetMapping("/appears-on/histogram")
 	public AssetAppearsOnHistogramMetricDTO getTopAppearsOnHistogramMetricDTO(
 		@RequestParam String assetId,
@@ -319,5 +350,8 @@ public class AssetMetricRestController {
 
 	@Autowired
 	private MetricTypeDog _metricTypeDog;
+
+	@Autowired
+	private ObjectEntryMetricDog _objectEntryMetricDog;
 
 }
