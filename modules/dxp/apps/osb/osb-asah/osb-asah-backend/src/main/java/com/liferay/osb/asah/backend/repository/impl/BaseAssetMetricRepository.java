@@ -13,6 +13,7 @@ import com.liferay.osb.asah.backend.model.HistogramMetric;
 import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.backend.model.Metric;
+import com.liferay.osb.asah.backend.model.ObjectEntryMetric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
@@ -213,7 +214,7 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		TimeRange timeRange) {
 
 		List<Field<? extends Object>> fields = new ArrayList<>(
-			_getMetricFields(selectedMetrics, timeRange));
+			getMetricFields(selectedMetrics, timeRange));
 
 		Field<String> assetIdField = DSL.field(
 			getAssetIdFieldName(), String.class);
@@ -921,6 +922,14 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 	}
 
 	@Override
+	public ObjectEntryMetric getObjectEntryMetric(
+		Long dataSourceId, String externalReferenceCode, Set<Long> groupIds,
+		Set<String> selectedMetrics, TimeRange timeRange) {
+
+		return null;
+	}
+
+	@Override
 	public List<Metric> getSegmentMetrics(
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
 		MetricType metricType, TimeRange timeRange) {
@@ -1161,6 +1170,20 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		return metricField.as(metricType.getName());
 	}
 
+	protected List<Field<BigDecimal>> getMetricFields(
+		Set<String> metricNames, TimeRange timeRange) {
+
+		return Stream.of(
+			getMetricTypes()
+		).filter(
+			assetMetricType -> metricNames.contains(assetMetricType.getName())
+		).map(
+			metricName -> getMetricFieldAliased(metricName, timeRange)
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	protected abstract MetricType getMetricType(String metricTypeName);
 
 	protected abstract MetricType[] getMetricTypes();
@@ -1316,7 +1339,7 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		);
 
 		SelectSelectStep<Record> selectSelectStep = dslContext.select(
-			_getMetricFields(selectedMetrics, timeRange)
+			getMetricFields(selectedMetrics, timeRange)
 		).select(
 			previousField
 		);
@@ -1370,20 +1393,6 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		BigDecimal count = (BigDecimal)recordMap.get(fieldName);
 
 		return count.longValue();
-	}
-
-	private List<Field<BigDecimal>> _getMetricFields(
-		Set<String> metricNames, TimeRange timeRange) {
-
-		return Stream.of(
-			getMetricTypes()
-		).filter(
-			assetMetricType -> metricNames.contains(assetMetricType.getName())
-		).map(
-			metricName -> getMetricFieldAliased(metricName, timeRange)
-		).collect(
-			Collectors.toList()
-		);
 	}
 
 	private Collection<SortField<?>> _getSortFields(Sort sort) {

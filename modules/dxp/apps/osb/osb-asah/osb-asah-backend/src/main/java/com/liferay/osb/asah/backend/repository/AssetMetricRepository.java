@@ -13,6 +13,7 @@ import com.liferay.osb.asah.backend.model.HistogramMetric;
 import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.backend.model.Metric;
+import com.liferay.osb.asah.backend.model.ObjectEntryMetric;
 import com.liferay.osb.asah.common.model.Interval;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.TimeRange;
@@ -87,6 +88,11 @@ public interface AssetMetricRepository<T extends AssetMetric> {
 	public long getKnownIndividualsCount(
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
 		MetricType metricType, @Nullable String keywords, TimeRange timeRange);
+
+	public ObjectEntryMetric getObjectEntryMetric(
+		Long dataSourceId, String externalReferenceCode,
+		@Nullable Set<Long> groupIds, Set<String> selectedMetrics,
+		TimeRange timeRange);
 
 	public List<Metric> getSegmentMetrics(
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
