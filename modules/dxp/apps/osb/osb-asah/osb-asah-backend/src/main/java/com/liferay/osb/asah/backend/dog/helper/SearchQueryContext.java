@@ -25,6 +25,13 @@ public class SearchQueryContext {
 		_assetType = assetType;
 	}
 
+	public SearchQueryContext(
+		AssetType assetType, String externalReferenceCode) {
+
+		_assetType = assetType;
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public SearchQueryContext(String assetId, AssetType assetType) {
 		_assetId = assetId;
 		_assetType = assetType;
@@ -72,6 +79,10 @@ public class SearchQueryContext {
 
 	public Long getExperimentId() {
 		return _experimentId;
+	}
+
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
 	}
 
 	public Geolocation getGeolocation() {
@@ -176,6 +187,10 @@ public class SearchQueryContext {
 		_experimentId = experimentId;
 	}
 
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public void setIncludeActiveSessions(Boolean includeActiveSessions) {
 		_includeActiveSessions = includeActiveSessions;
 	}
@@ -228,6 +243,7 @@ public class SearchQueryContext {
 	private String _entityType;
 	private String _experienceId;
 	private Long _experimentId;
+	private String _externalReferenceCode;
 	private Geolocation _geolocation = Geolocation.any();
 	private Boolean _includeActiveSessions = false;
 	private Boolean _includePrevious = true;
