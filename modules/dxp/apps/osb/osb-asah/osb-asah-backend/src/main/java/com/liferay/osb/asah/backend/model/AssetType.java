@@ -15,8 +15,8 @@ import java.util.Optional;
 public enum AssetType {
 
 	BLOG("blog"), CUSTOM("custom"), DOCUMENT("document"), FORM("form"),
-	INDIVIDUAL_METRIC("individualMetric"), JOURNAL("journal"), PAGE("page"),
-	SITE("site");
+	INDIVIDUAL_METRIC("individualMetric"), JOURNAL("journal"),
+	OBJECT_ENTRY("objectEntry"), PAGE("page"), SITE("site");
 
 	public static AssetType of(String value) {
 		return Optional.ofNullable(
