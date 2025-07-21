@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS AuditEvent (
 	context TEXT,
 	createDate TIMESTAMPTZ,
 	type TEXT,
-	userId TEXT,
+	userId BIGINT,
 	userName TEXT
 );
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS DataControlTask (
 	startDate TIMESTAMPTZ,
 	status TEXT,
 	type TEXT,
-	userId TEXT,
+	userId BIGINT,
 	userName TEXT
 );
 
