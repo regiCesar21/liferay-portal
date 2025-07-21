@@ -12,9 +12,9 @@ import java.util.Objects;
  */
 public class Author {
 
-	public static final Author UNKNOWN = new Author("", "");
+	public static final Author UNKNOWN = new Author(0L, "");
 
-	public Author(String userId, String userName) {
+	public Author(Long userId, String userName) {
 		_userId = userId;
 		_userName = userName;
 	}
@@ -40,7 +40,7 @@ public class Author {
 		return false;
 	}
 
-	public String getUserId() {
+	public Long getUserId() {
 		return _userId;
 	}
 
@@ -53,7 +53,7 @@ public class Author {
 		return Objects.hash(_userId, _userName);
 	}
 
-	private final String _userId;
+	private final Long _userId;
 	private final String _userName;
 
 }

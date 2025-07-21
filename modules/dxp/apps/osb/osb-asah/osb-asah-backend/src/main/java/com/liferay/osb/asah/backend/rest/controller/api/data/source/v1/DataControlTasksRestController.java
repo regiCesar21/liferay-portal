@@ -53,7 +53,7 @@ public class DataControlTasksRestController {
 		typesJSONArray.forEach(type -> types.add(String.valueOf(type)));
 
 		_dataControlTaskDog.addDataControlTasks(
-			emailAddresses, null, "0", types, "0", "");
+			emailAddresses, null, "0", types, 0L, "");
 
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}

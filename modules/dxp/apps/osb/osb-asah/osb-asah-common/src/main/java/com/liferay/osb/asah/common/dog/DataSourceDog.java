@@ -132,7 +132,9 @@ public class DataSourceDog {
 	public List<DataSource> disconnectDataSources() {
 		Author author = AuthorThreadLocal.getAuthor();
 
-		if ((author == null) || StringUtils.isBlank(author.getUserId()) ||
+		Long userId = author.getUserId();
+
+		if ((userId == null) || (userId == 0L) ||
 			StringUtils.isBlank(author.getUserName())) {
 
 			throw new OSBAsahException(

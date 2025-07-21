@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class AuditEventDog {
 
 	public AuditEvent addAuditEvent(
-		String context, AuditEvent.Type type, String userId, String userName) {
+		String context, AuditEvent.Type type, Long userId, String userName) {
 
 		AuditEvent auditEvent = new AuditEvent();
 

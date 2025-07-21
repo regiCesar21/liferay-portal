@@ -25,7 +25,7 @@ public class AuditEventDogTest
 	@Test
 	public void testAddAuditEvent() {
 		AuditEvent auditEvent = _auditEventDog.addAuditEvent(
-			"123", AuditEvent.Type.CHANNEL_CLEAR, "1", "Test Test");
+			"123", AuditEvent.Type.CHANNEL_CLEAR, 1L, "Test Test");
 
 		Assertions.assertNotNull(auditEvent.getCreateDate());
 		Assertions.assertNotNull(auditEvent.getId());

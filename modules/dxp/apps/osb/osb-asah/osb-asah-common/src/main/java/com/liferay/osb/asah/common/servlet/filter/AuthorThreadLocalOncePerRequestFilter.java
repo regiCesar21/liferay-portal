@@ -36,6 +36,11 @@ public class AuthorThreadLocalOncePerRequestFilter
 
 		String authorUserId = httpServletRequest.getHeader(
 			HeaderConstants.AUTHOR_USER_ID);
+
+		if (StringUtils.isBlank(authorUserId)) {
+			authorUserId = "0";
+		}
+
 		String authorUserName = httpServletRequest.getHeader(
 			HeaderConstants.AUTHOR_USER_NAME);
 
@@ -49,7 +54,7 @@ public class AuthorThreadLocalOncePerRequestFilter
 
 		try {
 			AuthorThreadLocal.setAuthor(
-				new Author(authorUserId, authorUserName));
+				new Author(Long.valueOf(authorUserId), authorUserName));
 
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}

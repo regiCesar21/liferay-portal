@@ -128,7 +128,7 @@ public class DataControlTaskDogTest
 		_dataControlTaskDog.addDataControlTasks(
 			null, Paths.get(_tmpPath.toString(), "test.csv"), "1000",
 			Collections.singletonList(DataControlTask.Type.SUPPRESS.toString()),
-			"12345", "test@liferay.com");
+			12345L, "test@liferay.com");
 
 		List<DataControlTask> dataControlTasks =
 			_dataControlTaskDog.getPrioritizedDataControlTasks(
@@ -160,7 +160,7 @@ public class DataControlTaskDogTest
 			Collections.singleton("test@liferay.com"), null, null,
 			Collections.singletonList(
 				DataControlTask.Type.UNSUPPRESS.toString()),
-			"12345", "Test Test");
+			12345L, "Test Test");
 
 		List<Suppression> suppressions =
 			_suppressionRepository.findByEmailAddressIn(
@@ -697,7 +697,7 @@ public class DataControlTaskDogTest
 				"test1@liferay.com", "test1@liferay.com", "test2@liferay.com"),
 			null, "1000",
 			Collections.singletonList(DataControlTask.Type.SUPPRESS.toString()),
-			"12345", "test@liferay.com");
+			12345L, "test@liferay.com");
 
 		List<DataControlTask> dataControlTasks =
 			_dataControlTaskDog.getPrioritizedDataControlTasks(

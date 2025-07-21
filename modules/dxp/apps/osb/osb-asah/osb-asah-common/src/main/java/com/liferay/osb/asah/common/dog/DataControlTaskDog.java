@@ -79,7 +79,7 @@ public class DataControlTaskDog {
 	@Transactional
 	public boolean addDataControlTasks(
 		Set<String> emailAddresses, Path path, String ownerId,
-		List<String> types, String userId, String userName) {
+		List<String> types, Long userId, String userName) {
 
 		if (path != null) {
 			File file = path.toFile();
@@ -345,7 +345,7 @@ public class DataControlTaskDog {
 
 	private DataControlTask _createDataControlTask(
 		Long batchId, DataControlTask.Type dataControlTaskType, Date date,
-		Set<String> emailAddresses, String ownerId, String userId,
+		Set<String> emailAddresses, String ownerId, Long userId,
 		String userName) {
 
 		DataControlTask dataControlTask = new DataControlTask();

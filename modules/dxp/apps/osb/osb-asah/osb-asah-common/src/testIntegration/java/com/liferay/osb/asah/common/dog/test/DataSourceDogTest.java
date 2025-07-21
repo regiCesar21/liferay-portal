@@ -185,7 +185,7 @@ public class DataSourceDogTest
 	@Test
 	public void testDisconnectDataSources() {
 		try {
-			AuthorThreadLocal.setAuthor(new Author("test-id", "Test Test"));
+			AuthorThreadLocal.setAuthor(new Author(123L, "Test Test"));
 
 			List<DataSource> dataSources =
 				_dataSourceDog.disconnectDataSources();

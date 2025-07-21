@@ -35,7 +35,7 @@ public class ClearChannelsNanite extends BaseNanite {
 	public void run(JSONObject contextJSONObject) throws Exception {
 		AuthorThreadLocal.forAuthor(
 			new Author(
-				String.valueOf(contextJSONObject.getLong("userId")),
+				contextJSONObject.getLong("userId"),
 				contextJSONObject.getString("userName")),
 			() -> _channelDog.clearChannels(
 				JSONUtil.toLongSet(

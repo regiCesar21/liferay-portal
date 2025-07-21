@@ -33,7 +33,7 @@ public class AuthorThreadLocal {
 		return Author.UNKNOWN;
 	}
 
-	public static String getUserId() {
+	public static Long getUserId() {
 		Author author = getAuthor();
 
 		return author.getUserId();

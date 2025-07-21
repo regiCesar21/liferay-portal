@@ -73,7 +73,7 @@ public class AuditEvent implements Persistable<Long> {
 	}
 
 	@AccessType(AccessType.Type.PROPERTY)
-	public String getUserId() {
+	public Long getUserId() {
 		return _userId;
 	}
 
@@ -119,7 +119,7 @@ public class AuditEvent implements Persistable<Long> {
 		_type = type;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		_userId = userId;
 	}
 
@@ -151,7 +151,7 @@ public class AuditEvent implements Persistable<Long> {
 	private Type _type;
 
 	@Transient
-	private String _userId;
+	private Long _userId;
 
 	@Transient
 	private String _userName;

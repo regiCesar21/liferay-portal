@@ -34,13 +34,18 @@ public class DataControlTasksMutationDataFetcher
 
 	@Override
 	public Boolean get(DataFetchingEnvironment dataFetchingEnvironment) {
+		String userId = dataFetchingEnvironment.getArgument("userId");
+
+		if (StringUtils.isBlank(userId)) {
+			userId = "0";
+		}
+
 		return _dataControlTaskDog.addDataControlTasks(
 			new HashSet<String>(
 				dataFetchingEnvironment.getArgument("emailAddresses")),
 			_getPath(dataFetchingEnvironment.getArgument("fileName")),
 			dataFetchingEnvironment.getArgument("ownerId"),
-			dataFetchingEnvironment.getArgument("types"),
-			dataFetchingEnvironment.getArgument("userId"),
+			dataFetchingEnvironment.getArgument("types"), Long.valueOf(userId),
 			dataFetchingEnvironment.getArgument("userName"));
 	}
 

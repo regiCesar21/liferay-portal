@@ -157,7 +157,7 @@ public class ChannelDogTest
 		);
 
 		try {
-			AuthorThreadLocal.setAuthor(new Author("1", "Test Test"));
+			AuthorThreadLocal.setAuthor(new Author(1L, "Test Test"));
 
 			String dayDateString = DateUtil.newDayDateString();
 
