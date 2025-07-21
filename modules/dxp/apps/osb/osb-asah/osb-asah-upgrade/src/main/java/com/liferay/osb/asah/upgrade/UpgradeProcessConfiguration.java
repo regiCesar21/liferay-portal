@@ -12,6 +12,8 @@ import com.liferay.osb.asah.upgrade.v4_13_0.BigQuerySchemaUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_0.EventDefinitionUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_1.EventUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_1.GlobalEventAttributeDefinitionUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_13_2.AuditEventUserIdUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_13_2.DataControlTaskUserIdUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_2.EventGroupIdUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_2.ObjectEntryUpgradeStep;
 
@@ -44,16 +46,23 @@ public class UpgradeProcessConfiguration {
 		upgradeProcess.addUpgradeSteps("4.0.49", "4.0.50", _eventUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
 			"4.0.50", "4.0.51", _eventGroupIdUpgradeStep,
+			_auditEventUserIdUpgradeStep, _dataControlTaskUserIdUpgradeStep,
 			_objectEntryUpgradeStep);
 
 		return upgradeProcess;
 	}
 
 	@Autowired
+	private AuditEventUserIdUpgradeStep _auditEventUserIdUpgradeStep;
+
+	@Autowired
 	private BigQuerySchemaUpgradeStep _bigQuerySchemaUpgradeStep;
 
 	@Autowired
 	private DataControlTaskUpgradeStep _dataControlTaskUpgradeStep;
+
+	@Autowired
+	private DataControlTaskUserIdUpgradeStep _dataControlTaskUserIdUpgradeStep;
 
 	@Autowired
 	private DataReplicationTablePrimaryKeyUpgradeStep
