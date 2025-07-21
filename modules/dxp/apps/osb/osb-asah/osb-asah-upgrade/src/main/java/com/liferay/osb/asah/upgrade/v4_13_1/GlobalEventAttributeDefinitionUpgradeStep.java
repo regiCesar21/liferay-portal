@@ -22,14 +22,14 @@ import org.springframework.stereotype.Component;
  * @author Leslie Wong
  */
 @Component
-public class EventAttributeDefinitionUpgradeStep implements UpgradeStep {
+public class GlobalEventAttributeDefinitionUpgradeStep implements UpgradeStep {
 
 	@Override
 	public void upgrade(String version) throws Exception {
 		DatabasePopulatorUtils.execute(
 			new ResourceDatabasePopulator(
 				new ClassPathResource(
-					"v4_13_1/event_attribute_definition_upgrade.sql")),
+					"v4_13_1/global_event_attribute_definition_upgrade.sql")),
 			_dataSource);
 
 		if (_log.isInfoEnabled()) {
@@ -40,7 +40,7 @@ public class EventAttributeDefinitionUpgradeStep implements UpgradeStep {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		EventAttributeDefinitionUpgradeStep.class);
+		GlobalEventAttributeDefinitionUpgradeStep.class);
 
 	@Autowired
 	private DataSource _dataSource;

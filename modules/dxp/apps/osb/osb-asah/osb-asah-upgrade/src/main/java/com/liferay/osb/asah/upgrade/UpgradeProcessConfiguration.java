@@ -10,8 +10,8 @@ import com.liferay.osb.asah.upgrade.v4_12_0.DataReplicationTablePrimaryKeyUpgrad
 import com.liferay.osb.asah.upgrade.v4_12_0.PostgreSQLUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_0.BigQuerySchemaUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_0.EventDefinitionUpgradeStep;
-import com.liferay.osb.asah.upgrade.v4_13_1.EventAttributeDefinitionUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_1.EventUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_13_1.GlobalEventAttributeDefinitionUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_2.EventGroupIdUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_13_2.ObjectEntryUpgradeStep;
 
@@ -40,7 +40,7 @@ public class UpgradeProcessConfiguration {
 		upgradeProcess.addUpgradeSteps(
 			"4.0.47", "4.0.48", _eventDefinitionUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-			"4.0.48", "4.0.49", _eventDefinitionUpgradeStep);
+			"4.0.48", "4.0.49", _globalEventAttributeDefinitionUpgradeStep);
 		upgradeProcess.addUpgradeSteps("4.0.49", "4.0.50", _eventUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
 			"4.0.50", "4.0.51", _eventGroupIdUpgradeStep,
@@ -60,10 +60,6 @@ public class UpgradeProcessConfiguration {
 		_dataReplicationTablePrimaryKeyUpgradeStep;
 
 	@Autowired
-	private EventAttributeDefinitionUpgradeStep
-		_eventAttributeDefinitionUpgradeStep;
-
-	@Autowired
 	private EventDefinitionUpgradeStep _eventDefinitionUpgradeStep;
 
 	@Autowired
@@ -71,6 +67,10 @@ public class UpgradeProcessConfiguration {
 
 	@Autowired
 	private EventUpgradeStep _eventUpgradeStep;
+
+	@Autowired
+	private GlobalEventAttributeDefinitionUpgradeStep
+		_globalEventAttributeDefinitionUpgradeStep;
 
 	@Autowired
 	private ObjectEntryUpgradeStep _objectEntryUpgradeStep;
