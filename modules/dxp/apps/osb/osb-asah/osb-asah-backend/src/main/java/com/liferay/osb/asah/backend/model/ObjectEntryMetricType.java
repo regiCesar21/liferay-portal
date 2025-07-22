@@ -18,10 +18,10 @@ import java.util.stream.Stream;
  */
 public enum ObjectEntryMetricType implements MetricType {
 
-	DOWNLOADS("downloadsMetric", "downloads", TrendClassification.Order.DESC),
+	DOWNLOADS("downloads", "downloadsMetric", TrendClassification.Order.DESC),
 	IMPRESSIONS(
-		"impressionsMetric", "impressions", TrendClassification.Order.ASC),
-	VIEWS("viewsMetric", "views", TrendClassification.Order.ASC);
+		"impressions", "impressionsMetric", TrendClassification.Order.ASC),
+	VIEWS("views", "viewsMetric", TrendClassification.Order.ASC);
 
 	public static ObjectEntryMetricType of(String name) {
 		return Optional.ofNullable(
@@ -52,10 +52,10 @@ public enum ObjectEntryMetricType implements MetricType {
 	}
 
 	private ObjectEntryMetricType(
-		String name, String fieldName, TrendClassification.Order order) {
+		String fieldName, String name, TrendClassification.Order order) {
 
-		_name = name;
 		_fieldName = fieldName;
+		_name = name;
 		_order = order;
 
 		_aggregationName = fieldName;
