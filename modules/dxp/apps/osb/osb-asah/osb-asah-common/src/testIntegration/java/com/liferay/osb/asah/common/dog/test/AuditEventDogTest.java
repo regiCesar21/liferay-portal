@@ -31,7 +31,7 @@ public class AuditEventDogTest
 		Assertions.assertNotNull(auditEvent.getId());
 		Assertions.assertEquals(
 			AuditEvent.Type.CHANNEL_CLEAR, auditEvent.getType());
-		Assertions.assertEquals("1", auditEvent.getUserId());
+		Assertions.assertEquals(1L, auditEvent.getUserId());
 		Assertions.assertEquals("Test Test", auditEvent.getUserName());
 	}
 

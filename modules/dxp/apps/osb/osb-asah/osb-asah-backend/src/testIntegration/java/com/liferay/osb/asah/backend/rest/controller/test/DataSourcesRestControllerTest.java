@@ -322,7 +322,7 @@ public class DataSourcesRestControllerTest {
 
 		Assertions.assertEquals(
 			AuditEvent.Type.DATA_SOURCE_DELETE_REQUEST, auditEvent.getType());
-		Assertions.assertEquals("1001", auditEvent.getUserId());
+		Assertions.assertEquals(1001L, auditEvent.getUserId());
 		Assertions.assertEquals("Caetano Veloso", auditEvent.getUserName());
 	}
 

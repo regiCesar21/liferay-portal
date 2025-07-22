@@ -177,7 +177,7 @@ public class ChannelDogTest
 				).put(
 					"createDate", dayDateString
 				).put(
-					"userId", "1"
+					"userId", 1L
 				).put(
 					"userName", "Test Test"
 				),
