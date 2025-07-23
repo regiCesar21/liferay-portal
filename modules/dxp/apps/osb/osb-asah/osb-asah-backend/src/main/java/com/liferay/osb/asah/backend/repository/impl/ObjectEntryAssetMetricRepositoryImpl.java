@@ -220,16 +220,18 @@ public class ObjectEntryAssetMetricRepositoryImpl
 				BigDecimal metricValueBigDecimal = (BigDecimal)recordMap.get(
 					metricType.getName());
 
-				if (metricValueBigDecimal != null) {
-					boolean previous = (boolean)recordMap.get("previous");
+				if (metricValueBigDecimal == null) {
+					continue;
+				}
 
-					if (previous) {
-						metric.setPreviousValue(
-							metricValueBigDecimal.doubleValue());
-					}
-					else {
-						metric.setValue(metricValueBigDecimal.doubleValue());
-					}
+				boolean previous = (boolean)recordMap.get("previous");
+
+				if (previous) {
+					metric.setPreviousValue(
+						metricValueBigDecimal.doubleValue());
+				}
+				else {
+					metric.setValue(metricValueBigDecimal.doubleValue());
 				}
 			}
 		}
