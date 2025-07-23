@@ -74,11 +74,9 @@ public class ObjectEntryAssetMetricRepositoryImpl
 		SelectJoinStep<Record> selectJoinStep = getAssetMetricSelectJoinStep(
 			selectSelectStep, timeRange);
 
-		Condition condition = DSL.noCondition();
-
 		SelectConditionStep<Record> selectConditionStep = selectJoinStep.where(
 			DSL.and(
-				condition,
+				DSL.noCondition(),
 				_createWhereClauseCondition(
 					dataSourceId, externalReferenceCode, groupIds,
 					timeRange.getIncludePreviousTimeRange())));
