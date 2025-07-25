@@ -10,6 +10,7 @@ import com.liferay.osb.asah.backend.model.BlogMetricType;
 import com.liferay.osb.asah.backend.model.DocumentLibraryMetricType;
 import com.liferay.osb.asah.backend.model.FormMetricType;
 import com.liferay.osb.asah.backend.model.JournalMetricType;
+import com.liferay.osb.asah.backend.model.ObjectEntryMetricType;
 import com.liferay.osb.asah.backend.model.SiteMetricType;
 import com.liferay.osb.asah.common.model.CustomAssetMetricType;
 import com.liferay.osb.asah.common.model.IndividualMetricType;
@@ -58,6 +59,7 @@ public class MetricTypeDog {
 					AssetType.INDIVIDUAL_METRIC,
 					IndividualMetricType.TOTAL_INDIVIDUALS);
 				put(AssetType.JOURNAL, JournalMetricType.VIEWS);
+				put(AssetType.OBJECT_ENTRY, ObjectEntryMetricType.IMPRESSIONS);
 				put(AssetType.PAGE, PageMetricType.VISITORS);
 				put(AssetType.SITE, SiteMetricType.VISITORS);
 			}
@@ -72,6 +74,7 @@ public class MetricTypeDog {
 					put(AssetType.FORM, FormMetricType::of);
 					put(AssetType.INDIVIDUAL_METRIC, IndividualMetricType::of);
 					put(AssetType.JOURNAL, JournalMetricType::of);
+					put(AssetType.OBJECT_ENTRY, ObjectEntryMetricType::of);
 					put(AssetType.PAGE, PageMetricType::of);
 					put(AssetType.SITE, SiteMetricType::of);
 				}
