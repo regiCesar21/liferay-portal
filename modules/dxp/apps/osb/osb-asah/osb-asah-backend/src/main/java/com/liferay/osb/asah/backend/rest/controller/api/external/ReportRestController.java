@@ -39,13 +39,16 @@ import com.liferay.osb.asah.backend.model.Trend;
 import com.liferay.osb.asah.backend.rest.controller.BaseRestController;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.DataExportTaskDog;
+import com.liferay.osb.asah.common.dog.ProjectFeatureDog;
 import com.liferay.osb.asah.common.entity.DataExportTask;
+import com.liferay.osb.asah.common.model.Feature;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.PageMetricType;
 import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.util.ListUtil;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.StringUtil;
 
 import java.io.File;
@@ -330,7 +333,12 @@ public class ReportRestController extends BaseRestController {
 					sortOrder)),
 			documentLibraryMetricResultBag,
 			documentLibraryMetric -> _toDocumentLibraryAssetReportEntityModel(
-				new AssetReport(documentLibraryMetric), rangeKey));
+				new DocumentLibraryAssetReport(
+					documentLibraryMetric,
+					_projectFeatureDog.isFeatureEnabled(
+						Feature.DOCUMENT_LIBRARY_EVENT_IMPRESSION_MADE,
+						ProjectIdThreadLocal.getProjectId())),
+				rangeKey));
 	}
 
 	@GetMapping("/*")
@@ -911,7 +919,17 @@ public class ReportRestController extends BaseRestController {
 
 			MetricType metricType = metric.getMetricType();
 
-			metricReports.put(metricType.getName(), metricReport);
+			if (!_projectFeatureDog.isFeatureEnabled(
+					Feature.DOCUMENT_LIBRARY_EVENT_IMPRESSION_MADE,
+					ProjectIdThreadLocal.getProjectId()) &&
+				(assetMetric instanceof DocumentLibraryMetric) &&
+				(metricType == DocumentLibraryMetricType.IMPRESSIONS)) {
+
+				metricReports.put("previewsMetric", metricReport);
+			}
+			else {
+				metricReports.put(metricType.getName(), metricReport);
+			}
 		}
 
 		return new AssetReport(assetMetric, metricReports);
@@ -1070,6 +1088,9 @@ public class ReportRestController extends BaseRestController {
 	private MetricTypeDog _metricTypeDog;
 
 	@Autowired
+	private ProjectFeatureDog _projectFeatureDog;
+
+	@Autowired
 	private SegmentMetricDog _segmentMetricDog;
 
 	@Autowired
@@ -1111,6 +1132,28 @@ public class ReportRestController extends BaseRestController {
 
 		private final AssetMetric _assetMetric;
 		private Map<String, MetricReport> _metricReports = new HashMap<>();
+
+	}
+
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private static class DocumentLibraryAssetReport extends AssetReport {
+
+		public DocumentLibraryAssetReport(
+			AssetMetric assetMetric,
+			boolean documentLibraryEventImpressionMadeEnabled) {
+
+			super(assetMetric);
+
+			if (!documentLibraryEventImpressionMadeEnabled) {
+				super._metricReports.put(
+					"previewsMetric",
+					super._metricReports.get(
+						DocumentLibraryMetricType.IMPRESSIONS.getName()));
+
+				super._metricReports.remove(
+					DocumentLibraryMetricType.IMPRESSIONS.getName());
+			}
+		}
 
 	}
 
