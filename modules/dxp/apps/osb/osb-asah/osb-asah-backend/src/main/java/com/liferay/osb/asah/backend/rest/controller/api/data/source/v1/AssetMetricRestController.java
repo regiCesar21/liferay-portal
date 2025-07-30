@@ -219,9 +219,10 @@ public class AssetMetricRestController {
 		@PathVariable("assetType") String assetTypeString,
 		@RequestParam String dataSourceId,
 		@RequestParam String externalReferenceCode,
-		@RequestParam Set<Long> groupIds,
+		@RequestParam(required = false) Set<Long> groupIds,
 		@RequestParam(defaultValue = "30") int rangeKey,
-		@RequestParam Set<String> selectedMetrics) {
+		@RequestParam(defaultValue = "impressionsMetric") Set<String>
+			selectedMetrics) {
 
 		AssetType assetType = AssetType.of(assetTypeString);
 
