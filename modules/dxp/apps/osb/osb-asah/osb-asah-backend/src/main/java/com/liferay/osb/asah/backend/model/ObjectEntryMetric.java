@@ -39,7 +39,7 @@ public class ObjectEntryMetric implements AssetMetric {
 				_externalReferenceCode,
 				objectEntryMetric._externalReferenceCode) &&
 			Objects.equals(
-				_impressionsMetric, objectEntryMetric._impressionsMetric) &&
+				_impressionMadeMetric, objectEntryMetric._impressionMadeMetric) &&
 			Objects.equals(_urls, objectEntryMetric._urls) &&
 			Objects.equals(_viewsMetric, objectEntryMetric._viewsMetric)) {
 
@@ -86,7 +86,7 @@ public class ObjectEntryMetric implements AssetMetric {
 
 	@Override
 	public Metric getDefaultMetric() {
-		return _impressionsMetric;
+		return _impressionMadeMetric;
 	}
 
 	public Metric getDownloadsMetric() {
@@ -97,8 +97,8 @@ public class ObjectEntryMetric implements AssetMetric {
 		return _externalReferenceCode;
 	}
 
-	public Metric getImpresssionsMetric() {
-		return _impressionsMetric;
+	public Metric getImpresssionMadeMetric() {
+		return _impressionMadeMetric;
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class ObjectEntryMetric implements AssetMetric {
 	public int hashCode() {
 		return Objects.hash(
 			_assetId, _assetMetrics, _assetTitle, _canonicalUrls, _dataSourceId,
-			_downloadsMetric, _externalReferenceCode, _impressionsMetric, _urls,
+			_downloadsMetric, _externalReferenceCode, _impressionMadeMetric, _urls,
 			_viewsMetric);
 	}
 
@@ -151,8 +151,8 @@ public class ObjectEntryMetric implements AssetMetric {
 		_externalReferenceCode = externalReferenceCode;
 	}
 
-	public void setImpressionsMetric(Metric impressionsMetric) {
-		_impressionsMetric = impressionsMetric;
+	public void setImpressionMadeMetric(Metric impressionMadeMetric) {
+		_impressionMadeMetric = impressionMadeMetric;
 	}
 
 	@Override
@@ -172,7 +172,7 @@ public class ObjectEntryMetric implements AssetMetric {
 	private Metric _downloadsMetric = new Metric(
 		ObjectEntryMetricType.DOWNLOADS);
 	private String _externalReferenceCode;
-	private Metric _impressionsMetric = new Metric(
+	private Metric _impressionMadeMetric = new Metric(
 		ObjectEntryMetricType.IMPRESSIONS);
 	private List<String> _urls;
 	private Metric _viewsMetric = new Metric(ObjectEntryMetricType.VIEWS);

@@ -281,7 +281,7 @@ public class AssetMetricRestController {
 		@RequestParam String externalReferenceCode,
 		@RequestParam(required = false) Set<Long> groupIds,
 		@RequestParam(defaultValue = "30") int rangeKey,
-		@RequestParam(defaultValue = "impressionsMetric") Set<String>
+		@RequestParam(defaultValue = "impressionMadeMetric") Set<String>
 			selectedMetrics) {
 
 		AssetType assetType = AssetType.of(assetTypeString);

@@ -35,7 +35,7 @@ public class ObjectEntryAssetMetricRepositoryTest
 				new HashSet<>() {
 					{
 						add("downloadsMetric");
-						add("impressionsMetric");
+						add("impressionMadeMetric");
 						add("viewsMetric");
 					}
 				},
@@ -50,10 +50,10 @@ public class ObjectEntryAssetMetricRepositoryTest
 		Assertions.assertEquals(3.0, downloadsMetric.getValue());
 		Assertions.assertEquals(31.0, downloadsMetric.getPreviousValue());
 
-		Metric impressionsMetric = objectEntryMetric.getImpresssionsMetric();
+		Metric impressionMadeMetric = objectEntryMetric.getImpressionMadeMetric();
 
-		Assertions.assertEquals(16.0, impressionsMetric.getValue());
-		Assertions.assertEquals(17.0, impressionsMetric.getPreviousValue());
+		Assertions.assertEquals(16.0, impressionMadeMetric.getValue());
+		Assertions.assertEquals(17.0, impressionMadeMetric.getPreviousValue());
 
 		Metric viewsMetric = objectEntryMetric.getViewsMetric();
 

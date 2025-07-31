@@ -165,7 +165,7 @@ public class ObjectEntryAssetMetricRepositoryImpl
 					ObjectEntryMetric::setDownloadsMetric);
 				put(
 					ObjectEntryMetricType.IMPRESSIONS.getName(),
-					ObjectEntryMetric::setImpressionsMetric);
+					ObjectEntryMetric::setImpressionMadeMetric);
 				put(
 					ObjectEntryMetricType.VIEWS.getName(),
 					ObjectEntryMetric::setViewsMetric);

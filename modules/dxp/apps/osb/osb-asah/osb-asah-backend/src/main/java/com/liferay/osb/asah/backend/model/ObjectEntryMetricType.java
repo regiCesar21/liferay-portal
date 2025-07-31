@@ -20,7 +20,7 @@ public enum ObjectEntryMetricType implements MetricType {
 
 	DOWNLOADS("downloads", "downloadsMetric", TrendClassification.Order.DESC),
 	IMPRESSIONS(
-		"impressions", "impressionsMetric", TrendClassification.Order.ASC),
+		"impressions", "impressionMadeMetric", TrendClassification.Order.ASC),
 	VIEWS("views", "viewsMetric", TrendClassification.Order.ASC);
 
 	public static ObjectEntryMetricType of(String name) {
