@@ -89,6 +89,11 @@ public interface AssetMetricRepository<T extends AssetMetric> {
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
 		MetricType metricType, @Nullable String keywords, TimeRange timeRange);
 
+	public List<HistogramMetric> getObjectEntryHistogramMetrics(
+		Long dataSourceId, String externalReferenceCode,
+		@Nullable Set<Long> groupIds, boolean includePrevious,
+		Interval interval, MetricType metricType, TimeRange timeRange);
+
 	public ObjectEntryMetric getObjectEntryMetric(
 		Long dataSourceId, String externalReferenceCode,
 		@Nullable Set<Long> groupIds, Set<String> selectedMetrics,

@@ -922,6 +922,15 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 	}
 
 	@Override
+	public List<HistogramMetric> getObjectEntryHistogramMetrics(
+		Long dataSourceId, String externalReferenceCode,
+		@Nullable Set<Long> groupIds, boolean includePrevious,
+		Interval interval, MetricType metricType, TimeRange timeRange) {
+
+		return null;
+	}
+
+	@Override
 	public ObjectEntryMetric getObjectEntryMetric(
 		Long dataSourceId, String externalReferenceCode, Set<Long> groupIds,
 		Set<String> selectedMetrics, TimeRange timeRange) {

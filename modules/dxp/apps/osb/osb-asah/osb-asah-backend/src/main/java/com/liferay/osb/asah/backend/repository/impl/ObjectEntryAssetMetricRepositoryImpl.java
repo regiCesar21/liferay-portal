@@ -6,15 +6,21 @@
 package com.liferay.osb.asah.backend.repository.impl;
 
 import com.liferay.osb.asah.backend.model.AssetType;
+import com.liferay.osb.asah.backend.model.HistogramMetric;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.model.ObjectEntryMetric;
 import com.liferay.osb.asah.backend.model.ObjectEntryMetricType;
+import com.liferay.osb.asah.common.date.DateUtil;
+import com.liferay.osb.asah.common.model.Interval;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.TimeRange;
 
 import java.math.BigDecimal;
 
+import java.time.ZoneOffset;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +29,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import org.jooq.Condition;
+import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SelectConditionStep;
@@ -43,6 +50,55 @@ public class ObjectEntryAssetMetricRepositoryImpl
 	@Override
 	public AssetType getAssetType() {
 		return AssetType.OBJECT_ENTRY;
+	}
+
+	@Override
+	public List<HistogramMetric> getObjectEntryHistogramMetrics(
+		Long dataSourceId, String externalReferenceCode,
+		@Nullable Set<Long> groupIds, boolean includePrevious,
+		Interval interval, MetricType metricType, TimeRange timeRange) {
+
+		Field field = DSL.timestamp(
+			dslHelper.dateTrunc(
+				DatePart.valueOf(interval.name()),
+				dslHelper.getDateAtTimeZoneField(
+					"eventdate", timeZoneDog.getTimeZoneId())));
+
+		field = field.as("key");
+
+		SelectJoinStep<Record> selectJoinStep = getAssetMetricSelectJoinStep(
+			dslContext.select(
+				field, getMetricFieldAliased(metricType, timeRange)),
+			timeRange);
+
+		if (includePrevious) {
+			timeRange = timeRange.getIncludePreviousTimeRange();
+		}
+
+		SelectConditionStep<Record> selectConditionStep = selectJoinStep.where(
+			_createWhereClauseCondition(
+				dataSourceId, externalReferenceCode, groupIds, timeRange));
+
+		return queryExecutor.queryForList(
+			rowMap -> {
+				Metric metric = new Metric(metricType);
+
+				BigDecimal bigDecimal = (BigDecimal)rowMap.get(
+					metricType.getName());
+
+				if (bigDecimal == null) {
+					bigDecimal = BigDecimal.ZERO;
+				}
+
+				metric.setValue(bigDecimal.doubleValue());
+
+				return new HistogramMetric(
+					String.valueOf(
+						DateUtil.toLocalDateTime(
+							(Date)rowMap.get("key"), ZoneOffset.UTC)),
+					metric);
+			},
+			selectConditionStep.groupBy(field));
 	}
 
 	@Override
