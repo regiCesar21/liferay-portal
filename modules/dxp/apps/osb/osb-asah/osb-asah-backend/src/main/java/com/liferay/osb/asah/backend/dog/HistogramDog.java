@@ -145,6 +145,32 @@ public class HistogramDog {
 			timeRange);
 	}
 
+	public HistogramMetricBag getObjectEntryHistogramMetricBag(
+		Set<Long> groupIds, MetricType metricType,
+		SearchQueryContext searchQueryContext) {
+
+		AssetMetricRepository assetMetricRepository =
+			_assetMetricRepositoryMap.get(AssetType.OBJECT_ENTRY);
+
+		Interval interval = searchQueryContext.getInterval();
+
+		TimeRange timeRange = searchQueryContext.getTimeRange();
+
+		if ((timeRange == TimeRange.LAST_24_HOURS) ||
+			(timeRange == TimeRange.YESTERDAY)) {
+
+			interval = Interval.HOUR;
+		}
+
+		return getHistogramMetricBag(
+			assetMetricRepository.getObjectEntryHistogramMetrics(
+				Long.valueOf(searchQueryContext.getDataSourceId()),
+				searchQueryContext.getExternalReferenceCode(), groupIds, true,
+				interval, metricType, timeRange),
+			searchQueryContext.isIncludePrevious(), interval, metricType,
+			timeRange);
+	}
+
 	public Map<String, HistogramMetricBag> getTopAppearsOnHistogramMetricBag(
 		Set<Long> channelIds, IdentityType identityType, MetricType metricType,
 		SearchQueryContext searchQueryContext, int size) {
