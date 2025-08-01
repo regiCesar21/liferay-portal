@@ -23,6 +23,7 @@ import com.liferay.osb.asah.backend.model.DocumentLibraryMetricType;
 import com.liferay.osb.asah.backend.model.HistogramMetricBag;
 import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.JournalMetricType;
+import com.liferay.osb.asah.backend.model.ObjectEntryMetricType;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
@@ -212,6 +213,65 @@ public class AssetMetricRestController {
 		}
 
 		return new DeviceMetricDTO(deviceMetricDTOs);
+	}
+
+	@GetMapping("/overview/histogram")
+	public AssetHistogramMetricDTO getObjectEntryAssetHistogramMetricDTO(
+		@PathVariable("assetType") String assetTypeString,
+		@RequestParam String dataSourceId,
+		@RequestParam String externalReferenceCode,
+		@RequestParam(required = false) Set<Long> groupIds,
+		@RequestParam(defaultValue = "30") int rangeKey,
+		@RequestParam(defaultValue = "impressionsMetric") Set<String>
+			selectedMetrics) {
+
+		AssetType assetType = AssetType.of(assetTypeString);
+
+		if (assetType != AssetType.OBJECT_ENTRY) {
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST,
+				"Unsupported asset type: " + assetTypeString);
+		}
+
+		SearchQueryContext searchQueryContext = new SearchQueryContext(
+			AssetType.OBJECT_ENTRY, externalReferenceCode);
+
+		searchQueryContext.setDataSourceId(dataSourceId);
+		searchQueryContext.setIncludePrevious(true);
+		searchQueryContext.setInterval("D");
+		searchQueryContext.setTimeRange(TimeRange.of(rangeKey));
+
+		Set<AssetHistogramMetricDTO> assetHistogramMetricDTOs =
+			new LinkedHashSet<>();
+
+		if (selectedMetrics.contains("downloadsMetric")) {
+			assetHistogramMetricDTOs.add(
+				new AssetHistogramMetricDTO(
+					_histogramDog.getObjectEntryHistogramMetricBag(
+						groupIds, ObjectEntryMetricType.DOWNLOADS,
+						searchQueryContext),
+					ObjectEntryMetricType.DOWNLOADS.getName()));
+		}
+
+		if (selectedMetrics.contains("impressionsMetric")) {
+			assetHistogramMetricDTOs.add(
+				new AssetHistogramMetricDTO(
+					_histogramDog.getObjectEntryHistogramMetricBag(
+						groupIds, ObjectEntryMetricType.IMPRESSIONS,
+						searchQueryContext),
+					ObjectEntryMetricType.IMPRESSIONS.getName()));
+		}
+
+		if (selectedMetrics.contains("viewsMetric")) {
+			assetHistogramMetricDTOs.add(
+				new AssetHistogramMetricDTO(
+					_histogramDog.getObjectEntryHistogramMetricBag(
+						groupIds, ObjectEntryMetricType.VIEWS,
+						searchQueryContext),
+					ObjectEntryMetricType.VIEWS.getName()));
+		}
+
+		return new AssetHistogramMetricDTO(assetHistogramMetricDTOs);
 	}
 
 	@GetMapping("/overview")
