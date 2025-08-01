@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class ObjectEntryAssetMetricRepositoryTest
 	extends BaseAssetMetricRepositoryTestCase<ObjectEntryMetric> {
 
-	@BQSQLResource(resourcePath = "object_entry_asset_metric.sql")
+	@BQSQLResource(resourcePath = "object_entry_metric_last_30_days.sql")
 	@Test
 	public void testGetObjectEntryMetricLast30Days() {
 		ObjectEntryMetric objectEntryMetric =

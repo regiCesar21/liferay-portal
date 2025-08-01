@@ -1227,9 +1227,9 @@ public class AssetMetricRestControllerTest
 			deviceMetricDTO);
 	}
 
-	@BQSQLResource(resourcePath = "object_entry_overview_histogram_metric.sql")
+	@BQSQLResource(resourcePath = "object_entry_asset_histogram_metric.sql")
 	@Test
-	public void testGetObjectEntryOverviewAssetHistogramMetricDTO() {
+	public void testGetObjectEntryAssetHistogramMetricDTO() {
 		AssetHistogramMetricDTO assetHistogramMetricDTO =
 			_assetMetricRestController.getObjectEntryAssetHistogramMetricDTO(
 				"objectEntry", "1", "abc-def-ghi-jkl",
