@@ -1235,7 +1235,7 @@ public class AssetMetricRestControllerTest
 				"objectEntry", "1", "abc-def-ghi-jkl",
 				Collections.singleton(1000L), 30,
 				SetUtil.of(
-					"downloadsMetric", "impressionsMetric", "viewsMetric"));
+					"downloadsMetric", "impressionMadeMetric", "viewsMetric"));
 
 		Set<AssetHistogramMetricDTO> assetHistogramMetricDTOs =
 			assetHistogramMetricDTO.getAssetHistogramMetricDTOs();
@@ -1269,7 +1269,7 @@ public class AssetMetricRestControllerTest
 					},
 					_getActualPreviousValues(histogramMetricDTOs));
 			}
-			else if (metricName.equals("impressionsMetric")) {
+			else if (metricName.equals("impressionMadeMetric")) {
 				Assertions.assertEquals(
 					25D, curAssetHistogramMetricDTO.getTotalValue());
 

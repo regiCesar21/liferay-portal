@@ -50,7 +50,8 @@ public class ObjectEntryAssetMetricRepositoryTest
 		Assertions.assertEquals(3.0, downloadsMetric.getValue());
 		Assertions.assertEquals(31.0, downloadsMetric.getPreviousValue());
 
-		Metric impressionMadeMetric = objectEntryMetric.getImpressionMadeMetric();
+		Metric impressionMadeMetric =
+			objectEntryMetric.getImpressionMadeMetric();
 
 		Assertions.assertEquals(16.0, impressionMadeMetric.getValue());
 		Assertions.assertEquals(17.0, impressionMadeMetric.getPreviousValue());

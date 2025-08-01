@@ -39,7 +39,8 @@ public class ObjectEntryMetric implements AssetMetric {
 				_externalReferenceCode,
 				objectEntryMetric._externalReferenceCode) &&
 			Objects.equals(
-				_impressionMadeMetric, objectEntryMetric._impressionMadeMetric) &&
+				_impressionMadeMetric,
+				objectEntryMetric._impressionMadeMetric) &&
 			Objects.equals(_urls, objectEntryMetric._urls) &&
 			Objects.equals(_viewsMetric, objectEntryMetric._viewsMetric)) {
 
@@ -97,7 +98,7 @@ public class ObjectEntryMetric implements AssetMetric {
 		return _externalReferenceCode;
 	}
 
-	public Metric getImpresssionMadeMetric() {
+	public Metric getImpressionMadeMetric() {
 		return _impressionMadeMetric;
 	}
 
@@ -114,8 +115,8 @@ public class ObjectEntryMetric implements AssetMetric {
 	public int hashCode() {
 		return Objects.hash(
 			_assetId, _assetMetrics, _assetTitle, _canonicalUrls, _dataSourceId,
-			_downloadsMetric, _externalReferenceCode, _impressionMadeMetric, _urls,
-			_viewsMetric);
+			_downloadsMetric, _externalReferenceCode, _impressionMadeMetric,
+			_urls, _viewsMetric);
 	}
 
 	@Override

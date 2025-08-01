@@ -222,7 +222,7 @@ public class AssetMetricRestController {
 		@RequestParam String externalReferenceCode,
 		@RequestParam(required = false) Set<Long> groupIds,
 		@RequestParam(defaultValue = "30") int rangeKey,
-		@RequestParam(defaultValue = "impressionsMetric") Set<String>
+		@RequestParam(defaultValue = "impressionMadeMetric") Set<String>
 			selectedMetrics) {
 
 		AssetType assetType = AssetType.of(assetTypeString);
@@ -253,7 +253,7 @@ public class AssetMetricRestController {
 					ObjectEntryMetricType.DOWNLOADS.getName()));
 		}
 
-		if (selectedMetrics.contains("impressionsMetric")) {
+		if (selectedMetrics.contains("impressionMadeMetric")) {
 			assetHistogramMetricDTOs.add(
 				new AssetHistogramMetricDTO(
 					_histogramDog.getObjectEntryHistogramMetricBag(
