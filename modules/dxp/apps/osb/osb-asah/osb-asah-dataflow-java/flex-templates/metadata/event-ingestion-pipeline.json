@@ -1,0 +1,48 @@
+{
+	"description": "An Apache Beam streaming pipeline that reads events from Cloud Pub/Sub, and writes into BigQuery",
+	"name": "Analytics Event Ingestion",
+	"parameters": [
+		{
+			"helpText": "Provide the name of subscription to ingest.",
+			"isOptional": false,
+			"label": "Input Subscription",
+			"name": "inputSubscription"
+		},
+		{
+			"helpText": "Provide the output directory to backup events from Cloud Pub/Sub.",
+			"isOptional": false,
+			"label": "Output Directory",
+			"name": "outputDirectory"
+		},
+		{
+			"helpText": "Provide the prefix of file names of backup events (default is output).",
+			"isOptional": true,
+			"label": "Output File Name Prefix",
+			"name": "outputFileNamePrefix"
+		},
+		{
+			"helpText": "Provide how long to allow late-arriving events for sessions in minutes (default is 5).",
+			"isOptional": true,
+			"label": "Session Window Allowed Lateness",
+			"name": "sessionWindowAllowedLateness"
+		},
+		{
+			"helpText": "Provide the interval for early window pane firings before session close (default is 1).",
+			"isOptional": true,
+			"label": "Session Window Early Firings Interval",
+			"name": "sessionWindowEarlyFiringsInterval"
+		},
+		{
+			"helpText": "Provide the gap duration to close session in minutes (default is 30).",
+			"isOptional": true,
+			"label": "Session Window Gap Duration",
+			"name": "sessionWindowGapDuration"
+		},
+		{
+			"helpText": "Provide the interval to write events to backup in minutes (default is 5).",
+			"isOptional": true,
+			"label": "Write Interval",
+			"name": "writeInterval"
+		}
+	]
+}
