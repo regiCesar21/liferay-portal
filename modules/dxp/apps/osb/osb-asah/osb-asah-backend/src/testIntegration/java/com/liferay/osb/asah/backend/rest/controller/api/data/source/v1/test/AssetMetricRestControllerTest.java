@@ -26,7 +26,6 @@ import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContex
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -1255,19 +1254,18 @@ public class AssetMetricRestControllerTest
 					curAssetHistogramMetricDTO.getHistogramMetricDTOs();
 
 				Assertions.assertEquals(30, histogramMetricDTOs.size());
-
-				Assertions.assertArrayEquals(
-					new double[] {
-						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,
-						0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0
-					},
-					_getActualValues(histogramMetricDTOs));
 				Assertions.assertArrayEquals(
 					new double[] {
 						0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,
 						0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0
 					},
 					_getActualPreviousValues(histogramMetricDTOs));
+				Assertions.assertArrayEquals(
+					new double[] {
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,
+						0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0
+					},
+					_getActualValues(histogramMetricDTOs));
 			}
 			else if (metricName.equals("impressionMadeMetric")) {
 				Assertions.assertEquals(
@@ -1277,19 +1275,18 @@ public class AssetMetricRestControllerTest
 					curAssetHistogramMetricDTO.getHistogramMetricDTOs();
 
 				Assertions.assertEquals(30, histogramMetricDTOs.size());
-
-				Assertions.assertArrayEquals(
-					new double[] {
-						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 0, 2,
-						0, 0, 3, 9, 0, 1, 0, 0, 0, 2, 1
-					},
-					_getActualValues(histogramMetricDTOs));
 				Assertions.assertArrayEquals(
 					new double[] {
 						1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,
 						0, 4, 0, 0, 0, 0, 5, 1, 2, 1, 3
 					},
 					_getActualPreviousValues(histogramMetricDTOs));
+				Assertions.assertArrayEquals(
+					new double[] {
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 0, 2,
+						0, 0, 3, 9, 0, 1, 0, 0, 0, 2, 1
+					},
+					_getActualValues(histogramMetricDTOs));
 			}
 			else if (metricName.equals("viewsMetric")) {
 				Assertions.assertEquals(
@@ -1299,19 +1296,18 @@ public class AssetMetricRestControllerTest
 					curAssetHistogramMetricDTO.getHistogramMetricDTOs();
 
 				Assertions.assertEquals(30, histogramMetricDTOs.size());
-
-				Assertions.assertArrayEquals(
-					new double[] {
-						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
-						0, 0, 1, 2, 0, 4, 0, 0, 0, 1, 4
-					},
-					_getActualValues(histogramMetricDTOs));
 				Assertions.assertArrayEquals(
 					new double[] {
 						1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0,
 						0, 1, 0, 0, 0, 0, 2, 1, 1, 1, 1
 					},
 					_getActualPreviousValues(histogramMetricDTOs));
+				Assertions.assertArrayEquals(
+					new double[] {
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+						0, 0, 1, 2, 0, 4, 0, 0, 0, 1, 4
+					},
+					_getActualValues(histogramMetricDTOs));
 			}
 		}
 	}
@@ -1357,13 +1353,9 @@ public class AssetMetricRestControllerTest
 
 		double[] actualPreviousValues = new double[histogramMetricDTOs.size()];
 
-		Iterator<HistogramMetricDTO> iterator = histogramMetricDTOs.iterator();
-
 		int i = 0;
 
-		while (iterator.hasNext()) {
-			HistogramMetricDTO histogramMetricDTO = iterator.next();
-
+		for (HistogramMetricDTO histogramMetricDTO : histogramMetricDTOs) {
 			actualPreviousValues[i++] = histogramMetricDTO.getPreviousValue();
 		}
 
@@ -1375,13 +1367,9 @@ public class AssetMetricRestControllerTest
 
 		double[] actualValues = new double[histogramMetricDTOs.size()];
 
-		Iterator<HistogramMetricDTO> iterator = histogramMetricDTOs.iterator();
-
 		int i = 0;
 
-		while (iterator.hasNext()) {
-			HistogramMetricDTO histogramMetricDTO = iterator.next();
-
+		for (HistogramMetricDTO histogramMetricDTO : histogramMetricDTOs) {
 			actualValues[i++] = histogramMetricDTO.getValue();
 		}
 
