@@ -19,6 +19,7 @@ SESSION_WINDOW_GAP_DURATION=30
 SUBNETWORK=${3}
 
 gcloud dataflow flex-template run eventingestionpipeline-${DXP_CLOUD_PROJECT} \
+	--additional-experiments=disableStringSetMetrics \
 	--enable-streaming-engine \
 	--template-file-gcs-location="${PIPELINE_FOLDER}/flex-templates/event-ingestion-pipeline.json" \
 	--max-workers=${MAX_NUMBER_WORKERS} \
