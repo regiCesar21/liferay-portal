@@ -6252,7 +6252,7 @@ log.sanitizer.enabled=false</echo>
 
 				<get-gradle-module-dir-task-names gradle.task.names="${modules.compile.task.groups}" />
 
-				<for delimiter="|" list="${modules.compile.task.groups}" param="gradle.module.dir.task.name" trim="true">
+				<for delimiter="|" list="${gradle.module.dir.task.names}" param="gradle.module.dir.task.name" trim="true">
 					<sequential>
 						<local name="gradle.module.dir" />
 						<local name="gradle.task.name" />
@@ -6873,7 +6873,7 @@ log.sanitizer.enabled=false</echo>
 
 				<get-gradle-module-dir-task-names gradle.task.names="${modules.baseline.task.groups}" />
 
-				<for delimiter="|" list="${gradle.module.dir.task.names}" param="module.dir.task" trim="true">
+				<for delimiter="|" list="${gradle.module.dir.task.names}" param="gradle.module.dir.task.name" trim="true">
 					<sequential>
 						<local name="gradle.module.dir" />
 						<local name="gradle.task.name" />
@@ -7762,7 +7762,7 @@ ${output.content}</echo>
 					<then>
 						<get-gradle-module-dir-task-names gradle.task.names="${modules.test.class.group}" />
 
-						<for delimiter="|" list="${gradle.module.dir.task.names}" param="module.dir.task" trim="true">
+						<for delimiter="|" list="${gradle.module.dir.task.names}" param="gradle.module.dir.task.name" trim="true">
 							<sequential>
 								<local name="gradle.module.dir" />
 								<local name="gradle.task.name" />
@@ -8038,7 +8038,7 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 					<then>
 						<get-gradle-module-dir-task-names gradle.task.names="${modules.test.class.group}" />
 
-						<for delimiter="|" list="${gradle.module.dir.task.names}" param="module.dir.task" trim="true">
+						<for delimiter="|" list="${gradle.module.dir.task.names}" param="gradle.module.dir.task.name" trim="true">
 							<sequential>
 								<local name="gradle.module.dir" />
 								<local name="gradle.task.name" />
