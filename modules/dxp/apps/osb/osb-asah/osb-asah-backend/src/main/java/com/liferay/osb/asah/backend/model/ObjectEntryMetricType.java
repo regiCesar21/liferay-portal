@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  */
 public enum ObjectEntryMetricType implements MetricType {
 
-	DOWNLOADS("downloads", "downloadsMetric", TrendClassification.Order.DESC),
+	DOWNLOADS("downloads", "downloadsMetric", TrendClassification.Order.ASC),
 	IMPRESSIONS(
 		"impressions", "impressionMadeMetric", TrendClassification.Order.ASC),
 	VIEWS("views", "viewsMetric", TrendClassification.Order.ASC);
