@@ -21,7 +21,6 @@ SUBNETWORK=${3}
 gcloud dataflow flex-template run eventingestionpipeline-${DXP_CLOUD_PROJECT} \
 	--additional-experiments=disableStringSetMetrics \
 	--enable-streaming-engine \
-	--template-file-gcs-location="${PIPELINE_FOLDER}/flex-templates/event-ingestion-pipeline.json" \
 	--max-workers=${MAX_NUMBER_WORKERS} \
 	--network=${NETWORK} \
 	--parameters="inputSubscription=projects/${PROJECT_ID}/subscriptions/${DXP_CLOUD_PROJECT}_analytics_events_dataflow,\
@@ -32,4 +31,5 @@ sessionWindowGapDuration=${SESSION_WINDOW_GAP_DURATION}" \
 	--project=${PROJECT_ID} \
 	--region=${REGION} \
 	--subnetwork=regions/${REGION}/subnetworks/${SUBNETWORK} \
-	--temp-location=${PIPELINE_FOLDER}/temp
+	--temp-location=${PIPELINE_FOLDER}/temp \
+	--template-file-gcs-location="${PIPELINE_FOLDER}/flex-templates/event-ingestion-pipeline.json"

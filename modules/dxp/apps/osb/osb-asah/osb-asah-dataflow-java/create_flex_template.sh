@@ -1,6 +1,9 @@
 #!/bin/bash
 
-declare -A templates=(["event-ingestion-pipeline"]="com.liferay.osb.asah.dataflow.ingestion.event.EventIngestionPipeline" ["postgresql-replication-pipeline"]="com.liferay.osb.asah.dataflow.replication.PostgreSQLReplicationPipeline")
+declare -A templates
+
+templates["event-ingestion-pipeline"]="com.liferay.osb.asah.dataflow.ingestion.event.EventIngestionPipeline"
+templates["postgresql-replication-pipeline"]="com.liferay.osb.asah.dataflow.replication.PostgreSQLReplicationPipeline"
 
 if [ "$#" -lt 2 ]
 then
