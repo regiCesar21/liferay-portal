@@ -94,7 +94,7 @@ create table SamlSpMessage (
 	companyId LONG,
 	createDate DATE null,
 	samlIdpEntityId VARCHAR(1024) null,
-	samlIdpResponseKey VARCHAR(75) null,
+	samlIdpResponseKey VARCHAR(256) null,
 	expirationDate DATE null
 );
 
