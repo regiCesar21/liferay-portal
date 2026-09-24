@@ -115,6 +115,18 @@ public class AuditMessageBuilder {
 			0, 0, className, classPK, null, eventType, attributes);
 	}
 
+	public static AuditMessage buildAuditMessage(
+		String className, long classPK, String eventType,
+		List<Attribute> attributes, String resourceAction) {
+
+		AuditMessage auditMessage = buildAuditMessage(
+			className, classPK, eventType, attributes);
+
+		auditMessage.setResourceAction(resourceAction);
+
+		return auditMessage;
+	}
+
 	private static JSONArray _getAttributesJSONArray(
 		List<Attribute> attributes) {
 
